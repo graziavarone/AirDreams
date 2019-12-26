@@ -27,7 +27,7 @@ a:focus {
 .tm-margin-b-20 { margin-bottom: 20px; }
 .tm-p-4 { padding: 2rem!important; }
 .tm-color-white { color: white; }
-.tm-color-primary {	color: #ee5057; }
+.tm-color-primary {	color: #38ACEC; }
 .tm-bg-primary { background: #ee5057; }
 .tm-bg-gray { background: #F4F4F4; }
 .tm-bg-white { background: white; }
@@ -93,10 +93,9 @@ p {
 
 .nav-item:last-child { border-right: 1px solid #ccc; }
 
-.nav-link.active,
 .nav-link:hover {
 	color: white;
-	background: #ee5057;	
+	background: #38ACEC;
 }
 
 .tm-top-bar .navbar-expand-lg .navbar-nav .nav-link { padding: 50px 35px; }
@@ -175,7 +174,7 @@ p {
 }
 
 .btn-primary {
-	background-color: #ee5057;
+	background-color: #38ACEC;
 	border-color: #ee5057;
 	border-radius: 0;
 	cursor: pointer;
@@ -188,7 +187,7 @@ p {
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-	background-color: #d53239;
+	background-color: #2B60DE;
 	border-color: #d53239;
 }
 
@@ -197,7 +196,7 @@ p {
 .tm-form-element:last-child { margin-right: 0; }
 
 .tm-form-element-icon {
-	color: #ee5057;
+	color: #38ACEC;
 	position: absolute;
 	top: 10px;
 	left: 15px;
