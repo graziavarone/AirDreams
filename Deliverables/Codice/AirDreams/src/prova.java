@@ -1,6 +1,5 @@
-
-
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +26,7 @@ public class prova extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setAttribute("prova","prova teresa");;
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -37,5 +37,4 @@ public class prova extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
