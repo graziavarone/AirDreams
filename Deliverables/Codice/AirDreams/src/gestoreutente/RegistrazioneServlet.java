@@ -1,6 +1,7 @@
 package gestoreutente;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,11 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  * Servlet implementation class RegistrazioneServlet
  */
 @WebServlet("/RegistrazioneServlet")
 public class RegistrazioneServlet extends HttpServlet {
+	private static Logger logger= Logger.getLogger("global");
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -53,14 +56,16 @@ public class RegistrazioneServlet extends HttpServlet {
 		
 		
 		account=new Account(nome, cognome, email, password);
+		logger.info("Chiamo signUp in accountManager...");
 		risultato=utenteManager.signUp(account);
 		
 		if (!risultato) {
-			request.setAttribute("message", "Failed");
+			request.setAttribute("message", "Signup failed");
 			redirect="registrazione.jsp";
 		}
 		else {
-			redirect="login.jsp";
+			request.setAttribute("message", "Signup success");
+			redirect="login.jsp"; //non posso testarlo perchè mi manca il login
 		}
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(redirect);

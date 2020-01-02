@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%
+	String message=(String)request.getAttribute("message");
+
+%>
 <!DOCTYPE html>
 <html>
 
@@ -70,10 +75,13 @@ http://www.tooplate.com/view/2095-level
             </div>
             <div class="tm-section tm-bg-img" id="tm-section-1">
 				                <div class="tm-bg-white ie-container-width-fix-2">
+				                <% if(message!=null){ %>
+				                <p id="messageError"><%=message %></p>
+				                <% } %>
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                                <form action="RegistrazioneServlet" method="post" class="tm-search-form tm-section-pad-2" id="form1">
+                                <form action="RegistrazioneServlet" method="post" class="tm-search-form tm-section-pad-2" onsubmit="event.preventDefault(); validate(this)">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
                                             <input name="nome" type="text" onblur="validaNome(this.value)" class="form-control" id="inputName" placeholder="Type your name...">
@@ -93,7 +101,7 @@ http://www.tooplate.com/view/2095-level
                                     </div>
                                     <div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
-                                            <button type="submit" class="btn btn-primary tm-btn-search">SignUp</button>
+                                            <input type="submit" class="btn btn-primary tm-btn-search" value="SignUp">
                                         </div>
                                       </div>
                                     
