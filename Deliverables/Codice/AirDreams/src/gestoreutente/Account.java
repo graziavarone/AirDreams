@@ -23,7 +23,7 @@ public class Account {
 	 * @param password password dell'utente
 	 * @return 
 	 */
-	public Account(String nome, String cognome, String password, String email) {
+	public Account(String nome, String cognome, String email, String password) {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
@@ -93,11 +93,6 @@ public class Account {
 	@Override
 	public String toString() {
 		return "Account [nome=" + nome + ", cognome=" + cognome + ", password=" + password + ", email=" + email + "]";
-	}
-	@Override
-	public boolean equals(Object arg0) {
-		// TODO Auto-generated method stub
-		return super.equals(arg0);
 	}
 	
 	

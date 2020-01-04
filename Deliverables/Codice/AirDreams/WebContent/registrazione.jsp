@@ -84,19 +84,19 @@ http://www.tooplate.com/view/2095-level
                                 <form action="RegistrazioneServlet" method="post" class="tm-search-form tm-section-pad-2" onsubmit="event.preventDefault(); validate(this)">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="nome" type="text" onblur="validaNome(this.value)" class="form-control" id="inputName" placeholder="Type your name...">
+                                            <input name="nome" type="text" onblur="validaNome(this.value)" class="form-control" id="inputName" placeholder="Type your name..." required>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                            <input name="cognome" type="text" onblur="validaCognome(this.value)" class="form-control" id="inputCognome" placeholder="Type your surname...">
+                                            <input name="cognome" type="text" onblur="validaCognome(this.value)" class="form-control" id="inputCognome" placeholder="Type your surname..." required>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="email" type="text" onblur="validaEmail(this.value)" class="form-control" id="inputEmail" placeholder="Type your email">
+                                            <input name="email" type="text" onblur="validaEmail(this.value)" class="form-control" id="inputEmail" placeholder="Type your email" required>
                                         </div>                                      
                                         <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="password" type="password" onblur="validaPassword(this.value)" class="form-control" id="inputPassword" placeholder="Type your password...">
+                                            <input name="password" type="password" onblur="validaPassword(this.value)" class="form-control" id="inputPassword" placeholder="Type your password..." required>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="Cpassword" type="password" onblur="controllaPassword(this.value)" class="form-control" id="inputCPassword" placeholder="Confirm your password...">
+                                            <input name="Cpassword" type="password" onblur="controllaPassword(this.value)" class="form-control" id="inputCPassword" placeholder="Confirm your password..." required>
                                         </div>
                                     </div>
                                     <div class="form-row tm-search-form-row">                                  

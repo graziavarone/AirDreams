@@ -1,6 +1,7 @@
 package gestoreutente;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -39,34 +40,48 @@ public class RegistrazioneServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//controllare che i parametri siano diversi da null
-		//controllare che non ci sia già un'email, fare query select * from account where email=..., se
-		//ritorna null allora possiamo registrare, altrimenti no perchè l'email esiste già
-		
 		String nome=request.getParameter("nome");
 		String cognome=request.getParameter("cognome");
 		String email=request.getParameter("email");
 		String password=request.getParameter("password");
-		String cPassword=request.getParameter("CPassword");
+		//String cPassword=request.getParameter("CPassword");
 		
 		UtenteManager utenteManager=new UtenteManager();
 		Account account=null;
 		String redirect="";
 		boolean risultato=false;
 		
-		
-		account=new Account(nome, cognome, email, password);
-		logger.info("Chiamo signUp in accountManager...");
-		risultato=utenteManager.signUp(account);
-		
-		if (!risultato) {
-			request.setAttribute("message", "Signup failed");
-			redirect="registrazione.jsp";
+		try {
+			account=utenteManager.findAccountByEmail(email);
+			
+			logger.info("Sono uscito da findAccountByEmail..");
+			if(account!=null) {
+				logger.info("Esiste già un account..");
+				request.setAttribute("message", "Email already exists");
+				redirect="registrazione.jsp";
+			}
+			else {
+				logger.info("Non esiste un account..");
+				
+				account=new Account(nome, cognome, email, password);
+				risultato=utenteManager.signUp(account);
+				logger.info("Sono uscito da signUp..");
+				if (!risultato) {
+					request.setAttribute("message", "Signup failed");
+					redirect="registrazione.jsp";
+				}
+				else {
+					request.setAttribute("message", "Signup success");
+					redirect="loginFauzzo.jsp";
+				}
+			}
 		}
-		else {
-			request.setAttribute("message", "Signup success");
-			redirect="login.jsp"; //non posso testarlo perchè mi manca il login
+			
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	
 		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(redirect);
 		requestDispatcher.forward(request, response);
