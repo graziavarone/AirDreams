@@ -1,6 +1,6 @@
 package gestoreutente;
 
 public enum Ruolo {
-	gestoreVoli,gestoreAccount;
+	gestoreVoli,gestoreCompagnie;
 
 }
