@@ -16,9 +16,12 @@ function validaNome(input){
 		name.classList.remove("success");
 		name.classList.add("error");
 	} else {
+		valid=true;
 		name.classList.remove("error");
 		name.classList.add("success");
 	}
+	
+	return valid;
 	
 }
 
@@ -40,10 +43,11 @@ function validaCognome(input){
 		name.classList.remove("success");
 		name.classList.add("error");
 	} else {
+		valid=true;
 		name.classList.remove("error");
 		name.classList.add("success");
 	}
-	
+	return valid;
 }
 
 function checkEmail(inputtxt) {
@@ -64,10 +68,11 @@ function validaEmail(input){
 		name.classList.remove("success");
 		name.classList.add("error");
 	} else {
+		valid=true;
 		name.classList.remove("error");
 		name.classList.add("success");
 	}
-	
+	return valid;
 }
 
 
@@ -90,27 +95,75 @@ function validaPassword(input){
 		name.classList.remove("success");
 		name.classList.add("error");
 	} else {
+		valid=true;
 		name.classList.remove("error");
 		name.classList.add("success");
 	}
-	
+	return valid;
 }
 
 function controllaPassword(inputtxt){
 	var valid = true;	
 	
 	var name = document.getElementsByName("password")[0];
-	var name2 = document.getElementsByName("Cpassword")[0];
+	var confermaPassword = document.getElementsByName("Cpassword")[0];
 	
 	if(name.value==inputtxt) {
-		name2.classList.remove("error");
-		name2.classList.add("success");
+		valid=true;
+		confermaPassword.classList.remove("error");
+		confermaPassword.classList.add("success");
 	}
 	else {
-		name2.classList.remove("success");
-		name2.classList.add("error");
+		valid=false;
+		confermaPassword.classList.remove("success");
+		confermaPassword.classList.add("error");
 	}
+	return valid;
 }
+
+function validate(obj){
+	var valid = true;	
+	
+	var name = document.getElementsByName("nome")[0];
+	var cognome = document.getElementsByName("cognome")[0];
+	var email = document.getElementsByName("email")[0];
+	var password=document.getElementsByName("password")[0];
+	var confermaPassword = document.getElementsByName("Cpassword")[0];
+	
+	if(!validaNome(name.value))
+		valid=false;
+	else
+		valid=true;
+	
+	
+	if(!validaCognome(cognome.value))
+		valid=false;
+	else
+		valid=true;
+	
+	if(!validaEmail(email.value))
+		valid=false;
+	else
+		valid=true;
+	
+	if(!validaPassword(password.value))
+		valid=false;
+	else
+		valid=true;
+	
+	if(!controllaPassword(confermaPassword.value))
+		valid=false;
+	else
+		valid=true;
+	
+
+	if(valid) obj.submit();
+	
+}
+
+
+
+
 
 
 

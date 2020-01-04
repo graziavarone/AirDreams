@@ -14,6 +14,9 @@ http://www.tooplate.com/view/2095-level
 	border-color: green;
 }
 
+#messageError{
+	color: red;
+}
 
 body {
 	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
