@@ -16,5 +16,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="lib" path="C:/junit/junit-4.10.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Grazia/Desktop/spring-mock-2.0.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosyd/Downloads/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rosyd/Downloads/spring-mock-2.0.6.jar/spring-mock-2.0.6.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
