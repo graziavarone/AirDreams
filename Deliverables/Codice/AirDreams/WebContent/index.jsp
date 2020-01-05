@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="java.util.*,gestioneUtente.*"%>
 <!DOCTYPE html>
 <html>
 
@@ -50,19 +50,28 @@ http://www.tooplate.com/view/2095-level
                             </button>
                             <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
                                 <ul class="navbar-nav ml-auto">
-                                  <li class="nav-item">
-                                    <a class="nav-link"  class="activeHome" href="#top">Home <span class="sr-only">(current)</span></a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="">Portfolio</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="">Blog Entries</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="">Contact Us</a>
-                                  </li>
-                                </ul>
+                                 <li class="nav-item"> <a class="nav-link" class="activeHome" href="login.jsp">
+								 <%
+									if (request.getSession().getAttribute("account")==null) {
+								 %>
+									Login
+								 <%
+									} else {
+								     	Account account = (Account) request.getSession().getAttribute("account");
+								 %>
+								 <%=account.getNome() %>
+								 <%
+									}
+								 %>
+								 </a></li>
+								 <%
+									 if (request.getSession().getAttribute("account")!=null) {
+								 %>
+		                         <li class="nav-item"> <a class="nav-link" href="/LogoutServlet"> Logout </a></li>
+								 <%
+									}
+								 %>
+                               </ul>
                             </div>                            
                         </nav>            
                     </div>
