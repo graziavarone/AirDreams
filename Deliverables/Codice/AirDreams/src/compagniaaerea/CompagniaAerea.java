@@ -1,4 +1,4 @@
-package gestioneUtente;
+package compagniaaerea;
 
 public class CompagniaAerea {
 

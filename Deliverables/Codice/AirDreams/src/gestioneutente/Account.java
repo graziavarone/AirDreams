@@ -1,4 +1,6 @@
-package gestioneUtente;
+package gestioneutente;
+
+import compagniaaerea.CompagniaAerea;
 
 public class Account {
 

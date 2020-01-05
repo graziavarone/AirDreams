@@ -1,10 +1,14 @@
-package gestioneUtente;
+package gestioneutente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import compagniaaerea.CompagniaAerea;
+import compagniaaerea.CompagniaAereaManager;
+import db.DriverManagerConnectionPool;
 
 public class UtenteManager {
 
