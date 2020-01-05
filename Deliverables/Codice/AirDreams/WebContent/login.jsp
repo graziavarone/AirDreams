@@ -27,12 +27,16 @@
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#">
+                            <a class="navbar-brand mr-auto" href="index.jsp">
                                 <img src="img/logo.png" alt="Site logo">
-                            </a>                         
+                            </a>
+                            <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>   
                         </nav>            
                     </div>
                 </div>
+
             </div>
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
