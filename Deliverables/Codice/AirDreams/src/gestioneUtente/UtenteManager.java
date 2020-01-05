@@ -36,8 +36,6 @@ public class UtenteManager {
 			} else {
 				return null;
 			}
-				
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
