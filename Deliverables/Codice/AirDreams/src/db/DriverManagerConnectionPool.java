@@ -6,9 +6,11 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class DriverManagerConnectionPool {
 
 	private static List<Connection> freeDbConnections;
+	private static boolean isTest = false;
 
 	static {
 		freeDbConnections = new LinkedList<Connection>();
@@ -18,22 +20,30 @@ public class DriverManagerConnectionPool {
 			System.out.println("DB driver not found:"+ e.getMessage());
 		} 
 	}
-		
+	
 	private static synchronized Connection createDBConnection() throws SQLException {
 		Connection newConnection = null;
 		String ip = "localhost";
 		String port = "3306";
-		String db = "airdreams";
+		String db ;
 		String username = "is";
 		String password = "password";
+		
+		if(!isTest) {
+			db = "airdreams";
+		} else {
+			db = "airdreamstest";
+		}
 
-		newConnection = DriverManager.getConnection("jdbc:mysql://"+ ip + ":"+ port + "/" + db + "?serverTimezone=UTC", username, password);
+		newConnection = DriverManager.getConnection("jdbc:mysql://"+ ip+":"+ 
+				port+"/"+db+"?serverTimezone=UTC", username, password);
+
 
 		System.out.println("Create a new DB connection");
-		newConnection.setAutoCommit(false);
+
 		return newConnection;
 	}	
-		
+	
 	public static synchronized Connection getConnection() throws SQLException {
 		Connection connection;
 
@@ -54,9 +64,21 @@ public class DriverManagerConnectionPool {
 
 		return connection;
 	}
+	
+	public static synchronized void releaseConnection(Connection connection) 
+			throws SQLException {
+		if(connection != null) freeDbConnections.add(connection);
+	}
+	
+
+	public static boolean isTest() {
+		return isTest;
+	}
+
+	public static void setTest(boolean isTest) {
+		DriverManagerConnectionPool.isTest = isTest;
 		
-	public static synchronized void releaseConnection(Connection connection) throws SQLException {
-		if(connection != null) 
-			freeDbConnections.add(connection);
 	}	
+	
+	
 }

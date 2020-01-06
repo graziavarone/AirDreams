@@ -12,7 +12,7 @@ public class Account {
 	private Ruolo ruolo;
 	
 	public Account() {
-		super();
+		
 	}
 
 	public String getNome() {
@@ -46,6 +46,7 @@ public class Account {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	
 	public CompagniaAerea getCompagniaAerea() {
 		return compagniaAerea;
@@ -62,10 +63,14 @@ public class Account {
 	public void setRuolo(Ruolo ruolo) {
 		this.ruolo = ruolo;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Account [nome=" + nome + ", cognome=" + cognome + ", email=" + email + ", password=" + password
 				+ ", compagniaAerea=" + compagniaAerea + ", ruolo=" + ruolo + "]";
 	}
+	
+	
+	
+	
 }

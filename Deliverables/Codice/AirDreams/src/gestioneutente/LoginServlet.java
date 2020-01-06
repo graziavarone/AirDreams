@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LoginServlet
@@ -18,6 +19,7 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		UtenteManager manager=new UtenteManager();
 		String redirectedPage="";
+		System.out.println("Ho ricevuto la sessione"+request.getSession());
 		
 		//recupero dati inviati dal form e creo un account apposito per il controllo
 		String email=request.getParameter("email");
@@ -28,19 +30,29 @@ public class LoginServlet extends HttpServlet {
 		
 		//effettuo il controllo delle credenziali e creo la sessione se tutto va a buon fine
 		Account account=manager.signIn(a);
+	
 		if (account!=null) {
+			System.out.println("Salvo nella sessione");
+			System.out.println("Ho ricevuto "+account);
 			request.getSession().setAttribute("account",account);
+			System.out.println("Ho salvato "+account);
 			request.getSession().setAttribute("roles",account.getRuolo());
+			System.out.println("Ho salvato");
+			redirectedPage="index.jsp";
+			response.getWriter().write("Success");
 		} else {
 			String error="autenticazione fallita";
-			redirectedPage="/errorPage.jsp?message=" + error;
+			request.setAttribute("message", error);
+			response.getWriter().write("Failed");
+			redirectedPage="errorPage.jsp";
 		}
 		
 		//redirect alla pagina
-		response.sendRedirect(request.getContextPath() + redirectedPage);
+		//response.sendRedirect(request.getContextPath() + redirectedPage);
+		request.getRequestDispatcher(redirectedPage).forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

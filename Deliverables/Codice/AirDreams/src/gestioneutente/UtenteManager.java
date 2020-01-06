@@ -13,6 +13,7 @@ import db.DriverManagerConnectionPool;
 public class UtenteManager {
 
 	public Account signIn(Account account) {
+		Account acc=null;
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -21,25 +22,25 @@ public class UtenteManager {
 			con = DriverManagerConnectionPool.getConnection();
 			st = con.createStatement();
 		
-			String sql= "SELECT * FROM utente WHERE email=?";
+			String sql= "SELECT * FROM utente WHERE email=? AND passwordUtente=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1,account.getEmail());
+			ps.setString(2, account.getPassword());
 			rs=ps.executeQuery();
 			
 			if (rs.next()) {
 				CompagniaAereaManager manager=new CompagniaAereaManager();
-				
-				account.setNome(rs.getString("nome"));
-				account.setCognome(rs.getString("cognome"));
-				account.setEmail(rs.getString("email"));
+				acc=new Account();
+				acc.setNome(rs.getString("nome"));
+				acc.setCognome(rs.getString("cognome"));
+				acc.setEmail(rs.getString("email"));
+				acc.setPassword(rs.getString("passwordUtente"));
 				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
 				account.setCompagniaAerea(compagniaAerea);
 				//account.setRuolo(rs.getString("ruolo"));
 				
-				return account;
-			} else {
-				return null;
-			}
+				
+			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -52,6 +53,6 @@ public class UtenteManager {
 			}
 		}
 		
-		return null;
+		return acc;
 	}
 }
