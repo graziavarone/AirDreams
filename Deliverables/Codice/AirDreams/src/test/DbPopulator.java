@@ -23,7 +23,7 @@ public class DbPopulator {
 		DriverManagerConnectionPool.setTest(true);
 		Connection conn =  DriverManagerConnectionPool.getConnection();
 		ScriptRunner sr = new ScriptRunner(conn);
-		java.io.Reader reader = new BufferedReader(new FileReader("inserimentoDatiTest.sql"));
+		java.io.Reader reader = new BufferedReader(new FileReader("inserimento.sql"));
 		sr.runScript(reader);
 		
 		DriverManagerConnectionPool.releaseConnection(conn);

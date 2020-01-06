@@ -10,6 +10,7 @@ import java.util.List;
 public class DriverManagerConnectionPool {
 
 	private static List<Connection> freeDbConnections;
+	private static boolean isTest = false;
 
 	static {
 		freeDbConnections = new LinkedList<Connection>();
@@ -24,9 +25,15 @@ public class DriverManagerConnectionPool {
 		Connection newConnection = null;
 		String ip = "localhost";
 		String port = "3306";
-		String db = "airdreams";
+		String db ;
 		String username = "is";
 		String password = "password";
+		
+		if(!isTest) {
+			db = "airdreams";
+		} else {
+			db = "airdreamstest";
+		}
 
 		newConnection = DriverManager.getConnection("jdbc:mysql://"+ ip+":"+ 
 				port+"/"+db+"?serverTimezone=UTC", username, password);
@@ -62,9 +69,14 @@ public class DriverManagerConnectionPool {
 			throws SQLException {
 		if(connection != null) freeDbConnections.add(connection);
 	}
+	
 
-	public static void setTest(boolean b) {
-		// TODO Auto-generated method stub
+	public static boolean isTest() {
+		return isTest;
+	}
+
+	public static void setTest(boolean isTest) {
+		DriverManagerConnectionPool.isTest = isTest;
 		
 	}	
 	

@@ -20,6 +20,7 @@ import java.util.regex.*;
 public class RegistrazioneServlet extends HttpServlet {
 	private static Logger logger= Logger.getLogger("global");
 	private static final long serialVersionUID = 1L;
+	private UtenteManager utenteManager=new UtenteManager();
 	private String expNome="^[A-Za-z]{1,}$";
 	private String expCognome="^[A-Za-z]{1,}$";
 	private String expEmail="^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$";
@@ -42,8 +43,6 @@ public class RegistrazioneServlet extends HttpServlet {
 		String email=request.getParameter("email");
 		String password=request.getParameter("password");
 		String cPassword=request.getParameter("Cpassword");
-		
-		UtenteManager utenteManager=new UtenteManager();
 		Account account=null;
 		String redirect="";
 		String message="";
@@ -86,16 +85,18 @@ public class RegistrazioneServlet extends HttpServlet {
 				if(!password.equals(cPassword)) {
 					message+="La password non corrisponde a quella inserita<br/>";
 					System.out.println(message);
-					response.getWriter().write("Formato errato dati");
+					response.getWriter().write("Password non corrisponde");
 					redirect="registrazione.jsp";
 				}
 				
 			}
 			
 			else{
-				message+="Registrazione effettuata con successo<br/>";
+				message="Registrazione effettuata con successo";
 				System.out.println(message);
+				account=new Account(nome,cognome,email,password);
 				utenteManager.signUp(account);
+				response.getWriter().write("Success");
 				redirect="loginFauzzo.jsp";
 			}
 			

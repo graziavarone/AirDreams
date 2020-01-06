@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 
-
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockRequestDispatcher;
 
+import db.DriverManagerConnectionPool;
 import gestioneutente.Account;
 import gestioneutente.RegistrazioneServlet;
 import gestioneutente.UtenteManager;
@@ -33,6 +35,9 @@ public class RegistrazioneTest {
 	
 	@Mock
 	MockRequestDispatcher dispatcher;
+	
+	@Mock
+	MockRequestDispatcher dispatcherSuccess;
 
 	
 	private RegistrazioneServlet servlet;
@@ -41,8 +46,9 @@ public class RegistrazioneTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(request.getRequestDispatcher("registrazione.jsp")).thenReturn(dispatcher);
+		when(request.getRequestDispatcher("loginFauzzo.jsp")).thenReturn(dispatcherSuccess);
         servlet = new RegistrazioneServlet();
-        
+        DbPopulator.initializeDatabase();
 	}
 	
 	//TC_7.2_1 nome sbagliato
@@ -99,9 +105,7 @@ public class RegistrazioneTest {
 	
 	//TC_7.2_4 email già presente
 	@Test
-	public void testCase_4() throws IOException, ServletException, SQLException {	
-		UtenteManager u=new UtenteManager();
-		u.signUp(new Account("Marco","Verdi","marco_verdi@hotmail.it","Marco1998"));
+	public void testCase_4() throws IOException, ServletException{	
 		when(request.getParameter("nome")).thenReturn("Grazia");
 		when(request.getParameter("cognome")).thenReturn("Varone");
 		when(request.getParameter("email")).thenReturn("teresa@hotmail.it");
@@ -114,6 +118,60 @@ public class RegistrazioneTest {
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
 		Mockito.verify(MyWriter).write("Email già esistente");
+	}
+	
+	//TC_7.2_5 password non rispetta il formato
+	@Test
+	public void testCase_5() throws IOException, ServletException {	
+		when(request.getParameter("nome")).thenReturn("Grazia");
+		when(request.getParameter("cognome")).thenReturn("Varone");
+		when(request.getParameter("email")).thenReturn("qualcosa@hotmail.it");
+		when(request.getParameter("password")).thenReturn("123");
+		when(request.getParameter("Cpassword")).thenReturn("123");
+		
+		
+		
+		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
+		when(response.getWriter()).thenReturn(MyWriter);
+		servlet.doPost(request, response);	
+		Mockito.verify(MyWriter).write("Formato errato dati");
+	}
+	
+	//TC_7.2_6 conferma password diverso
+	@Test
+	public void testCase_6() throws IOException, ServletException {	
+		when(request.getParameter("nome")).thenReturn("Grazia");
+		when(request.getParameter("cognome")).thenReturn("Varone");
+		when(request.getParameter("email")).thenReturn("qualcosa@hotmail.it");
+		when(request.getParameter("password")).thenReturn("@Emanuele2009");
+		when(request.getParameter("Cpassword")).thenReturn("123");
+		
+		
+		
+		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
+		when(response.getWriter()).thenReturn(MyWriter);
+		servlet.doPost(request, response);	
+		Mockito.verify(MyWriter).write("Password non corrisponde");
+	}
+	
+	//TC_7.2_7 success
+	@Test
+	public void testCase_7() throws IOException, ServletException {	
+		when(request.getParameter("nome")).thenReturn("Grazia");
+		when(request.getParameter("cognome")).thenReturn("Varone");
+		when(request.getParameter("email")).thenReturn("grazia_varone@hotmail.it");
+		when(request.getParameter("password")).thenReturn("@Emanuele2009");
+		when(request.getParameter("Cpassword")).thenReturn("@Emanuele2009");
+		
+		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
+		when(response.getWriter()).thenReturn(MyWriter);
+		servlet.doPost(request, response);	
+		Mockito.verify(MyWriter).write("Success");
+	}
+	
+	@After
+	public void tearDown() throws Exception{
+		DriverManagerConnectionPool.setTest(false);
 	}
 
 	
