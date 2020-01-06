@@ -61,6 +61,11 @@ public class DriverManagerConnectionPool {
 	public static synchronized void releaseConnection(Connection connection) 
 			throws SQLException {
 		if(connection != null) freeDbConnections.add(connection);
+	}
+
+	public static void setTest(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}	
 	
 	
