@@ -1,4 +1,4 @@
-package gestoreutente;
+package gestioneutente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

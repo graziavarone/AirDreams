@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
-import gestoreutente.RegistrazioneServlet;
+import gestioneutente.RegistrazioneServlet;
 
 
 public class Tesssst {

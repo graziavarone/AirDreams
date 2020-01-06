@@ -7,7 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-SE SONO QUI VUOL DIRE CHE MI SONO REGISTRATO YUHU
+
+<% String message=(String)request.getAttribute("message");
+if(message!=null){
+
+%>
+ <p><%=message %></p>
+ 
+ <%} %>
 
 </body>
 </html>

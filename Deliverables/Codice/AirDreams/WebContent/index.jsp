@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="java.util.*, gestioneutente.*"%>
 <!DOCTYPE html>
 <html>
 
@@ -8,13 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Level HTML Template</title>
+    <title>AirDreams</title>
 <!--
-
 Template 2095 Level
-
 http://www.tooplate.com/view/2095-level
-
 -->
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
@@ -40,7 +37,6 @@ http://www.tooplate.com/view/2095-level
                 <!-- Top Navbar -->
                 <div class="container">
                     <div class="row">
-                        
                         <nav class="navbar navbar-expand-lg narbar-light">
                             <a class="navbar-brand mr-auto" href="#">
                                 <img src="img/logo.png" alt="Site logo">
@@ -49,25 +45,21 @@ http://www.tooplate.com/view/2095-level
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
-                                <ul class="navbar-nav ml-auto">
-                                  <li class="nav-item">
-                                    <a class="nav-link"  class="activeHome" href="#top">Home <span class="sr-only">(current)</span></a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="">Portfolio</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="">Blog Entries</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="">Contact Us</a>
-                                  </li>
-                                </ul>
-                            </div>                            
+                            <ul class="navbar-nav ml-auto">
+                            	<li class="nav-item"><a class="nav-link" href="login.jsp">
+							
+									Login
+							
+								 </a></li>
+								
+								
+                        	</ul>  
+                        	</div>                         
                         </nav>            
                     </div>
                 </div>
             </div>
+            
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
                     <div class="container ie-h-align-center-fix">
@@ -149,10 +141,8 @@ http://www.tooplate.com/view/2095-level
                     </div>
                 </div>                  
             </div>
-            
- 
-            
-           <div class="tm-section tm-position-relative">
+          
+           	<div class="tm-section tm-position-relative">
              
                 <div class="container tm-pt-5 tm-pb-4">
                     <div class="row text-center">
@@ -178,8 +168,6 @@ http://www.tooplate.com/view/2095-level
                 </div>
             </div>
             
-            
-            
             <footer class="tm-bg-dark-blue">
                 <div class="container">
                     <div class="row">
@@ -197,143 +185,6 @@ http://www.tooplate.com/view/2095-level
         <script src="js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
-        <script>
-
-            /* Google map
-            ------------------------------------------------*/
-            var map = '';
-            var center;
-
-            function initialize() {
-                var mapOptions = {
-                    zoom: 16,
-                    center: new google.maps.LatLng(13.7567928,100.5653741),
-                    scrollwheel: false
-                };
-
-                map = new google.maps.Map(document.getElementById('google-map'),  mapOptions);
-
-                google.maps.event.addDomListener(map, 'idle', function() {
-                  calculateCenter();
-              });
-
-                google.maps.event.addDomListener(window, 'resize', function() {
-                  map.setCenter(center);
-              });
-            }
-
-            function calculateCenter() {
-                center = map.getCenter();
-            }
-
-            function loadGoogleMap(){
-                var script = document.createElement('script');
-                script.type = 'text/javascript';
-                script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDVWt4rJfibfsEDvcuaChUaZRS5NXey1Cs&v=3.exp&sensor=false&' + 'callback=initialize';
-                document.body.appendChild(script);
-            } 
-
-            function setCarousel() {
-                
-                if ($('.tm-article-carousel').hasClass('slick-initialized')) {
-                    $('.tm-article-carousel').slick('destroy');
-                } 
-
-                if($(window).width() < 438){
-                    // Slick carousel
-                    $('.tm-article-carousel').slick({
-                        infinite: false,
-                        dots: true,
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    });
-                }
-                else {
-                 $('.tm-article-carousel').slick({
-                        infinite: false,
-                        dots: true,
-                        slidesToShow: 2,
-                        slidesToScroll: 1
-                    });   
-                }
-            }
-
-            function setPageNav(){
-                if($(window).width() > 991) {
-                    $('#tm-top-bar').singlePageNav({
-                        currentClass:'active',
-                        offset: 79
-                    });   
-                }
-                else {
-                    $('#tm-top-bar').singlePageNav({
-                        currentClass:'active',
-                        offset: 65
-                    });   
-                }
-            }
-
-            function togglePlayPause() {
-                vid = $('.tmVideo').get(0);
-
-                if(vid.paused) {
-                    vid.play();
-                    $('.tm-btn-play').hide();
-                    $('.tm-btn-pause').show();
-                }
-                else {
-                    vid.pause();
-                    $('.tm-btn-play').show();
-                    $('.tm-btn-pause').hide();   
-                }  
-            }
-       
-            $(document).ready(function(){
-
-                $(window).on("scroll", function() {
-                    if($(window).scrollTop() > 100) {
-                        $(".tm-top-bar").addClass("active");
-                    } else {
-                        //remove the background property so it comes transparent again (defined in your css)
-                       $(".tm-top-bar").removeClass("active");
-                    }
-                });      
-
-                // Google Map
-                loadGoogleMap();  
-
-                // Date Picker
-                const pickerCheckIn = datepicker('#inputCheckIn');
-                const pickerCheckOut = datepicker('#inputCheckOut');
-                
-                // Slick carousel
-                setCarousel();
-                setPageNav();
-
-                $(window).resize(function() {
-                  setCarousel();
-                  setPageNav();
-                });
-
-                // Close navbar after clicked
-                $('.nav-link').click(function(){
-                    $('#mainNav').removeClass('show');
-                });
-
-                // Control video
-                $('.tm-btn-play').click(function() {
-                    togglePlayPause();                                      
-                });
-
-                $('.tm-btn-pause').click(function() {
-                    togglePlayPause();                                      
-                });
-
-                // Update the current year in copyright
-                $('.tm-current-year').text(new Date().getFullYear());                           
-            });
-
-        </script>             
-
+		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 </body>
 </html>

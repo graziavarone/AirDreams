@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="java.util.*, gestioneutente.*"%>
     
 <%
 	String message=(String)request.getAttribute("message");
-
 %>
 <!DOCTYPE html>
 <html>
@@ -12,14 +11,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
 
-    <title>Level HTML Template</title>
+    <title>AirDreams</title>
 <!--
-
 Template 2095 Level
-
 http://www.tooplate.com/view/2095-level
-
 -->
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
@@ -45,7 +42,6 @@ http://www.tooplate.com/view/2095-level
                 <!-- Top Navbar -->
                 <div class="container">
                     <div class="row">
-                        
                         <nav class="navbar navbar-expand-lg narbar-light">
                             <a class="navbar-brand mr-auto" href="#">
                                 <img src="img/logo.png" alt="Site logo">
@@ -54,49 +50,51 @@ http://www.tooplate.com/view/2095-level
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
-                                <ul class="navbar-nav ml-auto">
-                                  <li class="nav-item">
-                                    <a class="nav-link"  class="activeHome" href="#top">Home <span class="sr-only">(current)</span></a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="">Portfolio</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="">Blog Entries</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" href="">Contact Us</a>
-                                  </li>
-                                </ul>
-                            </div>                            
+                            <ul class="navbar-nav ml-auto">
+                            	<li class="nav-item"><a class="nav-link" href="login.jsp">
+								
+									Login
+							
+								 </a></li>
+								
+                        	</ul>  
+                        	</div>                         
                         </nav>            
                     </div>
                 </div>
             </div>
+            
             <div class="tm-section tm-bg-img" id="tm-section-1">
-				                <div class="tm-bg-white ie-container-width-fix-2">
-				                <% if(message!=null){ %>
+                <div class="tm-bg-white ie-container-width-fix-2">
+                  <% if(message!=null){ %>
 				                <p id="messageError"><%=message %></p>
 				                <% } %>
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                                <form action="RegistrazioneServlet" method="post" class="tm-search-form tm-section-pad-2" onsubmit="event.preventDefault(); validate(this)">
+                  				<form action="RegistrazioneServlet" method="post" class="tm-search-form tm-section-pad-2" id="form1">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="nome" type="text" onblur="validaNome(this.value)" class="form-control" id="inputName" placeholder="Type your name..." required>
+                                            <input name="nome" type="text" class="form-control" id="inputName" placeholder="Type your name..." required="required">
+                                   
                                         </div>
+                                     
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                            <input name="cognome" type="text" onblur="validaCognome(this.value)" class="form-control" id="inputCognome" placeholder="Type your surname..." required>
+                                         
+                                            <input name="cognome" type="text"  class="form-control" id="inputCognome" placeholder="Type your surname..." required="required">
+                                        	<br>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="email" type="text" onblur="validaEmail(this.value)" class="form-control" id="inputEmail" placeholder="Type your email" required>
+                                            <input name="email" type="text" class="form-control" id="inputEmail" placeholder="Type your email" required="required">
+                                        	<br>
                                         </div>                                      
                                         <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="password" type="password" onblur="validaPassword(this.value)" class="form-control" id="inputPassword" placeholder="Type your password..." required>
+                                            <input name="password" type="password"  class="form-control" id="inputPassword" placeholder="Type your password..." required="required">
+                                       		<br>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="Cpassword" type="password" onblur="controllaPassword(this.value)" class="form-control" id="inputCPassword" placeholder="Confirm your password..." required>
+                                            <input name="Cpassword" type="password" class="form-control" id="inputCPassword" placeholder="Confirm your password..." required="required">
+                                       	<br>
                                         </div>
                                     </div>
                                     <div class="form-row tm-search-form-row">                                  
@@ -109,38 +107,10 @@ http://www.tooplate.com/view/2095-level
                             </div>                        
                         </div>      
                     </div>
-                </div>                   
+                </div>                  
             </div>
-            
- 
-            
-           <div class="tm-section tm-position-relative">
-             
-                <div class="container tm-pt-5 tm-pb-4">
-                    <div class="row text-center">
-                        <article class="col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-article">                            
-                            <i class="fa tm-fa-6x fa-legal tm-color-primary tm-margin-b-20 "></i>
-                            <h3 class="tm-color-primary tm-article-title-1">Go everywhere</h3>
-                            <p>It is your world and we will help you explore it. Find the best prices from millions of flight deals to organize your perfect trip.</p>
-                          
-                        </article>
-                        <article class="col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-article">                            
-                            <i class="fa tm-fa-6x fa-plane tm-color-primary tm-margin-b-20"></i>
-                            <h3 class="tm-color-primary tm-article-title-1">Simple and safe</h3>
-                            <p>No extra charge. No nasty surprises. Easily manage your travel expenses, so you can relax even before departure.</p>
-                                                     
-                        </article>
-                        <article class="col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-article">                           
-                            <i class="fa tm-fa-6x fa-life-saver tm-color-primary tm-margin-b-20"></i>
-                            <h3 class="tm-color-primary tm-article-title-1">Travel your own way</h3>
-                            <p>Do you already know where to go? Find out the best time to book. Find offers for a relaxing short weekend or for an unforgettable adventure..</p>
-                                                    
-                        </article>
-                    </div>        
-                </div>
-            </div>
-            
-            
+          
+
             
             <footer class="tm-bg-dark-blue">
                 <div class="container">
@@ -153,149 +123,13 @@ http://www.tooplate.com/view/2095-level
         </div>
         
         <!-- load JS files -->
+        <script src="scripts/validaRegistrazione.js"></script>
         <script src="js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
         <script src="js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
         <script src="js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
         <script src="js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
-        <script>
-
-            /* Google map
-            ------------------------------------------------*/
-            var map = '';
-            var center;
-
-            function initialize() {
-                var mapOptions = {
-                    zoom: 16,
-                    center: new google.maps.LatLng(13.7567928,100.5653741),
-                    scrollwheel: false
-                };
-
-                map = new google.maps.Map(document.getElementById('google-map'),  mapOptions);
-
-                google.maps.event.addDomListener(map, 'idle', function() {
-                  calculateCenter();
-              });
-
-                google.maps.event.addDomListener(window, 'resize', function() {
-                  map.setCenter(center);
-              });
-            }
-
-            function calculateCenter() {
-                center = map.getCenter();
-            }
-
-            function loadGoogleMap(){
-                var script = document.createElement('script');
-                script.type = 'text/javascript';
-                script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDVWt4rJfibfsEDvcuaChUaZRS5NXey1Cs&v=3.exp&sensor=false&' + 'callback=initialize';
-                document.body.appendChild(script);
-            } 
-
-            function setCarousel() {
-                
-                if ($('.tm-article-carousel').hasClass('slick-initialized')) {
-                    $('.tm-article-carousel').slick('destroy');
-                } 
-
-                if($(window).width() < 438){
-                    // Slick carousel
-                    $('.tm-article-carousel').slick({
-                        infinite: false,
-                        dots: true,
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    });
-                }
-                else {
-                 $('.tm-article-carousel').slick({
-                        infinite: false,
-                        dots: true,
-                        slidesToShow: 2,
-                        slidesToScroll: 1
-                    });   
-                }
-            }
-
-            function setPageNav(){
-                if($(window).width() > 991) {
-                    $('#tm-top-bar').singlePageNav({
-                        currentClass:'active',
-                        offset: 79
-                    });   
-                }
-                else {
-                    $('#tm-top-bar').singlePageNav({
-                        currentClass:'active',
-                        offset: 65
-                    });   
-                }
-            }
-
-            function togglePlayPause() {
-                vid = $('.tmVideo').get(0);
-
-                if(vid.paused) {
-                    vid.play();
-                    $('.tm-btn-play').hide();
-                    $('.tm-btn-pause').show();
-                }
-                else {
-                    vid.pause();
-                    $('.tm-btn-play').show();
-                    $('.tm-btn-pause').hide();   
-                }  
-            }
-       
-            $(document).ready(function(){
-
-                $(window).on("scroll", function() {
-                    if($(window).scrollTop() > 100) {
-                        $(".tm-top-bar").addClass("active");
-                    } else {
-                        //remove the background property so it comes transparent again (defined in your css)
-                       $(".tm-top-bar").removeClass("active");
-                    }
-                });      
-
-                // Google Map
-                loadGoogleMap();  
-
-                // Date Picker
-                const pickerCheckIn = datepicker('#inputCheckIn');
-                const pickerCheckOut = datepicker('#inputCheckOut');
-                
-                // Slick carousel
-                setCarousel();
-                setPageNav();
-
-                $(window).resize(function() {
-                  setCarousel();
-                  setPageNav();
-                });
-
-                // Close navbar after clicked
-                $('.nav-link').click(function(){
-                    $('#mainNav').removeClass('show');
-                });
-
-                // Control video
-                $('.tm-btn-play').click(function() {
-                    togglePlayPause();                                      
-                });
-
-                $('.tm-btn-pause').click(function() {
-                    togglePlayPause();                                      
-                });
-
-                // Update the current year in copyright
-                $('.tm-current-year').text(new Date().getFullYear());                           
-            });
-
-        </script>             
-	<script src="scripts/validaRegistrazione.js"></script>
+		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 </body>
 </html>

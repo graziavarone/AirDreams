@@ -1,4 +1,4 @@
-package gestoreutente;
+package gestioneutente;
 
 /**
  * Questa classe rappresenta l'entità Account.
