@@ -9,8 +9,8 @@ public class Account {
 	private String cognome;
 	private String password;
 	private String email;
-	//private CompagniaAerea compagniaAerea;
-	//private Enum<Ruolo> ruolo;
+	private CompagniaAerea compagniaAerea;
+	private Ruolo ruolo;
 	
 	public Account() {
 		
