@@ -47,12 +47,26 @@ http://www.tooplate.com/view/2095-level
                             <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
                             <ul class="navbar-nav ml-auto">
                             	<li class="nav-item"><a class="nav-link" href="login.jsp">
-							
+								 <%
+									if (request.getSession().getAttribute("account")==null) {
+								 %>
 									Login
-							
+								 <%
+									} else {
+								     	Account account = (Account) request.getSession().getAttribute("account");
+								 %>
+								 <%=account.getNome() %>
+								 <%
+									}
+								 %>
 								 </a></li>
-								
-								
+								 <%
+									 if (request.getSession().getAttribute("account")!=null) {
+								 %>
+		                         <li class="nav-item"><a class="nav-link" href="LogoutServlet"> Logout </a></li>
+								 <%
+									}
+								 %>
                         	</ul>  
                         	</div>                         
                         </nav>            
