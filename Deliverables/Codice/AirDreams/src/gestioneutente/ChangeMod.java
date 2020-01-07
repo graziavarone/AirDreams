@@ -1,4 +1,4 @@
-
+package gestioneutente;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Aiuto
+ * Servlet implementation class ChangeMod
  */
-@WebServlet("/Aiuto")
-public class Aiuto extends HttpServlet {
+@WebServlet("/ChangeMod")
+public class ChangeMod extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Aiuto() {
+    public ChangeMod() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +26,14 @@ public class Aiuto extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String mod=request.getParameter("mod");
+		
+		if(mod.equals("false")) 
+			request.setAttribute("mod", false);
+		else
+			request.setAttribute("mod", true);
+		
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	/**

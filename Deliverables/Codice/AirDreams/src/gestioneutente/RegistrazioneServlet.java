@@ -97,7 +97,7 @@ public class RegistrazioneServlet extends HttpServlet {
 				account=new Account(nome,cognome,email,password);
 				utenteManager.signUp(account);
 				response.getWriter().write("Success");
-				redirect="loginFauzzo.jsp";
+				redirect="login.jsp";
 			}
 			
 		} catch (SQLException e) {

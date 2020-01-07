@@ -3,6 +3,11 @@
     
 <%
 	String message=(String)request.getAttribute("message");
+
+ Boolean mod=(Boolean)request.getAttribute("mod");
+
+if(mod==null)
+	mod=true;
 %>
 <!DOCTYPE html>
 <html>
@@ -50,14 +55,84 @@ http://www.tooplate.com/view/2095-level
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
+                            
                             <ul class="navbar-nav ml-auto">
-                            	<li class="nav-item"><a class="nav-link" href="login.jsp">
-								
-									Login
-							
-								 </a></li>
-								
-                        	</ul>  
+                            	<% if (request.getSession().getAttribute("account")==null){ %>
+                            		<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+                            	<% } %>
+                            	<%  if (request.getSession().getAttribute("account")!=null){
+                            		Account account=(Account)request.getSession().getAttribute("account");
+                            		Ruolo ruolo=account.getRuolo();
+                            		
+                            		if(ruolo==null){
+                            		%>
+                            		
+                           			   <li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Il mio profilo</a>
+									  <a href="#">Il mio carrello</a>
+									  </div>
+									</li>
+                       					
+                       					<% } else if(ruolo.equals(Ruolo.gestoreCompagnie)){ 
+                       					
+                       						if(mod==true){
+                       					%>	
+                           			   <li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Visualizza gli account</a>
+									  <a href="#">Aggiungi compagnia aerea</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  </div>
+									</li>
+									<% } else {%>
+									<li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Il mio profilo</a>
+									  <a href="#">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  </div>
+									</li>
+                           			
+									<% } %>
+                       				
+                       					
+               					<% } else if(ruolo.equals(Ruolo.gestoreVoli)) {
+               												
+                           			 					
+                       						if(mod==true){
+                       					%>	
+                           			   <li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Visualizza voli</a>
+									  <a href="#">Aggiungi volo</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  </div>
+									</li>
+									<% } else { %>
+									<li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Il mio profilo</a>
+									  <a href="#">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  </div>
+									</li>
+                           			
+									<% } %>
+               					
+               					<% } %>
+                       					
+									<li class="nav-item"><a class="nav-link" href="LogoutServlet">Logout</a></li>
+                       	
+								<% } %>
+                            
+                        	</ul> 
+                        	 
                         	</div>                         
                         </nav>            
                     </div>

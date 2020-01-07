@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="gestioneutente.*"%>
+    
+<% Boolean mod=(Boolean)request.getAttribute("mod");
+
+if(mod==null)
+	mod=true;
+	String message=(String) request.getAttribute("message");
+%>
 <!DOCTYPE html>
 
 <html>
@@ -20,27 +27,111 @@
 	</head>
 
 	<body>
-        <div class="tm-main-content" id="top">
+           <div class="tm-main-content" id="top">
             <div class="tm-top-bar-bg"></div>
             <div class="tm-top-bar" id="tm-top-bar">
                 <!-- Top Navbar -->
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="index.jsp">
+                            <a class="navbar-brand mr-auto" href="#">
                                 <img src="img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
-                            </button>   
+                            </button>
+                            <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
+                            
+                            <ul class="navbar-nav ml-auto">
+                            	<% if (request.getSession().getAttribute("account")==null){ %>
+                            		<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+                            	<% } %>
+                            	<%  if (request.getSession().getAttribute("account")!=null){
+                            		Account account=(Account)request.getSession().getAttribute("account");
+                            		Ruolo ruolo=account.getRuolo();
+                            		
+                            		if(ruolo==null){
+                            		%>
+                            		
+                           			   <li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Il mio profilo</a>
+									  <a href="#">Il mio carrello</a>
+									  </div>
+									</li>
+                       					
+                       					<% } else if(ruolo.equals(Ruolo.gestoreCompagnie)){ 
+                       					
+                       						if(mod==true){
+                       					%>	
+                           			   <li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Visualizza gli account</a>
+									  <a href="#">Aggiungi compagnia aerea</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  </div>
+									</li>
+									<% } else {%>
+									<li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Il mio profilo</a>
+									  <a href="#">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  </div>
+									</li>
+                           			
+									<% } %>
+                       				
+                       					
+               					<% } else if(ruolo.equals(Ruolo.gestoreVoli)) {
+               												
+                           			 					
+                       						if(mod==true){
+                       					%>	
+                           			   <li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Visualizza voli</a>
+									  <a href="#">Aggiungi volo</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  </div>
+									</li>
+									<% } else { %>
+									<li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Il mio profilo</a>
+									  <a href="#">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  </div>
+									</li>
+                           			
+									<% } %>
+               					
+               					<% } %>
+                       					
+									<li class="nav-item"><a class="nav-link" href="LogoutServlet">Logout</a></li>
+                       	
+								<% } %>
+                            
+                        	</ul> 
+                        	 
+                        	</div>                         
                         </nav>            
                     </div>
                 </div>
-
             </div>
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white w-50">
+                    <a href="registrazione.jsp"> Non hai un account? Registrati</a><br>
+                    <% if (message!=null){ %>
+                    
+                    	<p><%=message%></p>
+                    <% } %>
                     <div>
                         <div class="row">
                             <div class="d-flex align-items-center">
@@ -64,6 +155,7 @@
                                         </div>
                                     </div>
                                 </form>
+                            
                             </div>                        
                         </div>      
                     </div>

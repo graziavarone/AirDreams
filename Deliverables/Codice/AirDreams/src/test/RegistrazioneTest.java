@@ -46,7 +46,7 @@ public class RegistrazioneTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(request.getRequestDispatcher("registrazione.jsp")).thenReturn(dispatcher);
-		when(request.getRequestDispatcher("loginFauzzo.jsp")).thenReturn(dispatcherSuccess);
+		when(request.getRequestDispatcher("login.jsp")).thenReturn(dispatcherSuccess);
         servlet = new RegistrazioneServlet();
         DbPopulator.initializeDatabase();
 	}
