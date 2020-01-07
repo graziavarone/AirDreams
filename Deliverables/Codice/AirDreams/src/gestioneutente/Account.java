@@ -90,10 +90,13 @@ public class Account {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	@Override
 	public String toString() {
-		return "Account [nome=" + nome + ", cognome=" + cognome + ", password=" + password + ", email=" + email + "]";
+		return "Account [nome=" + nome + ", cognome=" + cognome + ", password=" + password + ", email=" + email
+				+ ", ruolo=" + ruolo + "]";
 	}
+
 	
 	
 	
