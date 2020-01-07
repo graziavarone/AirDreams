@@ -1,4 +1,4 @@
-package compagniaaerea;
+package gestionecompagniaaerea;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
