@@ -6,6 +6,18 @@ http://www.tooplate.com/view/2095-level
 
 */
 
+.error{
+	border-color: red;
+}
+
+.success{
+	border-color: green;
+}
+
+#messageError{
+	color: red;
+}
+
 body {
 	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-size: 13px;
@@ -169,8 +181,7 @@ p {
 }
 
 .form-control:focus {
-	border-color: #ee5057;
-	box-shadow: 0 0 0 0.2rem rgba(238,80,87,.25);
+	/*box-shadow: 0 0 0 0.2rem rgba(238,80,87,.25);*/
 }
 
 .btn-primary {
@@ -188,7 +199,6 @@ p {
 .btn-primary:focus,
 .btn-primary:active {
 	background-color: #2B60DE;
-	border-color: #d53239;
 }
 
 .tm-search-form .tm-form-element { padding: 0 5px; }
@@ -282,7 +292,6 @@ select.tm-select::-ms-expand { display: none; }
 
 .tm-btn-white-bordered:hover,
 .tm-btn-white-bordered:focus {
-	color: #ee5057;
 	background: white;	
 }
 
