@@ -98,4 +98,9 @@ public class LoginTest {
 		servlet.doPost(request, response);	
 		Mockito.verify(MyWriter).write("Success");
 	}
+	
+	@After
+	public void tearDown() throws Exception{
+		DriverManagerConnectionPool.setTest(false);
+	}
 }
