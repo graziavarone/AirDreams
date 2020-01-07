@@ -3,7 +3,7 @@ package gestioneutente;
 import gestionecompagniaaerea.CompagniaAerea;
 
 /**
- * Questa classe rappresenta l'entità Account.
+ * Questa classe rappresenta l'entita Account.
  */
 
 public class Account {
