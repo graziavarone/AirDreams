@@ -1,5 +1,7 @@
 package gestioneutente;
 
+import gestionecompagniaaerea.CompagniaAerea;
+
 /**
  * Questa classe rappresenta l'entità Account.
  */
@@ -60,7 +62,8 @@ public class Account {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	
+
+
 	/**
 	 * @return password password dell'utente
 	 */
@@ -90,6 +93,22 @@ public class Account {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public CompagniaAerea getCompagniaAerea() {
+		return compagniaAerea;
+	}
+
+	public void setCompagniaAerea(CompagniaAerea compagniaAerea) {
+		this.compagniaAerea = compagniaAerea;
+	}
+
+	public Ruolo getRuolo() {
+		return ruolo;
+	}
+
+	public void setRuolo(Ruolo ruolo) {
+		this.ruolo = ruolo;
+	}
 
 	@Override
 	public String toString() {
@@ -97,16 +116,5 @@ public class Account {
 				+ ", ruolo=" + ruolo + "]";
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
