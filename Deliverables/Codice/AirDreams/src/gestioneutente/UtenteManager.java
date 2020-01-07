@@ -36,10 +36,11 @@ public class UtenteManager {
 				acc.setEmail(rs.getString("email"));
 				acc.setPassword(rs.getString("passwordUtente"));
 				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
-				account.setCompagniaAerea(compagniaAerea);
-				//account.setRuolo(rs.getString("ruolo"));
+				acc.setCompagniaAerea(compagniaAerea);
+				Ruolo ruolo= Ruolo.valueOf(rs.getString("ruolo"));
+				acc.setRuolo(ruolo);
 				
-				
+				return acc;
 			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
