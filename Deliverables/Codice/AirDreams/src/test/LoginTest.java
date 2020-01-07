@@ -84,7 +84,7 @@ public class LoginTest {
 		Mockito.verify(MyWriter).write("Failed");
 	}
 	
-	//TC_7.1_3 password sbagliata
+	//TC_7.1_3 success
 	@Test
 	public void testCase_3() throws IOException, ServletException {		
 		when(request.getParameter("email")).thenReturn("rosaria@gmail.com");

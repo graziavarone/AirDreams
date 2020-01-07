@@ -17,6 +17,7 @@ public class UtenteManager {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
+		Ruolo ruolo=null;
 		
 		try {
 			con = DriverManagerConnectionPool.getConnection();
@@ -37,8 +38,11 @@ public class UtenteManager {
 				acc.setPassword(rs.getString("passwordUtente"));
 				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
 				acc.setCompagniaAerea(compagniaAerea);
-				Ruolo ruolo= Ruolo.valueOf(rs.getString("ruolo"));
+				if(rs.getString("ruolo")!=null) {
+				ruolo= Ruolo.valueOf(rs.getString("ruolo"));
+				System.out.println("Ho ricevuto "+ruolo);
 				acc.setRuolo(ruolo);
+				}
 				
 				return acc;
 			} 
