@@ -39,9 +39,9 @@ public class UtenteManager {
 				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
 				acc.setCompagniaAerea(compagniaAerea);
 				if(rs.getString("ruolo")!=null) {
-				ruolo= Ruolo.valueOf(rs.getString("ruolo"));
-				System.out.println("Ho ricevuto "+ruolo);
-				acc.setRuolo(ruolo);
+					ruolo= Ruolo.valueOf(rs.getString("ruolo"));
+					System.out.println("Ho ricevuto "+ruolo);
+					acc.setRuolo(ruolo);
 				}
 				
 				return acc;
@@ -132,5 +132,117 @@ public class UtenteManager {
 		return account;
 
 	}
+	
+	public boolean eliminaAccount(String email) {
+		Connection con = null;
+		Statement st = null;
+		
+		try {
+			con = DriverManagerConnectionPool.getConnection();
+			st = con.createStatement();
+		
+			String sql= "DELETE FROM utente WHERE email=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,email);
+			ps.executeUpdate();
+			
+			return true; //se la cancellazione è andata a buon fine
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				DriverManagerConnectionPool.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
 
+	public Account visualizzaInfoUtente(String email) {
+		Account account=null;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		Ruolo ruolo=null;
+		
+		try {
+			con = DriverManagerConnectionPool.getConnection();
+			st = con.createStatement();
+		
+			String sql= "SELECT * FROM utente WHERE email=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,email);
+			rs=ps.executeQuery();
+			
+			if (rs.next()) {
+				CompagniaAereaManager manager=new CompagniaAereaManager();
+				account=new Account();
+				account.setNome(rs.getString("nome"));
+				account.setCognome(rs.getString("cognome"));
+				account.setEmail(rs.getString("email"));
+				account.setPassword(rs.getString("passwordUtente"));
+				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
+				account.setCompagniaAerea(compagniaAerea);
+				if(rs.getString("ruolo")!=null) {
+					ruolo= Ruolo.valueOf(rs.getString("ruolo"));
+					System.out.println("Ho ricevuto "+ruolo);
+					account.setRuolo(ruolo);
+				}
+				
+				return account;
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				if (rs != null)
+					rs.close();
+				DriverManagerConnectionPool.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return account;	
+	}
+	
+	public boolean aggiornaProfilo(Account oldAccount, Account newAccount) {
+		Connection con = null;
+		Statement st = null;
+		
+		try {
+			con = DriverManagerConnectionPool.getConnection();
+			st = con.createStatement();
+		
+			String sql= "UPDATE utente SET nome=?, cognome=?, email=?, passwordUtente=?, ruolo=? WHERE email=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,newAccount.getNome());
+			ps.setString(2,newAccount.getCognome());
+			ps.setString(3,newAccount.getEmail());
+			ps.setString(4,newAccount.getPassword());
+			ps.setString(5,newAccount.getRuolo().toString()); //così il tipo enumerativo lo salvo come stringa
+			ps.setString(6,oldAccount.getEmail());
+			ps.executeUpdate();
+			
+			return true; //se l'update va a buon fine
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				DriverManagerConnectionPool.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;			
+	}
 }
