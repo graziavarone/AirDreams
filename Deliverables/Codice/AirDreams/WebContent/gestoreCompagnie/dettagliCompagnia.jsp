@@ -1,10 +1,27 @@
+<%@page import="gestionecompagniaaerea.PoliticaBagaglio"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.*, gestioneutente.*"%>
+    pageEncoding="ISO-8859-1" import="java.util.*, gestioneutente.*, gestionecompagniaaerea.*"%>
     
 <%
+PoliticaBagaglio mano=null;
+PoliticaBagaglio stiva=null;;
 	String message=(String)request.getAttribute("message");
 
  Boolean mod=(Boolean)request.getAttribute("mod");
+ 
+ PoliticaBagaglio[] politicaBagaglios=(PoliticaBagaglio[])request.getAttribute("politiche");
+ 
+ System.out.println(politicaBagaglios.toString());
+ 
+ if(politicaBagaglios[0].getPrezzo()==0.0){
+	  mano=politicaBagaglios[0];
+	  stiva=politicaBagaglios[1];
+ } else {
+	  mano=politicaBagaglios[1];
+	  stiva=politicaBagaglios[0];
+ }
+ System.out.println(mano);
+ System.out.println(stiva);
 
 if(mod==null)
 	mod=true;
@@ -26,11 +43,11 @@ http://www.tooplate.com/view/2095-level
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">                                      <!-- Bootstrap style -->
-    <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
-    <link rel="stylesheet" href="css/tooplate-style.css">                                   <!-- Templatemo style -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">                                      <!-- Bootstrap style -->
+    <link rel="stylesheet" type="text/css" href="../slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="../slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/datepicker.css"/>
+    <link rel="stylesheet" href="../css/tooplate-style.css">                                   <!-- Templatemo style -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,7 +66,7 @@ http://www.tooplate.com/view/2095-level
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
                             <a class="navbar-brand mr-auto" href="#">
-                                <img src="img/logo.png" alt="Site logo">
+                                <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -144,41 +161,72 @@ http://www.tooplate.com/view/2095-level
                   <% if(message!=null){ %>
 				                <p id="messageError"><%=message %></p>
 				                <% } %>
+				                                                
+                                          <a href="../index.jsp">Annulla</a>
                     <div class="container ie-h-align-center-fix">
+                    Modifica <%=politicaBagaglios[0].getCompagnia().getNome()%>
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                  				<form action="RegistrazioneServlet" method="post" class="tm-search-form tm-section-pad-2" id="form1">
+                  				<form action="AggiornaCompagniaAereaServlet" method="post" class="tm-search-form tm-section-pad-2" id="form1">
+                                  <input type="hidden" name="nome" value="<%=politicaBagaglios[0].getCompagnia().getNome()%>">
+                                      <input type="hidden" name="idMano" value="<%=mano.getCodice()%>">
+                                  		  <input type="hidden" name="idStiva" value="<%=stiva.getCodice()%>">
                                     <div class="form-row tm-search-form-row">
+                                      
+                                     
+                                        <div class="form-group tm-form-element tm-form-element-50">
+                                         <%=mano.getCodice()%>
+                                            <input name="sitoCompagnia" type="text" value="<%=politicaBagaglios[0].getCompagnia().getSito()%>"  class="form-control"placeholder="Type site.." required="required">
+                                        	<br>
+                                        </div>
+                                  
+                                   		</div>
+            							
+            							              <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="nome" type="text" class="form-control" id="inputName" placeholder="Type your name..." required="required">
+                                            <input name="pesoMano" type="number"  value="<%=mano.getPeso()%>" class="form-control"  placeholder="Peso bagaglio a mano" required="required">
                                    
                                         </div>
                                      
                                         <div class="form-group tm-form-element tm-form-element-50">
                                          
-                                            <input name="cognome" type="text"  class="form-control" id="inputCognome" placeholder="Type your surname..." required="required">
+                                            <input name="dimensioniMano" type="text"  value="<%=mano.getDimensioni()%>" class="form-control"placeholder="Dimensioni bagaglio a mano" required="required">
                                         	<br>
                                         </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="email" type="text" class="form-control" id="inputEmail" placeholder="Type your email" required="required">
+                                	
+            							</div>
+            							
+            							              <div class="form-row tm-search-form-row">
+                                        <div class="form-group tm-form-element tm-form-element-100">
+                                            <input name="pesoStiva" type="number" value="<%=stiva.getPeso()%>" class="form-control"  placeholder="Peso bagaglio stiva" required="required">
+                                   
+                                        </div>
+                                     
+                                        <div class="form-group tm-form-element tm-form-element-50">
+                                         
+                                            <input name="dimensioniStiva" type="text"  value="<%=stiva.getDimensioni()%>" class="form-control"placeholder="Dimensioni bagaglio stiva" required="required">
                                         	<br>
-                                        </div>                                      
-                                        <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="password" type="password"  class="form-control" id="inputPassword" placeholder="Type your password..." required="required">
-                                       		<br>
                                         </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="Cpassword" type="password" class="form-control" id="inputCPassword" placeholder="Confirm your password..." required="required">
-                                       	<br>
-                                        </div>
-                                    </div>
+                                        
+                                        <div class="form-group tm-form-element tm-form-element-100">                                      
+                                            	<input type="number" name="prezzoStiva"
+												placeholder="Prezzo bagaglio stiva" value="<%=stiva.getPrezzo()%>"style="height: 42px" step="0.01" required="required"> 
+                                        	<br>
+                                        </div>   
+                              			
+												
+												
+            							</div>
+            							
+            							
                                     <div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
-                                            <input type="submit" class="btn btn-primary tm-btn-search" value="SignUp">
+                                            <input type="submit" class="btn btn-primary tm-btn-search" value="Modifica">
                                         </div>
                                       </div>
                                     
                                 </form>
+
                             </div>                        
                         </div>      
                     </div>
@@ -198,13 +246,12 @@ http://www.tooplate.com/view/2095-level
         </div>
         
         <!-- load JS files -->
-        <script src="scripts/validaRegistrazione.js"></script>
-        <script src="js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
-        <script src="js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
-        <script src="js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
-        <script src="js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
-        <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
-        <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
+        <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
+        <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
+        <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
+        <script src="../js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
+        <script src="../js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
+        <script src="../slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 </body>
 </html>
