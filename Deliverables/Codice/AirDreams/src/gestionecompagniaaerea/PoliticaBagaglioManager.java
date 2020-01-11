@@ -6,16 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import db.DriverManagerConnectionPool;
-import gestioneutente.Account;
 
 public class PoliticaBagaglioManager {
 	
-	public boolean aggiungiPoliticaBagaglio(PoliticaBagaglio politicaBagaglio) throws SQLException {
+	public boolean aggiungiPoliticaBagaglioStiva(PoliticaBagaglioStiva politicaBagaglio) throws SQLException {
 		boolean b = false;
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 	
-		String updateSQL="INSERT into politicaBagaglio (peso,dimensioni,prezzo, compagniaAerea) values (?,?,?,?)";
+		String updateSQL="INSERT into politicaBagaglioStiva (peso,dimensioni,prezzo, compagniaAerea) values (?,?,?,?)";
         
         
             try {
@@ -28,7 +27,43 @@ public class PoliticaBagaglioManager {
                 preparedStatement.setFloat(3, politicaBagaglio.getPrezzo());
                 preparedStatement.setString(4, politicaBagaglio.getCompagnia().getNome());
                 
-            	System.out.println("aggiungiPoliticaBagaglio: "+ preparedStatement.toString());
+            	System.out.println("aggiungiPoliticaBagaglioStiva: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
+                b=true;
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return b;
+    }
+	
+	public boolean aggiungiPoliticaBagaglioMano(PoliticaBagaglioMano politicaBagaglio) throws SQLException {
+		boolean b = false;
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+	
+		String updateSQL="INSERT into politicaBagaglioMano (peso,dimensioni,compagniaAerea) values (?,?,?)";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+               
+
+                preparedStatement.setInt(1, politicaBagaglio.getPeso());
+                preparedStatement.setString(2, politicaBagaglio.getDimensioni());
+    
+                preparedStatement.setString(3, politicaBagaglio.getCompagnia().getNome());
+                
+            	System.out.println("aggiungiPoliticaBagaglioMano: "+ preparedStatement.toString());
                 preparedStatement.executeUpdate();
                 b=true;
                 
@@ -46,24 +81,25 @@ public class PoliticaBagaglioManager {
         return b;
     }
 
-	public PoliticaBagaglio[] trovaPoliticheCompagnia(String nome) throws SQLException {
+
+	public PoliticaBagaglioStiva trovaPoliticaCompagniaStiva(String nome) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		PoliticaBagaglio[] politicaBagagli=new PoliticaBagaglio[2];
-		int i=0;
+		PoliticaBagaglioStiva bagaglio=null;
 	
-		String selectSQL = "SELECT * FROM politicaBagaglio WHERE compagniaAerea = ?";
+	
+		String selectSQL = "SELECT * FROM politicaBagaglioStiva WHERE compagniaAerea = ?";
 		
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, nome);
 			
-			System.out.println("trovaPoliticheCompagnia: "+ preparedStatement.toString());
+			System.out.println("trovaPoliticaCompagniaStiva: "+ preparedStatement.toString());
 			ResultSet rs = preparedStatement.executeQuery();
 			
-			while(rs.next()) {
-				PoliticaBagaglio bagaglio = new PoliticaBagaglio();
+			if(rs.next()) {
+				bagaglio = new PoliticaBagaglioStiva();
 				
 				bagaglio.setPeso(rs.getInt("peso"));
 				bagaglio.setDimensioni(rs.getString("dimensioni"));
@@ -71,8 +107,6 @@ public class PoliticaBagaglioManager {
 				CompagniaAereaManager manager=new CompagniaAereaManager();
 				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
 				bagaglio.setCompagnia(compagniaAerea);	
-				
-				politicaBagagli[i++]=bagaglio;
 			}
 			
 		} finally {
@@ -83,15 +117,52 @@ public class PoliticaBagaglioManager {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}			
 		}
-		return politicaBagagli;
+		return bagaglio;
 	}
 
-	public boolean aggiornaPoliticaBagaglio(PoliticaBagaglio bagaglio) throws SQLException {
+	public PoliticaBagaglioMano trovaPoliticaCompagniaMano(String nome) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		PoliticaBagaglioMano bagaglio=null;
+	
+	
+		String selectSQL = "SELECT * FROM politicaBagaglioMano WHERE compagniaAerea = ?";
+		
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setString(1, nome);
+			
+			System.out.println("trovaPoliticaCompagniaMano: "+ preparedStatement.toString());
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			if(rs.next()) {
+				bagaglio = new PoliticaBagaglioMano();
+				
+				bagaglio.setPeso(rs.getInt("peso"));
+				bagaglio.setDimensioni(rs.getString("dimensioni"));
+				CompagniaAereaManager manager=new CompagniaAereaManager();
+				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
+				bagaglio.setCompagnia(compagniaAerea);	
+			}
+			
+		} finally {
+			try {
+				if(preparedStatement != null) 
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}			
+		}
+		return bagaglio;
+	}
+	
+	public boolean aggiornaPoliticaBagaglioStiva(PoliticaBagaglioStiva bagaglio) throws SQLException {
 		boolean b = false;
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 	
-		String updateSQL="UPDATE politicaBagaglio set peso=? dimensioni=? prezzo=? where codice=?";
+		String updateSQL="UPDATE politicaBagaglioStiva set peso=? ,dimensioni=?, prezzo=? where compagniaAerea=?";
         
         
             try {
@@ -102,9 +173,8 @@ public class PoliticaBagaglioManager {
                 preparedStatement.setInt(1, bagaglio.getPeso());
                 preparedStatement.setString(2, bagaglio.getDimensioni());
                 preparedStatement.setFloat(3,bagaglio.getPrezzo());
-                preparedStatement.setInt(4,bagaglio.getCodice());
-                
-            	System.out.println("AggiornaBagaglio: "+ preparedStatement.toString());
+                preparedStatement.setString(4,bagaglio.getCompagnia().getNome());
+            	System.out.println("AggiornaBagaglioStiva: "+ preparedStatement.toString());
                 preparedStatement.executeUpdate();
                 b=true;
                 
@@ -123,5 +193,41 @@ public class PoliticaBagaglioManager {
 		
 		
 	}
+	
+	
+	public boolean aggiornaPoliticaBagaglioMano(PoliticaBagaglioMano bagaglio) throws SQLException {
+		boolean b = false;
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+	
+		String updateSQL="UPDATE politicaBagaglioMano set peso=?,dimensioni=? where compagniaAerea=?";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+               
 
+                preparedStatement.setInt(1, bagaglio.getPeso());
+                preparedStatement.setString(2, bagaglio.getDimensioni());
+                preparedStatement.setString(3, bagaglio.getCompagnia().getNome());
+            	System.out.println("AggiornaBagaglioMano: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
+                b=true;
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return b;
+		
+		
+	}
 }
