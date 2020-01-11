@@ -1,31 +1,19 @@
-<%@page import="gestionecompagniaaerea.PoliticaBagaglio"%>
+<%@page import="gestionecompagniaaerea.PoliticaBagaglioStiva"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.*, gestioneutente.*, gestionecompagniaaerea.*"%>
+    pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*,gestionecompagniaaerea.*"%>
     
 <%
-PoliticaBagaglio mano=null;
-PoliticaBagaglio stiva=null;;
-	String message=(String)request.getAttribute("message");
+    String message=(String)request.getAttribute("message");
 
- Boolean mod=(Boolean)request.getAttribute("mod");
- 
- PoliticaBagaglio[] politicaBagaglios=(PoliticaBagaglio[])request.getAttribute("politiche");
- 
- System.out.println(politicaBagaglios.toString());
- 
- if(politicaBagaglios[0].getPrezzo()==0.0){
-	  mano=politicaBagaglios[0];
-	  stiva=politicaBagaglios[1];
- } else {
-	  mano=politicaBagaglios[1];
-	  stiva=politicaBagaglios[0];
- }
- System.out.println(mano);
- System.out.println(stiva);
+     Boolean mod=(Boolean)request.getAttribute("mod");
+     
+     PoliticaBagaglioMano politicaMano=(PoliticaBagaglioMano)request.getAttribute("politicaMano");
+     PoliticaBagaglioStiva politicaStiva=(PoliticaBagaglioStiva)request.getAttribute("politicaStiva");
+     
 
-if(mod==null)
-	mod=true;
-%>
+    if(mod==null)
+    	mod=true;
+    %>
 <!DOCTYPE html>
 <html>
 
@@ -164,19 +152,18 @@ http://www.tooplate.com/view/2095-level
 				                                                
                                           <a href="../index.jsp">Annulla</a>
                     <div class="container ie-h-align-center-fix">
-                    Modifica <%=politicaBagaglios[0].getCompagnia().getNome()%>
+                    Modifica <%=politicaMano.getCompagnia().getNome()%>
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                   				<form action="AggiornaCompagniaAereaServlet" method="post" class="tm-search-form tm-section-pad-2" id="form1">
-                                  <input type="hidden" name="nome" value="<%=politicaBagaglios[0].getCompagnia().getNome()%>">
-                                      <input type="hidden" name="idMano" value="<%=mano.getCodice()%>">
-                                  		  <input type="hidden" name="idStiva" value="<%=stiva.getCodice()%>">
+                                  <input type="hidden" name="nome" value="<%=politicaMano.getCompagnia().getNome()%>">
+                                 
                                     <div class="form-row tm-search-form-row">
                                       
                                      
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                         <%=mano.getCodice()%>
-                                            <input name="sitoCompagnia" type="text" value="<%=politicaBagaglios[0].getCompagnia().getSito()%>"  class="form-control"placeholder="Type site.." required="required">
+                                      
+                                            <input name="sitoCompagnia" type="text" value="<%=politicaMano.getCompagnia().getSito()%>"  class="form-control"placeholder="Type site.." required="required">
                                         	<br>
                                         </div>
                                   
@@ -184,13 +171,13 @@ http://www.tooplate.com/view/2095-level
             							
             							              <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="pesoMano" type="number"  value="<%=mano.getPeso()%>" class="form-control"  placeholder="Peso bagaglio a mano" required="required">
+                                            <input name="pesoMano" type="number"  value="<%=politicaMano.getPeso()%>" class="form-control"  placeholder="Peso bagaglio a mano" required="required">
                                    
                                         </div>
                                      
                                         <div class="form-group tm-form-element tm-form-element-50">
                                          
-                                            <input name="dimensioniMano" type="text"  value="<%=mano.getDimensioni()%>" class="form-control"placeholder="Dimensioni bagaglio a mano" required="required">
+                                            <input name="dimensioniMano" type="text"  value="<%=politicaMano.getDimensioni()%>" class="form-control"placeholder="Dimensioni bagaglio a mano" required="required">
                                         	<br>
                                         </div>
                                 	
@@ -198,19 +185,19 @@ http://www.tooplate.com/view/2095-level
             							
             							              <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="pesoStiva" type="number" value="<%=stiva.getPeso()%>" class="form-control"  placeholder="Peso bagaglio stiva" required="required">
+                                            <input name="pesoStiva" type="number" value="<%=politicaStiva.getPeso()%>" class="form-control"  placeholder="Peso bagaglio stiva" required="required">
                                    
                                         </div>
                                      
                                         <div class="form-group tm-form-element tm-form-element-50">
                                          
-                                            <input name="dimensioniStiva" type="text"  value="<%=stiva.getDimensioni()%>" class="form-control"placeholder="Dimensioni bagaglio stiva" required="required">
+                                            <input name="dimensioniStiva" type="text"  value="<%=politicaStiva.getDimensioni()%>" class="form-control"placeholder="Dimensioni bagaglio stiva" required="required">
                                         	<br>
                                         </div>
                                         
                                         <div class="form-group tm-form-element tm-form-element-100">                                      
                                             	<input type="number" name="prezzoStiva"
-												placeholder="Prezzo bagaglio stiva" value="<%=stiva.getPrezzo()%>"style="height: 42px" step="0.01" required="required"> 
+												placeholder="Prezzo bagaglio stiva" value="<%=politicaStiva.getPrezzo()%>"style="height: 42px" step="0.01" required="required"> 
                                         	<br>
                                         </div>   
                               			
