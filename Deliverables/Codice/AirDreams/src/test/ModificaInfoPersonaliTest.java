@@ -19,6 +19,7 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockRequestDispatcher;
 
 import db.DriverManagerConnectionPool;
+import gestioneutente.Account;
 import gestioneutente.ModificaInfoPersonaliServlet;
 
 public class ModificaInfoPersonaliTest {
@@ -102,7 +103,7 @@ public class ModificaInfoPersonaliTest {
 		when(request.getParameter("password")).thenReturn("Grazia1998");
 		
 		when(request.getSession()).thenReturn(session);
-		
+		when(request.getSession().getAttribute("account")).thenReturn(new Account("Rosaria","Rossi","rosaria@gmail.com","Rosaria1998"));
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -114,11 +115,11 @@ public class ModificaInfoPersonaliTest {
 	public void testCase_5() throws IOException, ServletException {		
 		when(request.getParameter("nome")).thenReturn("Grazia");
 		when(request.getParameter("cognome")).thenReturn("Varone");
-		when(request.getParameter("email")).thenReturn("grazia@virgilio.it");
+		when(request.getParameter("email")).thenReturn("grazia@hotmail.it");
 		when(request.getParameter("password")).thenReturn("Grazia1998!");
 		
 		when(request.getSession()).thenReturn(session);
-		
+		when(request.getSession().getAttribute("account")).thenReturn(new Account("Rosaria","Rossi","rosaria@gmail.com","Rosaria1998"));
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
