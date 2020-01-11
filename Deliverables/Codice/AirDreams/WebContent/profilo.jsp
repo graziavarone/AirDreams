@@ -150,7 +150,19 @@
             				<a href=""><span class="fa fa-cube mr-3"></span>Ordini</a>
           				</li>
           			    <li>
-            				<a href="EliminaAccountServlet"><span class="fa fa-user-times mr-3"></span>Elimina account</a>
+            				<a href="EliminaAccountServlet" onclick="conferm()"><span class="fa fa-user-times mr-3"></span>Elimina account</a>
+          					<script type="text/javascript">
+          						function myFunction() {
+          					 		var txt;
+          					  		var r = confirm("Press a button!");
+          					  		if (r == true) {
+          					    		txt = "You pressed OK!";
+          					  		} else {
+          					    		txt = "You pressed Cancel!";
+          					  		}
+          					  		document.getElementById("demo").innerHTML = txt;
+          						}
+          					</script>
           				</li>
         			</ul>
 				</nav>
@@ -166,10 +178,10 @@
       					<%
       						if (request.getAttribute("message")!=null) {
       					%>
-      					<h6><%=request.getAttribute("message")%></h6>
-      					<%
-      						}
-      					%>
+      					<div class="alert alert-primary" role="alert">
+      						<h6><%=request.getAttribute("message")%></h6>
+      					</div>
+      					<% } %>
       					<form action="ModificaInfoPersonaliServlet" method="post" class="tm-search-form tm-section-pad-2">
                         	<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Nome</label>

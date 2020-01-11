@@ -220,20 +220,24 @@ public class UtenteManager {
 			con = DriverManagerConnectionPool.getConnection();
 			st = con.createStatement();
 		
-			String sql= "UPDATE utente SET nome=?, cognome=?, email=?, passwordUtente=?, ruolo=? WHERE email=?";
+			String sql= "UPDATE utente SET nome=?, cognome=?, email=?, passwordUtente=?, compagniaAerea=?, ruolo=? WHERE email=?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1,newAccount.getNome());
 			ps.setString(2,newAccount.getCognome());
 			ps.setString(3,newAccount.getEmail());
 			ps.setString(4,newAccount.getPassword());
-			if (newAccount.getRuolo()==null)
+			if (oldAccount.getCompagniaAerea()==null)
 				ps.setString(5,null);
-			else if (newAccount.getRuolo()==Ruolo.gestoreCompagnie){
-				ps.setString(5,"gestoreCompagnie");
+			else
+				ps.setString(5,oldAccount.getCompagniaAerea().getNome());
+			if (oldAccount.getRuolo()==null)
+				ps.setString(6,null);
+			else if (oldAccount.getRuolo()==Ruolo.gestoreCompagnie){
+				ps.setString(6,"gestoreCompagnie");
 			} else {
-				ps.setString(5,"gestoreVoli");
+				ps.setString(6,"gestoreVoli");
 			}
-			ps.setString(6,oldAccount.getEmail());
+			ps.setString(7,oldAccount.getEmail());
 			ps.executeUpdate();
 			
 			return true; //se l'update va a buon fine
