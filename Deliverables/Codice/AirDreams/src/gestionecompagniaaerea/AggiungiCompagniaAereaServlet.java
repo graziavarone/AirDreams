@@ -1,22 +1,19 @@
 package gestionecompagniaaerea;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Paths;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+
 
 
 
@@ -60,15 +57,15 @@ public class AggiungiCompagniaAereaServlet extends HttpServlet {
 						CompagniaAerea compagnia=new CompagniaAerea(nomeCompagnia, sitoCompagnia);
 						compagniaAereaManager.aggiungiCompagnia(compagnia);
 						
-						PoliticaBagaglio bagaglioAMano=new PoliticaBagaglio(Integer.parseInt(pesoBagaglioMano), dimensioniBagaglioMano, 0, compagnia);
-						politicaBagaglioManager.aggiungiPoliticaBagaglio(bagaglioAMano);
+						PoliticaBagaglioMano bagaglioAMano=new PoliticaBagaglioMano(Integer.parseInt(pesoBagaglioMano), dimensioniBagaglioMano, compagnia);
+						politicaBagaglioManager.aggiungiPoliticaBagaglioMano(bagaglioAMano);
 						
-						PoliticaBagaglio bagaglioAStiva=new PoliticaBagaglio(Integer.parseInt(pesoBagaglioStiva), dimensioniBagaglioStiva,Float.parseFloat(prezzoStiva), compagnia);
-						politicaBagaglioManager.aggiungiPoliticaBagaglio(bagaglioAStiva);
+						PoliticaBagaglioStiva bagaglioAStiva=new PoliticaBagaglioStiva(Integer.parseInt(pesoBagaglioStiva), dimensioniBagaglioStiva,Float.parseFloat(prezzoStiva), compagnia);
+						politicaBagaglioManager.aggiungiPoliticaBagaglioStiva(bagaglioAStiva);
 						System.out.println("Compagnia aggiunta");
 					
 							
-						  nextJSP = "gestoreCompagnie/listaCompagnie.jsp";
+						  nextJSP = "/gestoreCompagnie/listaCompagnie.jsp";
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -77,12 +74,12 @@ public class AggiungiCompagniaAereaServlet extends HttpServlet {
 				} else {
 					System.out.println("Non posso aggiungere compagnia");
 					request.setAttribute("message","La compagnia già esiste");
-					  nextJSP = "gestoreCompagnie/aggiungiCompagnia.jsp";
+					  nextJSP = "/gestoreCompagnie/aggiungiCompagnia.jsp";
 				}
 		
 	
        
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/"+nextJSP);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
         dispatcher.forward(request, response);
 
 
