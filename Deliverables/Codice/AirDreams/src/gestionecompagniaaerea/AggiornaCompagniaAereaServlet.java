@@ -1,22 +1,19 @@
 package gestionecompagniaaerea;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Paths;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebInitParam;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+
 
 
 
@@ -27,7 +24,6 @@ import javax.servlet.http.Part;
 
 public class AggiornaCompagniaAereaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CompagniaAerea compagniaExists;
 	
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,10 +32,6 @@ public class AggiornaCompagniaAereaServlet extends HttpServlet {
 
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int codMano=Integer.parseInt(request.getParameter("idMano"));
-		System.out.println("id mano "+codMano);
-		int codStiva=Integer.parseInt(request.getParameter("idStiva"));
-		System.out.println("id stiva "+codStiva);
 		String nomeCompagnia=request.getParameter("nome");
 		
 		String sitoCompagnia=request.getParameter("sitoCompagnia");
@@ -66,34 +58,28 @@ public class AggiornaCompagniaAereaServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 						
-		PoliticaBagaglio bagaglioAMano=new PoliticaBagaglio(Integer.parseInt(pesoBagaglioMano), dimensioniBagaglioMano, 0, compagnia);
-		bagaglioAMano.setCodice(codMano);
+		PoliticaBagaglioMano bagaglioAMano=new PoliticaBagaglioMano(Integer.parseInt(pesoBagaglioMano), dimensioniBagaglioMano, compagnia);
 		try {
-			politicaBagaglioManager.aggiornaPoliticaBagaglio(bagaglioAMano);
+			politicaBagaglioManager.aggiornaPoliticaBagaglioMano(bagaglioAMano);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 						
-		PoliticaBagaglio bagaglioAStiva=new PoliticaBagaglio(Integer.parseInt(pesoBagaglioStiva), dimensioniBagaglioStiva,Float.parseFloat(prezzoStiva), compagnia);
-		bagaglioAStiva.setCodice(codStiva);
+		PoliticaBagaglioStiva bagaglioAStiva =new PoliticaBagaglioStiva(Integer.parseInt(pesoBagaglioStiva), dimensioniBagaglioStiva,Float.parseFloat(prezzoStiva), compagnia);
 		try {
-			politicaBagaglioManager.aggiornaPoliticaBagaglio(bagaglioAStiva);
+			politicaBagaglioManager.aggiornaPoliticaBagaglioStiva(bagaglioAStiva);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		request.setAttribute("politicaMano", bagaglioAMano);
 	
-					
-		
-			
-		
-			 
-				
-		
-	
-		nextJSP = "gestoreCompagnie/listaCompagnie.jsp";
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/"+nextJSP);
+		request.setAttribute("politicaStiva", bagaglioAStiva);
+		request.setAttribute("message", "Informazioni aggiornate");
+		nextJSP = "/gestoreCompagnie/dettagliCompagnia.jsp";
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
         dispatcher.forward(request, response);
 
 
