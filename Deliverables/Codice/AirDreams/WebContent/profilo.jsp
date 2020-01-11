@@ -151,14 +151,6 @@
           				</li>
           			    <li>
             				<a id="elimina" onclick="conferma()"><span class="fa fa-user-times mr-3"></span>Elimina account</a>
-          					<script type="text/javascript">
-          						function conferma() {
-          					 		var txt;
-          					  		var r = confirm("Cofermi la tua richiesta:\nElimina account?");
-          					  		if (r == true) 
-          					  			location.href = 'EliminaAccountServlet';
-          						}
-          					</script>
           				</li>
         			</ul>
 				</nav>
@@ -170,7 +162,7 @@
            				<br><br>
            			</div>
                 	<div class="p-2" id="info">
-      					<h2>Informazioni personali</h2>
+      					<h2>Informazioni personali <a href='javascript:editabiliInfo()'><span class="fa fa-pencil-square-o"></span></a></h2>
       					<%
       						if (request.getAttribute("message")!=null) {
       					%>
@@ -182,32 +174,32 @@
                         	<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Nome</label>
    					 			<div class="col-sm-5">
-   					 				<input type="text" class="form-control" name="nome" value="<%=account.getNome()%>">
+   					 				<input id="nome" type="text" class="form-control" name="nome" value="<%=account.getNome()%>" readonly>
    					 			</div>
   							</div>
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Cognome</label>
    					 			<div class="col-sm-5">
-   					 				<input type="text" class="form-control form-control-sm" name="cognome" value="<%=account.getCognome()%>">
+   					 				<input id="cognome" type="text" class="form-control form-control-sm" name="cognome" value="<%=account.getCognome()%>" readonly>
    					 			</div>
   							</div>
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Email</label>
    					 			<div class="col-sm-5">
-   					 				<input type="text" class="form-control form-control-sm" name="email" value="<%=account.getEmail()%>">
+   					 				<input id="email" type="text" class="form-control form-control-sm" name="email" value="<%=account.getEmail()%>" readonly>
    					 			</div>
   							</div>
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Password</label>
    					 			<div class="col-sm-5">
-   					 				<input type="text" class="form-control form-control-sm" name="password" value="<%=account.getPassword()%>">
+   					 				<input id="password" type="text" class="form-control form-control-sm" name="password" value="<%=account.getPassword()%>" readonly>
    					 			</div>
   							</div>			
-  							<button type="submit" class="btn btn-primary">Modifica </button>
+  							<button id="modifica" type="submit" class="btn btn-primary" hidden="true">Modifica </button>
                          </form>	
       				</div>
       				<div class="p-2" id="pagamenti">
-      					<h2>Metodi di pagamento</h2>
+      					<h2>Metodi di pagamento <i class="fa fa-pencil-square-o"></i></h2>
       					<form action="" method="post" class="tm-search-form tm-section-pad-2">
   							<div class="form-row">
   								<label class="col-sm-1.5 col-form-label">Numero carta</label>
@@ -226,7 +218,7 @@
 						</form>
       				</div>
       				<div class="p-2" id="ordini">
-      					<h2>Ordini</h2>
+      					<h2>Ordini <i class="fa fa-pencil-square-o"></i></h2>
       					<form action="" method="post" class="tm-search-form tm-section-pad-2">
   							<div class="form-row">
   								<label class="col-sm-2 col-form-label">Codice ordine</label>
@@ -275,5 +267,20 @@
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
+		<script type="text/javascript">
+        	function conferma() {
+          		var r = confirm("Cofermi di voler eliminare l'account?");
+          		if (r == true) 
+          			location.href = 'EliminaAccountServlet';
+          		}
+          						
+          	function editabiliInfo() {
+          		document.getElementById("nome").removeAttribute("readonly");
+          		document.getElementById("cognome").removeAttribute("readonly");
+          		document.getElementById("email").removeAttribute("readonly");
+          		document.getElementById("password").removeAttribute("readonly");
+          		document.getElementById("modifica").removeAttribute("hidden");
+          	}
+        </script>
 	</body>
 </html>

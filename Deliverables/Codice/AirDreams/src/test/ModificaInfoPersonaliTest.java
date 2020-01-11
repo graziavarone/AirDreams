@@ -103,7 +103,7 @@ public class ModificaInfoPersonaliTest {
 		when(request.getParameter("password")).thenReturn("Grazia1998");
 		
 		when(request.getSession()).thenReturn(session);
-		when(request.getSession().getAttribute("account")).thenReturn(new Account("Rosaria","Rossi","rosaria@gmail.com","Rosaria1998"));
+		when(request.getSession().getAttribute("account")).thenReturn(new Account("Grazia","Varone","grazia@virgilio.it","Grazia1998"));
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -119,7 +119,7 @@ public class ModificaInfoPersonaliTest {
 		when(request.getParameter("password")).thenReturn("Grazia1998!");
 		
 		when(request.getSession()).thenReturn(session);
-		when(request.getSession().getAttribute("account")).thenReturn(new Account("Rosaria","Rossi","rosaria@gmail.com","Rosaria1998"));
+		when(request.getSession().getAttribute("account")).thenReturn(new Account("Grazia","Varone","grazia@virgilio.it","Grazia1998"));
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
