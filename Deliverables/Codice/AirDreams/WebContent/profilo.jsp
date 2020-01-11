@@ -149,6 +149,9 @@
          			 	<li>
             				<a href=""><span class="fa fa-cube mr-3"></span>Ordini</a>
           				</li>
+          			    <li>
+            				<a href="EliminaAccountServlet"><span class="fa fa-user-times mr-3"></span>Elimina account</a>
+          				</li>
         			</ul>
 				</nav>
 				<!-- /Left Navbar -->

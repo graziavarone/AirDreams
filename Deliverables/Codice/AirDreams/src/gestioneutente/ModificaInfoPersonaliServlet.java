@@ -70,7 +70,6 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 		}
 		
 		request.getRequestDispatcher("profilo.jsp").forward(request, response);
-		//response.sendRedirect(request.getContextPath()+ "/profilo.jsp");
 	}
 
 	/**
