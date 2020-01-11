@@ -150,17 +150,13 @@
             				<a href=""><span class="fa fa-cube mr-3"></span>Ordini</a>
           				</li>
           			    <li>
-            				<a href="EliminaAccountServlet" onclick="conferm()"><span class="fa fa-user-times mr-3"></span>Elimina account</a>
+            				<a id="elimina" onclick="conferma()"><span class="fa fa-user-times mr-3"></span>Elimina account</a>
           					<script type="text/javascript">
-          						function myFunction() {
+          						function conferma() {
           					 		var txt;
-          					  		var r = confirm("Press a button!");
-          					  		if (r == true) {
-          					    		txt = "You pressed OK!";
-          					  		} else {
-          					    		txt = "You pressed Cancel!";
-          					  		}
-          					  		document.getElementById("demo").innerHTML = txt;
+          					  		var r = confirm("Cofermi la tua richiesta:\nElimina account?");
+          					  		if (r == true) 
+          					  			location.href = 'EliminaAccountServlet';
           						}
           					</script>
           				</li>
