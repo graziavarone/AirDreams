@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import db.DriverManagerConnectionPool;
 import gestionecompagniaaerea.CompagniaAerea;
@@ -130,7 +132,44 @@ public class UtenteManager {
 			}			
 		}
 		return account;
+	}
+	
+	public ArrayList<Account> getAllUsers() throws SQLException {
+		ArrayList<Account> allUtenti = new ArrayList<Account>();
+        Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String selectSQL="SELECT * from utente";
+		
+        try {
+        	connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()) {
+            	Account a = new Account();
+            	
+            	a.setNome(rs.getString("nome"));
+				a.setCognome(rs.getString("cognome"));
+				a.setEmail(rs.getString("email"));
+				a.setPassword(rs.getString("passwordUtente"));
+				
+				allUtenti.add(a);
+            }
+        } finally {
+        	try {
+        		if(preparedStatement!=null) preparedStatement.close();
+        		}
+        		finally {
+        			DriverManagerConnectionPool.releaseConnection(connection);
+        		}
+        	}
+        return allUtenti; 
+    }
 
+	public List<Account> findAccountByLetter(String query) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
