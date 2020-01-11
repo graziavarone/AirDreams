@@ -150,7 +150,7 @@
             				<a href=""><span class="fa fa-cube mr-3"></span>Ordini</a>
           				</li>
           			    <li>
-            				<a id="elimina" onclick="conferma()"><span class="fa fa-user-times mr-3"></span>Elimina account</a>
+            				<a id="elimina" onclick="confermaElimina()"><span class="fa fa-user-times mr-3"></span>Elimina account</a>
           				</li>
         			</ul>
 				</nav>
@@ -195,7 +195,7 @@
    					 				<input id="password" type="text" class="form-control form-control-sm" name="password" value="<%=account.getPassword()%>" readonly>
    					 			</div>
   							</div>			
-  							<button id="modifica" type="submit" class="btn btn-primary" hidden="true">Modifica </button>
+  							<button onclick="confermaModifica()" id="modifica" type="submit" class="btn btn-primary" hidden="true">Modifica </button>
                          </form>	
       				</div>
       				<div class="p-2" id="pagamenti">
@@ -268,11 +268,17 @@
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		<script type="text/javascript">
-        	function conferma() {
+        	function confermaElimina() {
           		var r = confirm("Cofermi di voler eliminare l'account?");
           		if (r == true) 
           			location.href = 'EliminaAccountServlet';
-          		}
+          	}
+
+        	function confermaModifica() {
+          		var r = confirm("Cofermi di voler modificare le tue informazioni?");
+          		if (r == true) 
+          			location.href = 'ModificaInfoPersonaliServlet';
+          	}
           						
           	function editabiliInfo() {
           		document.getElementById("nome").removeAttribute("readonly");
