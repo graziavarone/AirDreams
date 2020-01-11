@@ -35,11 +35,15 @@ public class DettagliCompagniaAereaServlet extends HttpServlet {
         CompagniaAerea compagniaAerea=compagniaAereaManager.visualizzaInfoCompagniaAerea(nome);
         
         PoliticaBagaglioManager politicaBagaglioManager=new PoliticaBagaglioManager();
-        PoliticaBagaglio[] politiche=new PoliticaBagaglio[2];
+      
         
         try {
-			politiche=politicaBagaglioManager.trovaPoliticheCompagnia(nome);
-			request.setAttribute("politiche", politiche);
+			PoliticaBagaglioMano politicaMano=politicaBagaglioManager.trovaPoliticaCompagniaMano(nome);
+			request.setAttribute("politicaMano", politicaMano);
+			
+			PoliticaBagaglioStiva politicaStiva=politicaBagaglioManager.trovaPoliticaCompagniaStiva(nome);
+			request.setAttribute("politicaStiva", politicaStiva);
+			
 			request.getRequestDispatcher("dettagliCompagnia.jsp").forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
