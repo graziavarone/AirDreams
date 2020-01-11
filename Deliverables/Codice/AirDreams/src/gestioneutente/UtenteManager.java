@@ -226,7 +226,13 @@ public class UtenteManager {
 			ps.setString(2,newAccount.getCognome());
 			ps.setString(3,newAccount.getEmail());
 			ps.setString(4,newAccount.getPassword());
-			ps.setString(5,newAccount.getRuolo().toString()); //così il tipo enumerativo lo salvo come stringa e SQL me lo riconosce
+			if (newAccount.getRuolo()==null)
+				ps.setString(5,null);
+			else if (newAccount.getRuolo()==Ruolo.gestoreCompagnie){
+				ps.setString(5,"gestoreCompagnie");
+			} else {
+				ps.setString(5,"gestoreVoli");
+			}
 			ps.setString(6,oldAccount.getEmail());
 			ps.executeUpdate();
 			

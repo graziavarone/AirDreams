@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*"%>
     
-<% Boolean mod=(Boolean)request.getAttribute("mod");
+<% 
+	Boolean mod=(Boolean)request.getAttribute("mod");
 
-if(mod==null)
-	mod=true;
+	if(mod==null)
+		mod=true;
 %>
     
 <!DOCTYPE html>
