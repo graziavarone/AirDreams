@@ -109,7 +109,7 @@ http://www.tooplate.com/view/2095-level
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
 									  <a href="#">Visualizza voli</a>
-									  <a href="#">Aggiungi volo</a>
+									  <a href="aggiungiVolo.jsp">Aggiungi volo</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
