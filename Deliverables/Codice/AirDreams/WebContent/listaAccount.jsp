@@ -4,7 +4,9 @@
 <%
 	String message=(String)request.getAttribute("message");
 	Boolean mod=(Boolean)request.getAttribute("mod");
-	List<Account> allUtenti = (List<Account>) request.getAttribute("allUtentiAdmin");
+	ArrayList<Account> allUtenti = (ArrayList<Account>)request.getAttribute("allUtentiAdmin");
+	System.out.println(allUtenti);
+	if(allUtenti==null) response.sendRedirect("./ListaAccountServlet");
 		if(mod==null)
 			mod=true;
 %>
@@ -144,38 +146,30 @@ http://www.tooplate.com/view/2095-level
 				                <% } %>
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
+                        <% for(int i=0; i<allUtenti.size(); i++) {
+                                    Account a = allUtenti.get(i);
+                             %>
+                             
                             <form action="ListaAccountServlet" method="get" class="tm-search-form tm-section-pad-2">
-                                    <div class="form-row tm-search-form-row">
-                                        <div class="form-group tm-form-element tm-form-element-100">
-                                        <% for( int i=0; i<allUtenti.size(); i++) {
-                                        	Account a = allUtenti.get(i);
-                                        %>
-                                        <h6>Nome</h6>
-                                            <p class="form-control" id="name"><%=a.getNome() %></p>
-                                        </div>
-                                     
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                        <h6>Cognome</h6>
-                                            <p class="form-control" id="cognome"><%=a.getCognome() %></p>
-                                        	<br>
-                                        </div>
-                                        
-                                        <div class="form-group tm-form-element tm-form-element-50">   
-                                        <h6>Email</h6>                                   
-                                            <p class="form-control" id="email"><%=a.getEmail() %></p>
-                                        	<br>
-                                        </div>  
-                                        <%} %>
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                            <button type="submit" class="btn btn-primary tm-btn-search">Modifica</button>
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="form-row tm-search-form-row">                                  
-                                        <div class="form-group tm-form-element tm-form-element-2">
-                                        </div>
-                                      </div>
-                                </form>                     
+                            <div class="form-row">
+  								<label class="col-sm-1.5 col-form-label">Nome</label>
+   	 							<div class="form-group col-md">
+      								<input type="text" value="<%=a.getNome() %>" class="form-control-plaintext form-control-sm">
+    							</div>
+    							<label class="col-sm-1.5 col-form-label">Cognome</label>
+    							<div class="form-group col-md">
+      								<input type="text" value="<%=a.getCognome() %>" class="form-control-plaintext form-control-sm">
+    							</div>
+    							<label class="col-sm-1.5 col-form-label">Email</label>
+    							<div class="form-group col-md">
+      								<input type="text" value="<%=a.getEmail() %>" class="form-control-plaintext form-control-sm">
+    							</div>
+    							<div class="form-group col-md">
+    							<i class="fa fa-pencil-square-o"></i> 
+    							</div>
+    						</div>
+                                </form>  
+                                <%} %>                   
                         </div>      
                     </div>
                 </div>                  
