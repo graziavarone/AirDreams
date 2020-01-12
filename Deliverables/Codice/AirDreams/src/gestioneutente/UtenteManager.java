@@ -139,7 +139,7 @@ public class UtenteManager {
         Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		
-		String selectSQL="SELECT * from utente";
+		String selectSQL="SELECT * FROM utente";
 		
         try {
         	connection = DriverManagerConnectionPool.getConnection();
@@ -167,9 +167,9 @@ public class UtenteManager {
         return allUtenti; 
     }
 
-	public List<Account> findAccountByLetter(String query) {
+	/*public List<Account> findAccountByLetter(String query) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 }
