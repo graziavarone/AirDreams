@@ -6,6 +6,8 @@
 if(mod==null)
 	mod=true;
 %>
+
+
     
 <!DOCTYPE html>
 <html>
@@ -159,208 +161,69 @@ http://www.tooplate.com/view/2095-level
                                             <input type="text" class="form-control" id="inputCheckOut" placeholder="Compagnia aerea">
                                         </div>
                                     </div>
+                                   
                                     <h6>Orario di partenza:</h6>
-                                    
                                     <div class="row">
                                         <div class="form-group">                                            
-                                            <select class="form-control">
-                                                <option>00</option>
-                                                <option>01</option>
-                                                <option>02</option>
-                                                <option>03</option>
-                                                <option>04</option>
-                                                <option>05</option>
-                                                <option>06</option>
-                                                <option>07</option>
-                                                <option>08</option>
-                                                <option>09</option>
-                                                <option>10</option>
-                                                <option>11</option>
-                                                <option>12</option>
-                                                <option>13</option>
-                                                <option>14</option>
-                                                <option>15</option>
-                                                <option>16</option>
-                                                <option>17</option>
-                                                <option>18</option>
-                                                <option>19</option>
-                                                <option>20</option>
-                                                <option>21</option>
-                                                <option>22</option>
-                                                <option>23</option>
-                                                <option>24</option>
-                                            </select>
+                                            <select name="ore">
+                                            	<option>Ore</option>
+                                               <% for(int i=0;i<=9;i++) { %>
+                                            	<option>0<%=i%></option>
+                                                <% } %> 
+                                                <% for(int i=10;i<=24;i++) { %>
+                                            	<option><%=i%></option>
+                                                <% } %> 
+                                             </select>
                                             </div>:        
                                              <div class="form-group">                                     
-                                       <select class="form-control"> 
-                                                <option value="">00</option>
-                                                <option value="1">01</option>
-                                                <option value="2">02</option>
-                                                <option value="3">03</option>
-                                                <option value="4">04</option>
-                                                <option value="5">05</option>
-                                                <option value="6">06</option>
-                                                <option value="7">07</option>
-                                                <option value="8">08</option>
-                                                <option value="9">09</option>
-                                                <option value="10">10</option>
-                                                <option value="10">11</option>
-                                                <option value="10">12</option>
-                                                <option value="10">13</option>
-                                                <option value="10">14</option>
-                                                <option value="10">15</option>
-                                                <option value="10">16</option>
-                                                <option value="10">17</option>
-                                                <option value="10">18</option>
-                                                <option value="10">19</option>
-                                                <option value="10">20</option>
-                                                <option value="10">21</option>
-                                                <option value="10">22</option>
-                                                <option value="10">23</option>
-                                                <option value="10">24</option>
-                                            	<option value="10">25</option>
-                                            	<option value="10">24</option>
-                                            	<option value="10">26</option>
-                                            	<option value="10">27</option>
-                                            	<option value="10">28</option>
-                                            	<option value="10">29</option>
-                                            	<option value="10">30</option>
-                                            	<option value="10">31</option>
-                                            	<option value="10">32</option>
-                                            	<option value="10">33</option>
-                                            	<option value="10">34</option>
-                                            	<option value="10">35</option>
-                                            	<option value="10">36</option>
-                                           		<option value="10">37</option>
-                                           	    <option value="10">38</option>
-                                            	<option value="10">39</option>
-                                           	 	<option value="10">40</option>
-                                            	<option value="10">41</option>
-                                           		<option value="10">42</option>
-                                            	<option value="10">43</option>
-                                            	<option value="10">44</option>
-                                                <option value="10">45</option>
-                                            	<option value="10">46</option>
-                                            	<option value="10">47</option>
-                                            	<option value="10">48</option>
-                                            	<option value="10">49</option>
-                                            	<option value="10">50</option>
-                                            	<option value="10">51</option>
-                                            	<option value="10">52</option>
-                                            	<option value="10">53</option>
-                                            	<option value="10">54</option>
-                                            	<option value="10">55</option>
-                                            	<option value="10">56</option>
-                                            	<option value="10">57</option>
-                                            	<option value="10">58</option>
-                                            	<option value="10">59</option>
-                                           </select>
-                                          
-                                         
+                                       <select name="minuti">
+                                            	<option>Minuti</option>
+                                                <% for(int i=0;i<=9;i++) { %>
+                                            	<option>0<%=i%></option>
+                                                <% } %> 
+                                                <% for(int i=10;i<=59;i++) { %>
+                                            	<option><%=i%></option>
+                                                <% } %> 
+                                            </select>
                                            </div>
                                        
-                                         <h6>Orario di arrivo:</h6>
+                                        <h6>Orario di arrivo:</h6>
+                                        <div class="form-group">                                          
+                                            <select name="ore">
+                                            	<option>Ore</option>
+                                                <% for(int i=0;i<=9;i++) { %>
+                                            	<option>0<%=i%></option>
+                                                <% } %> 
+                                                <% for(int i=10;i<=24;i++) { %>
+                                            	<option><%=i%></option>
+                                                <% } %> 
+                                            </select>
+                                        </div>:  
                                         <div class="form-group">                                            
-                                            <select class="form-control">
-                                                <option value="">00</option>
-                                                <option value="1">01</option>
-                                                <option value="2">02</option>
-                                                <option value="3">03</option>
-                                                <option value="4">04</option>
-                                                <option value="5">05</option>
-                                                <option value="6">06</option>
-                                                <option value="7">07</option>
-                                                <option value="8">08</option>
-                                                <option value="9">09</option>
-                                                <option value="10">10</option>
-                                                <option value="10">11</option>
-                                                <option value="10">12</option>
-                                                <option value="10">13</option>
-                                                <option value="10">14</option>
-                                                <option value="10">15</option>
-                                                <option value="10">16</option>
-                                                <option value="10">17</option>
-                                                <option value="10">18</option>
-                                                <option value="10">19</option>
-                                                <option value="10">20</option>
-                                                <option value="10">21</option>
-                                                <option value="10">22</option>
-                                                <option value="10">23</option>
-                                                <option value="10">24</option>
-                                            </select> 
-                                        </div>:
-                                        
-                                        <div class="form-group">                                            
-                                       <select class="form-control"> 
-                                                <option value="">00</option>
-                                                <option value="1">01</option>
-                                                <option value="2">02</option>
-                                                <option value="3">03</option>
-                                                <option value="4">04</option>
-                                                <option value="5">05</option>
-                                                <option value="6">06</option>
-                                                <option value="7">07</option>
-                                                <option value="8">08</option>
-                                                <option value="9">09</option>
-                                                <option value="10">10</option>
-                                                <option value="10">11</option>
-                                                <option value="10">12</option>
-                                                <option value="10">13</option>
-                                                <option value="10">14</option>
-                                                <option value="10">15</option>
-                                                <option value="10">16</option>
-                                                <option value="10">17</option>
-                                                <option value="10">18</option>
-                                                <option value="10">19</option>
-                                                <option value="10">20</option>
-                                                <option value="10">21</option>
-                                                <option value="10">22</option>
-                                                <option value="10">23</option>
-                                                <option value="10">24</option>
-                                            	<option value="10">25</option>
-                                            	<option value="10">24</option>
-                                            	<option value="10">26</option>
-                                            	<option value="10">27</option>
-                                            	<option value="10">28</option>
-                                            	<option value="10">29</option>
-                                            	<option value="10">30</option>
-                                            	<option value="10">31</option>
-                                            	<option value="10">32</option>
-                                            	<option value="10">33</option>
-                                            	<option value="10">34</option>
-                                            	<option value="10">35</option>
-                                            	<option value="10">36</option>
-                                           		<option value="10">37</option>
-                                           	    <option value="10">38</option>
-                                            	<option value="10">39</option>
-                                           	 	<option value="10">40</option>
-                                            	<option value="10">41</option>
-                                           		<option value="10">42</option>
-                                            	<option value="10">43</option>
-                                            	<option value="10">44</option>
-                                                <option value="10">45</option>
-                                            	<option value="10">46</option>
-                                            	<option value="10">47</option>
-                                            	<option value="10">48</option>
-                                            	<option value="10">49</option>
-                                            	<option value="10">50</option>
-                                            	<option value="10">51</option>
-                                            	<option value="10">52</option>
-                                            	<option value="10">53</option>
-                                            	<option value="10">54</option>
-                                            	<option value="10">55</option>
-                                            	<option value="10">56</option>
-                                            	<option value="10">57</option>
-                                            	<option value="10">58</option>
-                                            	<option value="10">59</option>
+                                       <select name="minuti"> 
+                                               <option>Minuti</option>
+                                                <% for(int i=0;i<=9;i++) { %>
+                                            	<option>0<%=i%></option>
+                                                <% } %> 
+                                                <% for(int i=10;i<=59;i++) { %>
+                                            	<option><%=i%></option>
+                                                <% } %> 
                                            </select>
                                            </div>
                                            <h6>Data del volo:</h6>
-                                           <div class="form-group tm-form-element tm-form-element-50">
-                                           		<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           		<input name="check-in" type="text" class="form-control" id="inputCheckIn" placeholder="Calendar">
-                                           </div>
-                                           <br>
+                                          <div class="form-row tm-search-form-row">
+                                        
+                                        <div class="form-group tm-form-element tm-form-element-50">
+                                            <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
+                                            <input name="check-in" type="text" class="form-control" id="inputCheckIn" placeholder="Check In">
+                                        </div>
+                                        <div class="form-group tm-form-element tm-form-element-50">
+                                            <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
+                                            <input name="check-out" type="text" class="form-control" id="inputCheckOut" placeholder="Check Out">
+                                        </div>
+                                    </div>
+                                        	</div>
+                                           	<br>
                                            
                                             <div class="form-row tm-search-form-row">
                                             <h6>Durata volo:</h6>
@@ -446,5 +309,21 @@ http://www.tooplate.com/view/2095-level
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
+		<script>
+		
+       
+            $(document).ready(function(){
+            	
+          
+
+
+                // Date Picker
+                const pickerCheckIn = datepicker('#inputCheckIn');
+                const pickerCheckOut = datepicker('#inputCheckOut');
+                
+                          
+            });
+
+        </script>   
 </body>
 </html>
