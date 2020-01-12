@@ -17,7 +17,7 @@ import db.DriverManagerConnectionPool;
 /**
  * Servlet implementation class listaAccountServlet
  */
-@WebServlet("/listaAccountServlet")
+@WebServlet("/ListaAccountServlet")
 public class ListaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	List<Account> allUtenti = new ArrayList<Account>();
@@ -41,7 +41,7 @@ public class ListaAccountServlet extends HttpServlet {
 		try {
 			allUtenti = model.getAllUsers();
 			request.setAttribute("allUtentiAdmin", allUtenti);
-			String nextJSP = "listaAccount.jsp";
+			String nextJSP = "/listaAccount.jsp";
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 			dispatcher.forward(request, response);
 		} catch (SQLException e) {
