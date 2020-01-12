@@ -20,7 +20,7 @@ import db.DriverManagerConnectionPool;
 @WebServlet("/ListaAccountServlet")
 public class ListaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	List<Account> allUtenti = new ArrayList<Account>();
+	ArrayList<Account> allUtenti = new ArrayList<Account>();
 	
 	/**
      * @see HttpServlet#HttpServlet()
@@ -40,6 +40,7 @@ public class ListaAccountServlet extends HttpServlet {
 	
 		try {
 			allUtenti = model.getAllUsers();
+			System.out.println(allUtenti);
 			request.setAttribute("allUtentiAdmin", allUtenti);
 			String nextJSP = "/listaAccount.jsp";
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
