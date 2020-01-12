@@ -158,15 +158,9 @@ http://www.tooplate.com/view/2095-level
                                         </div>
                                      <div class="w-50 mt-5">
 									<label for="inputNumber1" class="input-number-label">Posti disponibili:</label>
-									<span class="input-number">
+									
 										<input type="number" id="inputNumber2" name="inputNumber2" value="1" min="1" max="20">
-										<button class="input-number-add">
-											<span class="sr-only">Aumenta valore</span>
-										</button>
-										<button class="input-number-sub">
-											<span class="sr-only">Diminuisci valore</span>
-										</button>
-									</span>
+								
 								</div>
 									</div>
                                         
