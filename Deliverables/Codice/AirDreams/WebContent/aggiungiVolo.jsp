@@ -66,7 +66,7 @@ http://www.tooplate.com/view/2095-level
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                          			                           <form action="index.html" method="get" class="tm-search-form tm-section-pad-2">
+                                <form action="index.html" method="get" class="tm-search-form tm-section-pad-2">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
                                              <i class="sr-only"></i> 
@@ -159,7 +159,7 @@ http://www.tooplate.com/view/2095-level
                                      <div class="w-50 mt-5">
 									<label for="inputNumber1" class="input-number-label">Posti disponibili:</label>
 									<span class="input-number">
-										<input type="number" id="inputNumber2" name="inputNumber2" value=1" min="1" max="20">
+										<input type="number" id="inputNumber2" name="inputNumber2" value="1" min="1" max="20">
 										<button class="input-number-add">
 											<span class="sr-only">Aumenta valore</span>
 										</button>
@@ -185,18 +185,10 @@ http://www.tooplate.com/view/2095-level
                                         	<button type="submit" class="btn btn-primary tm-btn-search">Annulla inserimento</button>
                                        </div>
                                             </div>
-<<<<<<< HEAD
-  									 </form>
-                                        
-                                        
-                                    </div>
-                               
-=======
   									
                                     
                                 </form>
                                 </div>
->>>>>>> fd6dd2f351ebed2da6c04c58855b167165409b00
                             </div>                        
                         </div>      
                     </div>
@@ -237,7 +229,7 @@ http://www.tooplate.com/view/2095-level
                     </div>
                 </div>                
             </footer>
-        
+        </div>
         
         <!-- load JS files -->
         <script src="js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
