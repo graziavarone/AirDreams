@@ -55,87 +55,7 @@ http://www.tooplate.com/view/2095-level
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
-                            
-                            <ul class="navbar-nav ml-auto">
-                            	<% if (request.getSession().getAttribute("account")==null){ %>
-                            		<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
-                            	<% } %>
-                            	<%  if (request.getSession().getAttribute("account")!=null){
-                            		Account account=(Account)request.getSession().getAttribute("account");
-                            		Ruolo ruolo=account.getRuolo();
-                            		
-                            		if(ruolo==null){
-                            		%>
-                            		
-                           			   <li class="nav-item dropdown">
-									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
-									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  </div>
-									</li>
-                       					
-                       					<% } else if(ruolo.equals(Ruolo.gestoreCompagnie)){ 
-                       					
-                       						if(mod==true){
-                       					%>	
-                           			   <li class="nav-item dropdown">
-									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
-									  <div class="dropdown-content">
-									  <a href="#">Visualizza gli account</a>
-									  <a href="#">Aggiungi compagnia aerea</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
-									  </div>
-									</li>
-									<% } else {%>
-									<li class="nav-item dropdown">
-									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
-									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
-									  </div>
-									</li>
-                           			
-									<% } %>
-                       				
-                       					
-               					<% } else if(ruolo.equals(Ruolo.gestoreVoli)) {
-               												
-                           			 					
-                       						if(mod==true){
-                       					%>	
-                           			   <li class="nav-item dropdown">
-									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
-									  <div class="dropdown-content">
-									  <a href="#">Visualizza voli</a>
-									  <a href="aggiungiVolo.jsp">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
-									  </div>
-									</li>
-									<% } else { %>
-									<li class="nav-item dropdown">
-									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
-									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
-									  </div>
-									</li>
-                           			
-									<% } %>
-               					
-               					<% } %>
-                       					
-									<li class="nav-item"><a class="nav-link" href="LogoutServlet">Logout</a></li>
-                       	
-								<% } %>
-                            
-                        	</ul> 
-                        	 
-                        	</div>                         
+                            </button>                                                  
                         </nav>            
                     </div>
                 </div>
@@ -154,11 +74,11 @@ http://www.tooplate.com/view/2095-level
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="sr-only"></i>
-                                            <input  type="text" class="form-control" id="inputCheckIn" placeholder="Aeroporto di arrivo">
+                                            <input  type="text" class="form-control"  placeholder="Aeroporto di arrivo">
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="sr-only"></i>
-                                            <input type="text" class="form-control" id="inputCheckOut" placeholder="Compagnia aerea">
+                                            <input type="text" class="form-control"  placeholder="Compagnia aerea">
                                         </div>
                                     </div>
                                    
@@ -187,7 +107,7 @@ http://www.tooplate.com/view/2095-level
                                             </select>
                                            </div>
                                        
-                                        <h6>Orario di arrivo:</h6>
+                                        <h6>Durata volo:</h6>
                                         <div class="form-group">                                          
                                             <select name="ore">
                                             	<option>Ore</option>
@@ -210,9 +130,9 @@ http://www.tooplate.com/view/2095-level
                                                 <% } %> 
                                            </select>
                                            </div>
-                                           <h6>Data del volo:</h6>
+                                           </div>
                                           <div class="form-row tm-search-form-row">
-                                        
+                                        <h6>Data del volo:</h6>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
                                             <input name="check-in" type="text" class="form-control" id="inputCheckIn" placeholder="Check In">
@@ -222,34 +142,43 @@ http://www.tooplate.com/view/2095-level
                                             <input name="check-out" type="text" class="form-control" id="inputCheckOut" placeholder="Check Out">
                                         </div>
                                     </div>
-                                        	</div>
+                                        	
                                            	<br>
                                            
                                             <div class="form-row tm-search-form-row">
                                             <h6>Durata volo:</h6>
                                             <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="sr-only"></i>
-                                            <input  type="text" class="form-control" id="inputCheckIn" placeholder="">
+                                            <input  type="text" class="form-control" placeholder="">
                                         </div>
                                         <h6>Prezzo:</h6>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="sr-only"></i>
-                                            <input type="text" class="form-control" id="inputCheckOut" placeholder="">
+                                            <input type="text" class="form-control"  placeholder="">
                                         </div>
+                                     <div class="w-50 mt-5">
+									<label for="inputNumber1" class="input-number-label">Posti disponibili:</label>
+									<span class="input-number">
+										<input type="number" id="inputNumber2" name="inputNumber2" value=1" min="1" max="20">
+										<button class="input-number-add">
+											<span class="sr-only">Aumenta valore</span>
+										</button>
+										<button class="input-number-sub">
+											<span class="sr-only">Diminuisci valore</span>
+										</button>
+									</span>
+								</div>
+									</div>
+                                        
                                         </div>
                                         
                                         <div class="row">
                                         <h6>Bagaglio da stiva:</h6>
-										    <div class="form-check form-check-inline">
-										      <input id="checkbox2" type="checkbox">
-										      <label for="checkbox2">Bagaglio da stiva compreso</label>
-										    </div>
-										    <div class="form-check form-check-inline">
-										      <input id="checkbox3" type="checkbox" checked="checked">
-										      <label for="checkbox3">Bagaglio da stiva non compreso</label>
-										      <input type="text" class="form-control"  placeholder="prezzo">
-										    </div>
-										  
+										    <div class="form-group">                                            
+                                            <select name="ore">
+                                            	<option>non compreso</option>
+										        <option>compreso</option>
+										        </select>
                                         
                                         <div class="form-group tm-form-element tm-form-element-2">
                                             <button type="submit" class="btn btn-primary tm-btn-search">Aggiungi volo</button>
@@ -257,8 +186,9 @@ http://www.tooplate.com/view/2095-level
                                        </div>
                                             </div>
   									
-                                    </div>
+                                    
                                 </form>
+                                </div>
                             </div>                        
                         </div>      
                     </div>
