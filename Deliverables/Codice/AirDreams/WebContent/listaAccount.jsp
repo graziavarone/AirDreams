@@ -4,6 +4,7 @@
 <%
 	String message=(String)request.getAttribute("message");
 	Boolean mod=(Boolean)request.getAttribute("mod");
+	List<Account> allUtenti = (List<Account>) request.getAttribute("allUtentiAdmin");
 		if(mod==null)
 			mod=true;
 %>
@@ -79,7 +80,7 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza gli account</a>
+									  <a href="ListaAccountServlet">Visualizza gli account</a>
 									  <a href="#">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
@@ -143,23 +144,28 @@ http://www.tooplate.com/view/2095-level
 				                <% } %>
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
-                            <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                             <form action="ListaAccountServlet" method="get" class="tm-search-form tm-section-pad-2">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="nome" type="text" class="form-control" id="inputName" >
+                                        <% for( int i=0; i<allUtenti.size(); i++) {
+                                        	Account a = allUtenti.get(i);
+                                        %>
+                                        <h6>Nome</h6>
+                                            <p class="form-control" id="name"><%=a.getNome() %></p>
                                         </div>
                                      
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                            <input name="cognome" type="text"  class="form-control" id="inputCognome" >
+                                        <h6>Cognome</h6>
+                                            <p class="form-control" id="cognome"><%=a.getCognome() %></p>
                                         	<br>
                                         </div>
                                         
-                                        <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="email" type="text" class="form-control" id="inputEmail" >
+                                        <div class="form-group tm-form-element tm-form-element-50">   
+                                        <h6>Email</h6>                                   
+                                            <p class="form-control" id="email"><%=a.getEmail() %></p>
                                         	<br>
                                         </div>  
-                                        
+                                        <%} %>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <button type="submit" class="btn btn-primary tm-btn-search">Modifica</button>
                                         </div>
@@ -167,12 +173,9 @@ http://www.tooplate.com/view/2095-level
                                    
                                     <div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
-                                            <input type="submit" class="btn btn-primary tm-btn-search" value="">
                                         </div>
                                       </div>
-                                    
-                                </form>
-                            </div>                        
+                                </form>                     
                         </div>      
                     </div>
                 </div>                  
