@@ -6,8 +6,6 @@
 if(mod==null)
 	mod=true;
 %>
-
-
     
 <!DOCTYPE html>
 <html>
@@ -33,7 +31,7 @@ http://www.tooplate.com/view/2095-level
     <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
     <link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
     <link rel="stylesheet" href="css/tooplate-style.css">                                   <!-- Templatemo style -->
-
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" /> 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -55,7 +53,7 @@ http://www.tooplate.com/view/2095-level
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
-                            </button>                                                  
+                            </button>                     
                         </nav>            
                     </div>
                 </div>
@@ -69,22 +67,18 @@ http://www.tooplate.com/view/2095-level
                                 <form action="index.html" method="get" class="tm-search-form tm-section-pad-2">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                             <i class="sr-only"></i> 
-                                            <input type="text" class="form-control" id="inputCity" placeholder="Aeroporto di partenza">
+                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza">
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                            <i class="sr-only"></i>
-                                            <input  type="text" class="form-control"  placeholder="Aeroporto di arrivo">
+                                            <input  type="text" class="form-control" placeholder="Aeroporto di arrivo">
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                            <i class="sr-only"></i>
-                                            <input type="text" class="form-control"  placeholder="Compagnia aerea">
+                                            <input  type="text" class="form-control" placeholder="Compagnia aerea">
                                         </div>
                                     </div>
-                                   
-                                    <h6>Orario di partenza:</h6>
-                                    <div class="row">
-                                        <div class="form-group">                                            
+                                    <div class="form-row">
+                                    <div class="form-group">        
+                                        <h6>Orario di partenza: <span class="col-sm-2"></span></h6>  
                                             <select name="ore">
                                             	<option>Ore</option>
                                                <% for(int i=0;i<=9;i++) { %>
@@ -93,10 +87,8 @@ http://www.tooplate.com/view/2095-level
                                                 <% for(int i=10;i<=24;i++) { %>
                                             	<option><%=i%></option>
                                                 <% } %> 
-                                             </select>
-                                            </div>:        
-                                             <div class="form-group">                                     
-                                       <select name="minuti">
+                                             </select>:                             
+                                       			<select name="minuti">
                                             	<option>Minuti</option>
                                                 <% for(int i=0;i<=9;i++) { %>
                                             	<option>0<%=i%></option>
@@ -104,89 +96,82 @@ http://www.tooplate.com/view/2095-level
                                                 <% for(int i=10;i<=59;i++) { %>
                                             	<option><%=i%></option>
                                                 <% } %> 
-                                            </select>
-                                           </div>
-                                       
-                                        <h6>Durata volo:</h6>
-                                        <div class="form-group">                                          
+                                            	</select>
+                                       </div>    
+                                         <div class="form-group">
+                                         <h6>Durata volo:<span class="col-sm-2"></span></h6>                                   
                                             <select name="ore">
                                             	<option>Ore</option>
-                                                <% for(int i=0;i<=9;i++) { %>
+                                               <% for(int i=0;i<=9;i++) { %>
                                             	<option>0<%=i%></option>
                                                 <% } %> 
                                                 <% for(int i=10;i<=24;i++) { %>
                                             	<option><%=i%></option>
                                                 <% } %> 
-                                            </select>
-                                        </div>:  
-                                        <div class="form-group">                                            
-                                       <select name="minuti"> 
-                                               <option>Minuti</option>
+                                             </select>:                             
+                                       			<select name="minuti">
+                                            	<option>Minuti</option>
                                                 <% for(int i=0;i<=9;i++) { %>
                                             	<option>0<%=i%></option>
                                                 <% } %> 
                                                 <% for(int i=10;i<=59;i++) { %>
                                             	<option><%=i%></option>
                                                 <% } %> 
-                                           </select>
+                                            	</select>
                                            </div>
-                                           </div>
-                                          <div class="form-row tm-search-form-row">
-                                        <h6>Data del volo:</h6>
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                            <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                            <input name="check-in" type="text" class="form-control" id="inputCheckIn" placeholder="Check In">
-                                        </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                            <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                            <input name="check-out" type="text" class="form-control" id="inputCheckOut" placeholder="Check Out">
-                                        </div>
-                                    </div>
-                                        	
-                                           	<br>
+                                           <div class="form-group">
+                                            <h6>Data del volo:<span class="col-sm-2"></span></h6>
+                                            <div>
+                                       	     <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
+                                           	 <input name="check-in" type="text" class="form-control" id="inputCheckIn" placeholder="Check In">
+                                          	</div>
+                                          	</div>
+                                           	<div>
+                                             <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
+                                           	 <input name="check-out" type="text" class="form-control" id="inputCheckOut" placeholder="Check Out">
+                                           	</div>
+                                           	</div>
                                            
-                                            <div class="form-row tm-search-form-row">
-                                            <h6>Durata volo:</h6>
-                                            <div class="form-group tm-form-element tm-form-element-50">
-                                            <i class="sr-only"></i>
-                                            <input  type="text" class="form-control" placeholder="">
-                                        </div>
-                                        <h6>Prezzo:</h6>
-                                        <div class="form-group tm-form-element tm-form-element-50">
+                                           <div class="form-row">
+                                           <div class="form-group">
+                                           <h6>Prezzo:<span class="col-sm-2"></span></h6>
                                             <i class="sr-only"></i>
                                             <input type="text" class="form-control"  placeholder="">
                                         </div>
-                                     <div class="w-50 mt-5">
-									<label for="inputNumber1" class="input-number-label">Posti disponibili:</label>
-									
-										<input type="number" id="inputNumber2" name="inputNumber2" value="1" min="1" max="20">
-								
-								</div>
-									</div>
-                                        
-                                        
-                                        
-                                        <div class="row">
-                                        <h6>Bagaglio da stiva:</h6>
-										    <div class="form-group">                                            
-                                            <select name="ore">
+                                        <div class="form-group">
+										<label for="inputNumber1" class="input-number-label">Posti disponibili:</label>
+									   <input type="number" id="inputNumber2" name="inputNumber2" value="1" min="1" max="20">
+							        </div>
+							        </div>
+							        
+							        	 <div class="form-row">
+										    <div class="form-group"> 
+										    <h6>Bagaglio da stiva:<span class="col-sm-2"></span></h6>                                           
+                                            <select name="bagaglio">
                                             	<option>non compreso</option>
 										        <option>compreso</option>
 										        </select>
-                                        
-                                        <div class="form-group tm-form-element tm-form-element-2">
+										     </div>
+										     <div class="form-group">
+										      <h6>Prezzo:<span class="col-sm-2"></span></h6>
+                                            <input  type="text" class="form-control" placeholder="">
+                                             </div>
+										<div class="form-group ">
                                             <button type="submit" class="btn btn-primary tm-btn-search">Aggiungi volo</button>
+                                            </div>
+                                         <div class="form-group ">   
                                         	<button type="submit" class="btn btn-primary tm-btn-search">Annulla inserimento</button>
                                        </div>
-                                            </div>
-  						               </div>
+                                       </div>
+                                      
+                                    
                                 </form>
+                               </div>
                             </div>                        
                         </div>      
                     </div>
-                </div>
-                </div>
-                </div>
+                </div>                  
+            </div>
           
            	<div class="tm-section tm-position-relative">
              
@@ -222,8 +207,7 @@ http://www.tooplate.com/view/2095-level
                     </div>
                 </div>                
             </footer>
-        </div>
-        
+         
         <!-- load JS files -->
         <script src="js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
         <script src="js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
@@ -232,21 +216,27 @@ http://www.tooplate.com/view/2095-level
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
-		<script>
 		
+		<script>
+
        
             $(document).ready(function(){
-            	
-          
 
 
                 // Date Picker
                 const pickerCheckIn = datepicker('#inputCheckIn');
                 const pickerCheckOut = datepicker('#inputCheckOut');
                 
-                          
+                                         
             });
 
-        </script>   
+        </script>      
+        
+        <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
+        <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
+        
+               
+
+		
 </body>
 </html>
