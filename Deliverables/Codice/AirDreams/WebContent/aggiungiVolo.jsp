@@ -170,7 +170,7 @@ http://www.tooplate.com/view/2095-level
 								</div>
 									</div>
                                         
-                                        </div>
+                                        
                                         
                                         <div class="row">
                                         <h6>Bagaglio da stiva:</h6>
@@ -185,15 +185,14 @@ http://www.tooplate.com/view/2095-level
                                         	<button type="submit" class="btn btn-primary tm-btn-search">Annulla inserimento</button>
                                        </div>
                                             </div>
-  									
-                                    
+  						               </div>
                                 </form>
-                                </div>
                             </div>                        
                         </div>      
                     </div>
-                </div>                  
-            </div>
+                </div>
+                </div>
+                </div>
           
            	<div class="tm-section tm-position-relative">
              
