@@ -29,7 +29,7 @@ public class RicercaAccountServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		UtenteManager model = null;
+	/*	UtenteManager model = null;
 		model = new UtenteManager();
 		
 		String letNome = request.getParameter("search");
@@ -48,7 +48,7 @@ public class RicercaAccountServlet extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}	
-		}
+		}*/
 	}
 
 	/**
