@@ -68,11 +68,13 @@ http://www.tooplate.com/view/2095-level
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza">
+                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this, this.name)">
+                                            <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input type="text" class="form-control" placeholder="Aeroporto di arrivo">
+                                            <input name="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this, this.name)">
+                                            <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-flag-o fa-2x tm-form-element-icon"></i>
@@ -129,11 +131,11 @@ http://www.tooplate.com/view/2095-level
                                  		<h6>Data del volo:<span class="col-sm-2"></span></h6>
                                             <div class="form-group tm-form-element tm-form-element-50">
                                         		<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	 	<input name="check-in" type="text" class="form-control" id="inputCheckIn" placeholder="Data partenza">
+                                           	 	<input name="check-in" type="text" class="form-control" id="start" placeholder="Data partenza">
                                         	</div>
                                         	<div class="form-group tm-form-element tm-form-element-50">
                                         		<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	 	<input name="check-out" type="text" class="form-control" id="inputCheckOut" placeholder="Data arrivo">
+                                           	 	<input name="check-out" type="text" class="form-control" id="return" placeholder="Data arrivo">
                                         	</div>
                                      </div>
                                      <div class="form-row tm-search-form-row">
@@ -161,13 +163,15 @@ http://www.tooplate.com/view/2095-level
 											<h6>Prezzo:<span class="col-sm-2"></span></h6>
                                             <input  type="text" class="form-control" placeholder="">
                                         </div>
-										<div class="form-group ">
+                                       </div>
+                                       <div class="form-row">
+										<div class="form-group tm-form-element tm-form-element-2 ">
                                             <button type="submit" class="btn btn-primary tm-btn-search">Aggiungi volo</button>
                                         </div>
-                                         <div class="form-group ">   
+                                         <div class="form-group tm-form-element tm-form-element-2 ">   
                                         	<button type="submit" class="btn btn-primary tm-btn-search">Annulla inserimento</button>
                                          </div>
-                                    </div>
+                                   </div>
                                 </form>
                             </div>
                         </div>                        
@@ -220,26 +224,33 @@ http://www.tooplate.com/view/2095-level
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		
-		<script>
-
-       
-            $(document).ready(function(){
-
-
-                // Date Picker
-                const pickerCheckIn = datepicker('#inputCheckIn');
-                const pickerCheckOut = datepicker('#inputCheckOut');
-                
-                                         
-            });
-
-        </script>      
-        
         <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
+        <script src="scripts/ricercaAeroporti.js"> </script>
         
-               
-
-		
+        <script>
+      
+        $("#start").datepicker({
+            defaultDate:"+1w",
+            dateFormat:"dd/mm/yy",
+            minDate:0,
+            changeMonth:false,
+            numberOfMonth:1,
+            onClose: function(selectedDate){
+                $("#return").datepicker("option","minDate",selectedDate);
+            }
+         })
+         
+           $("#return").datepicker({
+            defaultDate:"+1w",
+            dateFormat:"dd/mm/yy",
+            changeMonth:false,
+            numberOfMonth:1,
+            onClose: function(selectedDate){
+                $("#start").datepicker("option","maxDate",selectedDate);
+            }
+         })
+         
+         </script>
 </body>
 </html>
