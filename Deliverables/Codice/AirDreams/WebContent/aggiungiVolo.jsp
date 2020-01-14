@@ -43,7 +43,7 @@ http://www.tooplate.com/view/2095-level
     <body>
         <div class="tm-main-content" id="top">
             <div class="tm-top-bar-bg"></div>
-            <div class="tm-top-bar" id="tm-top-bar">
+                        <div class="tm-top-bar" id="tm-top-bar">
                 <!-- Top Navbar -->
                 <div class="container">
                     <div class="row">
@@ -53,7 +53,87 @@ http://www.tooplate.com/view/2095-level
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
-                            </button>                     
+                            </button>
+                            <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
+                            
+                            <ul class="navbar-nav ml-auto">
+                            	<% if (request.getSession().getAttribute("account")==null){ %>
+                            		<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+                            	<% } %>
+                            	<%  if (request.getSession().getAttribute("account")!=null){
+                            		Account account=(Account)request.getSession().getAttribute("account");
+                            		Ruolo ruolo=account.getRuolo();
+                            		
+                            		if(ruolo==null){
+                            		%>
+                            		
+                           			   <li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Il mio profilo</a>
+									  <a href="#">Il mio carrello</a>
+									  </div>
+									</li>
+                       					
+                       					<% } else if(ruolo.equals(Ruolo.gestoreCompagnie)){ 
+                       					
+                       						if(mod==true){
+                       					%>	
+                           			   <li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Visualizza gli account</a>
+									  <a href="#">Aggiungi compagnia aerea</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  </div>
+									</li>
+									<% } else {%>
+									<li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Il mio profilo</a>
+									  <a href="#">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  </div>
+									</li>
+                           			
+									<% } %>
+                       				
+                       					
+               					<% } else if(ruolo.equals(Ruolo.gestoreVoli)) {
+               												
+                           			 					
+                       						if(mod==true){
+                       					%>	
+                           			   <li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Visualizza voli</a>
+									  <a href="aggiungiVolo.jsp">Aggiungi volo</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  </div>
+									</li>
+									<% } else { %>
+									<li class="nav-item dropdown">
+									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
+									  <div class="dropdown-content">
+									  <a href="#">Il mio profilo</a>
+									  <a href="#">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  </div>
+									</li>
+                           			
+									<% } %>
+               					
+               					<% } %>
+                       					
+									<li class="nav-item"><a class="nav-link" href="LogoutServlet">Logout</a></li>
+                       	
+								<% } %>
+                            
+                        	</ul> 
+                        	 
+                        	</div>                         
                         </nav>            
                     </div>
                 </div>
@@ -68,110 +148,97 @@ http://www.tooplate.com/view/2095-level
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this, this.name)">
+                                            <input name="departure" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this, this.name)">
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this, this.name)">
+                                            <input name="arrival" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this, this.name)">
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-flag-o fa-2x tm-form-element-icon"></i>
-                                            <input  type="text" class="form-control" placeholder="Compagnia aerea">
+                                            <input name="airline" type="text" class="form-control" placeholder="Compagnia aerea">
                                         </div>
                                     </div>
-                                    <div class="form-row tm-search-form-row">
-                                    	<div class="form-group">        
-                                        	<h6>Orario di partenza: <span class="col-sm-2"></span></h6>  
-                                        	<select name="ore">
-                                        		<option>Ore</option>
-                                            	<% for(int i=0;i<=9;i++) { %>
-                                           		<option><%=i%></option>
-                                            	<% } %> 
-                                            	<% for(int i=10;i<=24;i++) { %>
+                                 	<div class="form-row tm-search-form-row">
+                                    	<div class="form-group tm-form-element tm-form-element-50">
+                                        	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
+                                           	<input name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza">
+                                        </div>
+                                        <div class="form-group tm-form-element tm-form-element-50">
+                                        	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
+                                           	<input name="dateArrival" type="text" class="form-control" id="return" placeholder="Data arrivo">
+                                        </div>
+                                        <div class="form-group tm-form-element tm-form-element-50">
+                                            <i class="fa fa-euro fa-2x tm-form-element-icon"></i>
+                                            <input name="price" type="text" class="form-control" placeholder="prezzo base biglietto">
+                                        </div>
+                                     </div>
+                                     <div class="form-row tm-search-form-row d-flex justify-content-center">
+                                    	<label class="col-sm-1.5 col-form-label">Orario partenza</label>
+                                    	<div class="form-group col-auto">   
+                                    		<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>     
+                                        	<select name="hDeparture" class="form-control form-control-lg">
+                                        		<option>h</option>
+                                            	<% for(int i=0;i<24;i++) { %>
                                            		<option><%=i%></option>
                                             	<% } %> 
                                        		</select>
-                                            :                             
-                                        	<select name="minuti">
-                                        		<option>Minuti</option>
-                                            	<% for(int i=0;i<=9;i++) { %>
-                                           		<option>0<%=i%></option>
-                                            	<% } %> 
-                                            	<% for(int i=10;i<=59;i++) { %>
+                                       	</div>
+                                       	<label class="col-sm-1.5 col-form-label">:</label>
+                                       	<div class="form-group col-auto">
+                                       	    <i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>                    
+                                        	<select name="minDeparture" class="form-control form-control-lg">
+                                        		<option>min</option>
+                                            	<% for(int i=0;i<60;i++) { %>
                                            		<option><%=i%></option>
                                             	<% } %> 
                                         	</select>
-                                   		</div>    
-                                        <div class="form-group">
-                                        	<h6>Durata volo:<span class="col-sm-2"></span></h6>                                   
-                                        	<select name="ore">
-                                           		<option>Ore</option>
-                                                <% for(int i=0;i<=9;i++) { %>
-                                            	<option>0<%=i%></option>
-                                                <% } %> 
-                                                <% for(int i=10;i<=24;i++) { %>
+                                   		</div>
+                                   		<label class="col-sm-1.5 col-form-label">Durata volo</label>     
+                                        <div class="form-group col-auto">
+                                        	<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i> 
+                                        	<select name="hFly" class="form-control form-control-lg">
+                                           		<option>h</option>
+                                                <% for(int i=10;i<24;i++) { %>
                                             	<option><%=i%></option>
                                                 <% } %> 
                                             </select>
-                                            :                             
-                                       		<select name="minuti">
-                                            	<option>Minuti</option>
-                                                <% for(int i=0;i<=9;i++) { %>
-                                            	<option>0<%=i%></option>
-                                                <% } %> 
-                                                <% for(int i=10;i<=59;i++) { %>
+                                        </div>
+                                        <label class="col-sm-1.5 col-form-label">:</label>
+                                        <div class="form-group col-auto">  
+                                        	<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>                          
+                                       		<select name="minFly" class="form-control form-control-lg">
+                                            	<option>min</option>
+                                                 <% for(int i=0;i<60;i++) { %>
                                             	<option><%=i%></option>
                                                 <% } %> 
                                             </select>
                                         </div>
                                  	</div>
-                                 	<div class="form-row tm-search-form-row">
-                                 		<h6>Data del volo:<span class="col-sm-2"></span></h6>
-                                            <div class="form-group tm-form-element tm-form-element-50">
-                                        		<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	 	<input name="check-in" type="text" class="form-control" id="start" placeholder="Data partenza">
-                                        	</div>
-                                        	<div class="form-group tm-form-element tm-form-element-50">
-                                        		<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	 	<input name="check-out" type="text" class="form-control" id="return" placeholder="Data arrivo">
-                                        	</div>
-                                     </div>
-                                     <div class="form-row tm-search-form-row">
-                                     	<div class="form-group tm-form-element tm-form-element-50">
-                                        	<h6>Prezzo:<span class="col-sm-2"></span></h6>
-                                            <div>
-                                            	<i class="sr-only"></i>
-                                            	<input type="text" class="form-control"  placeholder="">
-                                        	</div>
-                                        </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                        	<h6>Posti disponibili:<span class="col-sm-2"></span></h6>
-									   		<input class="form-control input-group-lg" type="number" id="inputNumber2" name="inputNumber2" value="1" min="1" max="100">
-							        	</div>
-							        </div>
-							        <div class="form-row tm-search-form-row">
-										<div class="form-group"> 
-										    <h6>Bagaglio da stiva:<span class="col-sm-2"></span></h6>                                           
-                                            <select name="bagaglio">
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">
+                                        <label class="col-sm-1.5 col-form-label">Bagaglio da stiva</label> 
+                                        <div class="form-group tm-form-element tm-form-element-50"> 
+                                        	<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
+                                            <select name="baggage" class="form-control form-control-lg">
                                             	<option>non compreso</option>
 										        <option>compreso</option>
 										    </select>
 										</div>
-										<div class="form-group">
-											<h6>Prezzo:<span class="col-sm-2"></span></h6>
-                                            <input  type="text" class="form-control" placeholder="">
-                                        </div>
-                                       </div>
-                                       <div class="form-row">
-										<div class="form-group tm-form-element tm-form-element-2 ">
-                                            <button type="submit" class="btn btn-primary tm-btn-search">Aggiungi volo</button>
-                                        </div>
-                                         <div class="form-group tm-form-element tm-form-element-2 ">   
-                                        	<button type="submit" class="btn btn-primary tm-btn-search">Annulla inserimento</button>
-                                         </div>
-                                   </div>
+							        </div>
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">
+                                   		<label class="col-sm-1.5 col-form-label">Numero totale di posti disponibili per il volo</label>
+                                   		<div class="form-group col-auto">
+                                   			<i class="fa fa-group fa-2x tm-form-element-icon"></i>
+                                   			<input class="form-control input-group-lg" type="number" id="inputNumber2" name="seats" value="1" min="1" max="100">
+							        	</div>
+							        </div>
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">
+										<div class="form-group tm-form-element tm-form-element-50">
+                                        	<button onclick="confermaAggiungi()" type="submit" class="btn btn-primary tm-btn-search">Aggiungi volo</button>
+                                       	</div>
+                                   	</div>
                                 </form>
                             </div>
                         </div>                        
@@ -179,32 +246,6 @@ http://www.tooplate.com/view/2095-level
                 </div>
            	</div>                  
      	</div>
-          
-           	<div class="tm-section tm-position-relative">
-             
-                <div class="container tm-pt-5 tm-pb-4">
-                    <div class="row text-center">
-                        <article class="col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-article">                            
-                            <i class="fa tm-fa-6x fa-legal tm-color-primary tm-margin-b-20 "></i>
-                            <h3 class="tm-color-primary tm-article-title-1">Go everywhere</h3>
-                            <p>It is your world and we will help you explore it. Find the best prices from millions of flight deals to organize your perfect trip.</p>
-                          
-                        </article>
-                        <article class="col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-article">                            
-                            <i class="fa tm-fa-6x fa-plane tm-color-primary tm-margin-b-20"></i>
-                            <h3 class="tm-color-primary tm-article-title-1">Simple and safe</h3>
-                            <p>No extra charge. No nasty surprises. Easily manage your travel expenses, so you can relax even before departure.</p>
-                                                     
-                        </article>
-                        <article class="col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-article">                           
-                            <i class="fa tm-fa-6x fa-life-saver tm-color-primary tm-margin-b-20"></i>
-                            <h3 class="tm-color-primary tm-article-title-1">Travel your own way</h3>
-                            <p>Do you already know where to go? Find out the best time to book. Find offers for a relaxing short weekend or for an unforgettable adventure..</p>
-                                                    
-                        </article>
-                    </div>        
-                </div>
-            </div>
             
             <footer class="tm-bg-dark-blue">
                 <div class="container">
@@ -228,29 +269,12 @@ http://www.tooplate.com/view/2095-level
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
         <script src="scripts/ricercaAeroporti.js"> </script>
         
-        <script>
-      
-        $("#start").datepicker({
-            defaultDate:"+1w",
-            dateFormat:"dd/mm/yy",
-            minDate:0,
-            changeMonth:false,
-            numberOfMonth:1,
-            onClose: function(selectedDate){
-                $("#return").datepicker("option","minDate",selectedDate);
-            }
-         })
-         
-           $("#return").datepicker({
-            defaultDate:"+1w",
-            dateFormat:"dd/mm/yy",
-            changeMonth:false,
-            numberOfMonth:1,
-            onClose: function(selectedDate){
-                $("#start").datepicker("option","maxDate",selectedDate);
-            }
-         })
-         
+        <script type="text/javascript">
+        	function confermaAggiungi() {
+          		var r = confirm("Cofermi di voler aggiungere il volo?");
+          		if (r == true) 
+          			location.href = 'EliminaAccountServlet';
+          	}
          </script>
 </body>
 </html>
