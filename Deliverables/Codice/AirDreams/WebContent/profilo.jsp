@@ -108,7 +108,7 @@
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
+									  <a href="profilo.jsp">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
 									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
@@ -149,9 +149,18 @@
          			 	<li>
             				<a href=""><span class="fa fa-cube mr-3"></span>Ordini</a>
           				</li>
+          				<% 
+          					account=(Account)request.getSession().getAttribute("account");
+                			Ruolo ruolo=account.getRuolo();
+                			
+          					if(ruolo==null) {
+                       	%>	
           			    <li>
             				<a id="elimina" onclick="confermaElimina()"><span class="fa fa-user-times mr-3"></span>Elimina account</a>
           				</li>
+          				<% 		
+          					}
+          				%>
         			</ul>
 				</nav>
 				<!-- /Left Navbar -->
