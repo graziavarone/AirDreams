@@ -148,12 +148,12 @@ http://www.tooplate.com/view/2095-level
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="departure" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this, this.name)">
+                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)">
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="arrival" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this, this.name)">
+                                           <input name="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)">
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
@@ -269,12 +269,29 @@ http://www.tooplate.com/view/2095-level
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
         <script src="scripts/ricercaAeroporti.js"> </script>
         
-        <script type="text/javascript">
-        	function confermaAggiungi() {
-          		var r = confirm("Cofermi di voler aggiungere il volo?");
-          		if (r == true) 
-          			location.href = 'EliminaAccountServlet';
-          	}
+        <script>
+      
+        $("#start").datepicker({
+            defaultDate:"+1w",
+            dateFormat:"dd/mm/yy",
+            minDate:0,
+            changeMonth:false,
+            numberOfMonth:1,
+            onClose: function(selectedDate){
+                $("#return").datepicker("option","minDate",selectedDate);
+            }
+         })
+         
+           $("#return").datepicker({
+            defaultDate:"+1w",
+            dateFormat:"dd/mm/yy",
+            changeMonth:false,
+            numberOfMonth:1,
+            onClose: function(selectedDate){
+                $("#start").datepicker("option","maxDate",selectedDate);
+            }
+         })
+         
          </script>
 </body>
 </html>

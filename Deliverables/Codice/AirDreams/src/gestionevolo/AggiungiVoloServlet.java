@@ -1,20 +1,54 @@
 package gestionevolo;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
-public class AggiungiVoloServlet {
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+import gestioneutente.Account;
 
-		//prendi tutti valori inseriti nei form tramite request.getParameter("attributo name")
+@WebServlet("/AggiungiVoloServlet")
+public class AggiungiVoloServlet extends HttpServlet {
+	private static Logger logger= Logger.getLogger("global");
+	private String expAeroporto="^[A-Z]{3} - [A-Za-z  ]{1,}, [A-Za-z ]{1,}$";
+	
 		
-		//andare a vedere nel'ODD VoloManager o qualcosa del genere
-		//la ti implementi il metodo per aggiungere il volo
+		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			String city=request.getParameter("city");
+			
+			
+			if(valida(city)) {
+				System.out.println("Formato valido");
+			
+			}
+			
+			else{
+				System.out.println("Formato non valido");
+				
+			}
+		}
 		
-		//implementare il bean volo
-		//crei un oggetto volo qua e lo carichi con i valori presi dal form
-		//chiami il metodo implementato in VoloManager e ci passi l'oggetto che hai creato
+
+		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			doGet(request, response);
+		}
 		
-		//
+		private boolean valida(String aeroporto) {
+			boolean valido=true;
+			logger.info("Ho ricevuto "+aeroporto);
+			if (!Pattern.matches(expAeroporto, aeroporto)) {
+				logger.info("Aeroporto non corrisponde");
+				valido=false;
+				System.out.print(aeroporto);
+			}
+			return valido;
+			
+		}
+		
 	}
 
-}
