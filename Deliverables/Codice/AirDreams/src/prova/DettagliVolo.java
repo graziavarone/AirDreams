@@ -1,6 +1,7 @@
 package prova;
 
 public class DettagliVolo {
+	//sarebbe l'attuale oggetto VOLO del nostro class diagram
 	//volo che avevamo pensato all'inizio
 	//da un aeroporto si arriva ad un altro eeeeeeee STOP!
 	private int diVolo;
