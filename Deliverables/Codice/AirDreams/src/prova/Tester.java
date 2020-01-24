@@ -31,26 +31,26 @@ public class Tester {
 		listaVoli1.add(volo1);
 		listaVoli1.add(volo7);
 		Volo voloConScalo1=new Volo(listaVoli1.get(0).getAeroportoPartenza(),
-				listaVoli1.get(listaVoli1.size()-1).getAeroportoDestinazione(),listaVoli1);
+				listaVoli1.get(listaVoli1.size()-1).getAeroportoDestinazione(),listaVoli1,true);
 	
 		ArrayList<DettagliVolo> listaVoli2=new ArrayList<DettagliVolo>();
 		listaVoli2.add(volo3);
 		listaVoli2.add(volo9);
 		listaVoli2.add(volo6);
 		Volo voloConScalo2=new Volo(listaVoli2.get(0).getAeroportoPartenza(),
-				listaVoli2.get(listaVoli2.size()-1).getAeroportoDestinazione(),listaVoli2);
+				listaVoli2.get(listaVoli2.size()-1).getAeroportoDestinazione(),listaVoli2,false);
 	
 		ArrayList<DettagliVolo> listaVoli3=new ArrayList<DettagliVolo>();
 		listaVoli3.add(volo8);
 		Volo voloConScalo3=new Volo(listaVoli3.get(0).getAeroportoPartenza(),
-				listaVoli3.get(listaVoli3.size()-1).getAeroportoDestinazione(),listaVoli3);
+				listaVoli3.get(listaVoli3.size()-1).getAeroportoDestinazione(),listaVoli3,true);
 	
 		ArrayList<DettagliVolo> listaVoli4=new ArrayList<DettagliVolo>();
 		listaVoli4.add(volo5);
 		listaVoli4.add(volo1);
 		listaVoli4.add(volo2);
 		Volo voloConScalo4=new Volo(listaVoli4.get(0).getAeroportoPartenza(),
-				listaVoli4.get(listaVoli4.size()-1).getAeroportoDestinazione(),listaVoli4);
+				listaVoli4.get(listaVoli4.size()-1).getAeroportoDestinazione(),listaVoli4,false);
 	
 		System.out.println("QUESTA NON E' UNA PROVA");
 		System.out.println("RIPETO");
