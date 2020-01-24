@@ -139,8 +139,80 @@ http://www.tooplate.com/view/2095-level
                 </div>
             </div>
             
-            <div class="tm-section tm-bg-img" id="tm-section-1">
-                <div class="tm-bg-white ie-container-width-fix-2">
+		    <div class="tm-section tm-bg-img" id="tm-section-1">
+		        <div class="tm-bg-white ie-container-width-fix-2">
+		        <form action="RicercaAccountServlet" method="get" class="tm-search-form tm-section-pad-2">
+		             <span class="form-actions no-color">
+							<span class="search-items">Nome</span>
+									<span class="sigform_fld search-items">
+											 <select class="search nome" name="searchName">
+											 		<option value="-">-</option>
+													<option value="A">A</option>
+													<option value="B">B</option>
+													<option value="C">C</option>
+													<option value="D">D</option>
+													<option value="E">E</option>
+													<option value="F">F</option>
+													<option value="G">G</option>
+													<option value="H">H</option>
+													<option value="I">I</option>
+													<option value="J">J</option>
+													<option value="K">K</option>
+													<option value="L">L</option>
+													<option value="M">M</option>
+													<option value="N">N</option>
+													<option value="O">O</option>
+													<option value="P">P</option>
+													<option value="Q">Q</option>
+													<option value="R">R</option>
+													<option value="S">S</option>
+													<option value="T">T</option>
+													<option value="U">U</option>
+													<option value="V">V</option>
+													<option value="W">W</option>
+													<option value="X">X</option>
+													<option value="Y">Y</option>
+													<option value="Z">Z</option>
+											</select>
+									</span>
+							<span class="search-items">Cognome</span>
+									<span class="sigform_fld search-items">
+											<select class="search cognome" name="searchSurname">
+													<option value="-">-</option>
+													<option value="A">A</option>
+													<option value="B">B</option>
+													<option value="C">C</option>
+													<option value="D">D</option>
+													<option value="E">E</option>
+													<option value="F">F</option>
+													<option value="G">G</option>
+													<option value="H">H</option>
+													<option value="I">I</option>
+													<option value="J">J</option>
+													<option value="K">K</option>
+													<option value="L">L</option>
+													<option value="M">M</option>
+													<option value="N">N</option>
+													<option value="O">O</option>
+													<option value="P">P</option>
+													<option value="Q">Q</option>
+													<option value="R">R</option>
+													<option value="S">S</option>
+													<option value="T">T</option>
+													<option value="U">U</option>
+													<option value="V">V</option>
+													<option value="W">W</option>
+													<option value="X">X</option>
+													<option value="Y">Y</option>
+													<option value="Z">Z</option>
+     										</select>
+									</span>
+									<span>
+									<input type="submit" value="applica">
+									</span>
+						</span>
+						</form>
+                
                   <% if(message!=null){ %>
 				                <p id="messageError"><%=message %></p>
 				                <% } %>
@@ -151,6 +223,7 @@ http://www.tooplate.com/view/2095-level
                              %>
                              
                             <form action="ListaAccountServlet" method="get" class="tm-search-form tm-section-pad-2">
+                            		
                             <div class="form-row">
   								<label class="col-sm-1.5 col-form-label">Nome</label>
    	 							<div class="form-group col-md">

@@ -167,9 +167,43 @@ public class UtenteManager {
         return allUtenti; 
     }
 
-	/*public List<Account> findAccountByLetter(String query) {
+	public List<Account> findAccountByLetter(String nome, String cognome) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
-	}*/
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		List<Account> account=null;
+	
+		String selectSQL = "SELECT * FROM utente WHERE nome LIKE ? AND cognome LIKE ?";
+		
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setString(1, nome + "%");
+			preparedStatement.setString(2, cognome + "%");
+			
+			System.out.println("findAccountByLetter: "+ preparedStatement.toString());
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				Account account1 = new Account();
+				
+				account1.setNome(rs.getString("nome"));
+				account1.setCognome(rs.getString("cognome"));
+				account1.setEmail(rs.getString("email"));
+				account1.setPassword(rs.getString("passwordUtente"));			
+			}
+			
+		} finally {
+			try {
+				if(preparedStatement != null) 
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}			
+		}
+		return account;
+	}
+	
 
 }

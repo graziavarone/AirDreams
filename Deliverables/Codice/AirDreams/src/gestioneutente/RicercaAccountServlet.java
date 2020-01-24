@@ -1,8 +1,10 @@
 package gestioneutente;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,26 +31,28 @@ public class RicercaAccountServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	/*	UtenteManager model = null;
+		UtenteManager model = null;
 		model = new UtenteManager();
 		
-		String letNome = request.getParameter("search");
-		String letCognome = request.getParameter("search");
+		String nome = request.getParameter("searchName");
+		System.out.println("Stampa nomi:" +nome);
+		String cognome = request.getParameter("searchSurname");
+		System.out.println("Stampa cognomi:" +cognome);
 
-		if (letNome != null && letCognome != null) {
-			List<Account> lettera;
+		if (nome != null && cognome != null) {
+			List<Account> lettera = null;
 			try {
-				lettera = model.findAccountByLetter(letNome);
+				lettera = (List<Account>) model.findAccountByLetter(nome, cognome);
 				
-				for () {
-					a.getNome();
-					a.getCognome();
-					
-				}
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}	
-		}*/
+			}
+			request.setAttribute("allUtentiAdmin", lettera);
+			String prosJSP = "/listaAccount.jsp";
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(prosJSP);
+			dispatcher.forward(request, response);
+		}
 	}
 
 	/**
