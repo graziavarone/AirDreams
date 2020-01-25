@@ -35,7 +35,8 @@ http://www.tooplate.com/view/2095-level
     <link rel="stylesheet" type="text/css" href="../slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="../slick/slick-theme.css"/>
     <link rel="stylesheet" type="text/css" href="../css/datepicker.css"/>
-    <link rel="stylesheet" href="../css/tooplate-style.css">                                   <!-- Templatemo style -->
+    <link rel="stylesheet" href="../css/tooplate-style.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>                                   <!-- Templatemo style -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -146,13 +147,14 @@ http://www.tooplate.com/view/2095-level
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
+                
                   <% if(message!=null){ %>
 				                <p id="messageError"><%=message %></p>
 				                <% } %>
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                  				<form action="ModificaAccountServlet" method="post" class="tm-search-form tm-section-pad-2" id="form1">
+                  				<form action="ModificaAccountServlet" method="post"  class="tm-search-form tm-section-pad-2 confirm" id="form1">
                                          <input type="hidden" name="emailVecchia" value="<%=utente.getEmail()%>">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
@@ -195,6 +197,7 @@ http://www.tooplate.com/view/2095-level
                                     <div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
                                             <input type="submit" class="btn btn-primary tm-btn-search" value="Modifica">
+                                            
                                         </div>
                                       </div>
                                     
@@ -202,7 +205,7 @@ http://www.tooplate.com/view/2095-level
                             </div>                        
                         </div>      
                     </div>
-                </div>                  
+                </div>              
             </div>
           
 
@@ -226,7 +229,12 @@ http://www.tooplate.com/view/2095-level
         <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
         <script src="../js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
         <script src="../js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
-        <script src="../slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
+        <script src="../slick/slick.min.js"></script>    
+        <script src="../scripts/confirm.js"></script>
+                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
+	
+
+
 </body>
 </html>
