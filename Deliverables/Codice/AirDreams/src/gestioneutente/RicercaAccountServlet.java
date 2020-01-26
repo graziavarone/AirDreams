@@ -2,6 +2,7 @@ package gestioneutente;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -17,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/RicercaAccountServlet")
 public class RicercaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	ArrayList<Account> lettera = new ArrayList<Account>();
+	String message;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -40,18 +44,22 @@ public class RicercaAccountServlet extends HttpServlet {
 		System.out.println("Stampa cognomi:" +cognome);
 
 		if (nome != null && cognome != null) {
-			List<Account> lettera = null;
 			try {
-				lettera = (List<Account>) model.findAccountByLetter(nome, cognome);
+				lettera = model.findAccountByLetter(nome, cognome);
+				if(lettera.size() == 0)  {
+					message = "Non ci sono utenti che iniziano per questa lettera";	
+					request.setAttribute("message", message);		
+				}
+					
+				request.setAttribute("allUtentiAdmin", lettera);
+
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaAccount.jsp");
+				dispatcher.forward(request, response);
 				
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			request.setAttribute("allUtentiAdmin", lettera);
-			String prosJSP = "/listaAccount.jsp";
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(prosJSP);
-			dispatcher.forward(request, response);
 		}
 	}
 
