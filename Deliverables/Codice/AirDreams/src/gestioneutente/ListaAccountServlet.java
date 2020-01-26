@@ -36,12 +36,14 @@ public class ListaAccountServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		UtenteManager model = null;
-		model = new UtenteManager();			
+		model = new UtenteManager();	
+		String message = request.getParameter("message");
 	
 		try {
 			allUtenti = model.getAllUsers();
 			System.out.println(allUtenti);
 			request.setAttribute("allUtentiAdmin", allUtenti);
+			request.setAttribute("message", message);
 			String nextJSP = "/listaAccount.jsp";
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
 			dispatcher.forward(request, response);
