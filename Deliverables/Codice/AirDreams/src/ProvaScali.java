@@ -15,17 +15,31 @@ public class ProvaScali {
 	
 
 	public static void main(String[] args) throws SQLException {
-		ArrayList<Volo> voli=new ArrayList<Volo>();
+		VoloManager manager=new VoloManager();
 		
-		voli.add(new Volo("FRA", "AMS"));
-		voli.add(new Volo("FRA", "CPH"));
-		voli.add(new Volo("FRA", "MAD"));
-		voli.add(new Volo("CPH", "AMS"));
-		voli.add(new Volo("CPH", "MAD"));     
-		voli.add(new Volo("MAD","AMS"));
-
+		String aeroportoPartenza="NAP";
+		String aeroportoArrivo="NCE";
 		
-		//finire di vedere https://stackoverflow.com/questions/42806094/combine-flights-between-two-cities
+		//trovo voli diretti
+		ArrayList<Volo> voliDiretti=manager.cercaDiretti(aeroportoPartenza,aeroportoArrivo);
+		
+		for(Volo v: voliDiretti)
+			System.out.println("Volo "+v);
+		
+		System.out.println("###################");
+		
+		ArrayList<Volo[]> voliUnoScalo=manager.cercaUnoScalo(aeroportoPartenza,aeroportoArrivo);
+		
+		for(Volo[] v: voliUnoScalo)
+			System.out.println("Volo con uno scalo... primo volo "+v[0]+"..secondo volo "+v[1]);
+		
+		
+		System.out.println("###################");
+		
+		ArrayList<Volo[]> voliDueScali=manager.cercaDueScali(aeroportoPartenza,aeroportoArrivo);
+		
+		for(Volo[] v: voliDueScali)
+			System.out.println("Volo con due scali... primo volo "+v[0]+"..secondo volo "+v[1]+"..ultimo volo"+v[2]);
 
 	}
 
