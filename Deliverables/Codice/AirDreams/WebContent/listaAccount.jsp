@@ -6,9 +6,12 @@
 	Boolean mod=(Boolean)request.getAttribute("mod");
 	ArrayList<Account> allUtenti = (ArrayList<Account>)request.getAttribute("allUtentiAdmin");
 	System.out.println(allUtenti);
-	if(allUtenti==null) response.sendRedirect("./ListaAccountServlet");
+	
+	if((allUtenti==null)||(allUtenti.size() == 0))
+		response.sendRedirect("./ListaAccountServlet?message=" +message);
 		if(mod==null)
 			mod=true;
+
 %>
 <!DOCTYPE html>
 <html>
@@ -219,7 +222,8 @@ http://www.tooplate.com/view/2095-level
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
                         <% for(int i=0; i<allUtenti.size(); i++) {
-                                    Account a = allUtenti.get(i);
+                                    Account a = allUtenti.get(i);                                   
+                                    	
                              %>
                              
                             <form action="ListaAccountServlet" method="get" class="tm-search-form tm-section-pad-2">
