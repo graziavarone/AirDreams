@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*"%>
 
-<% Boolean mod=(Boolean)request.getAttribute("mod");
+
+
+<%
+String message=(String)request.getAttribute("message");
+Boolean mod=(Boolean)request.getAttribute("mod");
 
 if(mod==null)
 	mod=true;
@@ -142,37 +146,43 @@ http://www.tooplate.com/view/2095-level
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
                     <div class="container ie-h-align-center-fix">
+                     <% if (message!=null){ %>
+                    	<p><%=message%></p>
+                   	 <% } %>
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                                 <form action="AggiungiVoloServlet" method="post" class="tm-search-form tm-section-pad-2">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)">
+                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                           <input name="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)">
+                                           <input name="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-flag-o fa-2x tm-form-element-icon"></i>
-                                            <input name="airline" type="text" class="form-control" placeholder="Compagnia aerea">
+                                            <input name="airline" type="text" class="form-control" placeholder="Compagnia aerea" readonly="readonly"
+                                            <% if (request.getSession().getAttribute("account")!=null){
+                                            		Account account=(Account)request.getSession().getAttribute("account"); 
+                                            %>
+                                            value="<%=account.getCompagniaAerea().getNome() %>"
+                                            <% } %>	
+                                            >
+                                            
                                         </div>
                                     </div>
                                  	<div class="form-row tm-search-form-row">
                                     	<div class="form-group tm-form-element tm-form-element-50">
-                                        	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	<input name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza">
-                                        </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                        	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	<input name="dateArrival" type="text" class="form-control" id="return" placeholder="Data arrivo">
+                                    	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
+                                           	<input name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza" required>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="fa fa-euro fa-2x tm-form-element-icon"></i>
-                                            <input name="price" type="text" class="form-control" placeholder="prezzo base biglietto">
+                                            <input name="price" type="text" class="form-control" placeholder="prezzo base biglietto" required>
                                         </div>
                                      </div>
                                      <div class="form-row tm-search-form-row d-flex justify-content-center">
@@ -231,7 +241,7 @@ http://www.tooplate.com/view/2095-level
                                    		<label class="col-sm-1.5 col-form-label">Numero totale di posti disponibili per il volo</label>
                                    		<div class="form-group col-auto">
                                    			<i class="fa fa-group fa-2x tm-form-element-icon"></i>
-                                   			<input class="form-control input-group-lg" type="number" id="inputNumber2" name="seats" value="1" min="1" max="100">
+                                   			<input class="form-control input-group-lg" type="number" id="inputNumber2" name="seats" value="1" min="1" max="100" required>
 							        	</div>
 							        </div>
                                     <div class="form-row tm-search-form-row d-flex justify-content-center">

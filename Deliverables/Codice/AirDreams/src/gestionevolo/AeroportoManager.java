@@ -56,12 +56,12 @@ public class AeroportoManager {
 		        preparedStatement.setString(1, c);
 		        ResultSet rs = preparedStatement.executeQuery();
 		        if (rs.next()) {
-		        	Aeroporto bean= new Aeroporto();
+		        	aeroporto = new Aeroporto();
 		 			
-		 			bean.setCodice(rs.getString("codice"));
-		 			bean.setNome(rs.getString("nome"));
-		 			bean.setCity(rs.getString("city"));
-		 			bean.setStato(rs.getString("stato"));
+		 			aeroporto.setCodice(rs.getString("codice"));
+		 			aeroporto.setNome(rs.getString("nome"));
+		 			aeroporto.setCity(rs.getString("city"));
+		 			aeroporto.setStato(rs.getString("stato"));
 		 		
 
 		        }
