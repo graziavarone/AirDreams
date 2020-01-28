@@ -78,7 +78,7 @@ public class AggiungiVoloServlet extends HttpServlet {
 				
 				if(indTrattinoA != -1 && indVirgolaA != -1) {
 					cityA = cityArrivals.substring(indTrattinoA+2, indVirgolaA);
-					statoA = cityArrivals.substring(indVirgolaP+2, cityArrivals.length());
+					statoA = cityArrivals.substring(indVirgolaA+2, cityArrivals.length());
 				}
 
 			}
@@ -168,17 +168,16 @@ public class AggiungiVoloServlet extends HttpServlet {
 		}
 		
 		private String controlloAeroporti(Aeroporto aeroportoP, Aeroporto aeroportoA) {
-			System.out.println(aeroportoP.getCity());
-			if(aeroportoP.equals(aeroportoA)) {
-				return "Aeroporto partenza uguale a quello di arrivo";
-			} 
-			else if (aeroportoP==null || aeroportoA==null) {
+			if (aeroportoP==null || aeroportoA==null) 
 				return "Aeroporto di partenza e/o arrivo non esiste";
-			}
-			else if(aeroportoP.getCity().equalsIgnoreCase(cityP) && aeroportoP.getStato().equalsIgnoreCase(statoP) && 
-					  aeroportoA.getCity().equalsIgnoreCase(cityA) && aeroportoA.getStato().equalsIgnoreCase(statoA))
+			
+			if(aeroportoP.equals(aeroportoA)) 
+				return "Aeroporto partenza uguale a quello di arrivo";
+			
+			 if(!(aeroportoP.getCity().equalsIgnoreCase(cityP) && aeroportoP.getStato().equalsIgnoreCase(statoP) && 
+					  aeroportoA.getCity().equalsIgnoreCase(cityA) && aeroportoA.getStato().equalsIgnoreCase(statoA)))
 				return "Città e stato di aeroporto di partenza e/o arrivo non consistenti con il codice dell'aeroporto";
-			else 
+			 
 			return "Success";
 			
 		}
