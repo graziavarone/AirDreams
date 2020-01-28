@@ -191,9 +191,12 @@ http://www.tooplate.com/view/2095-level
                                     		<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>     
                                         	<select name="hDeparture" class="form-control form-control-lg">
                                         		<option>h</option>
-                                            	<% for(int i=0;i<24;i++) { %>
+                                            	<% for(int i=0;i<=9;i++) { %>
+                                           		<option>0<%=i%></option>
+                                            	<% } %>
+                                            	<% for(int i=10;i<=24;i++) { %>
                                            		<option><%=i%></option>
-                                            	<% } %> 
+                                            	<% } %>  
                                        		</select>
                                        	</div>
                                        	<label class="col-sm-1.5 col-form-label">:</label>
@@ -201,9 +204,12 @@ http://www.tooplate.com/view/2095-level
                                        	    <i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>                    
                                         	<select name="minDeparture" class="form-control form-control-lg">
                                         		<option>min</option>
-                                            	<% for(int i=0;i<60;i++) { %>
-                                           		<option><%=i%></option>
+                                            	<% for(int i=0;i<=9;i++) { %>
+                                           		<option>0<%=i%></option>
                                             	<% } %> 
+                                            	<% for(int i=10;i<=59;i++) { %>
+                                           		<option><%=i%></option>
+                                            	<% } %>
                                         	</select>
                                    		</div>
                                    		<label class="col-sm-1.5 col-form-label">Durata volo</label>     
