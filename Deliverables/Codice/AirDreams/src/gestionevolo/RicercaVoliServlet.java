@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
@@ -41,6 +42,7 @@ public class RicercaVoliServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AeroportoManager aeroportoManager=new AeroportoManager();
+		VoloManager voloManager=new VoloManager();
 		
 		String aeroportoPartenza=request.getParameter("city");
 		String aeroportoArrivo=request.getParameter("cityArrivals");
@@ -97,6 +99,55 @@ public class RicercaVoliServlet extends HttpServlet {
 				} 	else {
 					  LocalDate dataDepartureLd = LocalDate.parse(dateDeparture, FORMATO_DIA);
 					  LocalDate dataReturnLd = LocalDate.parse(dateReturn, FORMATO_DIA);
+					  
+					  //volo di andata e ritorno diretti
+					  ArrayList<Volo> voliAndataDiretti=voloManager.cercaDiretti(aeroportoP.getCodice(), aeroportoA.getCodice(),
+							  dataDepartureLd ,Integer.parseInt(numPasseggeri));
+					  
+					  int i=0;
+					  for(Volo volo: voliAndataDiretti) {
+						  System.out.println(++i+") Volo andata diretto "+volo.getId());
+					  }
+					  ArrayList<Volo> voliRitornoDiretti=voloManager.cercaDiretti(aeroportoA.getCodice(), aeroportoP.getCodice(),
+							  dataReturnLd,Integer.parseInt(numPasseggeri));
+					  
+				/*	  i=0;
+					  for(Volo volo: voliRitornoDiretti) {
+						  System.out.println(++i+") Volo ritorno diretto "+volo.getId());
+					  }
+					  
+					  ArrayList<Volo[]> voliAndataUnoScalo=voloManager.cercaUnoScalo(aeroportoP.getCodice(), aeroportoA.getCodice(),
+							  dataDepartureLd, Integer.parseInt(numPasseggeri));
+					  
+					   i=0;
+					  for(Volo[] volo: voliAndataUnoScalo) {
+						  System.out.println(++i+") Volo andata uno scalo "+volo[0].getId()+" "+volo[1].getId());
+					  }
+					  
+					  ArrayList<Volo[]> voliRitornoUnoScalo=voloManager.cercaUnoScalo(aeroportoA.getCodice(), aeroportoP.getCodice(),
+							  dataReturnLd, Integer.parseInt(numPasseggeri));
+					  
+					   i=0;
+					  for(Volo[] volo: voliRitornoUnoScalo) {
+						  System.out.println(++i+") Volo ritorno uno scalo "+volo[0].getId()+" "+volo[1].getId());
+					  }
+					  
+					  ArrayList<Volo[]> voliAndataDueScali=voloManager.cercaDueScali(aeroportoP.getCodice(), aeroportoA.getCodice(),
+							  dataDepartureLd, Integer.parseInt(numPasseggeri));
+					  
+					  i=0;
+					  for(Volo[] volo: voliAndataDueScali) {
+						  System.out.println(++i+") Volo andata due scalo "+volo[0].getId()+" "+volo[1].getId()+" "+volo[2].getId());
+					  }
+					  
+					  ArrayList<Volo[]> voliRitornoDueScali=voloManager.cercaDueScali(aeroportoA.getCodice(), aeroportoP.getCodice(),
+							  dataReturnLd, Integer.parseInt(numPasseggeri));
+					  
+					   i=0;
+					  for(Volo[] volo: voliRitornoDueScali) {
+						  System.out.println(++i+") Volo ritorno due scalo "+volo[0].getId()+" "+volo[1].getId()+" "+volo[2].getId());
+					  }
+					*/
 
 					  redirect = "/risultatiRicerca.jsp";
 				}
