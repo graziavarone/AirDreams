@@ -129,7 +129,9 @@ if(mod==null)
                 <div class="tm-bg-white w-10">
                     <div class="container">
                     	<div>
-                    		<a href="registrazione.jsp"> Non hai ancora un account? Registrati</a><br>
+                    		<div class="p-3 text-center">
+                    			<a href="registrazione.jsp" class="btn btn-outline-light text-primary"> Non hai ancora un account? Registrati</a><br>
+                    		</div>
                     		<% if (message!=null){ %>
                     			<h2 class="tm-color-primary tm-article-title-1"><%=message%></h2>
                     		<% } %>

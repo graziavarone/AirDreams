@@ -210,7 +210,7 @@
       				<div class="p-2" id="pagamenti">
       					<h2>Metodi di pagamento <i class="fa fa-pencil-square-o"></i></h2>
       					<form action="" method="post" class="tm-search-form tm-section-pad-2">
-  							<div class="form-row">
+  							<div class="form-row align-items-center">
   								<label class="col-sm-1.5 col-form-label">Numero carta</label>
    	 							<div class="col-sm-3">
       								<input type="text" value="3333 3333 3333 3333" class="form-control-plaintext form-control-sm">
@@ -229,7 +229,7 @@
       				<div class="p-2" id="ordini">
       					<h2>Ordini <i class="fa fa-pencil-square-o"></i></h2>
       					<form action="" method="post" class="tm-search-form tm-section-pad-2">
-  							<div class="form-row">
+  							<div class="form-row align-items-center">
   								<label class="col-sm-2 col-form-label">Codice ordine</label>
    	 							<div class="col-sm-2">
       								<input type="text" value="codice ordine" class="form-control-plaintext form-control-sm">
