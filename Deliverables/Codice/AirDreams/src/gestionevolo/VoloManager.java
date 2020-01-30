@@ -16,48 +16,6 @@ import gestionecompagniaaerea.CompagniaAereaManager;
 
 public class VoloManager {
 	private DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	
-	public ArrayList<Volo> findAll(){
-		Connection con = null;
-		Statement st = null;
-		ResultSet rs = null;
-		ArrayList<Volo> arrayList=new ArrayList<Volo>();
-		AeroportoManager aeroportoManager=new AeroportoManager();
-		
-		try {
-			con = DriverManagerConnectionPool.getConnection();
-			st = con.createStatement();
-		
-			String sql= "SELECT * FROM volo";
-			PreparedStatement ps = con.prepareStatement(sql);
-		
-			rs=ps.executeQuery();
-			
-			while (rs.next()) {
-				Volo volo=new Volo();
-				
-				Aeroporto aeroportoPartenza=aeroportoManager.findAeroportoById(rs.getString("aeroportoPart"));
-				Aeroporto aeroportoArrivo=aeroportoManager.findAeroportoById(rs.getString("aeroportoArr"));
-				
-				volo.setAeroportoP(aeroportoPartenza);
-				volo.setAeroportoA(aeroportoArrivo);
-
-				 arrayList.add(volo);
-			} 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (st != null)
-					st.close();
-				DriverManagerConnectionPool.releaseConnection(con);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return arrayList;
-	}
 
 	//si dovrebbe controllare posti disponibili e orario partenza tra un volo e un altro(?)
 	public ArrayList<Volo> cercaDiretti(String aeroportoPartenza, String aeroportoArrivo, LocalDate dataDepartureLd, int passeggeri) {
@@ -188,17 +146,9 @@ public class VoloManager {
 				LocalDateTime dataArrivoPrimoVolo=volo[0].getDataArrivo();
 				LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(volo[1].getDataPartenza(),volo[1].getOrarioPartenza());
 
-				System.out.println("Per il volo +"+volo.toString()+"il confronto tra date è ");
-				System.out.println("L'orario di partenza del secondo volo con id "+volo[1].getId()+"+è"+dataPartenzaSecondoVolo.toLocalDate()+" "
-						+ "alle ore "+volo[1].getOrarioPartenza());
-				System.out.println("L'orario di arrivo del primo volo è"+dataArrivoPrimoVolo.toLocalDate()+" "
-						+ "alle ore "+volo[0].getOrarioArrivo());
-				System.out.println("abc"+dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo));
-				int durataScalo=dataPartenzaSecondoVolo.getHour()-dataArrivoPrimoVolo.getHour();
-				System.out.println(dataPartenzaSecondoVolo.getHour()-dataArrivoPrimoVolo.getHour());
 				
 				if((postiPrimoVolo>=0 && postiSecondoVolo>=0) &&
-						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo) && (durataScalo<=24) ))
+						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo)))
 				arrayList.add(volo);
 				
 			} 
@@ -299,20 +249,16 @@ public class VoloManager {
 		
 				
 				LocalDateTime dataArrivoPrimoVolo=volo[0].getDataArrivo();
-				LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(volo[1].getDataPartenza(),volo[1].getDurataVolo());
-				LocalDateTime dataArrivoSecondoVolo=volo[1].getDataArrivo();
-				LocalDateTime dataPartenzaTerzoVolo=LocalDateTime.of(volo[2].getDataPartenza(),volo[2].getDurataVolo());
-				
-				System.out.println(postiPrimoVolo>=0);
-				System.out.println(postiSecondoVolo>=0);
-				System.out.println(postiTerzoVolo>=0);
+	
+				LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(volo[1].getDataPartenza(),volo[1].getOrarioPartenza());
 
-				
-				System.out.println(dataPartenzaSecondoVolo.compareTo(dataArrivoPrimoVolo)<2);
-				System.out.println(dataPartenzaTerzoVolo.compareTo(dataArrivoSecondoVolo)<2);
+				LocalDateTime dataArrivoSecondoVolo=volo[1].getDataArrivo();
+				LocalDateTime dataPartenzaTerzoVolo=LocalDateTime.of(volo[2].getDataPartenza(),volo[2].getOrarioPartenza());
+			
 				
 				if((postiPrimoVolo>=0 && postiSecondoVolo>=0 && postiTerzoVolo>=0) && 
-						(dataPartenzaSecondoVolo.compareTo(dataArrivoPrimoVolo)<2) && (dataPartenzaTerzoVolo.compareTo(dataArrivoSecondoVolo)<2) ) 
+						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo)) && 
+						(dataArrivoSecondoVolo.isBefore(dataPartenzaTerzoVolo))) 
 				arrayList.add(volo);
 
 				
@@ -328,7 +274,6 @@ public class VoloManager {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Voli "+arrayList);
 		return arrayList;
 	}
 

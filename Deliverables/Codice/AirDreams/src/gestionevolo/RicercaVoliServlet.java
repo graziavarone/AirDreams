@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RicercaVoliServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;	
 	private String expAeroporto="^[A-Z]{3} - [A-Za-z  ]{1,}, [A-Za-z ]{1,}$";
-	private String expData= "^\\s*(0?[1-9]|1[1-9]|2[2-9]|3[01])\\/\\s*(1[012]|0?[1-9])\\/\\d{4}\\s*$";
+	private String expData= "^\\s*(0?[1-9]|1[0-9]|2[2-9]|3[01])\\/\\s*(1[012]|0?[1-9])\\/\\d{4}\\s*$";
 	private DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private String cityP = null; //citta partenza
 	private String statoP = null; //stato partenza
@@ -80,8 +80,9 @@ public class RicercaVoliServlet extends HttpServlet {
 		
 		if (!valida(aeroportoPartenza,aeroportoArrivo,dateDeparture,dateReturn)) {
 			message="Formato campi non valido";
+			response.getWriter().write("Formato errato dati");
 			request.setAttribute("message", message);
-			redirect="/index.jsp";
+			redirect="index.jsp";
 		}
 		
 		else {
@@ -93,9 +94,9 @@ public class RicercaVoliServlet extends HttpServlet {
 				success=controlloAeroporti(aeroportoP, aeroportoA);
 			
 				if(!success.equals("Success")) {
-					
+					response.getWriter().write("Aeroporto non esistente");
 					request.setAttribute("message",success);
-					redirect = "/aggiungiVolo.jsp";
+					redirect = "index.jsp";
 				} 	else {
 					  LocalDate dataDepartureLd = LocalDate.parse(dateDeparture, FORMATO_DIA);
 					  LocalDate dataReturnLd = LocalDate.parse(dateReturn, FORMATO_DIA);
@@ -111,7 +112,7 @@ public class RicercaVoliServlet extends HttpServlet {
 					  ArrayList<Volo> voliRitornoDiretti=voloManager.cercaDiretti(aeroportoA.getCodice(), aeroportoP.getCodice(),
 							  dataReturnLd,Integer.parseInt(numPasseggeri));
 					  
-				/*	  i=0;
+					  i=0;
 					  for(Volo volo: voliRitornoDiretti) {
 						  System.out.println(++i+") Volo ritorno diretto "+volo.getId());
 					  }
@@ -138,18 +139,26 @@ public class RicercaVoliServlet extends HttpServlet {
 					  i=0;
 					  for(Volo[] volo: voliAndataDueScali) {
 						  System.out.println(++i+") Volo andata due scalo "+volo[0].getId()+" "+volo[1].getId()+" "+volo[2].getId());
-					  }
+					  } 
 					  
-					  ArrayList<Volo[]> voliRitornoDueScali=voloManager.cercaDueScali(aeroportoA.getCodice(), aeroportoP.getCodice(),
+					ArrayList<Volo[]> voliRitornoDueScali=voloManager.cercaDueScali(aeroportoA.getCodice(), aeroportoP.getCodice(),
 							  dataReturnLd, Integer.parseInt(numPasseggeri));
 					  
 					   i=0;
 					  for(Volo[] volo: voliRitornoDueScali) {
 						  System.out.println(++i+") Volo ritorno due scalo "+volo[0].getId()+" "+volo[1].getId()+" "+volo[2].getId());
 					  }
-					*/
-
-					  redirect = "/risultatiRicerca.jsp";
+					  
+					  response.getWriter().write("Success");
+					  request.setAttribute("voliAndataDiretti", voliAndataDiretti);
+					  request.setAttribute("voliRitornoDiretti", voliRitornoDiretti);
+					  
+					  request.setAttribute("voliAndataUno", voliAndataUnoScalo);
+					  request.setAttribute("voliRitornoUno", voliRitornoUnoScalo);
+					  
+					  request.setAttribute("voliAndataDue", voliAndataDueScali);
+					  request.setAttribute("voliRitornoDue", voliRitornoDueScali);
+					  redirect = "risultatiRicerca.jsp";
 				}
 				
 				
@@ -159,14 +168,15 @@ public class RicercaVoliServlet extends HttpServlet {
 			
 		}
 					
-		 RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(redirect);
+		 RequestDispatcher dispatcher = request.getRequestDispatcher(redirect);
 	     dispatcher.forward(request, response);
 		
 	}
 
 	private String controlloAeroporti(Aeroporto aeroportoP, Aeroporto aeroportoA) {
-		if (aeroportoP==null || aeroportoA==null) 
+		if (aeroportoP==null || aeroportoA==null) {
 			return "Aeroporto di partenza e/o arrivo non esiste";
+		}
 		
 		if(aeroportoP.equals(aeroportoA)) 
 			return "Aeroporto partenza uguale a quello di arrivo";
@@ -197,7 +207,7 @@ public class RicercaVoliServlet extends HttpServlet {
 		
 		if (!Pattern.matches(expData, dateReturn)) {
 			valido=false;
-			System.out.println("il prezzo non corrisponde");
+			System.out.println("data ritorno non corrisponde");
 		}
 		
 		return valido;
@@ -207,7 +217,7 @@ public class RicercaVoliServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

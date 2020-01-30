@@ -51,7 +51,7 @@ public class RegistrazioneTest {
         DbPopulator.initializeDatabase();
 	}
 	
-	//TC_7.2_1 nome sbagliato
+	//TC_7.2_1 nome non valido
 	@Test
 	public void testCase_1() throws IOException, ServletException {		
 		when(request.getParameter("nome")).thenReturn("123");
