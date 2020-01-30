@@ -103,7 +103,7 @@ public class AggiungiCartaTest {
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
-		Mockito.verify(MyWriter).write("Formato errato dati");
+		Mockito.verify(MyWriter).write("Carta scaduta");
 	}
 	
 	//TC_2.1_5 formato cvc errato
