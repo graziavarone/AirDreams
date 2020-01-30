@@ -49,7 +49,7 @@ public class AggiungiCartaTest {
 	//TC_2.1_1 formato numero carta errato
 	@Test
 	public void testCase_1() throws IOException, ServletException {		
-		when(request.getParameter("nCarta")).thenReturn("123R SS56");
+		when(request.getParameter("nCarta")).thenReturn("123R SS56 3456 0000");
 		when(request.getParameter("titolare")).thenReturn("Rosaria Rossi");
 		when(request.getParameter("dataScadenza")).thenReturn("02/22");
 		when(request.getParameter("cvc")).thenReturn("676");

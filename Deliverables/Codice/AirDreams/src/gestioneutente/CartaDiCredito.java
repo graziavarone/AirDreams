@@ -9,7 +9,7 @@ import java.sql.Date;
 public class CartaDiCredito {
 	private String nCarta;
 	private String titolare;
-	private Date dataScadenza;
+	private String dataScadenza;
 	private int cvc;
 	private Account account;
 	
@@ -24,7 +24,7 @@ public class CartaDiCredito {
 	 * @param cvc cvc della carta di credito
 	 * @return 
 	 */
-	public CartaDiCredito(String nCarta, String titolare, Date dataScadenza, int cvc) {
+	public CartaDiCredito(String nCarta, String titolare, String dataScadenza, int cvc) {
 		super();
 		this.nCarta = nCarta;
 		this.titolare = titolare;
@@ -48,11 +48,11 @@ public class CartaDiCredito {
 		this.titolare = titolare;
 	}
 
-	public Date getDataScadenza() {
+	public String getDataScadenza() {
 		return dataScadenza;
 	}
 
-	public void setDataScadenza(Date dataScadenza) {
+	public void setDataScadenza(String dataScadenza) {
 		this.dataScadenza = dataScadenza;
 	}
 
