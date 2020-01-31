@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class RicercaAccountServlet
  */
-@WebServlet("/RicercaAccountServlet")
+@WebServlet(name="/RicercaAccountServlet", urlPatterns= {"/gestoreCompagnie/RicercaAccountServlet"})
 public class RicercaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ArrayList<Account> lettera = new ArrayList<Account>();
@@ -53,7 +53,7 @@ public class RicercaAccountServlet extends HttpServlet {
 					
 				request.setAttribute("allUtentiAdmin", lettera);
 
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaAccount.jsp");
+				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/gestoreCompagnie/listaAccount.jsp");
 				dispatcher.forward(request, response);
 				
 				

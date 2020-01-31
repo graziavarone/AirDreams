@@ -1,9 +1,8 @@
-package gestioneutente;
+package gestionecompagniaaerea;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,44 +11,45 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import db.DriverManagerConnectionPool;
+import gestioneutente.UtenteManager;
 
 /**
- * Servlet implementation class listaAccountServlet
+ * Servlet implementation class ListaCompagnieServlet
  */
-@WebServlet(name="/ListaAccountServlet", urlPatterns= {"/gestoreCompagnie/ListaAccountServlet"})
-public class ListaAccountServlet extends HttpServlet {
+@WebServlet(name="/ListaCompagnieServlet", urlPatterns= {"/gestoreCompagnie/ListaCompagnieServlet"})
+public class ListaCompagnieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ArrayList<Account> allUtenti = new ArrayList<Account>();
-	
-	/**
+	ArrayList<CompagniaAerea> allComA = new ArrayList<CompagniaAerea>();
+       
+    /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListaAccountServlet() {
+    public ListaCompagnieServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
-    
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		UtenteManager model = null;
-		model = new UtenteManager();	
+		CompagniaAereaManager manager = null;
+		manager = new CompagniaAereaManager();	
 		String message = request.getParameter("message");
 	
 		try {
-			allUtenti = model.getAllUsers();
-			System.out.println(allUtenti);
-			request.setAttribute("allUtentiAdmin", allUtenti);
+			allComA = manager.getAllCompanies();
+			System.out.println(allComA);
+			request.setAttribute("allComA", allComA);
 			request.setAttribute("message", message);
-			String nextJSP = "/gestoreCompagnie/listaAccount.jsp";
+			String nextJSP = "/gestoreCompagnie/listaCompagnie.jsp";
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);
 			dispatcher.forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**
