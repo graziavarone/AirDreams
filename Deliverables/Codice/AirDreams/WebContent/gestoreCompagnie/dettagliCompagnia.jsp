@@ -88,8 +88,8 @@ http://www.tooplate.com/view/2095-level
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
 									  <a href="#">Visualizza gli account</a>
-									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
@@ -98,7 +98,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="#">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -115,7 +115,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="#">Visualizza voli</a>
 									  <a href="#">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -124,7 +124,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="#">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -132,7 +132,7 @@ http://www.tooplate.com/view/2095-level
                					
                					<% } %>
                        					
-									<li class="nav-item"><a class="nav-link" href="LogoutServlet">Logout</a></li>
+									<li class="nav-item"><a class="nav-link" href="../LogoutServlet">Logout</a></li>
                        	
 								<% } %>
                             

@@ -127,7 +127,7 @@ http://www.tooplate.com/view/2095-level
                					
                					<% } %>
                        					
-									<li class="nav-item"><a class="nav-link" href="LogoutServlet">Logout</a></li>
+									<li class="nav-item"><a class="nav-link" href="../LogoutServlet">Logout</a></li>
                        	
 								<% } %>
                             

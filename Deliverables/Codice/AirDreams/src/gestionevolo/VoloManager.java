@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import db.DriverManagerConnectionPool;
@@ -48,7 +49,7 @@ public class VoloManager {
 				Aeroporto aeroportoA=aeroportoManager.findAeroportoById(rs.getString("aeroportoArr"));
 				
 				volo.setId(rs.getInt("idVolo"));
-				volo.setOtherDayDate(dataDepartureLd);
+				volo.setOtherDayDate(LocalDate.parse(rs.getString("dataPart"), FORMATO_DIA));
 				volo.setPrezzo(rs.getFloat("prezzo"));
 				volo.setSeats(rs.getInt("postiDisponibili"));
 				volo.setDurataVolo(LocalTime.parse(rs.getString("durata")));
@@ -109,7 +110,7 @@ public class VoloManager {
 
 				volo[0]=new Volo();
 				volo[0].setId(rs.getInt("f1.idVolo"));
-				volo[0].setOtherDayDate(dataDepartureLd);
+				volo[0].setOtherDayDate(LocalDate.parse(rs.getString("f1.dataPart"), FORMATO_DIA));
 				volo[0].setPrezzo(rs.getFloat("f1.prezzo"));
 				volo[0].setSeats(rs.getInt("f1.postiDisponibili"));
 				volo[0].setDurataVolo(LocalTime.parse(rs.getString("f1.durata")));
@@ -125,7 +126,7 @@ public class VoloManager {
 				
 				volo[1]=new Volo();
 				volo[1].setId(rs.getInt("f2.idVolo"));
-				volo[1].setOtherDayDate(dataDepartureLd);
+				volo[1].setOtherDayDate(LocalDate.parse(rs.getString("f2.dataPart"), FORMATO_DIA));
 				volo[1].setPrezzo(rs.getFloat("f2.prezzo"));
 				volo[1].setSeats(rs.getInt("f2.postiDisponibili"));
 				volo[1].setDurataVolo(LocalTime.parse(rs.getString("f2.durata")));
@@ -145,10 +146,16 @@ public class VoloManager {
 				
 				LocalDateTime dataArrivoPrimoVolo=volo[0].getDataArrivo();
 				LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(volo[1].getDataPartenza(),volo[1].getOrarioPartenza());
+				
+				LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+				
+				long days = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.DAYS );
+				
+
 
 				
 				if((postiPrimoVolo>=0 && postiSecondoVolo>=0) &&
-						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo)))
+						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo) ) && days<=1)
 				arrayList.add(volo);
 				
 			} 
@@ -197,7 +204,7 @@ public class VoloManager {
 
 				volo[0]=new Volo();
 				volo[0].setId(rs.getInt("f1.idVolo"));
-				volo[0].setOtherDayDate(dataDepartureLd);
+				volo[0].setOtherDayDate(LocalDate.parse(rs.getString("f1.dataPart"), FORMATO_DIA));
 				volo[0].setPrezzo(rs.getFloat("f1.prezzo"));
 				volo[0].setSeats(rs.getInt("f1.postiDisponibili"));
 				volo[0].setDurataVolo(LocalTime.parse(rs.getString("f1.durata")));
@@ -213,7 +220,7 @@ public class VoloManager {
 				
 				volo[1]=new Volo();
 				volo[1].setId(rs.getInt("f2.idVolo"));
-				volo[1].setOtherDayDate(dataDepartureLd);
+				volo[1].setOtherDayDate(LocalDate.parse(rs.getString("f2.dataPart"), FORMATO_DIA));
 				volo[1].setPrezzo(rs.getFloat("f2.prezzo"));
 				volo[1].setSeats(rs.getInt("f2.postiDisponibili"));
 				volo[1].setDurataVolo(LocalTime.parse(rs.getString("f2.durata")));
@@ -228,7 +235,7 @@ public class VoloManager {
 				
 				volo[2]=new Volo();
 				volo[2].setId(rs.getInt("f3.idVolo"));
-				volo[2].setOtherDayDate(dataDepartureLd);
+				volo[2].setOtherDayDate(LocalDate.parse(rs.getString("f3.dataPart"), FORMATO_DIA));
 				volo[2].setPrezzo(rs.getFloat("f3.prezzo"));
 				volo[2].setSeats(rs.getInt("f3.postiDisponibili"));
 				volo[2].setDurataVolo(LocalTime.parse(rs.getString("f3.durata")));
@@ -249,16 +256,25 @@ public class VoloManager {
 		
 				
 				LocalDateTime dataArrivoPrimoVolo=volo[0].getDataArrivo();
-	
 				LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(volo[1].getDataPartenza(),volo[1].getOrarioPartenza());
+				
+				LocalDateTime tempDateTimeUno = LocalDateTime.from( dataArrivoPrimoVolo );
+				long daysPrimoScalo = tempDateTimeUno.until( dataPartenzaSecondoVolo, ChronoUnit.DAYS );
+
+				
 
 				LocalDateTime dataArrivoSecondoVolo=volo[1].getDataArrivo();
 				LocalDateTime dataPartenzaTerzoVolo=LocalDateTime.of(volo[2].getDataPartenza(),volo[2].getOrarioPartenza());
+				
+				
+				LocalDateTime tempDateTimeDue = LocalDateTime.from( dataArrivoSecondoVolo );
+				long daysSecondoScalo = tempDateTimeDue.until( dataPartenzaTerzoVolo, ChronoUnit.DAYS );
+				
 			
 				
 				if((postiPrimoVolo>=0 && postiSecondoVolo>=0 && postiTerzoVolo>=0) && 
 						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo)) && 
-						(dataArrivoSecondoVolo.isBefore(dataPartenzaTerzoVolo))) 
+						(dataArrivoSecondoVolo.isBefore(dataPartenzaTerzoVolo)) && daysPrimoScalo<=1 && daysSecondoScalo<=1) 
 				arrayList.add(volo);
 
 				

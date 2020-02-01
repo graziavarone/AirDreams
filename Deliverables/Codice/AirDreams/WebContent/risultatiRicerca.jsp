@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*,gestioneutente.*"%>
+    pageEncoding="UTF-8" import="java.util.*,gestioneutente.*,gestionevolo.*, java.time.*, java.time.temporal.*"%>
 <!DOCTYPE html>
 
 <% 
@@ -7,10 +7,20 @@
 	if(mod==null)
 		mod=true;
 	
-	Account account= (Account) request.getSession().getAttribute("account");
-	System.out.println("ACCOUNT: " + account);
+		Account account= (Account) request.getSession().getAttribute("account");
+		
+	  ArrayList<Volo> voliAndataDiretti=(ArrayList<Volo>)request.getAttribute("voliAndataDiretti");
+	  ArrayList<Volo> voliRitornoDiretti=(ArrayList<Volo>)request.getAttribute("voliRitornoDiretti");
 	
-	System.out.println("MESSAGE: " + request.getAttribute("message"));
+	  ArrayList<Volo[]> voliAndataUnoScalo=(ArrayList<Volo[]>)request.getAttribute("voliAndataUno");
+	  ArrayList<Volo[]> voliRitornoUnoScalo=(ArrayList<Volo[]>)request.getAttribute("voliRitornoUno");
+	  
+	  ArrayList<Volo[]> voliAndataDueScali=(ArrayList<Volo[]>)request.getAttribute("voliAndataDue");
+	  ArrayList<Volo[]> voliRitornoDueScali=(ArrayList<Volo[]>)request.getAttribute("voliRitornoDue");
+	  
+	  boolean test=voliAndataDiretti.size()==0 && voliRitornoDiretti.size()==0 && voliAndataUnoScalo.size()==0
+			  && voliRitornoUnoScalo.size()==0 && voliAndataDueScali.size()==0 && voliRitornoDueScali.size()==0;
+	
 %>
 
 <html>
@@ -159,55 +169,257 @@
            			<div>
            				<!-- verranno inseriti i form per i criteri di ricerca -->
            			</div>
+           			
                 	<div class="pl-3" id="info">
+                		<% if(test==true){ %>
+                		<p> Non ci sono voli disponibili </p>
+                		<% } else { %>
       					<h2> Lista voli </h2>
-      				
-      					<div class="pl-5"><br><!-- contiene le varie grid voli -->
-      						<% for(int i=0;i<4;i++){ %>
+      							<div class="pl-5"><!-- contiene le varie grid voli -->
+      					<% for(Volo voloAndata: voliAndataDiretti){
+      	
+      							int oreDurataAndata=voloAndata.getDurataVolo().getHour();
+  								int minutiDurataAndata=voloAndata.getDurataVolo().getMinute();
+  								String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
+  								
+      							for(Volo voloRitorno: voliRitornoDiretti){
+      								int oreDurataRitorno=voloRitorno.getDurataVolo().getHour();
+      								int minutiDurataRitorno=voloRitorno.getDurataVolo().getMinute();
+      								String durataFormatRitorno=oreDurataRitorno+"h"+" "+minutiDurataRitorno+"min";
+      							%>
+      							
+      			
+
       						<div class="p-3 border border-light rounded bg-light">
       						<div class="form-row align-items-center">
-  									 <h5>Ryanair</h5>
-  									<h3 style="margin-left: 100px;">13:20</h3> 
+  									 <h5><%=voloAndata.getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata.getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
-  									<h3>14:00</h3>
+  									<h3><%=voloAndata.getOrarioArrivo().toString()%></h3>
   							
     						</div>
-    									<b><span style="margin-left:177px;">NAP</span> </b>
-    					<span style="margin-left:100px;">3h 25min</span> 
-    					<b><span style="margin-left:115px;">TXL</span></b><br>
+    					<b><span style="margin-left:177px;"><%=voloAndata.getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata.getAeroportoA().getCodice()%></span></b><br>
     					
-    					<span style="color: red; margin-left: 155px; ">Uno scalo</span>
+    					<span style="color: green; margin-left: 155px; ">Diretto</span>
+    					<% if(voloAndata.isCompreso()){ %>
     					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
-    					<span style="color:red; margin-left: 35px;">Solo 5 posti rimasti</span>
+    					<% } %>
+    					<% 
+    					int posti;
+    					if((posti=voloAndata.getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
  
-    								<div class="form-row align-items-center">
-  									 <h5>Ryanair</h5>
-  									<h3 style="margin-left: 100px;">13:20</h3> 
+    					<div class="form-row align-items-center">
+  									 <h5><%=voloRitorno.getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloRitorno.getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
-  									<h3>14:00</h3>
+  									<h3><%=voloRitorno.getOrarioArrivo() %></h3>
   									
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; 54 </h3>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata.getPrezzo()+voloRitorno.getPrezzo()%>    </h3>
     						</div>
-    									<b><span style="margin-left:177px;">NAP</span> </b>
-    					<span style="margin-left:100px;">3h 25min</span> 
-    					<b><span style="margin-left:115px;">TXL</span></b><br>
+    									<b><span style="margin-left:177px;"><%=voloRitorno.getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
+    					<b><span style="margin-left:115px;"><%=voloRitorno.getAeroportoA().getCodice() %></span></b><br>
     					
     					<span style="color: green; margin-left: 160px; ">Diretto</span>
+    					<% if(voloRitorno.isCompreso()){ %>
     					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
-    					<span style="color:red; margin-left: 35px;">Solo 5 posti rimasti</span>
-    					<button type="submit" style="margin-left: 60px;" class="btn btn-primary">Dettagli</button>
-   						
-   
+    					<% } %>
+    					<% 
+    					int posti2;
+    					if((posti2=voloRitorno.getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
+    					<% } %>
+    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					
+    							</div>
+    				
+    							<br>
+   					
+   								<% } %>
+   									</div> 
+    						<% } %>
+    							
+    				
+    				
+						<div class="pl-5"> <!-- contiene le varie grid voli -->
+      					<% for(Volo voloAndata: voliAndataDiretti){
+      	
+      							int oreDurataAndata=voloAndata.getDurataVolo().getHour();
+  								int minutiDurataAndata=voloAndata.getDurataVolo().getMinute();
+  								String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
+  								
+      							for(Volo[] voloRitorno: voliRitornoUnoScalo){
+      								LocalTime start=voloRitorno[0].getDurataVolo();
+      								LocalTime end=voloRitorno[1].getDurataVolo();
+      								LocalTime durataTotale=start.plusMinutes(end.getHour()*60+end.getMinute());
+      						
+      								
+      								String durataFormatRitorno=durataTotale.getHour()+"h"+" "+durataTotale.getMinute()+"min";
+      							%>
+      							
+      							
+      							
+      			
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5 ><%=voloAndata.getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata.getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata.getOrarioArrivo().toString()%></h3>
+  							
     						</div>
-    						<hr>
-  							<% } %>
-      						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata.getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata.getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: green; margin-left: 155px; ">Diretto</span>
+    					<% if(voloAndata.isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti;
+    					if((posti=voloAndata.getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+ 
+    					<div class="form-row align-items-center">
+  									 <h5><%=voloRitorno[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloRitorno[1].getOrarioArrivo() %></h3>
+  									
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata.getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%>    </h3>
+    						</div>
+    									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
+    					<b><span style="margin-left:115px;"><%=voloRitorno[1].getAeroportoA().getCodice() %></span></b><br>
+    					
+    					<span style="color: red; margin-left: 160px; ">Uno scalo</span>
+    					<% if(voloRitorno[0].isCompreso() || voloRitorno[1].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti2;
+    					if((posti2=voloRitorno[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
+    					<% } %>
+    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					
+    								</div>
+    					
+										<br>
+   								
+   						
+   								<% } %>
+   							   
+    				
+      						</div> 					
+  		
+    						<% } %>
+    						
+    						<div class="pl-5"> <!-- contiene le varie grid voli -->
+      					<% for(Volo voloAndata: voliAndataDiretti){
+      	
+      							int oreDurataAndata=voloAndata.getDurataVolo().getHour();
+  								int minutiDurataAndata=voloAndata.getDurataVolo().getMinute();
+  								String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
+  								
+      							for(Volo[] voloRitorno: voliRitornoDueScali){
+      								//sbagliato bisogna fare somma tra durataVolo1+scalo1+durataVolo2+scalo2+durataVolo3
+      							
+      								/*LocalTime end=voloRitorno[1].getDurataVolo();
+      								LocalTime durataPrima=start.plusMinutes(end.getHour()*60+end.getMinute());
+      								
+      								LocalTime endFinale=voloRitorno[2].getDurataVolo();
+      								LocalTime durataFinale=durataPrima.plusMinutes(endFinale.getHour()*60+endFinale.getMinute());*/
+      						
+      								
+      								//String durataFormatRitorno=durataFinale.getHour()+"h"+" "+durataFinale.getMinute()+"min";
+      							%>
+      							
+      							
+      							
+      			
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5 ><%=voloAndata.getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata.getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata.getOrarioArrivo().toString()%></h3>
+  							
+    						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata.getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata.getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: green; margin-left: 155px; ">Diretto</span>
+    					<% if(voloAndata.isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti;
+    					if((posti=voloAndata.getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+ 
+    					<div class="form-row align-items-center">
+  									 <h5><%=voloRitorno[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloRitorno[2].getOrarioArrivo() %></h3>
+  									
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata.getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%>    </h3>
+    						</div>
+    									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
+    					<b><span style="margin-left:115px;"><%=voloRitorno[2].getAeroportoA().getCodice() %></span></b><br>
+    					
+    					<span style="color: red; margin-left: 160px; ">Due scali</span>
+    					<% if(voloRitorno[0].isCompreso() || voloRitorno[1].isCompreso() || voloRitorno[2].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti2;
+    					if((posti2=voloRitorno[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
+    					<% } %>
+    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					
+    								</div>
+    					
+										<br>
+   								
+   						
+   								<% } %>
+   							   
+    				
+      						</div> 					
+  		
+    						<% } %>
+    				
+      		
       						<br><br>
-      			 			  	
-      					</div>
+      						
+      					
       							<div class="d-flex justify-content-center">
       					<h2 class="p-2"><i class="fa fa-arrow-left"></i></h2>
       					<h2 class="p-2"><i class="fa fa-arrow-right"></i></h2>
+      			 			  	
+      					</div>
+      								    						
+
+      					
+      				<% } %>    						
+
+    				
+    						
+    						
       					 
       				</div>
       				</div>
@@ -216,7 +428,7 @@
       			</div>
       			<!-- /Information Sections -->
       			  
-      	  </div>
+      </div>
             
           <footer class="tm-bg-dark-blue">
           		<div class="container">

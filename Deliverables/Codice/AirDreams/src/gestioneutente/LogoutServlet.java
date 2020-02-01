@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class LogoutServlet
  */
 
-@WebServlet(name = "LogoutServlet", urlPatterns = {"/Logout","/gestoreCompagnie/LogoutServlet"})
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
