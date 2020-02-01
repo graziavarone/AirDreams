@@ -85,6 +85,7 @@ public class AggiungiVoloServlet extends HttpServlet {
 			
 			if (!valida(city,cityArrivals,dateDeparture,price)) {
 				message="Formato campi non valido";
+				response.getWriter().write("Failed");
 				request.setAttribute("message", message);
 				redirect="/aggiungiVolo.jsp";
 			} else {
@@ -96,7 +97,7 @@ public class AggiungiVoloServlet extends HttpServlet {
 					success=controlloAeroporti(aeroportoP, aeroportoA);
 				
 					if(!success.equals("Success")) {
-						
+						response.getWriter().write("L'aeroporto non esiste");
 						request.setAttribute("message",success);
 						redirect = "/aggiungiVolo.jsp";
 					} else if(!controllaComboBox(hDeparture,minDeparture,hFly,minFly)) {
@@ -120,6 +121,7 @@ public class AggiungiVoloServlet extends HttpServlet {
 						  Volo volo = new Volo(otherDayDate, prezzo, seats, durataVolo, orarioPartenza, compreso, ca, aeroportoP, aeroportoA);
 					
 						  vManager.aggiungiVolo(volo);
+						  response.getWriter().write("Success");
 						  redirect = "/listaVoli.jsp";
 					}
 					
@@ -137,7 +139,7 @@ public class AggiungiVoloServlet extends HttpServlet {
 		
 
 
-		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			doGet(request, response);
 		}
 		
@@ -167,7 +169,10 @@ public class AggiungiVoloServlet extends HttpServlet {
 			
 		}
 		
+		
+		
 		private String controlloAeroporti(Aeroporto aeroportoP, Aeroporto aeroportoA) {
+
 			if (aeroportoP==null || aeroportoA==null) 
 				return "Aeroporto di partenza e/o arrivo non esiste";
 			
@@ -180,7 +185,9 @@ public class AggiungiVoloServlet extends HttpServlet {
 			 
 			return "Success";
 			
+			
 		}
+		
 		
 
 		private boolean controllaComboBox(String hDeparture, String minDeparture, String hFly, String minFly) {
@@ -190,7 +197,6 @@ public class AggiungiVoloServlet extends HttpServlet {
 				
 		}
 		
-
 
 	}
 

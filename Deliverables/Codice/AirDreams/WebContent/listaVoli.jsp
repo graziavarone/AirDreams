@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-YUHUUUUUUUUUUUUUUUUUUUUUUUUU il volo è stato inserito
+
 </body>
 </html>
