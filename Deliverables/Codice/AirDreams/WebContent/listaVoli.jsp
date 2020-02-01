@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*,gestioneutente.*"%>
+    pageEncoding="UTF-8" import="java.util.*,gestioneutente.*,gestionevolo.*,java.time.*"%>
 <!DOCTYPE html>
 
 <% 
@@ -33,6 +33,21 @@
     <script src="scripts/ricercaAeroporti.js"></script>
 </head>
 <body>
+		<%
+			int pagina=Integer.parseInt(request.getParameter("page"));
+			String action=request.getParameter("action");
+			ArrayList<Volo> voli= (ArrayList<Volo>) request.getAttribute("voli");
+			if (voli==null) {
+				response.sendRedirect("./RicercaVoliServlet?page=" + pagina + "&action=" + action);
+				return;
+			}	
+		
+			for(Volo v: voli) {
+				System.out.println(v);
+			}
+			
+			pagina= (int) request.getAttribute("page");
+		%>
         <div class="tm-main-content" id="top">
             <div class="tm-top-bar-bg"></div>
             <div class="tm-top-bar" id="tm-top-bar">
@@ -158,12 +173,12 @@
            		<div class="justify-content-center">
            			<div>
            				<!--  verranno inseriti i form per i criteri di ricerca -->
-           				<form action="RicercaVoloServlet?action=ricerca" method="post" class="tm-search-form tm-section-pad-2">
+           				<form action="RicercaVoliServlet?action=ricerca&page=1" method="post" class="tm-search-form tm-section-pad-2">
                         	<div class="form-group row" id="formPartenza" hidden="true">
    					 			<label class="col-sm-6 col-form-label">Inserire aeroporto di partenza</label>
    					 			<div class="col-sm-5 tm-form-element ">
                                 	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                    <input name="cityArrivals" type="text" class="form-control" value="" id="partenza" list="ricerca-datalist" onkeyup="ricerca(this.value,this.name)">
+                                    <input name="cityDepartures" type="text" class="form-control" value="" id="partenza" list="ricerca-datalist" onkeyup="ricerca(this.value,this.name)">
                                 	<datalist id="ricerca-datalist"></datalist>
                                 </div>
                             </div>
@@ -185,7 +200,7 @@
   							<button id="buttonForm" type="submit" class="btn btn-primary" hidden="true">Ricerca </button>
                          </form>
            			</div>
-                	<div class="pl-3" id="info">
+                	<div class="pl-5" id="info">
       					<h2> Lista voli </h2>
       					<%
       						if (request.getAttribute("message")!=null) {
@@ -196,57 +211,67 @@
       					<% } %>	
       					<div class="pl-5"><br><!-- contiene le varie grid voli -->
       						<%
-      							for(int i=0;i<4;i++) {
+      							//calcolo indici di inizio e fine della griglia di visualizzazione
+    							int inizio=(pagina-1)*4;
+    							int fine=pagina*4;
+      						
+    							if (fine>voli.size()) {
+    								fine=voli.size();
+    							}
+    							System.out.println("INIZIO " + inizio);
+    							System.out.println("FINE " + fine);
+
+      							for(int i=inizio;i<fine;i=i+1) {
       						%>
       						<!-- grid voli -->
       						<div class="p-3 border border-light rounded bg-light">
       							<div class="form-row align-items-center">
   									<label class="col-sm-1.5 col-form-label font-weight-bold"> Ora partenza</label>
    	 								<div class="col-sm-3">
-      									<input type="text" value="12:00" class="form-control-plaintext form-control-sm">
+      									<input type="text" value="<%=voli.get(i).getOrarioPartenza()%>" class="form-control-plaintext form-control-sm">
     								</div>
     								<label class="col-sm-1.5 col-form-label font-weight-bold">Ora arrivo</label>
     								<div class="col-sm-2">
-      									<input type="text" value="12:00" class="form-control-plaintext form-control-sm">
+      									<input type="text" value="<%=voli.get(i).getOrarioArrivo()%>" class="form-control-plaintext form-control-sm">
     								</div>
     							</div>
     							<div class="form-row align-items-center">
   									<label class="col-sm-1.5 col-form-label font-weight-bold"> Durata volo</label>
    	 								<div class="col-sm-2">
-      									<input type="text" value="7h 40min" class="form-control-plaintext form-control-sm">
+      									<input type="text" value="<%=voli.get(i).getDurataVolo()%>" class="form-control-plaintext form-control-sm">
     								</div>
     							</div><br>
     							<div class="form-row align-items-center">
   									<label class="col-sm-1.5 col-form-label font-weight-bold"> Compagnia aerea</label>
    	 								<div class="col-sm-2">
-      									<input type="text" value="Alitalia AirLines" class="form-control-plaintext form-control-sm">
+      									<input type="text" value="<%=voli.get(i).getCa().getNome()%>" class="form-control-plaintext form-control-sm">
     								</div>
     							</div>
     							<div class="form-row align-items-center">
   									<label class="col-sm-1.5 col-form-label font-weight-bold"> Aeroporto partenza</label>
-   	 								<div class="col-sm-2">
-      									<input type="text" value="AAA" class="form-control-plaintext form-control-sm">
+   	 								<div class="col-sm-3">
+      									<input type="text" value="<%=voli.get(i).getAeroportoP().getNome()%>" class="form-control-plaintext form-control-sm">
     								</div>
     								<label class="col-sm-1.5 col-form-label font-weight-bold">Aeroporto arrivo</label>
-    								<div class="col-sm-2">
-      									<input type="text" value="AAA" class="form-control-plaintext form-control-sm">
+    								<div class="col-sm-4">
+      									<input type="text" value="<%=voli.get(i).getAeroportoA().getNome()%>" class="form-control-plaintext form-control-sm">
     								</div>
     							</div><br>
     							<div class="form-row align-items-center">
   									<label class="col-sm-1.5 col-form-label font-weight-bold"> Bagaglio incluso</label>
-   	 								<div class="col-sm-4">
-      									<input type="text" value="No" class="form-control-plaintext form-control-sm">
+   	 								<div class="col-sm-3">
+      									<input type="text" value="<%=voli.get(i).isCompreso()%>" class="form-control-plaintext form-control-sm">
     								</div>
     							</div>
     							<div class="form-row align-items-center">
   									<label class="col-sm-1.5 col-form-label badge badge-danger text-wrap text-white">Posti disponibili</label>
    	 								<div class="col-sm-4">
-      									<input type="text" value="120" class="form-control-plaintext form-control-sm">
+      									<input type="text" value="<%=voli.get(i).getSeats()%>" class="form-control-plaintext form-control-sm">
     								</div>
     								<div class="col-sm-2"></div>
     								<label class="col-sm-1.5 col-form-label badge badge-info text-wrap text-white"> Prezzo biglietto</label>
     								<div class="col-sm-1">
-      									<input type="text" value="200€" class="form-control-plaintext form-control-sm">
+      									<input type="text" value="<%=voli.get(i).getPrezzo()%>" class="form-control-plaintext form-control-sm">
     								</div>
     							</div>
     							<div class="form-row align-items-center">
@@ -263,8 +288,12 @@
       					</div>
       				</div>
       				<div class="d-flex justify-content-center">
-      					<h2 class="p-2"><i class="fa fa-arrow-left"></i></h2>
-      					<h2 class="p-2"><i class="fa fa-arrow-right"></i></h2>
+      					<% if (((pagina-1)*4)>0) { %>
+      					<h2 class="p-2"><a href="listaVoli.jsp?page=<%=(pagina-1)%>&action=<%=action%>"><i class="fa fa-arrow-left"></i></a></h2>
+      					<% } %>
+      					<% if (((pagina)*4)<voli.size()) { %>
+      					<h2 class="p-2"><a href="listaVoli.jsp?page=<%=(pagina+1)%>&action=<%=action%>"><i class="fa fa-arrow-right"></i></a></h2>
+      					<% } %>
       				</div>
       			</div>
       			<!-- /Information Sections -->

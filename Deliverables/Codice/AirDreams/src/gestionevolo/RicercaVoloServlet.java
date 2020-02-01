@@ -18,10 +18,10 @@ public class RicercaVoloServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String action= request.getParameter("action");
 		
-		if (action==null) {
-			//semplice visualizzazione voli
-		} else {
-			//visualizzazione voli con ricerca
+		if (action!=null) {
+			if (action.equals("ricerca")) {
+				//ricerca voli
+			}
 		}
 		
 	}
