@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class AggiungiCartaServlet
  */
-@WebServlet("/AggiungiCartaServlet")
+@WebServlet(name="/AggiungiCartaServlet", urlPatterns= {"/cliente/AggiungiCartaServlet"})
 public class AggiungiCartaServlet extends HttpServlet {
 	private static Logger logger= Logger.getLogger("global");
 	private static final long serialVersionUID = 1L;
@@ -76,9 +76,7 @@ public class AggiungiCartaServlet extends HttpServlet {
 				} 
 				if(!Pattern.matches(expDataScadenza, dataScadenza)) {
 					message+="Formato dataScadenza non valido<br/>";
-					SimpleDateFormat formatter = new SimpleDateFormat("MM/YY");
-					date = (Date) formatter.parse(dataScadenza);
-					System.out.println("Santa data:" +date);
+				
 					
 					//vedere se scaduta
 					System.out.println(message);
@@ -110,10 +108,12 @@ public class AggiungiCartaServlet extends HttpServlet {
 				int annoCorrente = dataOggi.getYear();
 				
 				if(anno<annoCorrente){
+					response.getWriter().write("Carta scaduta");
 					message+="Data Scadenza non valida<br/>";
 					redirect="aggiungiCarta.jsp";
 					} else if(anno==annoCorrente){
 						if(mese<=meseCorrente) 
+							response.getWriter().write("Carta scaduta");
 							message+="Carta di credito scaduta, gentilmente inserirne un'altra!<br/>";
 						}
 					else {
@@ -137,7 +137,7 @@ public class AggiungiCartaServlet extends HttpServlet {
 		}
 
 		request.setAttribute("message", message);
-		request.getRequestDispatcher(redirect).forward(request, response);
+		request.getServletContext().getRequestDispatcher("/cliente/aggiungiCarta.jsp").forward(request, response);
 	}
 	
 	private boolean valida(String nCarta, String titolare, String dataScadenza, String cvc) throws ParseException {
