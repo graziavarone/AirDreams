@@ -30,6 +30,7 @@
     <link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
     <link rel="stylesheet" href="css/tooplate-style.css"> 
     <link rel="stylesheet" href="css/prova.css">
+    <script src="scripts/ricercaAeroporti.js"></script>
 </head>
 <body>
         <div class="tm-main-content" id="top">
@@ -141,13 +142,13 @@
 	  				</div>
         			<ul class="list-unstyled components mb-5">
           				<li>
-              				<a href=""><span class="fa fa-plane mr-3"></span>Aeroporto di partenza</a>
+              				<a href="javascript:visiblePartenza()"><span class="fa fa-plane mr-3"></span>Aeroporto di partenza</a>
           				</li>
          			 	<li>
-            				<a href=""><span class="fa fa-plane mr-3"></span>Aeroporto di destinazione</a>
+            				<a href="javascript:visibleDestinazione()"><span class="fa fa-plane mr-3"></span>Aeroporto di destinazione</a>
           				</li>
           				<li>
-            				<a href=""><span class="fa fa-calendar mr-3"></span>Data volo</a>
+            				<a href="javascript:visibleData()"><span class="fa fa-calendar mr-3"></span>Data volo</a>
           				</li>
         			</ul>
 				</nav>
@@ -157,6 +158,32 @@
            		<div class="justify-content-center">
            			<div>
            				<!--  verranno inseriti i form per i criteri di ricerca -->
+           				<form action="RicercaVoloServlet?action=ricerca" method="post" class="tm-search-form tm-section-pad-2">
+                        	<div class="form-group row" id="formPartenza" hidden="true">
+   					 			<label class="col-sm-6 col-form-label">Inserire aeroporto di partenza</label>
+   					 			<div class="col-sm-5 tm-form-element ">
+                                	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
+                                    <input name="cityArrivals" type="text" class="form-control" value="" id="partenza" list="ricerca-datalist" onkeyup="ricerca(this.value,this.name)">
+                                	<datalist id="ricerca-datalist"></datalist>
+                                </div>
+                            </div>
+                          	<div class="form-group row" id="formDestinazione" hidden="true">
+   					 			<label class="col-sm-6 col-form-label">Inserire aeroporto di destinazione</label>
+   					 			<div class="col-sm-5 tm-form-element ">
+                                	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
+                                    <input name="cityArrivals" type="text" class="form-control" value="" id="destinazione" list="ricerca-datalist" onkeyup="ricerca(this.value,this.name)">
+                               		<datalist id="ricerca-datalist"></datalist>
+                                </div>	
+                            </div>
+                            <div class="form-group row" id="formData" hidden="true">
+                            	<label class="col-sm-6 col-form-label">Inserire data del volo</label>
+   					 			<div class="col-sm-5 tm-form-element ">
+                                	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
+                                    <input name="data" type="text" class="form-control" id="data">
+                                </div>
+  							</div>			
+  							<button id="buttonForm" type="submit" class="btn btn-primary" hidden="true">Ricerca </button>
+                         </form>
            			</div>
                 	<div class="pl-3" id="info">
       					<h2> Lista voli </h2>
@@ -261,5 +288,21 @@
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
+		<script type="text/javascript">
+			function visiblePartenza() {
+				document.getElementById("formPartenza").removeAttribute("hidden");
+				document.getElementById("buttonForm").removeAttribute("hidden");
+			}
+			
+			function visibleDestinazione() {
+				document.getElementById("formDestinazione").removeAttribute("hidden");
+				document.getElementById("buttonForm").removeAttribute("hidden");				
+			}
+			
+			function visibleData() {
+				document.getElementById("formData").removeAttribute("hidden");
+				document.getElementById("buttonForm").removeAttribute("hidden");			
+			}
+		</script>
 	</body>
 </html>
