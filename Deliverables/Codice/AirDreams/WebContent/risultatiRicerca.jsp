@@ -330,7 +330,7 @@
   								String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
   								
       							for(Volo[] voloRitorno: voliRitornoDueScali){
-      								//sbagliato bisogna fare somma tra durataVolo1+scalo1+durataVolo2+scalo2+durataVolo3
+      								//sbagliato bisogna fare somma tra durataVoldo1+scalo1+durataVolo2+scalo2+durataVolo3
       							
       								/*LocalTime end=voloRitorno[1].getDurataVolo();
       								LocalTime durataPrima=start.plusMinutes(end.getHour()*60+end.getMinute());
