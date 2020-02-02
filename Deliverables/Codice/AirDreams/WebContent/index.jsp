@@ -5,6 +5,8 @@
 
 if(mod==null)
 	mod=true;
+
+String message=(String)request.getAttribute("message");
 %>
     
 <!DOCTYPE html>
@@ -142,13 +144,21 @@ http://www.tooplate.com/view/2095-level
     
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
+                	  <% if(message!=null){ %>
+				                <p id="messageError"><%=message %></p>
+				                <% } %>
                     <div style="height: 350px;" class="container ie-h-align-center-fix">
             		
-                        <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
+                        <div class="row">
+                      
                                 <form action="RicercaVoliServlet" method="post" class="tm-search-form tm-section-pad-2">
-                                
+                                		
+                                		  Andata e ritorno<input type="radio" id="andERit" style="margin-right: 30px;" name="tipoViaggio" value="Andata e ritorno" checked="checked">
+                        					Solo andata<input type="radio" id="and"  style="margin-right: 30px;"  name="tipoViaggio" value="Solo andata">
+                        					 Solo voli diretti <input type="checkbox" name="Diretto"  value="Diretto">
                                     <div class="form-row tm-search-form-row">
+                                    	
                                         <div class="form-group tm-form-element tm-form-element-100">
                                            <i class="fa fa-plane fa-2x tm-form-element-icon"></i>
                                             <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
@@ -270,6 +280,16 @@ http://www.tooplate.com/view/2095-level
                 $("#start").datepicker("option","maxDate",selectedDate);
             }
          })
+         
+         $("#and").click(function(){
+        	 $('#return').val(null);
+        	 $("#return").prop('disabled', true);
+         });
+        
+        $("#andERit").click(function(){
+       	 $("#return").prop('disabled', false);
+        });
+         
          
          </script>
 </body>

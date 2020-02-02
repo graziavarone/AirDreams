@@ -49,6 +49,9 @@ public class RicercaVoliServlet extends HttpServlet {
 		String numPasseggeri=request.getParameter("seats");
 		String dateDeparture=request.getParameter("dateDeparture");
 		String dateReturn=request.getParameter("dateReturn");
+		String checkbox=request.getParameter("Diretto");
+
+		
 		
 		String redirect = null;
 		
@@ -98,66 +101,59 @@ public class RicercaVoliServlet extends HttpServlet {
 					request.setAttribute("message",success);
 					redirect = "index.jsp";
 				} 	else {
+			
 					  LocalDate dataDepartureLd = LocalDate.parse(dateDeparture, FORMATO_DIA);
-					  LocalDate dataReturnLd = LocalDate.parse(dateReturn, FORMATO_DIA);
-					  
+
 					  //volo di andata e ritorno diretti
 					  ArrayList<Volo> voliAndataDiretti=voloManager.cercaDiretti(aeroportoP.getCodice(), aeroportoA.getCodice(),
 							  dataDepartureLd ,Integer.parseInt(numPasseggeri));
+					  request.setAttribute("voliAndataDiretti", voliAndataDiretti);
 					  
-					  int i=0;
-					  for(Volo volo: voliAndataDiretti) {
-						  System.out.println(++i+") Volo andata diretto "+volo.getId());
-					  }
-					  ArrayList<Volo> voliRitornoDiretti=voloManager.cercaDiretti(aeroportoA.getCodice(), aeroportoP.getCodice(),
-							  dataReturnLd,Integer.parseInt(numPasseggeri));
-					  
-					  i=0;
-					  for(Volo volo: voliRitornoDiretti) {
-						  System.out.println(++i+") Volo ritorno diretto "+volo.getId());
-					  }
-					  
+					  if(checkbox==null) {
 					  ArrayList<Volo[]> voliAndataUnoScalo=voloManager.cercaUnoScalo(aeroportoP.getCodice(), aeroportoA.getCodice(),
 							  dataDepartureLd, Integer.parseInt(numPasseggeri));
 					  
-					   i=0;
-					  for(Volo[] volo: voliAndataUnoScalo) {
-						  System.out.println(++i+") Volo andata uno scalo "+volo[0].getId()+" "+volo[1].getId());
-					  }
-					  
-					  ArrayList<Volo[]> voliRitornoUnoScalo=voloManager.cercaUnoScalo(aeroportoA.getCodice(), aeroportoP.getCodice(),
-							  dataReturnLd, Integer.parseInt(numPasseggeri));
-					  
-					   i=0;
-					  for(Volo[] volo: voliRitornoUnoScalo) {
-						  System.out.println(++i+") Volo ritorno uno scalo "+volo[0].getId()+" "+volo[1].getId());
-					  }
 					  
 					  ArrayList<Volo[]> voliAndataDueScali=voloManager.cercaDueScali(aeroportoP.getCodice(), aeroportoA.getCodice(),
 							  dataDepartureLd, Integer.parseInt(numPasseggeri));
 					  
-					  i=0;
-					  for(Volo[] volo: voliAndataDueScali) {
-						  System.out.println(++i+") Volo andata due scalo "+volo[0].getId()+" "+volo[1].getId()+" "+volo[2].getId());
-					  } 
-					  
-					ArrayList<Volo[]> voliRitornoDueScali=voloManager.cercaDueScali(aeroportoA.getCodice(), aeroportoP.getCodice(),
-							  dataReturnLd, Integer.parseInt(numPasseggeri));
-					  
-					   i=0;
-					  for(Volo[] volo: voliRitornoDueScali) {
-						  System.out.println(++i+") Volo ritorno due scalo "+volo[0].getId()+" "+volo[1].getId()+" "+volo[2].getId());
-					  }
-					  
-					  response.getWriter().write("Success");
-					  request.setAttribute("voliAndataDiretti", voliAndataDiretti);
-					  request.setAttribute("voliRitornoDiretti", voliRitornoDiretti);
 					  
 					  request.setAttribute("voliAndataUno", voliAndataUnoScalo);
-					  request.setAttribute("voliRitornoUno", voliRitornoUnoScalo);
+					 
 					  
 					  request.setAttribute("voliAndataDue", voliAndataDueScali);
-					  request.setAttribute("voliRitornoDue", voliRitornoDueScali);
+					  }
+					  
+					 
+						if(dateReturn!=null) {
+							  LocalDate dataReturnLd = LocalDate.parse(dateReturn, FORMATO_DIA);
+							  
+							  ArrayList<Volo> voliRitornoDiretti=voloManager.cercaDiretti(aeroportoA.getCodice(), aeroportoP.getCodice(),
+									  dataReturnLd,Integer.parseInt(numPasseggeri));
+							  
+							if(checkbox==null) {
+							  ArrayList<Volo[]> voliRitornoUnoScalo=voloManager.cercaUnoScalo(aeroportoA.getCodice(), aeroportoP.getCodice(),
+									  dataReturnLd, Integer.parseInt(numPasseggeri));
+						
+							ArrayList<Volo[]> voliRitornoDueScali=voloManager.cercaDueScali(aeroportoA.getCodice(), aeroportoP.getCodice(),
+									  dataReturnLd, Integer.parseInt(numPasseggeri));
+							
+							 request.setAttribute("voliRitornoUno", voliRitornoUnoScalo);
+							  request.setAttribute("voliRitornoDue", voliRitornoDueScali);
+							
+							}
+							
+							request.setAttribute("voliRitornoDiretti", voliRitornoDiretti);
+							
+							  
+						}
+		
+					  
+					  response.getWriter().write("Success");
+					
+					  
+				
+					
 					  redirect = "risultatiRicerca.jsp";
 				}
 				
@@ -205,9 +201,11 @@ public class RicercaVoliServlet extends HttpServlet {
 			System.out.println("dataPartenza non corrisponde");
 		}
 		
+		if(dateReturn!=null) {
 		if (!Pattern.matches(expData, dateReturn)) {
 			valido=false;
 			System.out.println("data ritorno non corrisponde");
+		}
 		}
 		
 		return valido;

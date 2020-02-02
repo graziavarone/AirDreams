@@ -18,9 +18,17 @@
 	  ArrayList<Volo[]> voliAndataDueScali=(ArrayList<Volo[]>)request.getAttribute("voliAndataDue");
 	  ArrayList<Volo[]> voliRitornoDueScali=(ArrayList<Volo[]>)request.getAttribute("voliRitornoDue");
 	  
-	  boolean test=voliAndataDiretti.size()==0 && voliRitornoDiretti.size()==0 && voliAndataUnoScalo.size()==0
-			  && voliRitornoUnoScalo.size()==0 && voliAndataDueScali.size()==0 && voliRitornoDueScali.size()==0;
-	
+	  boolean testVoliAndata=voliAndataDiretti.size()==0 && voliAndataUnoScalo.size()==0 && voliAndataDueScali.size()==0;
+	  boolean testVoliRitorno=false;
+	  boolean soloVoliDirettiRitorno=false;
+	  if(voliRitornoDiretti!=null && voliRitornoUnoScalo!=null && voliRitornoDueScali!=null){
+	   testVoliRitorno= voliRitornoDiretti.size()==0 && voliRitornoUnoScalo.size()==0 && voliRitornoDueScali.size()==0;
+	   soloVoliDirettiRitorno=voliRitornoDiretti!=null&&voliRitornoUnoScalo==null&&voliRitornoDueScali==null;
+	  }
+	  
+	  boolean soloVoliDirettiAndata=voliAndataDiretti!=null && voliAndataUnoScalo==null && voliAndataDueScali==null;
+	  System.out.println(soloVoliDirettiAndata);
+		
 %>
 
 <html>
@@ -171,8 +179,179 @@
            			</div>
            			
                 	<div class="pl-3" id="info">
-                		<% if(test==true){ %>
+                		<% if((testVoliAndata==true && testVoliRitorno==true) || (testVoliAndata==true && testVoliRitorno==false)){ %>
                 		<p> Non ci sono voli disponibili </p>
+                		<% } else if(voliRitornoDiretti==null && voliRitornoUnoScalo==null && voliRitornoDueScali==null) {%>
+                		
+                		<div class="pl-5"><!-- contiene le varie grid voli -->
+                			<% for(Volo voloAndata: voliAndataDiretti){
+      	
+      							int oreDurataAndata=voloAndata.getDurataVolo().getHour();
+  								int minutiDurataAndata=voloAndata.getDurataVolo().getMinute();
+  								String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
+      							%>
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5><%=voloAndata.getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata.getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata.getOrarioArrivo().toString()%></h3>
+  								<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata.getPrezzo()%>    </h3>
+    						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata.getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata.getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: green; margin-left: 155px; ">Diretto</span>
+    						<% 
+    					int posti;
+    					if((posti=voloAndata.getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+    					
+    					<% if(voloAndata.isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    				
+ 						
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+  					
+    							<br>
+   					
+   								<%  }%>
+   									</div> 
+   									<br>
+   									</div>
+   							
+   								<% if(soloVoliDirettiAndata==false){ %>
+   								<div class="pl-5"><!-- contiene le varie grid voli -->
+   						        <% for(Volo[] voloAndata: voliAndataUnoScalo){
+   						        	LocalTime totale;
+   									
+   									LocalTime durataPrimoVolo=voloAndata[0].getDurataVolo();
+   									
+   									LocalDateTime dataArrivoPrimoVolo=voloAndata[0].getDataArrivo();
+   									LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(voloAndata[1].getDataPartenza(),voloAndata[1].getOrarioPartenza());
+   									
+   									LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+   									
+   									long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+   									
+   									
+   									totale=durataPrimoVolo.plusMinutes(durataScalo1);
+   									
+   									LocalTime durataSecondoVolo=voloAndata[1].getDurataVolo();
+   									
+   									totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+   									
+   									
+   									String durataFormatAndata=totale.getHour()+"h"+" "+totale.getMinute()+"min";
+      							%>
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5><%=voloAndata[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata[1].getOrarioArrivo().toString()%></h3>
+  								<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()%>    </h3>
+    						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata[1].getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: red; margin-left: 155px; ">Uno scalo</span>
+    						<% 
+    					int posti;
+    					if((posti=voloAndata[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+    					
+    					<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    				
+ 						
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+  					
+    							<br>
+   					
+   								<%  }%>
+   									</div> 
+    							<br>
+    							<div>
+                			
+                			<div class="pl-5"><!-- contiene le varie grid voli -->
+   						        <% for(Volo[] voloAndata: voliAndataDueScali){
+   						        	LocalTime totale;
+   									
+   									LocalTime durataPrimoVolo=voloAndata[0].getDurataVolo();
+   									
+   									LocalDateTime dataArrivoPrimoVolo=voloAndata[0].getDataArrivo();
+   									LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(voloAndata[1].getDataPartenza(),voloAndata[1].getOrarioPartenza());
+   									
+   									LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+   									
+   									long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+   									
+   									
+   									totale=durataPrimoVolo.plusMinutes(durataScalo1);
+   									
+   									LocalTime durataSecondoVolo=voloAndata[1].getDurataVolo();
+   									
+   									totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+   									
+   									LocalDateTime dataArrivoSecondoVolo=voloAndata[1].getDataArrivo();
+   	  								LocalDateTime dataPartenzaTerzoVolo=LocalDateTime.of(voloAndata[2].getDataPartenza(),voloAndata[2].getOrarioPartenza());
+   	  								
+   	  								LocalDateTime tempDateTime2 = LocalDateTime.from( dataArrivoSecondoVolo );
+   	  								
+   	  								long durataScalo2 = tempDateTime2.until( dataPartenzaTerzoVolo, ChronoUnit.MINUTES);
+   	  								
+   	  								totale=totale.plusMinutes(durataScalo2);
+   	  								
+   	  								LocalTime durataTerzoVolo=voloAndata[2].getDurataVolo();
+   	  								
+   	  								totale=totale.plusMinutes(durataTerzoVolo.getHour()*60+durataTerzoVolo.getMinute());
+   	  						
+   	  							
+   									String durataFormatAndata=totale.getHour()+"h"+" "+totale.getMinute()+"min";
+      							%>
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5><%=voloAndata[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata[2].getOrarioArrivo().toString()%></h3>
+  								<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()%>    </h3>
+    						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata[2].getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: red; margin-left: 155px; ">Due scali</span>
+    						<% 
+    					int posti;
+    					if((posti=voloAndata[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+    					
+    					<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso() || voloAndata[2].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    				
+ 						
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+  					
+    							<br>
+   					
+   								<%  }%>
+   									</div> 
+    							<br>
+    							<div>
+                			<% } %>
                 		<% } else { %>
       					<h2> Lista voli </h2>
       							<div class="pl-5"><!-- contiene le varie grid voli -->
@@ -182,6 +361,7 @@
   								int minutiDurataAndata=voloAndata.getDurataVolo().getMinute();
   								String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
   								
+  						
       							for(Volo voloRitorno: voliRitornoDiretti){
       								int oreDurataRitorno=voloRitorno.getDurataVolo().getHour();
       								int minutiDurataRitorno=voloRitorno.getDurataVolo().getMinute();
@@ -219,6 +399,7 @@
   									<h3><%=voloRitorno.getOrarioArrivo() %></h3>
   									
   									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata.getPrezzo()+voloRitorno.getPrezzo()%>    </h3>
+    						
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno.getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
@@ -239,12 +420,12 @@
     				
     							<br>
    					
-   								<% } %>
+   								<%  }%>
    									</div> 
     						<% } %>
     							
     				
-    				
+    					<% if(soloVoliDirettiAndata==false && soloVoliDirettiRitorno==false){ %>
 						<div class="pl-5"> <!-- contiene le varie grid voli -->
       					<% for(Volo voloAndata: voliAndataDiretti){
       	
@@ -252,13 +433,29 @@
   								int minutiDurataAndata=voloAndata.getDurataVolo().getMinute();
   								String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
   								
+  							
       							for(Volo[] voloRitorno: voliRitornoUnoScalo){
-      								LocalTime start=voloRitorno[0].getDurataVolo();
-      								LocalTime end=voloRitorno[1].getDurataVolo();
-      								LocalTime durataTotale=start.plusMinutes(end.getHour()*60+end.getMinute());
-      						
+ 									LocalTime totale;
       								
-      								String durataFormatRitorno=durataTotale.getHour()+"h"+" "+durataTotale.getMinute()+"min";
+      								LocalTime durataPrimoVolo=voloRitorno[0].getDurataVolo();
+      								
+      								LocalDateTime dataArrivoPrimoVolo=voloRitorno[0].getDataArrivo();
+      								LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(voloRitorno[1].getDataPartenza(),voloRitorno[1].getOrarioPartenza());
+      								
+      								LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+      								
+      								long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+      								
+      								
+      								totale=durataPrimoVolo.plusMinutes(durataScalo1);
+      								
+      								LocalTime durataSecondoVolo=voloRitorno[1].getDurataVolo();
+      								
+      								totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+      								
+      								
+      								String durataFormatRitorno=totale.getHour()+"h"+" "+totale.getMinute()+"min";
+      						
       							%>
       							
       							
@@ -329,17 +526,41 @@
   								int minutiDurataAndata=voloAndata.getDurataVolo().getMinute();
   								String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
   								
+  								
       							for(Volo[] voloRitorno: voliRitornoDueScali){
-      								//sbagliato bisogna fare somma tra durataVoldo1+scalo1+durataVolo2+scalo2+durataVolo3
-      							
-      								/*LocalTime end=voloRitorno[1].getDurataVolo();
-      								LocalTime durataPrima=start.plusMinutes(end.getHour()*60+end.getMinute());
+      								LocalTime totale;
       								
-      								LocalTime endFinale=voloRitorno[2].getDurataVolo();
-      								LocalTime durataFinale=durataPrima.plusMinutes(endFinale.getHour()*60+endFinale.getMinute());*/
+      								LocalTime durataPrimoVolo=voloRitorno[0].getDurataVolo();
+      								
+      								LocalDateTime dataArrivoPrimoVolo=voloRitorno[0].getDataArrivo();
+      								LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(voloRitorno[1].getDataPartenza(),voloRitorno[1].getOrarioPartenza());
+      								
+      								LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+      								
+      								long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+      								
+      								
+      								totale=durataPrimoVolo.plusMinutes(durataScalo1);
+      								
+      								LocalTime durataSecondoVolo=voloRitorno[1].getDurataVolo();
+      								
+      								totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+      								
+      								LocalDateTime dataArrivoSecondoVolo=voloRitorno[1].getDataArrivo();
+      								LocalDateTime dataPartenzaTerzoVolo=LocalDateTime.of(voloRitorno[2].getDataPartenza(),voloRitorno[2].getOrarioPartenza());
+      								
+      								LocalDateTime tempDateTime2 = LocalDateTime.from( dataArrivoSecondoVolo );
+      								
+      								long durataScalo2 = tempDateTime2.until( dataPartenzaTerzoVolo, ChronoUnit.MINUTES);
+      								
+      								totale=totale.plusMinutes(durataScalo2);
+      								
+      								LocalTime durataTerzoVolo=voloRitorno[2].getDurataVolo();
+      								
+      								totale=totale.plusMinutes(durataTerzoVolo.getHour()*60+durataTerzoVolo.getMinute());
       						
       								
-      								//String durataFormatRitorno=durataFinale.getHour()+"h"+" "+durataFinale.getMinute()+"min";
+      								String durataFormatRitorno=totale.getHour()+"h"+" "+totale.getMinute()+"min";
       							%>
       							
       							
@@ -396,14 +617,678 @@
 										<br>
    								
    						
-   								<% } %>
+   								<%  } %>
+   							   
+    				
+      						</div> 					
+  		
+    						<% } %>
+    						
+    					<div class="pl-5"> <!-- contiene le varie grid voli -->
+      					<% for(Volo[] voloAndata: voliAndataUnoScalo){
+      						LocalTime totale;
+								
+								LocalTime durataPrimoVolo=voloAndata[0].getDurataVolo();
+								
+								LocalDateTime dataArrivoPrimoVolo=voloAndata[0].getDataArrivo();
+								LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(voloAndata[1].getDataPartenza(),voloAndata[1].getOrarioPartenza());
+								
+								LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+								
+								long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+								
+								
+								totale=durataPrimoVolo.plusMinutes(durataScalo1);
+								
+								LocalTime durataSecondoVolo=voloAndata[1].getDurataVolo();
+								
+								totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+								
+								
+								String durataFormatRitorno=totale.getHour()+"h"+" "+totale.getMinute()+"min";
+  								
+							
+      							for(Volo voloRitorno: voliRitornoDiretti){
+
+          							int oreDurataRitorno=voloRitorno.getDurataVolo().getHour();
+      								int minutiDurataRitorno=voloRitorno.getDurataVolo().getMinute();
+      								String durataFormatAndata=oreDurataRitorno+"h"+" "+minutiDurataRitorno+"min";
+      								
+      							%>
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5 ><%=voloAndata[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata[1].getOrarioArrivo().toString()%></h3>
+  							
+    						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata[1].getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: red; margin-left: 155px; ">Uno scalo</span>
+    					<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti;
+    					if((posti=voloAndata[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+ 
+    					<div class="form-row align-items-center">
+  									 <h5><%=voloRitorno.getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloRitorno.getOrarioPartenza() %></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloRitorno.getOrarioArrivo() %></h3>
+  									
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloRitorno.getPrezzo()+voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()%>    </h3>
+    						</div>
+    									<b><span style="margin-left:177px;"><%=voloRitorno.getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
+    					<b><span style="margin-left:115px;"><%=voloRitorno.getAeroportoA().getCodice() %></span></b><br>
+    					
+    					<span style="color: green; margin-left: 160px; ">Diretto</span>
+    					<% if(voloRitorno.isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti2;
+    					if((posti2=voloRitorno.getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
+    					<% } %>
+    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					
+    								</div>
+    					
+										<br>
+   								
+   						
+   								<%  } %>
    							   
     				
       						</div> 					
   		
     						<% } %>
     				
-      		
+      					<div class="pl-5"> <!-- contiene le varie grid voli -->
+      					<% for(Volo[] voloAndata: voliAndataUnoScalo){
+      							LocalTime totale;
+								
+								LocalTime durataPrimoVolo=voloAndata[0].getDurataVolo();
+								
+								LocalDateTime dataArrivoPrimoVolo=voloAndata[0].getDataArrivo();
+								LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(voloAndata[1].getDataPartenza(),voloAndata[1].getOrarioPartenza());
+								
+								LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+								
+								long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+								
+								
+								totale=durataPrimoVolo.plusMinutes(durataScalo1);
+								
+								LocalTime durataSecondoVolo=voloAndata[1].getDurataVolo();
+								
+								totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+								
+								
+								String durataFormatAndata=totale.getHour()+"h"+" "+totale.getMinute()+"min";
+  								
+								
+      							for(Volo[] voloRitorno: voliRitornoUnoScalo){
+      								LocalTime totaleR;
+    								
+    								LocalTime durataPrimoVoloR=voloRitorno[0].getDurataVolo();
+    								
+    								LocalDateTime dataArrivoPrimoVoloR=voloRitorno[0].getDataArrivo();
+    								LocalDateTime dataPartenzaSecondoVoloR=LocalDateTime.of(voloRitorno[1].getDataPartenza(),voloRitorno[1].getOrarioPartenza());
+    								
+    								LocalDateTime tempDateTimeR = LocalDateTime.from( dataArrivoPrimoVoloR );
+    								
+    								long durataScalo1R = tempDateTimeR.until( dataPartenzaSecondoVoloR, ChronoUnit.MINUTES);
+    								
+    								
+    								totaleR=durataPrimoVoloR.plusMinutes(durataScalo1R);
+    								
+    								LocalTime durataSecondoVoloR=voloRitorno[1].getDurataVolo();
+    								
+    								totaleR=totaleR.plusMinutes(durataSecondoVoloR.getHour()*60+durataSecondoVoloR.getMinute());
+    								
+    								
+    								String durataFormatRitornoR=totaleR.getHour()+"h"+" "+totaleR.getMinute()+"min";
+      								
+      							%>
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5 ><%=voloAndata[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata[1].getOrarioArrivo().toString()%></h3>
+  							
+    						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata[1].getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: red; margin-left: 155px; ">Uno scalo</span>
+    					<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti;
+    					if((posti=voloAndata[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+ 
+    					<div class="form-row align-items-center">
+  									 <h5><%=voloRitorno[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloRitorno[1].getOrarioArrivo() %></h3>
+  									
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%>    </h3>
+    						</div>
+    									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatRitornoR %></span> 
+    					<b><span style="margin-left:115px;"><%=voloRitorno[1].getAeroportoA().getCodice() %></span></b><br>
+    					
+    					<span style="color: red; margin-left: 160px; ">Uno scalo</span>
+    					<% if(voloRitorno[0].isCompreso() || voloRitorno[1].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti2;
+    					if((posti2=voloRitorno[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
+    					<% } %>
+    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					
+    								</div>
+    					
+										<br>
+   								
+   						
+   								<%  } %>
+   							   
+    				
+      						</div> 					
+  		
+    						<% } %>
+    						
+    					<div class="pl-5"> <!-- contiene le varie grid voli -->
+      					<% for(Volo[] voloAndata: voliAndataUnoScalo){
+      							LocalTime totale;
+								
+								LocalTime durataPrimoVolo=voloAndata[0].getDurataVolo();
+								
+								LocalDateTime dataArrivoPrimoVolo=voloAndata[0].getDataArrivo();
+								LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(voloAndata[1].getDataPartenza(),voloAndata[1].getOrarioPartenza());
+								
+								LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+								
+								long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+								
+								
+								totale=durataPrimoVolo.plusMinutes(durataScalo1);
+								
+								LocalTime durataSecondoVolo=voloAndata[1].getDurataVolo();
+								
+								totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+								
+								
+								String durataFormatAndata=totale.getHour()+"h"+" "+totale.getMinute()+"min";
+  								
+								
+      							for(Volo[] voloRitorno: voliRitornoDueScali){
+								LocalTime totaleR;
+      								
+      								LocalTime durataPrimoVoloR=voloRitorno[0].getDurataVolo();
+      								
+      								LocalDateTime dataArrivoPrimoVoloR=voloRitorno[0].getDataArrivo();
+      								LocalDateTime dataPartenzaSecondoVoloR=LocalDateTime.of(voloRitorno[1].getDataPartenza(),voloRitorno[1].getOrarioPartenza());
+      								
+      								LocalDateTime tempDateTimeR = LocalDateTime.from( dataArrivoPrimoVoloR );
+      								
+      								long durataScalo1R = tempDateTimeR.until( dataPartenzaSecondoVoloR, ChronoUnit.MINUTES);
+      								
+      								
+      								totaleR=durataPrimoVoloR.plusMinutes(durataScalo1R);
+      								
+      								LocalTime durataSecondoVoloR=voloRitorno[1].getDurataVolo();
+      								
+      								totaleR=totaleR.plusMinutes(durataSecondoVoloR.getHour()*60+durataSecondoVoloR.getMinute());
+      								
+      								LocalDateTime dataArrivoSecondoVoloR=voloRitorno[1].getDataArrivo();
+      								LocalDateTime dataPartenzaTerzoVoloR=LocalDateTime.of(voloRitorno[2].getDataPartenza(),voloRitorno[2].getOrarioPartenza());
+      								
+      								LocalDateTime tempDateTime2 = LocalDateTime.from( dataArrivoSecondoVoloR );
+      								
+      								long durataScalo2 = tempDateTime2.until( dataPartenzaTerzoVoloR, ChronoUnit.MINUTES);
+      								
+      								totale=totale.plusMinutes(durataScalo2);
+      								
+      								LocalTime durataTerzoVolo=voloRitorno[2].getDurataVolo();
+      								
+      								totaleR=totaleR.plusMinutes(durataTerzoVolo.getHour()*60+durataTerzoVolo.getMinute());
+      						
+      								
+      								String durataFormatRitorno=totaleR.getHour()+"h"+" "+totaleR.getMinute()+"min";
+      								
+      							%>
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5 ><%=voloAndata[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata[1].getOrarioArrivo().toString()%></h3>
+  							
+    						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata[1].getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: red; margin-left: 155px; ">Uno scalo</span>
+    					<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti;
+    					if((posti=voloAndata[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+ 
+    					<div class="form-row align-items-center">
+  									 <h5><%=voloRitorno[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloRitorno[2].getOrarioArrivo() %></h3>
+  									
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%>   </h3>
+    						</div>
+    									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
+    					<b><span style="margin-left:115px;"><%=voloRitorno[2].getAeroportoA().getCodice() %></span></b><br>
+    					
+    					<span style="color: red; margin-left: 160px; ">Due scali</span>
+    					<% if(voloRitorno[0].isCompreso() || voloRitorno[1].isCompreso() || voloRitorno[2].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti2;
+    					if((posti2=voloRitorno[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
+    					<% } %>
+    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					
+    								</div>
+    					
+										<br>
+   								
+   						
+   								<%   } %>
+   							   
+    				
+      						</div> 					
+  		
+    						<% } %>
+    						
+    						
+    				<div class="pl-5"> <!-- contiene le varie grid voli -->
+      					<% for(Volo[] voloAndata: voliAndataDueScali){
+      							LocalTime totale;
+								
+								LocalTime durataPrimoVolo=voloAndata[0].getDurataVolo();
+								
+								LocalDateTime dataArrivoPrimoVolo=voloAndata[0].getDataArrivo();
+								LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(voloAndata[1].getDataPartenza(),voloAndata[1].getOrarioPartenza());
+								
+								LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+								
+								long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+								
+								
+								totale=durataPrimoVolo.plusMinutes(durataScalo1);
+								
+								LocalTime durataSecondoVolo=voloAndata[1].getDurataVolo();
+								
+								totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+								
+								LocalDateTime dataArrivoSecondoVoloR=voloAndata[1].getDataArrivo();
+  								LocalDateTime dataPartenzaTerzoVoloR=LocalDateTime.of(voloAndata[2].getDataPartenza(),voloAndata[2].getOrarioPartenza());
+  								
+  								LocalDateTime tempDateTime2 = LocalDateTime.from( dataArrivoSecondoVoloR );
+  								
+  								long durataScalo2 = tempDateTime2.until( dataPartenzaTerzoVoloR, ChronoUnit.MINUTES);
+  								
+  								totale=totale.plusMinutes(durataScalo2);
+  								
+  								LocalTime durataTerzoVolo=voloAndata[2].getDurataVolo();
+  								
+  								totale=totale.plusMinutes(durataTerzoVolo.getHour()*60+durataTerzoVolo.getMinute());
+  						
+  							
+								String durataFormatAndata=totale.getHour()+"h"+" "+totale.getMinute()+"min";
+  								
+								
+      							for(Volo voloRitorno: voliRitornoDiretti){
+								
+      								LocalTime durataPrimoVoloR=voloRitorno.getDurataVolo();
+      							
+      								
+      								String durataFormatRitorno=durataPrimoVoloR.getHour()+"h"+" "+durataPrimoVoloR.getMinute()+"min";
+      								
+      							%>
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5 ><%=voloAndata[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata[2].getOrarioArrivo().toString()%></h3>
+  							
+    						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata[2].getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: red; margin-left: 155px; ">Due scali</span>
+    					<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso() || voloAndata[2].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti;
+    					if((posti=voloAndata[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+ 
+    					<div class="form-row align-items-center">
+  									 <h5><%=voloRitorno.getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloRitorno.getOrarioPartenza() %></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloRitorno.getOrarioArrivo() %></h3>
+  									
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()+voloRitorno.getPrezzo()%>   </h3>
+    						</div>
+    									<b><span style="margin-left:177px;"><%=voloRitorno.getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
+    					<b><span style="margin-left:115px;"><%=voloRitorno.getAeroportoA().getCodice() %></span></b><br>
+    					
+    					<span style="color: green; margin-left: 160px; ">Diretto</span>
+    					<% if(voloRitorno.isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti2;
+    					if((posti2=voloRitorno.getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
+    					<% } %>
+    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					
+    								</div>
+    					
+										<br>
+   								
+   						
+   								<%   } %>
+   							   
+    				
+      						</div> 					
+  		
+    						<% } %>
+    						
+    						
+    					<div class="pl-5"> <!-- contiene le varie grid voli -->
+      					<% for(Volo[] voloAndata: voliAndataDueScali){
+      							LocalTime totale;
+								
+								LocalTime durataPrimoVolo=voloAndata[0].getDurataVolo();
+								
+								LocalDateTime dataArrivoPrimoVolo=voloAndata[0].getDataArrivo();
+								LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(voloAndata[1].getDataPartenza(),voloAndata[1].getOrarioPartenza());
+								
+								LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+								
+								long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+								
+								
+								totale=durataPrimoVolo.plusMinutes(durataScalo1);
+								
+								LocalTime durataSecondoVolo=voloAndata[1].getDurataVolo();
+								
+								totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+								
+								LocalDateTime dataArrivoSecondoVoloR=voloAndata[1].getDataArrivo();
+  								LocalDateTime dataPartenzaTerzoVoloR=LocalDateTime.of(voloAndata[2].getDataPartenza(),voloAndata[2].getOrarioPartenza());
+  								
+  								LocalDateTime tempDateTime2 = LocalDateTime.from( dataArrivoSecondoVoloR );
+  								
+  								long durataScalo2 = tempDateTime2.until( dataPartenzaTerzoVoloR, ChronoUnit.MINUTES);
+  								
+  								totale=totale.plusMinutes(durataScalo2);
+  								
+  								LocalTime durataTerzoVolo=voloAndata[2].getDurataVolo();
+  								
+  								totale=totale.plusMinutes(durataTerzoVolo.getHour()*60+durataTerzoVolo.getMinute());
+  						
+  							
+								String durataFormatAndata=totale.getHour()+"h"+" "+totale.getMinute()+"min";
+  								
+								
+      							for(Volo[] voloRitorno: voliRitornoUnoScalo){
+									LocalTime totaleR;
+    								
+    								LocalTime durataPrimoVoloR=voloRitorno[0].getDurataVolo();
+    								
+    								LocalDateTime dataArrivoPrimoVoloR=voloRitorno[0].getDataArrivo();
+    								LocalDateTime dataPartenzaSecondoVoloR=LocalDateTime.of(voloRitorno[1].getDataPartenza(),voloRitorno[1].getOrarioPartenza());
+    								
+    								LocalDateTime tempDateTimeR = LocalDateTime.from( dataArrivoPrimoVoloR );
+    								
+    								long durataScalo1R = tempDateTimeR.until( dataPartenzaSecondoVoloR, ChronoUnit.MINUTES);
+    								
+    								
+    								totaleR=durataPrimoVoloR.plusMinutes(durataScalo1R);
+    								
+    								LocalTime durataSecondoVoloR=voloRitorno[1].getDurataVolo();
+    								
+    								totaleR=totaleR.plusMinutes(durataSecondoVoloR.getHour()*60+durataSecondoVoloR.getMinute());
+    								
+    								
+    								String durataFormatRitornoR=totaleR.getHour()+"h"+" "+totaleR.getMinute()+"min";
+      								
+      							%>
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5 ><%=voloAndata[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata[2].getOrarioArrivo().toString()%></h3>
+  							
+    						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata[2].getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: red; margin-left: 155px; ">Due scali</span>
+    					<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso() || voloAndata[2].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti;
+    					if((posti=voloAndata[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+ 
+    					<div class="form-row align-items-center">
+  									 <h5><%=voloRitorno[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloRitorno[1].getOrarioArrivo() %></h3>
+  									
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%>   </h3>
+    						</div>
+    									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatRitornoR%></span> 
+    					<b><span style="margin-left:115px;"><%=voloRitorno[1].getAeroportoA().getCodice() %></span></b><br>
+    					
+    					<span style="color: red; margin-left: 160px; ">Uno scalo</span>
+    					<% if(voloRitorno[0].isCompreso() || voloRitorno[1].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti2;
+    					if((posti2=voloRitorno[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
+    					<% } %>
+    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					
+    								</div>
+    					
+										<br>
+   								
+   						
+   								<%   } %>
+   							   
+    				
+      						</div> 					
+  		
+    						<% } %>
+    						
+    						
+    				<div class="pl-5"> <!-- contiene le varie grid voli -->
+      					<% for(Volo[] voloAndata: voliAndataDueScali){
+      							LocalTime totale;
+								
+								LocalTime durataPrimoVolo=voloAndata[0].getDurataVolo();
+								
+								LocalDateTime dataArrivoPrimoVolo=voloAndata[0].getDataArrivo();
+								LocalDateTime dataPartenzaSecondoVolo=LocalDateTime.of(voloAndata[1].getDataPartenza(),voloAndata[1].getOrarioPartenza());
+								
+								LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+								
+								long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+								
+								
+								totale=durataPrimoVolo.plusMinutes(durataScalo1);
+								
+								LocalTime durataSecondoVolo=voloAndata[1].getDurataVolo();
+								
+								totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+								
+								LocalDateTime dataArrivoSecondoVolo=voloAndata[1].getDataArrivo();
+  								LocalDateTime dataPartenzaTerzoVolo=LocalDateTime.of(voloAndata[2].getDataPartenza(),voloAndata[2].getOrarioPartenza());
+  								
+  								LocalDateTime tempDateTime2 = LocalDateTime.from( dataArrivoSecondoVolo );
+  								
+  								long durataScalo2 = tempDateTime2.until( dataPartenzaTerzoVolo, ChronoUnit.MINUTES);
+  								
+  								totale=totale.plusMinutes(durataScalo2);
+  								
+  								LocalTime durataTerzoVolo=voloAndata[2].getDurataVolo();
+  								
+  								totale=totale.plusMinutes(durataTerzoVolo.getHour()*60+durataTerzoVolo.getMinute());
+  						
+  							
+								String durataFormatAndata=totale.getHour()+"h"+" "+totale.getMinute()+"min";
+  								
+      							for(Volo[] voloRitorno: voliRitornoDueScali){
+									LocalTime totaleR;
+      								
+      								LocalTime durataPrimoVoloR=voloRitorno[0].getDurataVolo();
+      								
+      								LocalDateTime dataArrivoPrimoVoloR=voloRitorno[0].getDataArrivo();
+      								LocalDateTime dataPartenzaSecondoVoloR=LocalDateTime.of(voloRitorno[1].getDataPartenza(),voloRitorno[1].getOrarioPartenza());
+      								
+      								LocalDateTime tempDateTimeR = LocalDateTime.from( dataArrivoPrimoVoloR );
+      								
+      								long durataScalo1R = tempDateTimeR.until( dataPartenzaSecondoVoloR, ChronoUnit.MINUTES);
+      								
+      								
+      								totaleR=durataPrimoVoloR.plusMinutes(durataScalo1R);
+      								
+      								LocalTime durataSecondoVoloR=voloRitorno[1].getDurataVolo();
+      								
+      								totaleR=totaleR.plusMinutes(durataSecondoVoloR.getHour()*60+durataSecondoVoloR.getMinute());
+      								
+      								LocalDateTime dataArrivoSecondoVoloR=voloRitorno[1].getDataArrivo();
+      								LocalDateTime dataPartenzaTerzoVoloR=LocalDateTime.of(voloRitorno[2].getDataPartenza(),voloRitorno[2].getOrarioPartenza());
+      								
+      								LocalDateTime tempDateTime2R = LocalDateTime.from( dataArrivoSecondoVoloR );
+      								
+      								long durataScalo2R = tempDateTime2R.until( dataPartenzaTerzoVoloR, ChronoUnit.MINUTES);
+      								
+      								totaleR=totaleR.plusMinutes(durataScalo2R);
+      								
+      								LocalTime durataTerzoVoloR=voloRitorno[2].getDurataVolo();
+      								
+      								totaleR=totaleR.plusMinutes(durataTerzoVolo.getHour()*60+durataTerzoVolo.getMinute());
+      						
+      								
+      								String durataFormatRitorno=totaleR.getHour()+"h"+" "+totaleR.getMinute()+"min";
+      								
+      							%>
+
+      						<div class="p-3 border border-light rounded bg-light">
+      						<div class="form-row align-items-center">
+  									 <h5 ><%=voloAndata[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloAndata[2].getOrarioArrivo().toString()%></h3>
+  							
+    						</div>
+    					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    					<b><span style="margin-left:115px;"><%=voloAndata[2].getAeroportoA().getCodice()%></span></b><br>
+    					
+    					<span style="color: red; margin-left: 155px; ">Due scali</span>
+    					<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso() || voloAndata[2].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti;
+    					if((posti=voloAndata[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    					<% } %>
+ 
+    					<div class="form-row align-items-center">
+  									 <h5><%=voloRitorno[0].getCa().getNome() %></h5>
+  									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
+  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<h3><%=voloRitorno[2].getOrarioArrivo() %></h3>
+  									
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%>   </h3>
+    						</div>
+    									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
+    					<span style="margin-left:100px;"><%=durataFormatRitorno%></span> 
+    					<b><span style="margin-left:115px;"><%=voloRitorno[2].getAeroportoA().getCodice() %></span></b><br>
+    					
+    					<span style="color: red; margin-left: 160px; ">Due scali</span>
+    					<% if(voloRitorno[0].isCompreso() || voloRitorno[1].isCompreso() || voloRitorno[2].isCompreso()){ %>
+    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    					<% } %>
+    					<% 
+    					int posti2;
+    					if((posti2=voloRitorno[0].getSeats())<=10){ %>
+    					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
+    					<% } %>
+    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					
+    								</div>
+    					
+										<br>
+   								
+   						
+   								<% } %>
+   							   
+    						<% } %>
+      						</div> 					
+  		
+    						<% } %>
       						<br><br>
       						
       					
@@ -414,8 +1299,7 @@
       					</div>
       								    						
 
-      					
-      				<% } %>    						
+      			  		<% } %>				
 
     				
     						
@@ -427,17 +1311,10 @@
       		
       			</div>
       			<!-- /Information Sections -->
-      			  
-      </div>
+			</div>
+ 
             
-          <footer class="tm-bg-dark-blue">
-          		<div class="container">
-                    <div class="row">
-                        <p class="col-sm-12 text-center tm-font-light tm-color-white p-4 tm-margin-b-0">
-                        Copyright &copy; <span class="tm-current-year">2019</span>      
-                    </div>
-                </div>                
-          </footer>
+
            
 
         
@@ -450,4 +1327,5 @@
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 	</body>
+	
 </html>
