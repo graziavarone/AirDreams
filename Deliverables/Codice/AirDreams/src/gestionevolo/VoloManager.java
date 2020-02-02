@@ -314,6 +314,7 @@ public class VoloManager {
         return b;
 	}
 	
+	//UEUEEUEUEUEU TERESAA QUI CI VORREBBE UNA MODIFIICA PERCHE IN LISTA VOLI IL GESTORE VOLI VISUALIZZA I VOLI DELLA SUA COMPAGNIA
 	public ArrayList<Volo> cercaVoli() throws SQLException {
 		Connection con = null;
 		Statement st = null;
@@ -397,7 +398,7 @@ public class VoloManager {
 				if (ricerca[0].equals("")||ricerca[1].equals(""))
 					sql+= "dataPart=?";
 				else
-					sql+= " AND aeroportoArr=?";
+					sql+= " AND dataPart=?"; //avevi inserito aeroportoArr ma ti perdono
 			}
 			
 			PreparedStatement ps = con.prepareStatement(sql);

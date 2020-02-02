@@ -178,7 +178,7 @@
    					 			<label class="col-sm-6 col-form-label">Inserire aeroporto di partenza</label>
    					 			<div class="col-sm-5 tm-form-element ">
                                 	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                    <input name="cityDepartures" type="text" class="form-control" value="" id="partenza" list="ricerca-datalist" onkeyup="ricerca(this.value,this.name)">
+                                    <input name="city" type="text" class="form-control" value="" id="partenza" list="ricerca-datalist" onkeyup="ricerca(this.value,this.name)">
                                 	<datalist id="ricerca-datalist"></datalist>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@
                             	<label class="col-sm-6 col-form-label">Inserire data del volo</label>
    					 			<div class="col-sm-5 tm-form-element ">
                                 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                    <input name="data" type="text" class="form-control" id="data">
+                                    <input name="data" type="text" class="form-control" id="start">
                                 </div>
   							</div>			
   							<button id="buttonForm" type="submit" class="btn btn-primary" hidden="true">Ricerca </button>
@@ -315,7 +315,11 @@
         <script src="js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
         <script src="js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
-        <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
+        <script src="slick/slick.min.js"></script>      
+        
+           <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
+        <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
+        <script src="scripts/ricercaAeroporti.js"> </script>            <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		<script type="text/javascript">
 			function visiblePartenza() {
@@ -332,6 +336,18 @@
 				document.getElementById("formData").removeAttribute("hidden");
 				document.getElementById("buttonForm").removeAttribute("hidden");			
 			}
+			
+		    $("#start").datepicker({
+	            defaultDate:"+1w",
+	            dateFormat:"dd/mm/yy",
+	            minDate:0,
+	            changeMonth:false,
+	            numberOfMonth:1,
+	            onClose: function(selectedDate){
+	                $("#return").datepicker("option","minDate",selectedDate);
+	            }
+	         })
+	         
 		</script>
 	</body>
 </html>

@@ -1,5 +1,4 @@
 function ricerca(str,name) {
-
 	var dataList = document.getElementById('ricerca-datalist');
 	
 	if(str.lenght == 0){

@@ -50,7 +50,7 @@ public class RicercaVoliServlet extends HttpServlet {
 			redirect="listaVoli.jsp";
 		} else if (action.equals("ricerca")) {
 			
-			String aeroportoP=request.getParameter("cityDepartures");
+			String aeroportoP=request.getParameter("city");
 			String aeroportoA=request.getParameter("cityArrivals");
 			String data=request.getParameter("data");
 			
