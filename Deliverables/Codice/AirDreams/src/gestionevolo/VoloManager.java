@@ -19,7 +19,7 @@ public class VoloManager {
 	private DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	//si dovrebbe controllare posti disponibili e orario partenza tra un volo e un altro(?)
-	public ArrayList<Volo> cercaDiretti(String aeroportoPartenza, String aeroportoArrivo, LocalDate dataDepartureLd, int passeggeri) {
+	public ArrayList<Volo> cercaDiretti(String aeroportoPartenza, String aeroportoArrivo, LocalDate dataDepartureLd, int passeggeri, int durata, int prezzo) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -37,7 +37,11 @@ public class VoloManager {
 			ps.setString(2, aeroportoArrivo);
 			ps.setString(3, dataDepartureLd.format(FORMATO_DIA));
 			
-			System.out.println("CercaVoliDiretti "+ps.toString());
+			if(durata!=0 && prezzo!=0) {
+				sql+=" and v.durata<="+durata+" and v.prezzo<="+prezzo;
+			}
+			
+			System.out.println("CercaVoliDiretti "+sql);
 			rs=ps.executeQuery();
 			
 			while (rs.next()) {
@@ -83,7 +87,7 @@ public class VoloManager {
 		return arrayList;
 	}
 
-	public ArrayList<Volo[]> cercaUnoScalo(String aeroportoPartenza, String aeroportoArrivo,LocalDate dataDepartureLd,int passeggeri) {
+	public ArrayList<Volo[]> cercaUnoScalo(String aeroportoPartenza, String aeroportoArrivo,LocalDate dataDepartureLd,int passeggeri, int durata, int prezzo) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -102,6 +106,9 @@ public class VoloManager {
 			ps.setString(2, aeroportoArrivo);
 			ps.setString(3, aeroportoArrivo);
 			ps.setString(4, dataDepartureLd.format(FORMATO_DIA));
+			
+			
+			
 			rs=ps.executeQuery();
 			
 			while (rs.next()) {
@@ -155,8 +162,35 @@ public class VoloManager {
 
 				
 				if((postiPrimoVolo>=0 && postiSecondoVolo>=0) &&
-						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo) ) && days<=1)
-				arrayList.add(volo);
+						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo) ) && days<=1) {
+					
+					if(prezzo!=0 && durata!=0) {
+						float prezzoTot=volo[0].getPrezzo()+volo[1].getPrezzo();
+						
+						LocalTime totale;
+							
+							LocalTime durataPrimoVolo=volo[0].getDurataVolo();
+					
+							
+							 tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+							
+							long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+							
+							
+							totale=durataPrimoVolo.plusMinutes(durataScalo1);
+							
+							LocalTime durataSecondoVolo=volo[1].getDurataVolo();
+							
+							totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+							
+							if(prezzoTot<=prezzo && totale.getHour()<=durata)
+								arrayList.add(volo);
+						
+					}
+					else {
+					arrayList.add(volo);
+					}
+				}
 				
 			} 
 		} catch (SQLException e) {
@@ -174,7 +208,7 @@ public class VoloManager {
 		return arrayList;
 	}
 
-	public ArrayList<Volo[]> cercaDueScali(String aeroportoPartenza, String aeroportoArrivo,LocalDate dataDepartureLd,int passeggeri) {
+	public ArrayList<Volo[]> cercaDueScali(String aeroportoPartenza, String aeroportoArrivo,LocalDate dataDepartureLd,int passeggeri, int durata, int prezzo) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -274,10 +308,46 @@ public class VoloManager {
 				
 				if((postiPrimoVolo>=0 && postiSecondoVolo>=0 && postiTerzoVolo>=0) && 
 						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo)) && 
-						(dataArrivoSecondoVolo.isBefore(dataPartenzaTerzoVolo)) && daysPrimoScalo<=1 && daysSecondoScalo<=1) 
-				arrayList.add(volo);
+						(dataArrivoSecondoVolo.isBefore(dataPartenzaTerzoVolo)) && daysPrimoScalo<=1 && daysSecondoScalo<=1) {
 
-				
+					if(prezzo!=0 && durata!=0) {
+						float prezzoTot=volo[0].getPrezzo()+volo[1].getPrezzo()+volo[2].getPrezzo();
+						
+						LocalTime totale;
+							
+							LocalTime durataPrimoVolo=volo[0].getDurataVolo();
+							
+							LocalDateTime tempDateTime = LocalDateTime.from( dataArrivoPrimoVolo );
+							
+							long durataScalo1 = tempDateTime.until( dataPartenzaSecondoVolo, ChronoUnit.MINUTES);
+							
+							
+							totale=durataPrimoVolo.plusMinutes(durataScalo1);
+							
+							LocalTime durataSecondoVolo=volo[1].getDurataVolo();
+							
+							totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
+							
+						
+								LocalDateTime tempDateTime2 = LocalDateTime.from( dataArrivoSecondoVolo );
+								
+								long durataScalo2 = tempDateTime2.until( dataPartenzaTerzoVolo, ChronoUnit.MINUTES);
+								
+								totale=totale.plusMinutes(durataScalo2);
+								
+								LocalTime durataTerzoVolo=volo[2].getDurataVolo();
+								
+								totale=totale.plusMinutes(durataTerzoVolo.getHour()*60+durataTerzoVolo.getMinute());
+							
+							if(prezzoTot<=prezzo && totale.getHour()<=durata)
+								arrayList.add(volo);
+						
+					}
+					else {
+					arrayList.add(volo);
+					}
+
+				}
 			} 
 		} catch (SQLException e) {
 			e.printStackTrace();

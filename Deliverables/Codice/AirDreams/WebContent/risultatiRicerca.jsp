@@ -9,16 +9,19 @@
 	
 		Account account= (Account) request.getSession().getAttribute("account");
 		
-	  ArrayList<Volo> voliAndataDiretti=(ArrayList<Volo>)request.getAttribute("voliAndataDiretti");
-	  ArrayList<Volo> voliRitornoDiretti=(ArrayList<Volo>)request.getAttribute("voliRitornoDiretti");
+	  ArrayList<Volo> voliAndataDiretti=(ArrayList<Volo>)request.getSession().getAttribute("voliAndataDiretti");
+	  ArrayList<Volo> voliRitornoDiretti=(ArrayList<Volo>)request.getSession().getAttribute("voliRitornoDiretti");
 	
-	  ArrayList<Volo[]> voliAndataUnoScalo=(ArrayList<Volo[]>)request.getAttribute("voliAndataUno");
-	  ArrayList<Volo[]> voliRitornoUnoScalo=(ArrayList<Volo[]>)request.getAttribute("voliRitornoUno");
+	  ArrayList<Volo[]> voliAndataUnoScalo=(ArrayList<Volo[]>)request.getSession().getAttribute("voliAndataUno");
+	  ArrayList<Volo[]> voliRitornoUnoScalo=(ArrayList<Volo[]>)request.getSession().getAttribute("voliRitornoUno");
 	  
-	  ArrayList<Volo[]> voliAndataDueScali=(ArrayList<Volo[]>)request.getAttribute("voliAndataDue");
-	  ArrayList<Volo[]> voliRitornoDueScali=(ArrayList<Volo[]>)request.getAttribute("voliRitornoDue");
+	  ArrayList<Volo[]> voliAndataDueScali=(ArrayList<Volo[]>)request.getSession().getAttribute("voliAndataDue");
+	  ArrayList<Volo[]> voliRitornoDueScali=(ArrayList<Volo[]>)request.getSession().getAttribute("voliRitornoDue");
 	  
-	  boolean testVoliAndata=voliAndataDiretti.size()==0 && voliAndataUnoScalo.size()==0 && voliAndataDueScali.size()==0;
+	  boolean testVoliAndata=false;
+	  if(voliAndataDiretti!=null && voliAndataUnoScalo!=null && voliAndataDueScali!=null){
+	   testVoliAndata=voliAndataDiretti.size()==0 && voliAndataUnoScalo.size()==0 && voliAndataDueScali.size()==0;
+	  }
 	  boolean testVoliRitorno=false;
 	  boolean soloVoliDirettiRitorno=false;
 	  if(voliRitornoDiretti!=null && voliRitornoUnoScalo!=null && voliRitornoDueScali!=null){
@@ -157,25 +160,67 @@
 	  						<div class="img"></div>
 	  						<h3>Ricerca voli per</h3>
 	  					</div>
+	  					
+	  					
 	  				</div>
-        			<ul class="list-unstyled components mb-5">
-          				<li>
-              				<a href=""><span class="fa fa-plane mr-3"></span>Aeroporto di partenza</a>
-          				</li>
-         			 	<li>
-            				<a href=""><span class="fa fa-plane mr-3"></span>Aeroporto di destinazione</a>
-          				</li>
-          				<li>
-            				<a href=""><span class="fa fa-calendar mr-3"></span>Data volo</a>
-          				</li>
-        			</ul>
+	  				
+	  				<div>
+	  				<form method="post" action="FiltraRisultatiServlet" >
+							<%  if(voliRitornoDiretti!=null && voliRitornoUnoScalo!=null && voliRitornoDueScali!=null){%>
+              			<input type="checkbox"  name="DirettoAndata" value="DirettoAndata" style="margin-left: 30px;">Solo voli diretti (Andata)<br>
+          			
+          						<input type="checkbox"  name="DirettoRitorno" value="DirettoRitorno" style="margin-left: 30px;">Solo voli diretti (Ritorno)
+          				
+            				<div class="slidecontainer">
+						  Durata volo (Andata) <input type="range" name="durataAndata" min="0" max="24" value="3" class="slider" id="myRangeDurata">
+						    <p style="color: white;">Ore: <span id="demoAndata"></span>h</p>
+						</div>
+						<div class="slidecontainer">
+						  Durata volo (Ritorno) <input type="range" name="durataRitorno" min="0" max="24" value="3" class="slider" id="myRangeDurata2">
+						    <p style="color: white;">Ore: <span id="demoRitorno"></span>h</p>
+						</div>
+          		
+            			<div class="slidecontainer">
+						  Prezzo volo (Andata)<input type="range" name="prezzoAndata" min="0" max="3000" value="100" class="slider" id="myRangePrezzo">
+						    <p style="color: white;">Prezzo: &euro; <span id="demoAndata2"></span></p>
+						</div>
+							<div class="slidecontainer">
+						  Prezzo volo (Ritorno)<input type="range" name="prezzoRitorno" min="0" max="3000" value="100" class="slider" id="myRangePrezzo2">
+						    <p style="color: white;">Prezzo: &euro; <span id="demoRitorno2"></span></p>
+						</div>
+						<% } else { %> 
+							<input type="checkbox"  name="DirettoAndata" value="DirettoAndata" style="margin-left: 30px;">Solo voli diretti<br>
+          			
+          					
+            				<div class="slidecontainer">
+						  Durata volo  <input type="range" name="durataAndata" min="0" max="24" value="3" class="slider" id="myRangeDurata">
+						    <p style="color: white;">Ore: <span id="demoAndata"></span>h</p>
+						</div>
+					
+            			<div class="slidecontainer">
+						  Prezzo volo <input type="range" name="prezzoAndata" min="0" max="3000" value="100" class="slider" id="myRangePrezzo">
+						    <p style="color: white;">Prezzo: &euro; <span id="demoAndata2"></span></p>
+						</div>
+						
+						<% } %>
+          			
+          					<button type="submit"  class="btn btn-primary">Filtra</button>
+          				</form>
+	  				
+	  				
+	  				
+	  				</div>
+        		
+
+        		
 				</nav>
 				<!-- /Left Navbar -->
-           
+           	
            		<!-- Information Sections -->
            		<div class="justify-content-center">
            			<div>
            				<!-- verranno inseriti i form per i criteri di ricerca -->
+           			</div>
            			</div>
            			
                 	<div class="pl-3" id="info">
@@ -217,13 +262,13 @@
  						
   						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
   					
-    							<br>
    					
-   								<%  }%>
    									</div> 
    									<br>
+   									
+   								<%  }%>
    									</div>
-   							
+   									
    								<% if(soloVoliDirettiAndata==false){ %>
    								<div class="pl-5"><!-- contiene le varie grid voli -->
    						        <% for(Volo[] voloAndata: voliAndataUnoScalo){
@@ -274,13 +319,13 @@
     				
  						
   						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
-  					
+  							</div> 
     							<br>
-   					
    								<%  }%>
-   									</div> 
-    							<br>
+   						</div>			
     							<div>
+                			</div>
+                			
                 			
                 			<div class="pl-5"><!-- contiene le varie grid voli -->
    						        <% for(Volo[] voloAndata: voliAndataDueScali){
@@ -344,14 +389,16 @@
     				
  						
   						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
-  					
+  							</div> 
     							<br>
    					
    								<%  }%>
-   									</div> 
-    							<br>
+   									</div>
+   									<br>
     							<div>
                 			<% } %>
+                			</div>
+                			
                 		<% } else { %>
       					<h2> Lista voli </h2>
       							<div class="pl-5"><!-- contiene le varie grid voli -->
@@ -376,11 +423,13 @@
   									<h3 style="margin-left: 100px;"><%=voloAndata.getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata.getOrarioArrivo().toString()%></h3>
+  					
   							
     						</div>
     					<b><span style="margin-left:177px;"><%=voloAndata.getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
     					<b><span style="margin-left:115px;"><%=voloAndata.getAeroportoA().getCodice()%></span></b><br>
+    							
     					
     					<span style="color: green; margin-left: 155px; ">Diretto</span>
     					<% if(voloAndata.isCompreso()){ %>
@@ -397,14 +446,14 @@
   									<h3 style="margin-left: 100px;"><%=voloRitorno.getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloRitorno.getOrarioArrivo() %></h3>
-  									
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata.getPrezzo()+voloRitorno.getPrezzo()%>    </h3>
+  										
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale &euro; <%=voloAndata.getPrezzo()+voloRitorno.getPrezzo()%>    </h3>
     						
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno.getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
     					<b><span style="margin-left:115px;"><%=voloRitorno.getAeroportoA().getCodice() %></span></b><br>
-    					
+    			
     					<span style="color: green; margin-left: 160px; ">Diretto</span>
     					<% if(voloRitorno.isCompreso()){ %>
     					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
@@ -424,7 +473,7 @@
    									</div> 
     						<% } %>
     							
-    				
+    					
     					<% if(soloVoliDirettiAndata==false && soloVoliDirettiRitorno==false){ %>
 						<div class="pl-5"> <!-- contiene le varie grid voli -->
       					<% for(Volo voloAndata: voliAndataDiretti){
@@ -1289,34 +1338,30 @@
       						</div> 					
   		
     						<% } %>
-      						<br><br>
-      						
+      			
+      			
+      								    						
+
+      			  		<% } %>				
+
+    							<br><br>
+    									
       					
       							<div class="d-flex justify-content-center">
       					<h2 class="p-2"><i class="fa fa-arrow-left"></i></h2>
       					<h2 class="p-2"><i class="fa fa-arrow-right"></i></h2>
       			 			  	
       					</div>
-      								    						
-
-      			  		<% } %>				
-
-    				
-    						
     						
       					 
-      				</div>
-      				</div>
+      			
+      			
       				
       		
-      			</div>
+      			
       			<!-- /Information Sections -->
-			</div>
- 
-            
-
-           
-
+	
+	
         
         <!-- load JS files -->
         <script src="js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
@@ -1326,6 +1371,47 @@
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
+		
+		
+		<script type="text/javascript">
+		var slider = document.getElementById("myRangeDurata");
+		var output = document.getElementById("demoAndata");
+		output.innerHTML = slider.value; // Display the default slider value
+
+		// Update the current slider value (each time you drag the slider handle)
+		slider.oninput = function() {
+		  output.innerHTML = this.value;
+		}
+		
+		var slider2 = document.getElementById("myRangeDurata2");
+		var output2 = document.getElementById("demoRitorno");
+		output2.innerHTML = slider2.value; // Display the default slider value
+
+		// Update the current slider value (each time you drag the slider handle)
+		slider2.oninput = function() {
+		  output2.innerHTML = this.value;
+		}
+		
+		var slider3 = document.getElementById("myRangePrezzo");
+		var output3 = document.getElementById("demoAndata2");
+		output3.innerHTML = slider3.value; // Display the default slider value
+
+		// Update the current slider value (each time you drag the slider handle)
+		slider3.oninput = function() {
+		  output3.innerHTML = this.value;
+		}
+		
+		var slider4 = document.getElementById("myRangePrezzo2");
+		var output4 = document.getElementById("demoRitorno2");
+		output4.innerHTML = slider4.value; // Display the default slider value
+
+		// Update the current slider value (each time you drag the slider handle)
+		slider4.oninput = function() {
+		  output4.innerHTML = this.value;
+		}
+		</script>
 	</body>
+	
+	
 	
 </html>

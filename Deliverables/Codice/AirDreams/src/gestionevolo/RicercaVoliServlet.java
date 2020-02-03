@@ -106,22 +106,22 @@ public class RicercaVoliServlet extends HttpServlet {
 
 					  //volo di andata e ritorno diretti
 					  ArrayList<Volo> voliAndataDiretti=voloManager.cercaDiretti(aeroportoP.getCodice(), aeroportoA.getCodice(),
-							  dataDepartureLd ,Integer.parseInt(numPasseggeri));
-					  request.setAttribute("voliAndataDiretti", voliAndataDiretti);
+							  dataDepartureLd ,Integer.parseInt(numPasseggeri),0,0);
+					  request.getSession().setAttribute("voliAndataDiretti", voliAndataDiretti);
 					  
 					  if(checkbox==null) {
 					  ArrayList<Volo[]> voliAndataUnoScalo=voloManager.cercaUnoScalo(aeroportoP.getCodice(), aeroportoA.getCodice(),
-							  dataDepartureLd, Integer.parseInt(numPasseggeri));
+							  dataDepartureLd, Integer.parseInt(numPasseggeri),0,0);
 					  
 					  
 					  ArrayList<Volo[]> voliAndataDueScali=voloManager.cercaDueScali(aeroportoP.getCodice(), aeroportoA.getCodice(),
-							  dataDepartureLd, Integer.parseInt(numPasseggeri));
+							  dataDepartureLd, Integer.parseInt(numPasseggeri),0,0);
 					  
 					  
-					  request.setAttribute("voliAndataUno", voliAndataUnoScalo);
+					  request.getSession().setAttribute("voliAndataUno", voliAndataUnoScalo);
 					 
 					  
-					  request.setAttribute("voliAndataDue", voliAndataDueScali);
+					  request.getSession().setAttribute("voliAndataDue", voliAndataDueScali);
 					  }
 					  
 					 
@@ -129,21 +129,21 @@ public class RicercaVoliServlet extends HttpServlet {
 							  LocalDate dataReturnLd = LocalDate.parse(dateReturn, FORMATO_DIA);
 							  
 							  ArrayList<Volo> voliRitornoDiretti=voloManager.cercaDiretti(aeroportoA.getCodice(), aeroportoP.getCodice(),
-									  dataReturnLd,Integer.parseInt(numPasseggeri));
+									  dataReturnLd,Integer.parseInt(numPasseggeri),0,0);
 							  
 							if(checkbox==null) {
 							  ArrayList<Volo[]> voliRitornoUnoScalo=voloManager.cercaUnoScalo(aeroportoA.getCodice(), aeroportoP.getCodice(),
-									  dataReturnLd, Integer.parseInt(numPasseggeri));
+									  dataReturnLd, Integer.parseInt(numPasseggeri),0,0);
 						
 							ArrayList<Volo[]> voliRitornoDueScali=voloManager.cercaDueScali(aeroportoA.getCodice(), aeroportoP.getCodice(),
-									  dataReturnLd, Integer.parseInt(numPasseggeri));
+									  dataReturnLd, Integer.parseInt(numPasseggeri), 0, 0);
 							
-							 request.setAttribute("voliRitornoUno", voliRitornoUnoScalo);
-							  request.setAttribute("voliRitornoDue", voliRitornoDueScali);
+							 request.getSession().setAttribute("voliRitornoUno", voliRitornoUnoScalo);
+							  request.getSession().setAttribute("voliRitornoDue", voliRitornoDueScali);
 							
 							}
 							
-							request.setAttribute("voliRitornoDiretti", voliRitornoDiretti);
+							request.getSession().setAttribute("voliRitornoDiretti", voliRitornoDiretti);
 							
 							  
 						}

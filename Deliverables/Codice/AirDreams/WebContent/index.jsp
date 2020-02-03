@@ -161,13 +161,13 @@ http://www.tooplate.com/view/2095-level
                                     	
                                         <div class="form-group tm-form-element tm-form-element-100">
                                            <i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                            <input name="city" id="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
-                             
+                             				<i id=scambia class="fa fa-arrows-h fa-2x"></i>
                                            <div class="form-group tm-form-element tm-form-element-100">
                                             	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                           <input name="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                           <input name="cityArrivals" id="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         
@@ -288,6 +288,12 @@ http://www.tooplate.com/view/2095-level
         
         $("#andERit").click(function(){
        	 $("#return").prop('disabled', false);
+        });
+        
+        $("#scambia").click(function(){
+        var temp=$("#city").val();
+       	 $("#city").val($("#cityArrivals").val());
+       	 $("#cityArrivals").val(temp);
         });
          
          
