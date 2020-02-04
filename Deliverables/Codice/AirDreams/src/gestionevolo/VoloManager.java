@@ -37,9 +37,7 @@ public class VoloManager {
 			ps.setString(2, aeroportoArrivo);
 			ps.setString(3, dataDepartureLd.format(FORMATO_DIA));
 			
-			if(durata!=0 && prezzo!=0) {
-				sql+=" and v.durata<="+durata+" and v.prezzo<="+prezzo;
-			}
+		
 			
 			System.out.println("CercaVoliDiretti "+sql);
 			rs=ps.executeQuery();
@@ -69,8 +67,19 @@ public class VoloManager {
 
 				int postiRimasti=volo.getSeats()-passeggeri;
 				System.out.println("I posti rimasti del volo "+volo+" sono "+postiRimasti);
-				if(postiRimasti>=0)
+				if(postiRimasti>=0) {
+					if(durata!=0 && prezzo!=0) {
+						if(volo.getDurataVolo().getHour()<=durata && volo.getPrezzo()<=prezzo) {
+							 arrayList.add(volo);
+						System.out.println("filtro durata era "+durata);
+						System.out.println("filtro prezzo era "+prezzo);
+						
+						System.out.println("AGGIUNTO PER FILTRI "+volo);
+						}
+					} else {
 				 arrayList.add(volo);
+					}
+				}
 			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,8 +173,8 @@ public class VoloManager {
 				if((postiPrimoVolo>=0 && postiSecondoVolo>=0) &&
 						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo) ) && days<=1) {
 					
-					if(prezzo!=0 && durata!=0) {
-						float prezzoTot=volo[0].getPrezzo()+volo[1].getPrezzo();
+					if(durata!=0 && prezzo!=0) {
+						float prezzoTotale=volo[0].getPrezzo()+volo[1].getPrezzo();
 						
 						LocalTime totale;
 							
@@ -183,9 +192,13 @@ public class VoloManager {
 							
 							totale=totale.plusMinutes(durataSecondoVolo.getHour()*60+durataSecondoVolo.getMinute());
 							
-							if(prezzoTot<=prezzo && totale.getHour()<=durata)
+							if(totale.getHour()<=durata && prezzoTotale<=prezzo) {
 								arrayList.add(volo);
-						
+								
+								System.out.println("filtro durata era scalo "+durata);
+								
+								System.out.println("AGGIUNTO PER FILTRI scalo "+volo);
+							}
 					}
 					else {
 					arrayList.add(volo);
@@ -310,10 +323,9 @@ public class VoloManager {
 						(dataArrivoPrimoVolo.isBefore(dataPartenzaSecondoVolo)) && 
 						(dataArrivoSecondoVolo.isBefore(dataPartenzaTerzoVolo)) && daysPrimoScalo<=1 && daysSecondoScalo<=1) {
 
-					if(prezzo!=0 && durata!=0) {
-						float prezzoTot=volo[0].getPrezzo()+volo[1].getPrezzo()+volo[2].getPrezzo();
-						
-						LocalTime totale;
+					if(durata!=0 && prezzo!=0) {		
+						float prezzoTotale=volo[0].getPrezzo()+volo[1].getPrezzo()+volo[2].getPrezzo();
+							LocalTime totale;
 							
 							LocalTime durataPrimoVolo=volo[0].getDurataVolo();
 							
@@ -339,8 +351,12 @@ public class VoloManager {
 								
 								totale=totale.plusMinutes(durataTerzoVolo.getHour()*60+durataTerzoVolo.getMinute());
 							
-							if(prezzoTot<=prezzo && totale.getHour()<=durata)
+							if(totale.getHour()<=durata && prezzoTotale<=prezzo)
 								arrayList.add(volo);
+							
+							System.out.println("filtro durata era scali "+durata);
+							
+							System.out.println("AGGIUNTO PER FILTRI scali "+volo);
 						
 					}
 					else {

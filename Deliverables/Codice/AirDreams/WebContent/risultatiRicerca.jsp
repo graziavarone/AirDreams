@@ -7,16 +7,46 @@
 	if(mod==null)
 		mod=true;
 	
-		Account account= (Account) request.getSession().getAttribute("account");
-		
-	  ArrayList<Volo> voliAndataDiretti=(ArrayList<Volo>)request.getSession().getAttribute("voliAndataDiretti");
-	  ArrayList<Volo> voliRitornoDiretti=(ArrayList<Volo>)request.getSession().getAttribute("voliRitornoDiretti");
-	
-	  ArrayList<Volo[]> voliAndataUnoScalo=(ArrayList<Volo[]>)request.getSession().getAttribute("voliAndataUno");
-	  ArrayList<Volo[]> voliRitornoUnoScalo=(ArrayList<Volo[]>)request.getSession().getAttribute("voliRitornoUno");
+	  String city=(String)request.getAttribute("city");
+	  String cityArrivals=(String)request.getAttribute("cityArrivals");
+	  String seats=(String)request.getAttribute("seats");
+	  String dateDeparture=(String)request.getAttribute("dateDeparture");
+	  String dateReturn=(String)request.getAttribute("dateReturn");
+	  String diretto=(String)request.getAttribute("Diretto");
 	  
-	  ArrayList<Volo[]> voliAndataDueScali=(ArrayList<Volo[]>)request.getSession().getAttribute("voliAndataDue");
-	  ArrayList<Volo[]> voliRitornoDueScali=(ArrayList<Volo[]>)request.getSession().getAttribute("voliRitornoDue");
+	  Integer durataAndata=(Integer)request.getAttribute("durataAndata");
+	  Integer prezzoAndata=(Integer)request.getAttribute("prezzoAndata");
+	  
+	  if(durataAndata==null){
+	  durataAndata=12;
+	  }
+	  
+	  if(prezzoAndata==null){
+	  prezzoAndata=250;
+	  }
+	  
+	  Integer durataRitorno=(Integer)request.getAttribute("durataRitorno");
+	  Integer prezzoRitorno=(Integer)request.getAttribute("prezzoRitorno");
+	  
+	  if(durataRitorno==null){
+	  durataRitorno=12;
+	  }
+	  
+	  if(prezzoRitorno==null){
+	  prezzoRitorno=250;
+	  }
+	  
+	  System.out.println("Nella jsp la checkbox è" +diretto);
+		Account account= (Account) request.getAttribute("account");
+		
+	  ArrayList<Volo> voliAndataDiretti=(ArrayList<Volo>)request.getAttribute("voliAndataDiretti");
+	  ArrayList<Volo> voliRitornoDiretti=(ArrayList<Volo>)request.getAttribute("voliRitornoDiretti");
+	
+	  ArrayList<Volo[]> voliAndataUnoScalo=(ArrayList<Volo[]>)request.getAttribute("voliAndataUno");
+	  ArrayList<Volo[]> voliRitornoUnoScalo=(ArrayList<Volo[]>)request.getAttribute("voliRitornoUno");
+	  
+	  ArrayList<Volo[]> voliAndataDueScali=(ArrayList<Volo[]>)request.getAttribute("voliAndataDue");
+	  ArrayList<Volo[]> voliRitornoDueScali=(ArrayList<Volo[]>)request.getAttribute("voliRitornoDue");
 	  
 	  boolean testVoliAndata=false;
 	  if(voliAndataDiretti!=null && voliAndataUnoScalo!=null && voliAndataDueScali!=null){
@@ -30,7 +60,9 @@
 	  }
 	  
 	  boolean soloVoliDirettiAndata=voliAndataDiretti!=null && voliAndataUnoScalo==null && voliAndataDueScali==null;
-	  System.out.println(soloVoliDirettiAndata);
+	 
+	  boolean viaggioSolaAndata=voliRitornoDiretti==null && voliRitornoUnoScalo==null && voliRitornoDueScali==null;
+	  System.out.println("Viagggio sola andata"+viaggioSolaAndata);
 		
 %>
 
@@ -69,11 +101,11 @@
                             <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
                             
                             <ul class="navbar-nav ml-auto">
-                            	<% if (request.getSession().getAttribute("account")==null){ %>
+                            	<% if (request.getAttribute("account")==null){ %>
                             		<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
                             	<% } %>
-                            	<%  if (request.getSession().getAttribute("account")!=null){
-                            		account=(Account)request.getSession().getAttribute("account");
+                            	<%  if (request.getAttribute("account")!=null){
+                            		account=(Account)request.getAttribute("account");
                             		Ruolo ruolo=account.getRuolo();
                             		
                             		if(ruolo==null){
@@ -165,48 +197,71 @@
 	  				</div>
 	  				
 	  				<div>
-	  				<form method="post" action="FiltraRisultatiServlet" >
-							<%  if(voliRitornoDiretti!=null && voliRitornoUnoScalo!=null && voliRitornoDueScali!=null){%>
-              			<input type="checkbox"  name="DirettoAndata" value="DirettoAndata" style="margin-left: 30px;">Solo voli diretti (Andata)<br>
-          			
-          						<input type="checkbox"  name="DirettoRitorno" value="DirettoRitorno" style="margin-left: 30px;">Solo voli diretti (Ritorno)
-          				
-            				<div class="slidecontainer">
-						  Durata volo (Andata) <input type="range" name="durataAndata" min="0" max="24" value="3" class="slider" id="myRangeDurata">
-						    <p style="color: white;">Ore: <span id="demoAndata"></span>h</p>
-						</div>
-						<div class="slidecontainer">
-						  Durata volo (Ritorno) <input type="range" name="durataRitorno" min="0" max="24" value="3" class="slider" id="myRangeDurata2">
-						    <p style="color: white;">Ore: <span id="demoRitorno"></span>h</p>
-						</div>
-          		
-            			<div class="slidecontainer">
-						  Prezzo volo (Andata)<input type="range" name="prezzoAndata" min="0" max="3000" value="100" class="slider" id="myRangePrezzo">
-						    <p style="color: white;">Prezzo: &euro; <span id="demoAndata2"></span></p>
-						</div>
-							<div class="slidecontainer">
-						  Prezzo volo (Ritorno)<input type="range" name="prezzoRitorno" min="0" max="3000" value="100" class="slider" id="myRangePrezzo2">
-						    <p style="color: white;">Prezzo: &euro; <span id="demoRitorno2"></span></p>
-						</div>
-						<% } else { %> 
-							<input type="checkbox"  name="DirettoAndata" value="DirettoAndata" style="margin-left: 30px;">Solo voli diretti<br>
-          			
-          					
-            				<div class="slidecontainer">
-						  Durata volo  <input type="range" name="durataAndata" min="0" max="24" value="3" class="slider" id="myRangeDurata">
-						    <p style="color: white;">Ore: <span id="demoAndata"></span>h</p>
-						</div>
-					
-            			<div class="slidecontainer">
-						  Prezzo volo <input type="range" name="prezzoAndata" min="0" max="3000" value="100" class="slider" id="myRangePrezzo">
-						    <p style="color: white;">Prezzo: &euro; <span id="demoAndata2"></span></p>
+	  				
+	  				<% if(viaggioSolaAndata){ %>
+	  					<%if (diretto!=null){ %>
+	  				<input type="checkbox" checked="checked" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
+	  				name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
+	  				<% } else { %>
+	  				<input type="checkbox" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
+	  				name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
+	  	
+	  				<% } %>
+	  						<div class="slidecontainer">
+						  Durata volo <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
+						  type="range" name="durataAndata" min="1" max="24" value="<%=durataAndata%>" class="slider" id="myRangeDurataAndata">
+						    <p style="color: white;">Ore: <span id="durataAndata"></span>h</p>
 						</div>
 						
-						<% } %>
-          			
-          					<button type="submit"  class="btn btn-primary">Filtra</button>
-          				</form>
+							<div class="slidecontainer">
+						  Prezzo volo <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
+						   type="range" name="prezzoAndata" min="1" max="500" value="<%=prezzoAndata %>" class="slider" id="myRangePrezzoAndata">
+						    <p style="color: white;">Prezzo: &euro; <span id="prezzoAndata"></span></p>
+						</div>
+						
+	  				<% } else { %>
+	  				<%if (diretto!=null){ %>
+	  				<input type="checkbox" checked="checked" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
+	  				name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
+	  				<% } else { %>
+	  				<input type="checkbox" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
+	  				name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
+	  	
+	  				<% } %>
+	  						<div class="slidecontainer">
+						  Durata volo di andata <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
+						  type="range" name="durataAndata" min="1" max="24" value="<%=durataAndata %>" class="slider" id="myRangeDurataAndata">
+						    <p style="color: white;">Ore: <span id="durataAndata"></span>h</p>
+						</div>
+						
+							<div class="slidecontainer">
+						  Prezzo volo di andata <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
+						   type="range" name="prezzoAndata" min="1" max="500" value="<%=prezzoAndata %>" class="slider" id="myRangePrezzoAndata">
+						    <p style="color: white;">Prezzo: &euro; <span id="prezzoAndata"></span></p>
+						    
+						    	<div class="slidecontainer">
+						  Durata volo di ritorno <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
+						  type="range" name="durataAndata" min="1" max="24" value="<%=durataRitorno %>" class="slider" id="myRangeDurataRitorno">
+						    <p style="color: white;">Ore: <span id="durataRitorno"></span>h</p>
+						</div>
+						
+							<div class="slidecontainer">
+						  Prezzo volo di ritorno <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
+						   type="range" name="prezzoAndata" min="1" max="500" value="<%=prezzoRitorno %>" class="slider" id="myRangePrezzoRitorno">
+						    <p style="color: white;">Prezzo: &euro; <span id="prezzoRitorno"></span></p>
+						</div>
 	  				
+	  				
+	  				<% } %>
+	  				
+	  				
+	  			
+	  		
+					
+          		
+            		
+						
+						
 	  				
 	  				
 	  				</div>
@@ -408,7 +463,7 @@
   								int minutiDurataAndata=voloAndata.getDurataVolo().getMinute();
   								String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
   								
-  						
+  							
       							for(Volo voloRitorno: voliRitornoDiretti){
       								int oreDurataRitorno=voloRitorno.getDurataVolo().getHour();
       								int minutiDurataRitorno=voloRitorno.getDurataVolo().getMinute();
@@ -420,16 +475,19 @@
       						<div class="p-3 border border-light rounded bg-light">
       						<div class="form-row align-items-center">
   									 <h5><%=voloAndata.getCa().getNome() %></h5>
+  									 
   									<h3 style="margin-left: 100px;"><%=voloAndata.getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata.getOrarioArrivo().toString()%></h3>
-  					
+  										<span style="margin-left: 10px;"> Totale andata: &euro; <%=voloAndata.getPrezzo()%></span>
   							
     						</div>
+    							
     					<b><span style="margin-left:177px;"><%=voloAndata.getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
     					<b><span style="margin-left:115px;"><%=voloAndata.getAeroportoA().getCodice()%></span></b><br>
-    							
+    		
+    								
     					
     					<span style="color: green; margin-left: 155px; ">Diretto</span>
     					<% if(voloAndata.isCompreso()){ %>
@@ -446,8 +504,10 @@
   									<h3 style="margin-left: 100px;"><%=voloRitorno.getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloRitorno.getOrarioArrivo() %></h3>
+  									<span style="margin-left: 10px;"> Totale ritorno: &euro; <%=voloRitorno.getPrezzo()%></span>
+    						
   										
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale &euro; <%=voloAndata.getPrezzo()+voloRitorno.getPrezzo()%>    </h3>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale: &euro; <%=voloAndata.getPrezzo()+voloRitorno.getPrezzo()%>    </h3>
     						
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno.getAeroportoP().getCodice()%></span> </b>
@@ -517,6 +577,7 @@
   									<h3 style="margin-left: 100px;"><%=voloAndata.getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata.getOrarioArrivo().toString()%></h3>
+  											<span style="margin-left: 10px;"> Totale andata: &euro; <%=voloAndata.getPrezzo()%></span>
   							
     						</div>
     					<b><span style="margin-left:177px;"><%=voloAndata.getAeroportoP().getCodice()%></span> </b>
@@ -538,8 +599,9 @@
   									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloRitorno[1].getOrarioArrivo() %></h3>
+  											<span style="margin-left: 10px;"> Totale ritorno: &euro; <%=voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%></span>
   									
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata.getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%>    </h3>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale: &euro; <%=voloAndata.getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%>    </h3>
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
@@ -622,6 +684,7 @@
   									<h3 style="margin-left: 100px;"><%=voloAndata.getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata.getOrarioArrivo().toString()%></h3>
+  											<span style="margin-left: 10px;"> Totale andata: &euro; <%=voloAndata.getPrezzo()%></span>
   							
     						</div>
     					<b><span style="margin-left:177px;"><%=voloAndata.getAeroportoP().getCodice()%></span> </b>
@@ -643,8 +706,9 @@
   									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloRitorno[2].getOrarioArrivo() %></h3>
+  									<span style="margin-left: 10px;"> Totale ritorno: &euro; <%=voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%></span>
   									
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata.getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%>    </h3>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale: &euro; <%=voloAndata.getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%>    </h3>
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
@@ -711,6 +775,7 @@
   									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata[1].getOrarioArrivo().toString()%></h3>
+  											<span style="margin-left: 10px;"> Totale andata: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()%></span>
   							
     						</div>
     					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
@@ -732,8 +797,8 @@
   									<h3 style="margin-left: 100px;"><%=voloRitorno.getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloRitorno.getOrarioArrivo() %></h3>
-  									
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloRitorno.getPrezzo()+voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()%>    </h3>
+  											<span style="margin-left: 10px;"> Totale ritorno: &euro; <%=voloRitorno.getPrezzo()%></span>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale: &euro; <%=voloRitorno.getPrezzo()+voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()%>    </h3>
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno.getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
@@ -816,6 +881,7 @@
   									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata[1].getOrarioArrivo().toString()%></h3>
+  									<span style="margin-left: 10px;"> Totale andata: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()%></span>
   							
     						</div>
     					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
@@ -837,8 +903,8 @@
   									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloRitorno[1].getOrarioArrivo() %></h3>
-  									
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%>    </h3>
+  											<span style="margin-left: 10px;"> Totale ritorno: &euro; <%=voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%></span>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%>    </h3>
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatRitornoR %></span> 
@@ -934,6 +1000,7 @@
   									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata[1].getOrarioArrivo().toString()%></h3>
+  									<span style="margin-left: 10px;"> Totale andata: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo() %></span>
   							
     						</div>
     					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
@@ -955,8 +1022,8 @@
   									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloRitorno[2].getOrarioArrivo() %></h3>
-  									
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%>   </h3>
+  											<span style="margin-left: 10px;"> Totale ritorno: &euro; <%=voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%></span>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%>   </h3>
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
@@ -1038,6 +1105,7 @@
   									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata[2].getOrarioArrivo().toString()%></h3>
+  									<span style="margin-left: 10px;"> Totale andata: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()%></span>
   							
     						</div>
     					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
@@ -1059,8 +1127,8 @@
   									<h3 style="margin-left: 100px;"><%=voloRitorno.getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloRitorno.getOrarioArrivo() %></h3>
-  									
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()+voloRitorno.getPrezzo()%>   </h3>
+  											<span style="margin-left: 10px;"> Totale ritorno: &euro; <%=voloRitorno.getPrezzo()%></span>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()+voloRitorno.getPrezzo()%>   </h3>
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno.getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatRitorno %></span> 
@@ -1157,6 +1225,7 @@
   									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata[2].getOrarioArrivo().toString()%></h3>
+  									<span style="margin-left: 10px;"> Totale andata: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()%></span>
   							
     						</div>
     					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
@@ -1178,8 +1247,8 @@
   									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloRitorno[1].getOrarioArrivo() %></h3>
-  									
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%>   </h3>
+  											<span style="margin-left: 10px;"> Totale ritorno: &euro; <%=voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%></span>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()%>   </h3>
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatRitornoR%></span> 
@@ -1288,6 +1357,7 @@
   									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata[2].getOrarioArrivo().toString()%></h3>
+  											<span style="margin-left: 10px;"> Totale andata: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()%></span>
   							
     						</div>
     					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
@@ -1309,8 +1379,8 @@
   									<h3 style="margin-left: 100px;"><%=voloRitorno[0].getOrarioPartenza() %></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloRitorno[2].getOrarioArrivo() %></h3>
-  									
-  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%>   </h3>
+  											<span style="margin-left: 10px;"> Totale ritorno: &euro; <%=voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%></span>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;">Totale: &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()+voloRitorno[0].getPrezzo()+voloRitorno[1].getPrezzo()+voloRitorno[2].getPrezzo()%>   </h3>
     						</div>
     									<b><span style="margin-left:177px;"><%=voloRitorno[0].getAeroportoP().getCodice()%></span> </b>
     					<span style="margin-left:100px;"><%=durataFormatRitorno%></span> 
@@ -1342,7 +1412,7 @@
       			
       								    						
 
-      			  		<% } %>				
+      			  		<% }  %>				
 
     							<br><br>
     									
@@ -1374,41 +1444,87 @@
 		
 		
 		<script type="text/javascript">
-		var slider = document.getElementById("myRangeDurata");
-		var output = document.getElementById("demoAndata");
-		output.innerHTML = slider.value; // Display the default slider value
+		
+		function filtra(city,cityArrivals,seats,dateDeparture,dateReturn,test){
+			var slider = document.getElementById("myRangeDurataAndata");
+			var durataAndataFiltro=slider.value;
+			
+			
+			var slider2 = document.getElementById("myRangePrezzoAndata");
+			var prezzoAndataFiltro=slider2.value;
+			
+		
+			if(test){
+			
+				if(document.getElementById('Diretto').checked){
+		
+					location.href="RicercaVoliServlet?city="+city+"&cityArrivals="+cityArrivals+"&seats="+seats+
+							"&dateDeparture="+dateDeparture+"&Diretto=Diretto&durataAndataFiltro="+durataAndataFiltro+
+							"&prezzoAndataFiltro="+prezzoAndataFiltro;
+						} 
+					 else {
+					
+						location.href="RicercaVoliServlet?city="+city+"&cityArrivals="+cityArrivals+"&seats="+seats+
+						"&dateDeparture="+dateDeparture+"&durataAndataFiltro="+durataAndataFiltro+
+						"&prezzoAndataFiltro="+prezzoAndataFiltro;
+						} 
+			}
+			else {
+				
+				var slider3=document.getElementById("myRangeDurataRitorno");
+				var durataRitornoFiltro=slider3.value;
+				
+				var slider4 = document.getElementById("myRangePrezzoRitorno");
+				var prezzoRitornoFiltro=slider4.value;
+			if(document.getElementById('Diretto').checked){
+			
+			location.href="RicercaVoliServlet?city="+city+"&cityArrivals="+cityArrivals+"&seats="+seats+
+					"&dateDeparture="+dateDeparture+"&dateReturn="+dateReturn+"&Diretto=Diretto&durataAndataFiltro="+durataAndataFiltro+
+					"&prezzoAndataFiltro="+prezzoAndataFiltro+"&durataRitornoFiltro="+durataRitornoFiltro+"&prezzoRitornoFiltro="+prezzoRitornoFiltro;
+				} 
+			 else {
+			
+				location.href="RicercaVoliServlet?city="+city+"&cityArrivals="+cityArrivals+"&seats="+seats+
+				"&dateDeparture="+dateDeparture+"&dateReturn="+dateReturn+"&durataAndataFiltro="+durataAndataFiltro+
+				"&prezzoAndataFiltro="+prezzoAndataFiltro+"&durataRitornoFiltro="+durataRitornoFiltro+"&prezzoRitornoFiltro="+prezzoRitornoFiltro;
+				} 
+			  }
+			}
+		
 
+		
+		var slider = document.getElementById("myRangeDurataAndata");
+		var output = document.getElementById("durataAndata");
+		output.innerHTML = slider.value; // Display the default slider value
 		// Update the current slider value (each time you drag the slider handle)
 		slider.oninput = function() {
 		  output.innerHTML = this.value;
 		}
 		
-		var slider2 = document.getElementById("myRangeDurata2");
-		var output2 = document.getElementById("demoRitorno");
+		var slider2 = document.getElementById("myRangePrezzoAndata");
+		var output2 = document.getElementById("prezzoAndata");
 		output2.innerHTML = slider2.value; // Display the default slider value
-
 		// Update the current slider value (each time you drag the slider handle)
 		slider2.oninput = function() {
 		  output2.innerHTML = this.value;
 		}
 		
-		var slider3 = document.getElementById("myRangePrezzo");
-		var output3 = document.getElementById("demoAndata2");
+		var slider3 = document.getElementById("myRangeDurataRitorno");
+		var output3 = document.getElementById("durataRitorno");
 		output3.innerHTML = slider3.value; // Display the default slider value
-
 		// Update the current slider value (each time you drag the slider handle)
 		slider3.oninput = function() {
 		  output3.innerHTML = this.value;
 		}
 		
-		var slider4 = document.getElementById("myRangePrezzo2");
-		var output4 = document.getElementById("demoRitorno2");
+		var slider4 = document.getElementById("myRangePrezzoRitorno");
+		var output4 = document.getElementById("prezzoRitorno");
 		output4.innerHTML = slider4.value; // Display the default slider value
-
 		// Update the current slider value (each time you drag the slider handle)
 		slider4.oninput = function() {
 		  output4.innerHTML = this.value;
 		}
+		
 		</script>
 	</body>
 	
