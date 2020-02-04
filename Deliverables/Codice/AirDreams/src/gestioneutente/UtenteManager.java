@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 import db.DriverManagerConnectionPool;
 import gestionecompagniaaerea.CompagniaAerea;
@@ -41,9 +40,9 @@ public class UtenteManager {
 				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
 				acc.setCompagniaAerea(compagniaAerea);
 				if(rs.getString("ruolo")!=null) {
-				ruolo= Ruolo.valueOf(rs.getString("ruolo"));
-				System.out.println("Ho ricevuto "+ruolo);
-				acc.setRuolo(ruolo);
+					ruolo= Ruolo.valueOf(rs.getString("ruolo"));
+					System.out.println("Ho ricevuto "+ruolo);
+					acc.setRuolo(ruolo);
 				}
 				
 				return acc;
@@ -95,6 +94,7 @@ public class UtenteManager {
             		}
             	}
         
+        
         return b;
     }
 
@@ -131,6 +131,7 @@ public class UtenteManager {
 			}			
 		}
 		return account;
+
 	}
 	
 	public boolean eliminaAccount(String email) {
@@ -161,7 +162,101 @@ public class UtenteManager {
 		
 		return false;
 	}
+
+	public Account visualizzaInfoUtente(String email) {
+		Account account=null;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		Ruolo ruolo=null;
+		
+		try {
+			con = DriverManagerConnectionPool.getConnection();
+			st = con.createStatement();
+		
+			String sql= "SELECT * FROM utente WHERE email=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,email);
+			rs=ps.executeQuery();
+			
+			if (rs.next()) {
+				CompagniaAereaManager manager=new CompagniaAereaManager();
+				account=new Account();
+				account.setNome(rs.getString("nome"));
+				account.setCognome(rs.getString("cognome"));
+				account.setEmail(rs.getString("email"));
+				account.setPassword(rs.getString("passwordUtente"));
+				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
+				account.setCompagniaAerea(compagniaAerea);
+				if(rs.getString("ruolo")!=null) {
+					ruolo= Ruolo.valueOf(rs.getString("ruolo"));
+					System.out.println("Ho ricevuto "+ruolo);
+					account.setRuolo(ruolo);
+				}
+				
+				return account;
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				if (rs != null)
+					rs.close();
+				DriverManagerConnectionPool.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return account;	
+	}
 	
+	public boolean aggiornaProfilo(Account oldAccount, Account newAccount) {
+		Connection con = null;
+		Statement st = null;
+		
+		try {
+			con = DriverManagerConnectionPool.getConnection();
+			st = con.createStatement();
+		
+			String sql= "UPDATE utente SET nome=?, cognome=?, email=?, passwordUtente=?, compagniaAerea=?, ruolo=? WHERE email=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,newAccount.getNome());
+			ps.setString(2,newAccount.getCognome());
+			ps.setString(3,newAccount.getEmail());
+			ps.setString(4,newAccount.getPassword());
+			if (oldAccount.getCompagniaAerea()==null)
+				ps.setString(5,null);
+			else
+				ps.setString(5,oldAccount.getCompagniaAerea().getNome());
+			if (oldAccount.getRuolo()==null)
+				ps.setString(6,null);
+			else if (oldAccount.getRuolo()==Ruolo.gestoreCompagnie){
+				ps.setString(6,"gestoreCompagnie");
+			} else {
+				ps.setString(6,"gestoreVoli");
+			}
+			ps.setString(7,oldAccount.getEmail());
+			ps.executeUpdate();
+			
+			return true; //se l'update va a buon fine
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				DriverManagerConnectionPool.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;			
+	}
+
 	public ArrayList<Account> getAllUsers() throws SQLException {
 		ArrayList<Account> allUtenti = new ArrayList<Account>();
         Connection connection=null;
