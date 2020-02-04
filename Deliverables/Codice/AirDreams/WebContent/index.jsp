@@ -83,7 +83,8 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza gli account</a>
+									  <a href="gestoreCompagnie/ListaAccountServlet">Visualizza gli account</a>
+									  <a href="gestoreCompagnie/ListaCompagnieServlet">Visualizza tutte le compagnie</a>
 									  <a href="#">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>

@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import db.DriverManagerConnectionPool;
+import gestioneutente.Account;
 
 public class CompagniaAereaManager {
 
@@ -51,4 +53,35 @@ public class CompagniaAereaManager {
 		
 		return null;
 	}
+	
+	public ArrayList<CompagniaAerea> getAllCompanies() throws SQLException {
+		ArrayList<CompagniaAerea> allComA = new ArrayList<CompagniaAerea>();
+        Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String selectSQL="SELECT * FROM compagniaAerea";
+		
+        try {
+        	connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()) {
+            	CompagniaAerea ca = new CompagniaAerea();
+            	
+            	ca.setNome(rs.getString("nome"));
+				ca.setSito(rs.getString("sito"));
+				
+				allComA.add(ca);
+            }
+        } finally {
+        	try {
+        		if(preparedStatement!=null) preparedStatement.close();
+        		}
+        		finally {
+        			DriverManagerConnectionPool.releaseConnection(connection);
+        		}
+        	}
+        return allComA; 
+    }
 }
