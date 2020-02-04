@@ -20,6 +20,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -160,14 +161,17 @@ http://www.tooplate.com/view/2095-level
                              %>
                        	<form action="ListaCompagnieServlet" method="get" class="tm-search-form tm-section-pad-2">
                             <div class="form-row">
-  								<label class="col-sm-1.5 col-form-label">Nome Compagnia</label>
+  								<label class="col-sm-1.5 col-form-label">Nome Compagnia</label> 
    	 							<div class="form-group col-md">
-      								<input type="text" value="<%=ca.getNome() %>" class="form-control-plaintext form-control-sm">
+   	 							<p align="center">
+      								<input type="text" value="<%=ca.getNome() %>" class="form-control-plaintext form-control-sm"></p>
+    							 
     							</div>
-    				
+    							
     							<div class="form-group col-md">
-    							<i class="fa fa-pencil-square-o"></i> 
+    								<i class="fa fa-pencil-square-o fa-2x"></i>
     							</div>
+    							
     						</div>
                             </form>  
                         <%} %>                    

@@ -16,6 +16,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -243,7 +245,7 @@ http://www.tooplate.com/view/2095-level
       								<input type="text" value="<%=a.getEmail() %>" class="form-control-plaintext form-control-sm">
     							</div>
     							<div class="form-group col-md">
-    							<i class="fa fa-pencil-square-o"></i> 
+    								<i class="fa fa-pencil-square-o fa-2x"></i>
     							</div>
     						</div>
                                 </form>  
