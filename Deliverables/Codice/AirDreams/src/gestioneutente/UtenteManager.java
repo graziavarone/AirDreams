@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import db.DriverManagerConnectionPool;
 import gestionecompagniaaerea.CompagniaAerea;
@@ -146,7 +147,7 @@ public class UtenteManager {
 			ps.setString(1,email);
 			ps.executeUpdate();
 			
-			return true; //se la cancellazione è andata a buon fine
+			return true; //se la cancellazione e' andata a buon fine
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -254,5 +255,90 @@ public class UtenteManager {
 		}
 		
 		return false;			
+	}
+	
+	public ArrayList<Account> getAllUsers() throws SQLException {
+		ArrayList<Account> allUtenti = new ArrayList<Account>();
+        Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String selectSQL="SELECT * FROM utente";
+		
+        try {
+        	connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()) {
+            	Account a = new Account();
+            	
+            	a.setNome(rs.getString("nome"));
+				a.setCognome(rs.getString("cognome"));
+				a.setEmail(rs.getString("email"));
+				a.setPassword(rs.getString("passwordUtente"));
+				
+				allUtenti.add(a);
+            }
+        } finally {
+        	try {
+        		if(preparedStatement!=null) preparedStatement.close();
+        		}
+        		finally {
+        			DriverManagerConnectionPool.releaseConnection(connection);
+        		}
+        	}
+        return allUtenti; 
+    }
+
+	public ArrayList<Account> findAccountByLetter(String nome, String cognome) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ArrayList<Account> account= new ArrayList<Account>();
+		String selectSQL=null;
+		
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			if(cognome.equals("-")) {
+				selectSQL = "SELECT * FROM utente WHERE nome LIKE ?";
+				preparedStatement = connection.prepareStatement(selectSQL);
+				preparedStatement.setString(1, nome + "%");
+			} else if(nome.equals("-")) {
+				selectSQL = "SELECT * FROM utente WHERE cognome LIKE ?";
+				preparedStatement = connection.prepareStatement(selectSQL);
+				preparedStatement.setString(1, cognome + "%");
+			} else {
+				selectSQL = "SELECT * FROM utente WHERE nome LIKE ? AND cognome LIKE ?";
+				preparedStatement = connection.prepareStatement(selectSQL);
+				preparedStatement.setString(1, nome + "%");
+				preparedStatement.setString(2, cognome + "%");
+			}
+			
+			
+			System.out.println("findAccountByLetter: "+ preparedStatement.toString());
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while(rs.next()) {
+				Account account1 = new Account();
+				
+				account1.setNome(rs.getString("nome"));
+				account1.setCognome(rs.getString("cognome"));
+				account1.setEmail(rs.getString("email"));
+				account1.setPassword(rs.getString("passwordUtente"));	
+				
+				account.add(account1);	
+			}
+			return account;
+			
+		} finally {
+			try {
+				if(preparedStatement != null) 
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}			
+		}
+		
 	}
 }
