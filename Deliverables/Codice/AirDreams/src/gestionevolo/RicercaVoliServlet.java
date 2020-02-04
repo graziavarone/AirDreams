@@ -2,9 +2,6 @@ package gestionevolo;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -20,7 +17,7 @@ import gestioneutente.Account;
 /**
  * Servlet implementation class RicercaVoliServlet
  */
-@WebServlet("/RicercaVoliServlet")
+@WebServlet(name="/RicercaVoliServlet",urlPatterns= {"/gestoreVoli/RicercaVoliServlet"})
 public class RicercaVoliServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -49,7 +46,7 @@ public class RicercaVoliServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			redirect="listaVoli.jsp";
+			redirect="/gestoreVoli/listaVoli.jsp";
 		} else if (action.equals("ricerca")) {
 			
 			String aeroportoP=request.getParameter("city");
@@ -119,7 +116,7 @@ public class RicercaVoliServlet extends HttpServlet {
 			
 			request.setAttribute("voli",voli);
 			request.setAttribute("page",pagina);
-			redirect="listaVoli.jsp";
+			redirect="/gestoreVoli/listaVoli.jsp";
 		}
 			
 		RequestDispatcher dispatcher = request.getRequestDispatcher(redirect);

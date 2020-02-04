@@ -24,13 +24,13 @@
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">                                      <!-- Bootstrap style -->
-    <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
-    <link rel="stylesheet" href="css/tooplate-style.css"> 
-    <link rel="stylesheet" href="css/prova.css">
-    <script src="scripts/ricercaAeroporti.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">                                      <!-- Bootstrap style -->
+    <link rel="stylesheet" type="text/css" href="../slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="../slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/datepicker.css"/>
+    <link rel="stylesheet" href="../css/tooplate-style.css"> 
+    <link rel="stylesheet" href="../css/prova.css">
+    <script src="../scripts/ricercaAeroporti.js"></script>
 </head>
 <body>
 		<%
@@ -55,8 +55,8 @@
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="index.jsp">
-                                <img src="img/logo.png" alt="Site logo">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
+                                <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -65,7 +65,7 @@
                             
                             <ul class="navbar-nav ml-auto">
                             	<% if (request.getSession().getAttribute("account")==null){ %>
-                            		<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+                            		<li class="nav-item"><a class="nav-link" href="../login.jsp">Login</a></li>
                             	<% } %>
                             	<%  if (request.getSession().getAttribute("account")!=null){
                             		account=(Account)request.getSession().getAttribute("account");
@@ -77,7 +77,7 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
+									  <a href="../profilo.jsp">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
 									  </div>
 									</li>
@@ -91,16 +91,16 @@
 									  <div class="dropdown-content">
 									  <a href="#">Visualizza gli account</a>
 									  <a href="#">Aggiungi compagnia aerea</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
+									  <a href="../profilo.jsp">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -117,16 +117,16 @@
 									  <div class="dropdown-content">
 									  <a href="listaVoli.jsp">Visualizza voli</a>
 									  <a href="#">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
+									  <a href="../profilo.jsp">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -310,12 +310,12 @@
         </div>
         
         <!-- load JS files -->
-        <script src="js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
-        <script src="js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
-        <script src="js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
-        <script src="js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
-        <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
-        <script src="slick/slick.min.js"></script>      
+        <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
+        <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
+        <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
+        <script src="../js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
+        <script src="../js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
+        <script src="../slick/slick.min.js"></script>      
         
            <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
