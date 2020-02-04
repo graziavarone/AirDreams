@@ -1,11 +1,13 @@
 package gestionevolo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import gestionecompagniaaerea.CompagniaAerea;
 
 public class Volo {
+	private int id;
 	private LocalDate dataPart;
 	private float prezzo;
 	private int seats;
@@ -27,6 +29,31 @@ public class Volo {
 		this.ca = ca;
 		this.aeroportoP = aeroportoP;
 		this.aeroportoA = aeroportoA;
+	}
+	public Volo() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int i) {
+		id=i;
+	}
+	
+	public LocalTime getOrarioArrivo() {
+		int minuti=durataVolo.getHour()*60+durataVolo.getMinute();
+		LocalTime orarioArrivo=orarioPartenza.plusMinutes(minuti);
+		return orarioArrivo;
+		
+	}
+	
+	public LocalDateTime getDataArrivo() {
+		LocalDateTime d=LocalDateTime.of(dataPart, orarioPartenza);
+		int minuti=durataVolo.getHour()*60+durataVolo.getMinute();
+		LocalDateTime dataArrivo=d.plusMinutes(minuti);
+		return dataArrivo;
 	}
 	public LocalDate getDataPartenza() {
 		return dataPart;
@@ -84,10 +111,12 @@ public class Volo {
 	}
 	@Override
 	public String toString() {
-		return "Volo [otherDayDate=" + dataPart + ", prezzo=" + prezzo + ", seats=" + seats + ", durataVolo="
+		return "Volo [id=" + id + ", dataPart=" + dataPart + ", prezzo=" + prezzo + ", seats=" + seats + ", durataVolo="
 				+ durataVolo + ", orarioPartenza=" + orarioPartenza + ", compreso=" + compreso + ", ca=" + ca
 				+ ", aeroportoP=" + aeroportoP + ", aeroportoA=" + aeroportoA + "]";
 	}
+
+	
 	
 	
 

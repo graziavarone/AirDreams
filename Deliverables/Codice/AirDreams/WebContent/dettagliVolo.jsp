@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*"%>
-
+    pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*, gestionevolo.*, java.time.format.DateTimeFormatter"%>
 
 
 <%
 String message=(String)request.getAttribute("message");
 Boolean mod=(Boolean)request.getAttribute("mod");
+Volo volo = (Volo) request.getAttribute("volo");
+DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 if(mod==null)
 	mod=true;
@@ -151,16 +152,19 @@ http://www.tooplate.com/view/2095-level
                    	 <% } %>
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                                <form action="AggiungiVoloServlet" method="post" class="tm-search-form tm-section-pad-2">
+                                <form action="ModificaVoloServlet" method="post" class="tm-search-form tm-section-pad-2">
+                                	<input type="hidden" id="custId" name="idVolo" value="<%=volo.getId()%>">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                        	<% String partenza = volo.getAeroportoP().getCodice() +" - " + volo.getAeroportoP().getCity() + ", " +  volo.getAeroportoP().getStato(); %>
+                                            <input name="city" value=<%=partenza %> type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                           <input name="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                        	<% String arrivo = volo.getAeroportoA().getCodice() +" - " + volo.getAeroportoA().getCity() + ", " +  volo.getAeroportoA().getStato(); %>
+                                           <input name="cityArrivals" value=<%=arrivo %> type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
@@ -178,18 +182,22 @@ http://www.tooplate.com/view/2095-level
                                  	<div class="form-row tm-search-form-row">
                                     	<div class="form-group tm-form-element tm-form-element-50">
                                     	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	<input name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza" required>
+                                           	<input name="dateDeparture" value="<%=volo.getDataPartenza().format(FORMATO_DIA)%>" type="text" class="form-control" id="start" placeholder="Data partenza" required>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="fa fa-euro fa-2x tm-form-element-icon"></i>
-                                            <input name="price" type="text" class="form-control" placeholder="prezzo base biglietto" required>
+                                            <% String prezzo = String.format("%.2f",volo.getPrezzo());
+                                               String prezzoSenzaVirgola = prezzo.replace(",", ".");
+                                            %>
+                                            <input name="price" value=<%=prezzoSenzaVirgola%> type="text" class="form-control" placeholder="prezzo base biglietto" required>
                                         </div>
                                      </div>
                                      <div class="form-row tm-search-form-row d-flex justify-content-center">
                                     	<label class="col-sm-1.5 col-form-label">Orario partenza</label>
                                     	<div class="form-group col-auto">   
-                                    		<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>     
+                                    		<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>
                                         	<select name="hDeparture" class="form-control form-control-lg">
+                                        		<option> <%=volo.getOrarioPartenza().getHour()%> </option>
                                         		<option>h</option>
                                             	<% for(int i=0;i<=9;i++) { %>
                                            		<option>0<%=i%></option>
@@ -203,6 +211,7 @@ http://www.tooplate.com/view/2095-level
                                        	<div class="form-group col-auto">
                                        	    <i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>                    
                                         	<select name="minDeparture" class="form-control form-control-lg">
+                                        		<option> <%=volo.getOrarioPartenza().getMinute()%> </option>
                                         		<option>min</option>
                                             	<% for(int i=0;i<=9;i++) { %>
                                            		<option>0<%=i%></option>
@@ -216,6 +225,7 @@ http://www.tooplate.com/view/2095-level
                                         <div class="form-group col-auto">
                                         	<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i> 
                                         	<select name="hFly" class="form-control form-control-lg">
+                                        		<option> <%=volo.getDurataVolo().getHour()%> </option>
                                            		<option>h</option>
                                                 <% for(int i=10;i<24;i++) { %>
                                             	<option><%=i%></option>
@@ -226,6 +236,7 @@ http://www.tooplate.com/view/2095-level
                                         <div class="form-group col-auto">  
                                         	<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>                          
                                        		<select name="minFly" class="form-control form-control-lg">
+                                       			<option> <%=volo.getDurataVolo().getMinute()%> </option>
                                             	<option>min</option>
                                                  <% for(int i=0;i<60;i++) { %>
                                             	<option><%=i%></option>
@@ -238,8 +249,15 @@ http://www.tooplate.com/view/2095-level
                                         <div class="form-group tm-form-element tm-form-element-50"> 
                                         	<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
                                             <select name="baggage" class="form-control form-control-lg">
+                                            	<%boolean compreso = volo.isCompreso();
+                                            	  if(compreso == true) {
+                                            	%>
+                                            	<option>compreso</option>
+										        <option>non compreso</option>
+                                            	<% } else { %>
                                             	<option>non compreso</option>
 										        <option>compreso</option>
+										        <% } %>
 										    </select>
 										</div>
 							        </div>
@@ -247,12 +265,12 @@ http://www.tooplate.com/view/2095-level
                                    		<label class="col-sm-1.5 col-form-label">Numero totale di posti disponibili per il volo</label>
                                    		<div class="form-group col-auto">
                                    			<i class="fa fa-group fa-2x tm-form-element-icon"></i>
-                                   			<input class="form-control input-group-lg" type="number" id="inputNumber2" name="seats" value="1" min="1" max="100" required>
+                                   			<input class="form-control input-group-lg" value= <%=volo.getSeats()%> type="number" id="inputNumber2" name="seats" value="1" min="1" max="100" required>
 							        	</div>
 							        </div>
                                     <div class="form-row tm-search-form-row d-flex justify-content-center">
 										<div class="form-group tm-form-element tm-form-element-50">
-                                        	<button onclick="confermaAggiungi()" type="submit" class="btn btn-primary tm-btn-search">Aggiungi volo</button>
+                                        	<button onclick="confermaAggiungi()" type="submit" class="btn btn-primary tm-btn-search">Modifica volo</button>
                                        	</div>
                                    	</div>
                                 </form>
