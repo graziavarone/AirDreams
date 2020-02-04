@@ -126,39 +126,43 @@ if(mod==null)
             </div>
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
-                <div class="tm-bg-white w-50">
-                    <a href="registrazione.jsp"> Non hai un account? Registrati</a><br>
-                    <% if (message!=null){ %>
-                    
-                    	<p><%=message%></p>
-                    <% } %>
-                    <div>
+                <div class="tm-bg-white w-10">
+                    <div class="container">
+                    	<div>
+                    		<div class="p-3 text-center">
+                    			<a href="registrazione.jsp" class="btn btn-outline-light text-primary"> Non hai ancora un account? Registrati</a><br>
+                    		</div>
+                    		<% if (message!=null){ %>
+                    			<h2 class="tm-color-primary tm-article-title-1"><%=message%></h2>
+                    		<% } %>
+                    	</div>
                         <div class="row">
-                            <div class="d-flex align-items-center">
-                                <form action="LoginServlet" method="post" class="tm-search-form tm-section-pad-2">
-                                	<div>
+                         	<form action="LoginServlet" method="post" class="tm-search-form tm-section-pad-2">
+                                <div class="form-row tm-search-form-row d-flex justify-content-center">	
+                                	<div class="form-group tm-form-element tm-form-element-100">
                                 		<h3 class="tm-color-primary tm-article-title-1">Accedi</h3>
                                 	</div>
-                                    <div>
-                                        <div class="form-group tm-form-element tm-form-element-100">
-                                             <i class="fa fa-user fa-2x tm-form-element-icon"></i> 
-                                            <input name="email" type="text" class="form-control" placeholder="Enter your email...">
-                                        </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                            <i class="fa fa-lock fa-2x tm-form-element-icon"></i>
-                                            <input name="password" type="password" class="form-control" placeholder="Enter your password...">
-                                        </div>
+                                </div>
+                                <div class="form-row tm-search-form-row d-flex justify-content-center">
+                                	<div class="form-group tm-form-element tm-form-element-100">
+                                    	<i class="fa fa-user fa-2x tm-form-element-icon"></i> 
+                                        <input name="email" type="text" class="form-control" placeholder="Enter your email...">
                                     </div>
-                                    <div class="form-row tm-search-form-row">
-                                        <div class="form-group tm-form-element tm-form-element-2">
-                                            <button type="submit" class="btn btn-primary tm-btn-search">Accedi</button>
-                                        </div>
+                                </div>
+                                <div class="form-row tm-search-form-row d-flex justify-content-center">
+                                    <div class="form-group tm-form-element tm-form-element-50">
+                                    	<i class="fa fa-lock fa-2x tm-form-element-icon"></i>
+                                        <input name="password" type="password" class="form-control" placeholder="Enter your password...">
                                     </div>
-                                </form>
-                            
-                            </div>                        
-                        </div>      
-                    </div>
+                                </div>
+                                <div class="form-row tm-search-form-row d-flex justify-content-center">
+                                	<div class="form-group tm-form-element tm-form-element-2">
+                                    	<button type="submit" class="btn btn-primary tm-btn-search">Accedi</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>  
+                    </div>    
                 </div>                  
             </div>
             

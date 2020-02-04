@@ -49,9 +49,9 @@ public class RegistrazioneServlet extends HttpServlet {
 		
 		try {
 			if (utenteManager.findAccountByEmail(email)!=null) {
-					message+="Email già esistente.<br/>";
+					message+="Email gia' esistente.<br/>";
 					System.out.println(message);
-					response.getWriter().write("Email già esistente");
+					response.getWriter().write("Email gia' esistente");
 					redirect="registrazione.jsp";
 				} 
 			
