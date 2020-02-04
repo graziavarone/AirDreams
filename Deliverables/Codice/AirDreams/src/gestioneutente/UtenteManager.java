@@ -95,7 +95,6 @@ public class UtenteManager {
             		}
             	}
         
-        
         return b;
     }
 
@@ -132,6 +131,35 @@ public class UtenteManager {
 			}			
 		}
 		return account;
+	}
+	
+	public boolean eliminaAccount(String email) {
+		Connection con = null;
+		Statement st = null;
+		
+		try {
+			con = DriverManagerConnectionPool.getConnection();
+			st = con.createStatement();
+		
+			String sql= "DELETE FROM utente WHERE email=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,email);
+			ps.executeUpdate();
+			
+			return true; //se la cancellazione è andata a buon fine
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				DriverManagerConnectionPool.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
 	}
 	
 	public ArrayList<Account> getAllUsers() throws SQLException {

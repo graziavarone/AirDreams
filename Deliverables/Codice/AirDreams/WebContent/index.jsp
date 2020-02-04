@@ -48,7 +48,7 @@ http://www.tooplate.com/view/2095-level
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="index.jsp">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
                                 <img src="img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
