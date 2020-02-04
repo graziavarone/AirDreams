@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import db.DriverManagerConnectionPool;
 import gestionecompagniaaerea.CompagniaAerea;
@@ -256,7 +255,7 @@ public class UtenteManager {
 		
 		return false;			
 	}
-
+	
 	public ArrayList<Account> getAllUsers() throws SQLException {
 		ArrayList<Account> allUtenti = new ArrayList<Account>();
         Connection connection=null;
@@ -339,8 +338,5 @@ public class UtenteManager {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}			
 		}
-		
-	}
-	
-
+	}	
 }
