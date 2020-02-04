@@ -146,7 +146,7 @@ public class UtenteManager {
 			ps.setString(1,email);
 			ps.executeUpdate();
 			
-			return true; //se la cancellazione è andata a buon fine
+			return true; //se la cancellazione e andata a buon fine
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
