@@ -372,7 +372,7 @@ public class VoloManager {
 		return arrayList;
 	}
 	
-	public ArrayList<Volo> cercaVoli(String[] ricerca) throws SQLException {
+	public ArrayList<Volo> cercaVoli(String[] ricerca,String compagnia) throws SQLException {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -396,31 +396,40 @@ public class VoloManager {
 			
 			if (!ricerca[2].equals("")) {
 				if (ricerca[0].equals("")||ricerca[1].equals(""))
-					sql+= "dataPart=?";
+					sql+= "dataPart=? ";
 				else
 					sql+= " AND dataPart=?"; //avevi inserito aeroportoArr ma ti perdono
 			}
+			
+			sql+=" AND compagniaAerea=?";
 			
 			PreparedStatement ps = con.prepareStatement(sql);
 			if (!ricerca[0].equals("") && !ricerca[1].equals("") && !ricerca[2].equals("")) {
 				ps.setString(1, ricerca[0]);
 				ps.setString(2, ricerca[1]);
 				ps.setString(3, ricerca[2]);
+				ps.setString(4,compagnia);
 			} else if (!ricerca[0].equals("") &&  ricerca[1].equals("") && !ricerca[2].equals("")) {
 				ps.setString(1, ricerca[0]);
 				ps.setString(2, ricerca[2]);
+				ps.setString(3,compagnia);
 			} else if (ricerca[0].equals("") &&  !ricerca[1].equals("") && !ricerca[2].equals("")) {
 				ps.setString(1, ricerca[1]);
 				ps.setString(2, ricerca[2]);
+				ps.setString(3,compagnia);
 			} else if (!ricerca[0].equals("") &&  !ricerca[1].equals("") && ricerca[2].equals("")) {
 				ps.setString(1, ricerca[0]);
 				ps.setString(2, ricerca[1]);
+				ps.setString(3,compagnia);
 			} else if (!ricerca[0].equals("") &&  ricerca[1].equals("") && ricerca[2].equals("")) {
 				ps.setString(1, ricerca[0]);
+				ps.setString(2,compagnia);
 			} else if (ricerca[0].equals("") &&  !ricerca[1].equals("") && ricerca[2].equals("")) {
 				ps.setString(1, ricerca[1]);
+				ps.setString(2,compagnia);
 			} else if (ricerca[0].equals("") &&  ricerca[1].equals("") && !ricerca[2].equals("")) {
 				ps.setString(1, ricerca[2]);
+				ps.setString(2,compagnia);
 			} 
 			
 			System.out.println("CercaVoli" + ps.toString());

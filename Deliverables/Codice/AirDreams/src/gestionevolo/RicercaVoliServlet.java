@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import gestioneutente.Account;
+
 /**
  * Servlet implementation class RicercaVoliServlet
  */
@@ -33,7 +35,7 @@ public class RicercaVoliServlet extends HttpServlet {
 		
 		String action=request.getParameter("action");
 		int pagina=Integer.parseInt(request.getParameter("page"));
-		
+		Account utente= (Account) request.getSession().getAttribute("account");
 		String redirect = null;
 		
 		if (action.equals("null")) {
@@ -92,7 +94,9 @@ public class RicercaVoliServlet extends HttpServlet {
 							ricercaSalvata[2]=data;
 						}
 				
-						voli=voloManager.cercaVoli(ricerca);
+						String compagnia=utente.getCompagniaAerea().getNome();
+						System.out.println("compagnia aerea di cui il gestore è tenuto: " + compagnia);
+						voli=voloManager.cercaVoli(ricerca,compagnia);
 					} catch (SQLException e) {
 						e.printStackTrace();
 					} 
@@ -104,7 +108,9 @@ public class RicercaVoliServlet extends HttpServlet {
 				ricerca[2]=ricercaSalvata[2];
 					
 				try {
-					voli=voloManager.cercaVoli(ricerca);
+					String compagnia=utente.getCompagniaAerea().getNome();
+					System.out.println("compagnia aerea di cui il gestore è tenuto: " + compagnia);
+					voli=voloManager.cercaVoli(ricerca,compagnia);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
