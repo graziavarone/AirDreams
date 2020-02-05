@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*"%>
     
-<% Boolean mod=(Boolean)request.getAttribute("mod");
-if(mod==null)
-	mod=true;
+<% 
+	Boolean mod=(Boolean)request.getAttribute("mod");
+
+	if(mod==null)
+		mod=true;
 %>
     
 <!DOCTYPE html>
@@ -16,8 +18,11 @@ if(mod==null)
 
     <title>AirDreams</title>
 <!--
+
 Template 2095 Level
+
 http://www.tooplate.com/view/2095-level
+
 -->
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
@@ -44,7 +49,7 @@ http://www.tooplate.com/view/2095-level
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
                                 <img src="img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +71,7 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
+									  <a href="profilo.jsp">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
 									  </div>
 									</li>
@@ -78,7 +83,8 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza gli account</a>
+									  <a href="gestoreCompagnie/ListaAccountServlet">Visualizza gli account</a>
+									  <a href="gestoreCompagnie/ListaCompagnieServlet">Visualizza tutte le compagnie</a>
 									  <a href="#">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
@@ -87,7 +93,7 @@ http://www.tooplate.com/view/2095-level
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
+									  <a href="profilo.jsp">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
 									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
@@ -105,7 +111,7 @@ http://www.tooplate.com/view/2095-level
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
 									  <a href="gestoreVoli/listaVoli.jsp?page=1&action=null">Visualizza voli</a>
-									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
+									  <a href="#">Aggiungi volo</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
@@ -113,7 +119,7 @@ http://www.tooplate.com/view/2095-level
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
+									  <a href="profilo.jsp">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
 									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
@@ -140,7 +146,7 @@ http://www.tooplate.com/view/2095-level
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                                <form action="index.html" method="post" class="tm-search-form tm-section-pad-2">
+                                <form action="index.html" method="get" class="tm-search-form tm-section-pad-2">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
                                              <i class="fa fa-map-marker fa-2x tm-form-element-icon"></i> 
@@ -261,18 +267,5 @@ http://www.tooplate.com/view/2095-level
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
-		
-		<script>
-       
-            $(document).ready(function(){
-                // Date Picker
-                const pickerCheckIn = datepicker('#inputCheckIn');
-                const pickerCheckOut = datepicker('#inputCheckOut');
-                
-                                         
-            });
-        </script>             
-
-		
 </body>
 </html>

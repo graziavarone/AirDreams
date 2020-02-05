@@ -1,7 +1,6 @@
 package gestionevolo;
 
 public class Aeroporto {
-	
 	private String codice;
 	private String nome;
 	private String city;
@@ -48,15 +47,18 @@ public class Aeroporto {
 		return "Aeroporto [codice=" + codice + ", nome=" + nome + ", city=" + city + ", stato=" + stato + "]";
 	}
 	
-	@Override public boolean equals(Object obj) { 	
+	@Override 
+	public boolean equals(Object obj) { 	
 		if (obj == null) 		
-			return false; 	
+			return false; 
+		
 		if (getClass() != obj.getClass()) 		
 			return false; 	
+		
 		Aeroporto other = (Aeroporto) obj; 	
-		 if (codice.equals(other.codice) && nome.equals(other.nome) && city.equals(other.city) && stato.equals(other.stato)) 		
-				return true; 	
+		if (codice.equals(other.codice) && nome.equals(other.nome) && city.equals(other.city) && stato.equals(other.stato)) 		
+				return true; 
+		
 		return false; 
-		}
-	
+	}
 }

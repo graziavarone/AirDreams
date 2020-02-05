@@ -7,69 +7,63 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import db.DriverManagerConnectionPool;
-import gestioneutente.Account;
-
-
 
 public class AeroportoManager {
-
+	
 	public ArrayList<Aeroporto> getAeroportiByCity(String a) {
 		 ArrayList<Aeroporto> listAeroportiByCity = new ArrayList<Aeroporto>();
 		 Connection con = null;
 		 PreparedStatement preparedStatement=null;
 		 
-		     String selectSQL="SELECT * FROM aeroporto WHERE city LIKE ?";
-		    try { 
-		        con = DriverManagerConnectionPool.getConnection();
-		        preparedStatement= con.prepareStatement(selectSQL);
+		 String selectSQL="SELECT * FROM aeroporto WHERE city LIKE ?";
+		 try { 
+			 con = DriverManagerConnectionPool.getConnection();
+		     preparedStatement= con.prepareStatement(selectSQL);
 		        
-		        preparedStatement.setString(1, a + "%");
-		        ResultSet rs = preparedStatement.executeQuery();
-		        while (rs.next()) {
-		        	Aeroporto bean= new Aeroporto();
+		     preparedStatement.setString(1, a + "%");
+		     ResultSet rs = preparedStatement.executeQuery();
+		     while (rs.next()) {
+		    	 Aeroporto bean= new Aeroporto();
 		 			
-		 			bean.setCodice(rs.getString("codice"));
-		 			bean.setNome(rs.getString("nome"));
-		 			bean.setCity(rs.getString("city"));
-		 			bean.setStato(rs.getString("stato"));
+		 		 bean.setCodice(rs.getString("codice"));
+		 		 bean.setNome(rs.getString("nome"));
+		 		 bean.setCity(rs.getString("city"));
+		 		 bean.setStato(rs.getString("stato"));
 		 			
-		 			listAeroportiByCity.add(bean);
+		 	     listAeroportiByCity.add(bean);
 
-		        }
-		       System.out.println( preparedStatement.toString());
-		    } catch (SQLException e) {
-				e.printStackTrace();
-		    }
-		    return listAeroportiByCity;
-		}
+		     }
+		     System.out.println( preparedStatement.toString());
+		 } catch (SQLException e) {
+			 e.printStackTrace();
+		 }
+		 return listAeroportiByCity;
+	}
 	
 	public Aeroporto findAeroportoById(String c) throws SQLException {
 		 Aeroporto aeroporto = null;
 		 Connection con = null;
 		 PreparedStatement preparedStatement=null;
 		 
-		     String selectSQL="SELECT * FROM aeroporto WHERE codice = ?";
-		    try { 
-		        con = DriverManagerConnectionPool.getConnection();
-		        preparedStatement= con.prepareStatement(selectSQL);
+		 String selectSQL="SELECT * FROM aeroporto WHERE codice = ?";
+		 try { 
+			 con = DriverManagerConnectionPool.getConnection();
+		     preparedStatement= con.prepareStatement(selectSQL);
 		        
-		        preparedStatement.setString(1, c);
-		        ResultSet rs = preparedStatement.executeQuery();
-		        if (rs.next()) {
-		        	aeroporto = new Aeroporto();
+		     preparedStatement.setString(1, c);
+		     ResultSet rs = preparedStatement.executeQuery();
+		     if (rs.next()) {
+		    	 aeroporto = new Aeroporto();
 		 			
-		 			aeroporto.setCodice(rs.getString("codice"));
-		 			aeroporto.setNome(rs.getString("nome"));
-		 			aeroporto.setCity(rs.getString("city"));
-		 			aeroporto.setStato(rs.getString("stato"));
-		 		
-
-		        }
-		       System.out.println( preparedStatement.toString());
-		    } catch (SQLException e) {
-				e.printStackTrace();
-		    }
-		    return aeroporto;
-		}
-	
+		 		 aeroporto.setCodice(rs.getString("codice"));
+		 		 aeroporto.setNome(rs.getString("nome"));
+		 		 aeroporto.setCity(rs.getString("city"));
+		 		 aeroporto.setStato(rs.getString("stato"));
+		      }
+		      System.out.println( preparedStatement.toString());
+		  } catch (SQLException e) {
+			  e.printStackTrace();
+		  }
+		  return aeroporto;
 	}
+}

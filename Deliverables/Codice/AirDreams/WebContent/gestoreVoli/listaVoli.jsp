@@ -10,7 +10,7 @@
 	Account account= (Account) request.getSession().getAttribute("account");
 	System.out.println("ACCOUNT: " + account);
 	
-	System.out.println(": " + request.getAttribute("message"));
+	System.out.println("MESSAGE: " + request.getAttribute("message"));
 %>
 
 <html>
@@ -30,8 +30,7 @@
     <link rel="stylesheet" type="text/css" href="../css/datepicker.css"/>
     <link rel="stylesheet" href="../css/tooplate-style.css"> 
     <link rel="stylesheet" href="../css/prova.css">
-    
-    
+
 </head>
 <body>
 		<%
@@ -39,7 +38,7 @@
 			String action=request.getParameter("action");
 			ArrayList<Volo> voli= (ArrayList<Volo>) request.getAttribute("voli");
 			if (voli==null) {
-				response.sendRedirect("./ListaVoliServlet?page=" + pagina + "&action=" + action);
+				response.sendRedirect("./RicercaVoliServlet?page=" + pagina + "&action=" + action);
 				return;
 			}	
 		
@@ -56,7 +55,7 @@
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="index.jsp">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
                                 <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +77,7 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
+									  <a href="../profilo.jsp">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
 									  </div>
 									</li>
@@ -99,7 +98,7 @@
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
+									  <a href="../profilo.jsp">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
 									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
@@ -116,8 +115,8 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="listaVoli.jsp?page=1&action=null">Visualizza voli</a>
-									  <a href="aggiungiVolo.jsp">Aggiungi volo</a>
+									  <a href="listaVoli.jsp">Visualizza voli</a>
+									  <a href="#">Aggiungi volo</a>
 									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
@@ -125,7 +124,7 @@
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
+									  <a href="../profilo.jsp">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
 									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
@@ -174,7 +173,7 @@
            		<div class="justify-content-center">
            			<div>
            				<!--  verranno inseriti i form per i criteri di ricerca -->
-           				<form action="ListaVoliServlet?action=ricerca&page=1"  method="post" class="tm-search-form tm-section-pad-2">
+           				<form action="RicercaVoliServlet?action=ricerca&page=1" method="post" class="tm-search-form tm-section-pad-2">
                         	<div class="form-group row" id="formPartenza" hidden="true">
    					 			<label class="col-sm-6 col-form-label">Inserire aeroporto di partenza</label>
    					 			<div class="col-sm-5 tm-form-element ">
@@ -221,6 +220,7 @@
     							}
     							System.out.println("INIZIO " + inizio);
     							System.out.println("FINE " + fine);
+
       							for(int i=inizio;i<fine;i=i+1) {
       						%>
       						<!-- grid voli -->
@@ -242,18 +242,32 @@
     								</div>
     							</div><br>
     							<div class="form-row align-items-center">
+  									<label class="col-sm-1.5 col-form-label font-weight-bold"> Compagnia aerea</label>
+   	 								<div class="col-sm-2">
+      									<input type="text" value="<%=voli.get(i).getCa().getNome()%>" class="form-control-plaintext form-control-sm">
+    								</div>
+    							</div>
+    							<div class="form-row align-items-center">
   									<label class="col-sm-1.5 col-form-label font-weight-bold"> Aeroporto partenza</label>
    	 								<div class="col-sm-3">
       									<input type="text" value="<%=voli.get(i).getAeroportoP().getNome()%>" class="form-control-plaintext form-control-sm">
     								</div>
-    							</div>
-    							<div class="form-row align-items-center">
     								<label class="col-sm-1.5 col-form-label font-weight-bold">Aeroporto arrivo</label>
     								<div class="col-sm-4">
       									<input type="text" value="<%=voli.get(i).getAeroportoA().getNome()%>" class="form-control-plaintext form-control-sm">
     								</div>
     							</div><br>
-    								<div class="form-row align-items-center">
+    							<div class="form-row align-items-center">
+  									<label class="col-sm-1.5 col-form-label font-weight-bold"> Bagaglio incluso</label>
+   	 								<div class="col-sm-3">
+      									<input type="text" value="<%=voli.get(i).isCompreso()%>" class="form-control-plaintext form-control-sm">
+    								</div>
+    							</div>
+    							<div class="form-row align-items-center">
+  									<label class="col-sm-1.5 col-form-label badge badge-danger text-wrap text-white">Posti disponibili</label>
+   	 								<div class="col-sm-4">
+      									<input type="text" value="<%=voli.get(i).getSeats()%>" class="form-control-plaintext form-control-sm">
+    								</div>
     								<div class="col-sm-2"></div>
     								<label class="col-sm-1.5 col-form-label badge badge-info text-wrap text-white"> Prezzo biglietto</label>
     								<div class="col-sm-1">
@@ -264,18 +278,9 @@
    	 								<div class="col-sm-2"></div>
     								<div class="col-sm-5"></div>
     								<div class="col-sm-2">
-    									<form action="dettagliVoloServlet">
-    										<input type="hidden" id="custId" name="idVolo" value="<%=voli.get(i).getId()%>">
-    										<button type="submit" class="btn btn-primary">Visualizza dettagli volo</button>
-    									</form>
-    									<form action="EliminaVoloServlet" id="form1">
-    										<input type="hidden"  id="custId" name="idVolo" value="<%=voli.get(i).getId()%>">
-    										<button type="submit" class="btn btn-primary">
-    										<i class="fa fa-trash" aria-hidden="true"></i>
-    										</button>
-    									</form>
+      									<button type="submit" class="btn btn-primary">Visualizza dettagli volo</button>
     								</div>
-    							</div> 
+    							</div>
       						</div>
       						<br><br>
       						<!-- /grid voli -->
@@ -305,6 +310,7 @@
         </div>
         
         <!-- load JS files -->
+             <script src="../scripts/ricercaAeroporti.js"> </script>       
         <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
         <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
         <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
@@ -314,17 +320,9 @@
         
            <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
-        <script src="scripts/ricercaAeroporti.js"> </script>            <!-- http://kenwheeler.github.io/slick/ -->
+        <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
-		<script>
-		
-		
-	        $("#form1").submit(function(e) {    
-	        	if(!confirm("sei sicuro di voler eliminare il volo?")){      
-	        		e.preventDefault();  
-	            } 
-	        }); 
-	        
+		<script type="text/javascript">
 			function visiblePartenza() {
 				document.getElementById("formPartenza").removeAttribute("hidden");
 				document.getElementById("buttonForm").removeAttribute("hidden");
@@ -352,6 +350,5 @@
 	         })
 	         
 		</script>
-		
 	</body>
 </html>
