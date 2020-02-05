@@ -73,7 +73,7 @@ public class RicercaVoliServlet extends HttpServlet {
 		  
 		  request.setAttribute("voliAndataDiretti", voliAndataDiretti);
 		  
-		
+		System.out.println("voliAndataDiretti "+voliAndataDiretti);
 		  
 		  if(checkbox==null) {
 		  voliAndataUnoScalo=voloManager.cercaUnoScalo(aeroportoPartenza, aeroportoArrivo,
@@ -86,6 +86,9 @@ public class RicercaVoliServlet extends HttpServlet {
 		   
 			  request.setAttribute("voliAndataUno", voliAndataUnoScalo);
 			  request.setAttribute("voliAndataDue", voliAndataDueScali);
+			  
+				System.out.println("voliAndataUno "+voliAndataUnoScalo);
+				System.out.println("voliAndataDue "+voliAndataDueScali);
 
 		  }
 		  
@@ -97,6 +100,7 @@ public class RicercaVoliServlet extends HttpServlet {
 				   voliRitornoDiretti=voloManager.cercaDiretti(aeroportoArrivo, aeroportoPartenza,
 						  dataReturnLd,Integer.parseInt(numPasseggeri),Integer.parseInt(durataRitornoFiltro),Integer.parseInt(prezzoRitornoFiltro));
 				  
+					System.out.println("voliRitornoDiretti "+voliRitornoDiretti);
 				if(checkbox==null) {
 				 voliRitornoUnoScalo=voloManager.cercaUnoScalo(aeroportoArrivo, aeroportoPartenza,
 						  dataReturnLd, Integer.parseInt(numPasseggeri),Integer.parseInt(durataRitornoFiltro),Integer.parseInt(prezzoRitornoFiltro));
@@ -107,6 +111,8 @@ public class RicercaVoliServlet extends HttpServlet {
 					request.setAttribute("voliRitornoUno", voliRitornoUnoScalo);
 					  request.setAttribute("voliRitornoDue", voliRitornoDueScali);
 					  
+						System.out.println("voliRitornoUno "+voliRitornoUnoScalo);
+						System.out.println("voliRitornoDue "+voliRitornoDueScali);
 					  
 				
 				}
@@ -311,7 +317,7 @@ public class RicercaVoliServlet extends HttpServlet {
 					  request.setAttribute("dateDeparture", dateDeparture);
 					  request.setAttribute("dateReturn", dateReturn);
 					  request.setAttribute("Diretto", checkbox);
-					  redirect = "risultatiRicerca.jsp";
+					  redirect = "/risultatiRicerca.jsp";
 				}
 				
 				
@@ -321,7 +327,7 @@ public class RicercaVoliServlet extends HttpServlet {
 			
 		}
 					
-		 RequestDispatcher dispatcher = request.getRequestDispatcher(redirect);
+		 RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(redirect);
 	     dispatcher.forward(request, response);
 	}
 
