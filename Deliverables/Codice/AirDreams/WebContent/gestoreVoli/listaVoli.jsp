@@ -23,14 +23,14 @@
     
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">                                      <!-- Bootstrap style -->
     <link rel="stylesheet" type="text/css" href="../slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="../slick/slick-theme.css"/>
     <link rel="stylesheet" type="text/css" href="../css/datepicker.css"/>
     <link rel="stylesheet" href="../css/tooplate-style.css"> 
     <link rel="stylesheet" href="../css/prova.css">
-    <script src="../scripts/ricercaAeroporti.js"></script>
+
 </head>
 <body>
 		<%
@@ -310,6 +310,7 @@
         </div>
         
         <!-- load JS files -->
+             <script src="../scripts/ricercaAeroporti.js"> </script>       
         <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
         <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
         <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
@@ -319,7 +320,7 @@
         
            <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
-        <script src="scripts/ricercaAeroporti.js"> </script>            <!-- http://kenwheeler.github.io/slick/ -->
+        <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		<script type="text/javascript">
 			function visiblePartenza() {
