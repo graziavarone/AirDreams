@@ -1,5 +1,4 @@
 function ricerca(str,name) {
-	
 	var dataList = document.getElementById('ricerca-datalist');
 	
 	if(str.lenght == 0){
@@ -23,5 +22,4 @@ function ricerca(str,name) {
 	}
 		xmlHttpReq.open("GET", "RicercaAeroportiServlet?"+ name + "=" + encodeURIComponent(str), true);
 		xmlHttpReq.send();
-	
 }
