@@ -25,9 +25,10 @@ import org.springframework.mock.web.MockServletContext;
 import db.DriverManagerConnectionPool;
 import gestionevolo.Volo;
 import gestionevolo.AggiungiVoloServlet;
+import gestionevolo.ModificaVoloServlet;
 
 
-public class AggiungiVoloTest {
+public class ModificaVoloTest {
 
 	@Mock
 	MockHttpServletRequest request;
@@ -42,28 +43,26 @@ public class AggiungiVoloTest {
 	MockServletContext context;
 	
 	@Mock
-	MockRequestDispatcher dispatcherSuccess;
-	
-	@Mock
 	MockHttpSession session;
 
 	
-	private AggiungiVoloServlet servlet;
+	private ModificaVoloServlet servlet;
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(request.getServletContext()).thenReturn(context);
-		when(request.getServletContext().getRequestDispatcher("/gestoreVoli/aggiungiVolo.jsp")).thenReturn(dispatcher);
-		when(request.getServletContext().getRequestDispatcher("/gestoreVoli/ListaVoliServlet?page=1&action=null")).thenReturn(dispatcherSuccess);
+		when(request.getServletContext().getRequestDispatcher("/gestoreVoli/dettagliVolo.jsp")).thenReturn(dispatcher);
+	
 
-        servlet = new AggiungiVoloServlet();
+        servlet = new ModificaVoloServlet();
         DbPopulator.initializeDatabase();
 	}
 	
-	//TC_4.1_1 aeroporto di partenza sbagliato
+	//TC_4.2_1 aeroporto di partenza sbagliato
 	@Test
 	public void testCase_1() throws IOException, ServletException {		
+		when(request.getParameter("idVolo")).thenReturn("1");
 		when(request.getParameter("city")).thenReturn("AKDJI");
 		when(request.getParameter("cityArrivals")).thenReturn("FSC - Figari, FRANCE");
 		when(request.getParameter("dateDeparture")).thenReturn("05/09/2020");
@@ -83,9 +82,10 @@ public class AggiungiVoloTest {
 		Mockito.verify(MyWriter).write("Failed");
 	}
 	
-	//TC_4.1_2 aeroporto di arrivo sbagliato
+	//TC_4.2_2 aeroporto di arrivo sbagliato
 		@Test
 		public void testCase_2() throws IOException, ServletException {		
+			when(request.getParameter("idVolo")).thenReturn("1");
 			when(request.getParameter("city")).thenReturn("NAP - Naples, ITALY");
 			when(request.getParameter("cityArrivals")).thenReturn("MSKD");
 			when(request.getParameter("dateDeparture")).thenReturn("05/09/2020");
@@ -106,9 +106,10 @@ public class AggiungiVoloTest {
 		}
 
 	
-	//TC_4.1_3 data partenza sbagliata
+	//TC_4.2_3 data partenza sbagliata
 		@Test
 		public void testCase_3() throws IOException, ServletException {		
+			when(request.getParameter("idVolo")).thenReturn("1");
 			when(request.getParameter("city")).thenReturn("NAP - Naples, ITALY");
 			when(request.getParameter("cityArrivals")).thenReturn("FSC - Figari, FRANCE");
 			when(request.getParameter("dateDeparture")).thenReturn("5784");
@@ -128,9 +129,10 @@ public class AggiungiVoloTest {
 			Mockito.verify(MyWriter).write("Failed");
 		}
 		
-	//TC_4.1_4 prezzo sbagliato
+	//TC_4.2_4 prezzo sbagliato
 		@Test
 		public void testCase_4() throws IOException, ServletException {		
+			when(request.getParameter("idVolo")).thenReturn("1");
 			when(request.getParameter("city")).thenReturn("NAP - Naples, ITALY");
 			when(request.getParameter("cityArrivals")).thenReturn("FSC - Figari, FRANCE");
 			when(request.getParameter("dateDeparture")).thenReturn("05/09/2020");
@@ -150,9 +152,10 @@ public class AggiungiVoloTest {
 			Mockito.verify(MyWriter).write("Failed");
 		}
 		
-		//TC_4.1_5 aeroporto di partenza non esiste
+		//TC_4.2_5 aeroporto di partenza non esiste
 		@Test
 		public void testCase_5() throws IOException, ServletException {		
+			when(request.getParameter("idVolo")).thenReturn("1");
 			when(request.getParameter("city")).thenReturn("NAP - Njksl, ITALY");
 			when(request.getParameter("cityArrivals")).thenReturn("FSC - Figari, FRANCE");
 			when(request.getParameter("dateDeparture")).thenReturn("05/09/2020");
@@ -172,9 +175,10 @@ public class AggiungiVoloTest {
 			Mockito.verify(MyWriter).write("L'aeroporto non esiste");
 		}
 		
-		//TC_4.1_6 aeroporto di arrivo non esiste
+		//TC_4.2_6 aeroporto di arrivo non esiste
 		@Test
 		public void testCase_6() throws IOException, ServletException {		
+			when(request.getParameter("idVolo")).thenReturn("1");
 			when(request.getParameter("city")).thenReturn("NAP - Naples, ITALY");
 			when(request.getParameter("cityArrivals")).thenReturn("FSC - Flsh, FRANCE");
 			when(request.getParameter("dateDeparture")).thenReturn("05/09/2020");
@@ -195,9 +199,10 @@ public class AggiungiVoloTest {
 		}
 
 	
-	//TC_4.1_7 success
+	//TC_4.2_7 success
 		@Test
 		public void testCase_7() throws IOException, ServletException {		
+			when(request.getParameter("idVolo")).thenReturn("1");
 			when(request.getParameter("city")).thenReturn("NAP - Naples, ITALY");
 			when(request.getParameter("cityArrivals")).thenReturn("FSC - Figari, FRANCE");
 			when(request.getParameter("dateDeparture")).thenReturn("05/09/2020");

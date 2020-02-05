@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class RicercaVoliServlet
  */
-@WebServlet("/RicercaVoliServlet")
-public class RicercaVoliServlet extends HttpServlet {
+@WebServlet(name = "ListaVoliServlet", urlPatterns = {"/gestoreVoli/ListaVoliServlet"})
+public class ListaVoliServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private String expAeroporto="^[A-Z]{3} - [A-Za-z  ]{1,}, [A-Za-z ]{1,}$";

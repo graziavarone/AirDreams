@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class DettagliVoloServlet
  */
-@WebServlet("/dettagliVoloServlet")
+@WebServlet(name = "dettagliVoloServlet", urlPatterns = {"/gestoreVoli/dettagliVoloServlet"})
 public class DettagliVoloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
@@ -31,10 +31,10 @@ public class DettagliVoloServlet extends HttpServlet {
 		System.out.println(volo);
 		
 		if(volo == null) {
-			response.sendRedirect("errorPage.jsp");
+			response.sendRedirect("../errorPage.jsp");
 		} else {
 			request.setAttribute("volo", volo);
-			request.getServletContext().getRequestDispatcher("/dettagliVolo.jsp").forward(request,response);
+			request.getServletContext().getRequestDispatcher("/gestoreVoli/dettagliVolo.jsp").forward(request,response);
 		}
 	}
 

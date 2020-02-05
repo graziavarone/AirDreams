@@ -19,7 +19,7 @@ import org.json.JSONArray;
 /**
  * Servlet implementation class RicercaAeroportiServlet
  */
-@WebServlet(name = "RicercaAeroportiServlet", urlPatterns = {"/RicercaAeroportiServlet"})
+@WebServlet(name = "RicercaAeroportiServlet", urlPatterns = {"/RicercaAeroportiServlet","/gestoreVoli/RicercaAeroportiServlet"})
 public class RicercaAeroportiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	

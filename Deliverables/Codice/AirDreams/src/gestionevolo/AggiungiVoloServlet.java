@@ -17,7 +17,7 @@ import gestionecompagniaaerea.CompagniaAerea;
 import gestionecompagniaaerea.CompagniaAereaManager;
 
 
-@WebServlet("/AggiungiVoloServlet")
+@WebServlet(name = "AggiungiVoloServlet", urlPatterns = {"/gestoreVoli/AggiungiVoloServlet"})
 public class AggiungiVoloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String expAeroporto="^[A-Z]{3} - [A-Za-z  ]{1,}, [A-Za-z ]{1,}$";
@@ -87,7 +87,7 @@ public class AggiungiVoloServlet extends HttpServlet {
 				message="Formato campi non valido";
 				response.getWriter().write("Failed");
 				request.setAttribute("message", message);
-				redirect="/aggiungiVolo.jsp";
+				redirect="/gestoreVoli/aggiungiVolo.jsp";
 			} else {
 				 try {
 					aeroportoP = manager.findAeroportoById(codAeroportoP);
@@ -99,10 +99,10 @@ public class AggiungiVoloServlet extends HttpServlet {
 					if(!success.equals("Success")) {
 						response.getWriter().write("L'aeroporto non esiste");
 						request.setAttribute("message",success);
-						redirect = "/aggiungiVolo.jsp";
+						redirect = "/gestoreVoli/aggiungiVolo.jsp";
 					} else if(!controllaComboBox(hDeparture,minDeparture,hFly,minFly)) {
 						request.setAttribute("message","Inserire orarioPartenza e/o durata volo");
-						redirect = "/aggiungiVolo.jsp";	
+						redirect = "/gestoreVoli/aggiungiVolo.jsp";	
 					}	
 						else {
 						  LocalDate otherDayDate = LocalDate.parse(dateDeparture, FORMATO_DIA);
@@ -122,7 +122,8 @@ public class AggiungiVoloServlet extends HttpServlet {
 					
 						  vManager.aggiungiVolo(volo);
 						  response.getWriter().write("Success");
-						  redirect = "/listaVoli.jsp";
+						  request.setAttribute("message", "il volo è stato aggiunto");
+						  redirect = "/gestoreVoli/ListaVoliServlet?page=1&action=null";
 					}
 					
 					

@@ -530,5 +530,82 @@ public Volo findByID(String id) throws SQLException {
 		
 		return volo;
 	}
+
+public boolean modificaVolo(Volo volo) throws SQLException {
+	boolean b = false;
+	Connection connection=null;
+	PreparedStatement preparedStatement=null;
+
+	String updateSQL="UPDATE volo set dataPart = ?, prezzo= ?,postiDisponibili=?,durata=?,orarioPart=?,bagaglioStivaCompreso=?,aeroportoPart=?,"
+					+ "aeroportoArr=?,compagniaAerea=? WHERE idVolo=?";
+    
+    
+        try {
+            connection = DriverManagerConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(updateSQL);
+           
+
+            preparedStatement.setString(1,volo.getDataPartenza().format(FORMATO_DIA));
+            preparedStatement.setFloat(2, volo.getPrezzo());
+            preparedStatement.setInt(3, volo.getSeats());
+            preparedStatement.setString(4, volo.getDurataVolo().toString());
+            preparedStatement.setString(5, volo.getOrarioPartenza().toString());
+            preparedStatement.setBoolean(6, volo.isCompreso());
+            preparedStatement.setString(7, volo.getAeroportoP().getCodice());
+            preparedStatement.setString(8, volo.getAeroportoA().getCodice());
+            preparedStatement.setString(9, volo.getCa().getNome());
+            preparedStatement.setInt(10, volo.getId());
+            
+        	System.out.println("ModificaVolo: "+ preparedStatement.toString());
+            preparedStatement.executeUpdate();
+            b=true;
+            
+        }
+          finally {
+        	try {
+        		if(preparedStatement!=null) preparedStatement.close();
+        		}
+        		finally {
+        			DriverManagerConnectionPool.releaseConnection(connection);
+        		}
+        	}
+    
+    
+    return b;
+	
+  }
+
+public boolean eliminaVolo(int id) throws SQLException {
+	boolean b = false;
+	Connection connection=null;
+	PreparedStatement preparedStatement=null;
+
+	String updateSQL="DELETE FROM volo WHERE idVolo=? ";
+    
+    
+        try {
+            connection = DriverManagerConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(updateSQL);
+           
+            preparedStatement.setInt(1, id);
+            
+        	System.out.println("EliminaVolo: "+ preparedStatement.toString());
+            preparedStatement.executeUpdate();
+            b=true;
+            
+        }
+          finally {
+        	try {
+        		if(preparedStatement!=null) preparedStatement.close();
+        		}
+        		finally {
+        			DriverManagerConnectionPool.releaseConnection(connection);
+        		}
+        	}
+    
+    
+    return b;
+	
+  }
 }
 

@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*"%>
-
+    pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*, gestionevolo.*, java.time.format.DateTimeFormatter"%>
 
 
 <%
 String message=(String)request.getAttribute("message");
 Boolean mod=(Boolean)request.getAttribute("mod");
+Volo volo = (Volo) request.getAttribute("volo");
+DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 if(mod==null)
 	mod=true;
@@ -29,12 +30,12 @@ http://www.tooplate.com/view/2095-level
 -->
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">                                      <!-- Bootstrap style -->
-    <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
-    <link rel="stylesheet" href="css/tooplate-style.css">                                   <!-- Templatemo style -->
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">                                      <!-- Bootstrap style -->
+    <link rel="stylesheet" type="text/css" href="../slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="../slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/datepicker.css"/>
+    <link rel="stylesheet" href="../css/tooplate-style.css">                                   <!-- Templatemo style -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" /> 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,7 +54,7 @@ http://www.tooplate.com/view/2095-level
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
                             <a class="navbar-brand mr-auto" href="#">
-                                <img src="img/logo.png" alt="Site logo">
+                                <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -62,7 +63,7 @@ http://www.tooplate.com/view/2095-level
                             
                             <ul class="navbar-nav ml-auto">
                             	<% if (request.getSession().getAttribute("account")==null){ %>
-                            		<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+                            		<li class="nav-item"><a class="nav-link" href="../login.jsp">Login</a></li>
                             	<% } %>
                             	<%  if (request.getSession().getAttribute("account")!=null){
                             		Account account=(Account)request.getSession().getAttribute("account");
@@ -88,7 +89,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="#">Visualizza gli account</a>
 									  <a href="#">Aggiungi compagnia aerea</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
@@ -97,7 +98,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="#">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -114,7 +115,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="listaVoli.jsp?page=1&action=null">Visualizza voli</a>
 									  <a href="aggiungiVolo.jsp">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -123,7 +124,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="#">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -151,16 +152,19 @@ http://www.tooplate.com/view/2095-level
                    	 <% } %>
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                                <form action="AggiungiVoloServlet" method="post" class="tm-search-form tm-section-pad-2">
+                                <form action="ModificaVoloServlet" id="form1" method="post" class="tm-search-form tm-section-pad-2">
+                                	<input type="hidden" id="custId" name="idVolo" value="<%=volo.getId()%>">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                        	<% String partenza = volo.getAeroportoP().getCodice() +" - " + volo.getAeroportoP().getCity() + ", " +  volo.getAeroportoP().getStato();%>
+                                            <input name="city" value="<%=partenza%>" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                           <input name="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                        	<% String arrivo = volo.getAeroportoA().getCodice() +" - " + volo.getAeroportoA().getCity() + ", " +  volo.getAeroportoA().getStato(); %>
+                                           <input name="cityArrivals" value="<%=arrivo%>" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
@@ -178,18 +182,22 @@ http://www.tooplate.com/view/2095-level
                                  	<div class="form-row tm-search-form-row">
                                     	<div class="form-group tm-form-element tm-form-element-50">
                                     	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	<input name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza" required>
+                                           	<input name="dateDeparture" value="<%=volo.getDataPartenza().format(FORMATO_DIA)%>" type="text" class="form-control" id="start" placeholder="Data partenza" required>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="fa fa-euro fa-2x tm-form-element-icon"></i>
-                                            <input name="price" type="text" class="form-control" placeholder="prezzo base biglietto" required>
+                                            <% String prezzo = String.format("%.2f",volo.getPrezzo());
+                                               String prezzoSenzaVirgola = prezzo.replace(",", ".");
+                                            %>
+                                            <input name="price" value=<%=prezzoSenzaVirgola%> type="text" class="form-control" placeholder="prezzo base biglietto" required>
                                         </div>
                                      </div>
                                      <div class="form-row tm-search-form-row d-flex justify-content-center">
                                     	<label class="col-sm-1.5 col-form-label">Orario partenza</label>
                                     	<div class="form-group col-auto">   
-                                    		<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>     
+                                    		<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>
                                         	<select name="hDeparture" class="form-control form-control-lg">
+                                        		<option> <%=volo.getOrarioPartenza().getHour()%> </option>
                                         		<option>h</option>
                                             	<% for(int i=0;i<=9;i++) { %>
                                            		<option>0<%=i%></option>
@@ -203,6 +211,7 @@ http://www.tooplate.com/view/2095-level
                                        	<div class="form-group col-auto">
                                        	    <i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>                    
                                         	<select name="minDeparture" class="form-control form-control-lg">
+                                        		<option> <%=volo.getOrarioPartenza().getMinute()%> </option>
                                         		<option>min</option>
                                             	<% for(int i=0;i<=9;i++) { %>
                                            		<option>0<%=i%></option>
@@ -216,6 +225,7 @@ http://www.tooplate.com/view/2095-level
                                         <div class="form-group col-auto">
                                         	<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i> 
                                         	<select name="hFly" class="form-control form-control-lg">
+                                        		<option> <%=volo.getDurataVolo().getHour()%> </option>
                                            		<option>h</option>
                                                 <% for(int i=10;i<24;i++) { %>
                                             	<option><%=i%></option>
@@ -226,6 +236,7 @@ http://www.tooplate.com/view/2095-level
                                         <div class="form-group col-auto">  
                                         	<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>                          
                                        		<select name="minFly" class="form-control form-control-lg">
+                                       			<option> <%=volo.getDurataVolo().getMinute()%> </option>
                                             	<option>min</option>
                                                  <% for(int i=0;i<60;i++) { %>
                                             	<option><%=i%></option>
@@ -238,8 +249,15 @@ http://www.tooplate.com/view/2095-level
                                         <div class="form-group tm-form-element tm-form-element-50"> 
                                         	<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
                                             <select name="baggage" class="form-control form-control-lg">
+                                            	<%boolean compreso = volo.isCompreso();
+                                            	  if(compreso == true) {
+                                            	%>
+                                            	<option>compreso</option>
+										        <option>non compreso</option>
+                                            	<% } else { %>
                                             	<option>non compreso</option>
 										        <option>compreso</option>
+										        <% } %>
 										    </select>
 										</div>
 							        </div>
@@ -247,12 +265,12 @@ http://www.tooplate.com/view/2095-level
                                    		<label class="col-sm-1.5 col-form-label">Numero totale di posti disponibili per il volo</label>
                                    		<div class="form-group col-auto">
                                    			<i class="fa fa-group fa-2x tm-form-element-icon"></i>
-                                   			<input class="form-control input-group-lg" type="number" id="inputNumber2" name="seats" value="1" min="1" max="100" required>
+                                   			<input class="form-control input-group-lg" value= <%=volo.getSeats()%> type="number" id="inputNumber2" name="seats" value="1" min="1" max="100" required>
 							        	</div>
 							        </div>
                                     <div class="form-row tm-search-form-row d-flex justify-content-center">
 										<div class="form-group tm-form-element tm-form-element-50">
-                                        	<button onclick="confermaAggiungi()" type="submit" class="btn btn-primary tm-btn-search">Aggiungi volo</button>
+                                        	<button  type="submit" class="btn btn-primary tm-btn-search">Modifica volo</button>
                                        	</div>
                                    	</div>
                                 </form>
@@ -273,19 +291,24 @@ http://www.tooplate.com/view/2095-level
             </footer>
          
         <!-- load JS files -->
-        <script src="js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
-        <script src="js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
-        <script src="js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
-        <script src="js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
-        <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
-        <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
+        <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
+        <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
+        <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
+        <script src="../js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
+        <script src="../js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
+        <script src="../slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		
         <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
-        <script src="scripts/ricercaAeroporti.js"> </script>
+        <script src="../scripts/ricercaAeroporti.js"> </script>
         
         <script>
+        $("#form1").submit(function(e) {    
+        	if(!confirm("sei sicuro di voler modificare il volo?")){      
+        		e.preventDefault();  
+        	} 
+        }); 
       
         $("#start").datepicker({
             defaultDate:"+1w",
