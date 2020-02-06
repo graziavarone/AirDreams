@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import java.util.*;
+
 import db.DriverManagerConnectionPool;
 import gestioneutente.Account;
 
@@ -16,6 +18,7 @@ public class CompagniaAereaManager {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
+		CompagniaAerea compagniaAerea=null;
 		
 		try {
 			con = DriverManagerConnectionPool.getConnection();
@@ -28,14 +31,12 @@ public class CompagniaAereaManager {
 			
 			if (rs.next()) { 
 				//se trova la compagnia, ne crea un istanza e la restituisce
-				CompagniaAerea compagniaAerea=new CompagniaAerea();
+				compagniaAerea=new CompagniaAerea();
 				
 				compagniaAerea.setNome(rs.getString("nome"));
 				compagniaAerea.setSito(rs.getString("sito"));
-				
-				return compagniaAerea;
-			} else {
-				return null;
+			
+
 			}
 				
 			
@@ -51,7 +52,122 @@ public class CompagniaAereaManager {
 			}
 		}
 		
-		return null;
+		System.out.println("Ho trovato"+ compagniaAerea);
+		return compagniaAerea;
+	}
+
+	public boolean aggiungiCompagnia(CompagniaAerea compagniaAerea) throws SQLException {
+		boolean b = false;
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+	
+		String updateSQL="INSERT into compagniaAerea values (?,?)";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+               
+
+                preparedStatement.setString(1, compagniaAerea.getNome());
+  
+                preparedStatement.setString(2, compagniaAerea.getSito());
+      
+       
+                
+            	System.out.println("AddCompagnia: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
+                b=true;
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return b;
+		
+	}
+	
+	public ArrayList<CompagniaAerea> getCompagnie() throws SQLException {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ArrayList<CompagniaAerea> lista=new ArrayList<CompagniaAerea>();
+		CompagniaAerea compagniaAerea=null;
+		
+		try {
+			con = DriverManagerConnectionPool.getConnection();
+			st = con.createStatement();
+		
+			String sql= "SELECT * FROM compagniaAerea";
+			PreparedStatement ps = con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			
+			while (rs.next()) { 
+				compagniaAerea=new CompagniaAerea();
+				
+				compagniaAerea.setNome(rs.getString("nome"));
+				compagniaAerea.setSito(rs.getString("sito"));
+	
+				
+				lista.add(compagniaAerea);
+
+			}
+				
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				DriverManagerConnectionPool.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return lista;
+	}
+
+	public boolean aggiornaCompagnia(CompagniaAerea compagnia) throws SQLException {
+		boolean b = false;
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+	
+		String updateSQL="UPDATE compagniaAerea set sito=? where nome=?";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+              
+                preparedStatement.setString(1, compagnia.getSito());
+                preparedStatement.setString(2, compagnia.getNome());
+                
+            	System.out.println("AggiornaCompagnia: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
+                b=true;
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return b;
+		
 	}
 	
 	public ArrayList<CompagniaAerea> getAllCompanies() throws SQLException {
