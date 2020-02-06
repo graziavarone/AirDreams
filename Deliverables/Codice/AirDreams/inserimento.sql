@@ -22,6 +22,3 @@ values ('Rosaria','Rossi','rosaria@gmail.com','Rosaria1998'),
 	("Ryanair","12/02/2020",55,3,"01:25","14:30",false,"TXL","AMS"),
 	("Ryanair","12/02/2020",55,3,"02:15","16:55",false,"AMS","FCO"),
 	("Ryanair","12/02/2020",55,3,"00:50","21:45",false,"FCO","NAP");
-    
-    
-    
