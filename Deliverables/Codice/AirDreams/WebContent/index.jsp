@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*"%>
     
 <% Boolean mod=(Boolean)request.getAttribute("mod");
+
 if(mod==null)
 	mod=true;
 %>
@@ -16,8 +17,11 @@ if(mod==null)
 
     <title>AirDreams</title>
 <!--
+
 Template 2095 Level
+
 http://www.tooplate.com/view/2095-level
+
 -->
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
@@ -263,14 +267,18 @@ http://www.tooplate.com/view/2095-level
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		
 		<script>
+
        
             $(document).ready(function(){
+
+
                 // Date Picker
                 const pickerCheckIn = datepicker('#inputCheckIn');
                 const pickerCheckOut = datepicker('#inputCheckOut');
                 
                                          
             });
+
         </script>             
 
 		
