@@ -24,7 +24,7 @@ import gestionecompagniaaerea.CompagniaAereaManager;
 public class ModificaVoloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String expAeroporto="^[A-Z]{3} - [A-Za-z  ]{1,}, [A-Za-z ]{1,}$";
-	private String expData= "^\\s*(0?[1-9]|1[1-9]|2[2-9]|3[01])\\/\\s*(1[012]|0?[1-9])\\/\\d{4}\\s*$";
+	private String expData= "^\\s*(0?[1-9]|1[0-9]|2[2-9]|3[01])\\/\\s*(1[012]|0?[1-9])\\/\\d{4}\\s*$";
 	private String expPrice="^([0-9]){1,}[.]([0-9]){1,2}$";
 	private DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	//globali per poterle utilizare nella funzione

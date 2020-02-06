@@ -8,9 +8,7 @@
 		mod=true;
 	
 	Account account= (Account) request.getSession().getAttribute("account");
-	System.out.println("ACCOUNT: " + account);
-	
-	System.out.println(": " + request.getAttribute("message"));
+
 %>
 
 <html>
@@ -38,14 +36,9 @@
 			int pagina=Integer.parseInt(request.getParameter("page"));
 			String action=request.getParameter("action");
 			ArrayList<Volo> voli= (ArrayList<Volo>) request.getAttribute("voli");
-			if (voli==null) {
-				response.sendRedirect("./ListaVoliServlet?page=" + pagina + "&action=" + action);
-				return;
-			}	
-		
-			for(Volo v: voli) {
-				System.out.println(v);
-			}
+			
+			System.out.println("I voli sono" +voli);
+
 			
 			pagina= (int) request.getAttribute("page");
 		%>
@@ -135,7 +128,7 @@
                					
                					<% } %>
                        					
-									<li class="nav-item"><a class="nav-link" href="LogoutServlet">Logout</a></li>
+									<li class="nav-item"><a class="nav-link" href="../LogoutServlet">Logout</a></li>
                        	
 								<% } %>
                             
@@ -174,7 +167,9 @@
            		<div class="justify-content-center">
            			<div>
            				<!--  verranno inseriti i form per i criteri di ricerca -->
-           				<form action="ListaVoliServlet?action=ricerca&page=1"  method="post" class="tm-search-form tm-section-pad-2">
+           				<form action="ListaVoliServlet"  method="post" class="tm-search-form tm-section-pad-2">
+           					<input type="hidden" name="page" value="1">
+           					<input type="hidden" name="action" value="ricerca">
                         	<div class="form-group row" id="formPartenza" hidden="true">
    					 			<label class="col-sm-6 col-form-label">Inserire aeroporto di partenza</label>
    					 			<div class="col-sm-5 tm-form-element ">
@@ -216,6 +211,8 @@
     							int inizio=(pagina-1)*4;
     							int fine=pagina*4;
       						
+    							System.out.println("FINE E"+fine);
+    							System.out.println("VOLI è"+voli);
     							if (fine>voli.size()) {
     								fine=voli.size();
     							}
@@ -279,7 +276,7 @@
       						</div>
       						<br><br>
       						<!-- /grid voli -->
-      						<% } %>      					
+      						<%  }  %>      					
       					</div>
       				</div>
       				<div class="d-flex justify-content-center">
@@ -314,7 +311,7 @@
         
            <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
-        <script src="scripts/ricercaAeroporti.js"> </script>            <!-- http://kenwheeler.github.io/slick/ -->
+        <script src="../scripts/ricercaAeroporti.js"> </script>            <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		<script>
 		

@@ -324,7 +324,7 @@ public class VoloManager {
 	}
 
 
-public ArrayList<Volo> cercaVoli() throws SQLException {
+public ArrayList<Volo> cercaVoli(String compagnia) throws SQLException {
 	Connection con = null;
 	Statement st = null;
 	ResultSet rs = null;
@@ -335,8 +335,111 @@ public ArrayList<Volo> cercaVoli() throws SQLException {
 		con = DriverManagerConnectionPool.getConnection();
 		st = con.createStatement();
 	
-		String sql= "SELECT * FROM volo v";
+		String sql= "SELECT * FROM volo v WHERE compagniaAerea=?";
 		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, compagnia);
+		System.out.println("CercaVoli" + ps.toString());
+		rs=ps.executeQuery();
+		
+		while (rs.next()) {
+			Volo volo=new Volo();
+			
+			volo.setId(rs.getInt("idVolo"));
+			
+			Aeroporto aeroportoP=aeroportoManager.findAeroportoById(rs.getString("aeroportoPart"));
+			Aeroporto aeroportoA=aeroportoManager.findAeroportoById(rs.getString("aeroportoArr"));
+			
+			volo.setId(rs.getInt("idVolo"));
+			volo.setOtherDayDate(LocalDate.parse(rs.getString("dataPart"),FORMATO_DIA));
+			volo.setPrezzo(rs.getFloat("prezzo"));
+			volo.setSeats(rs.getInt("postiDisponibili"));
+			volo.setDurataVolo(LocalTime.parse(rs.getString("durata")));
+			volo.setOrarioPartenza(LocalTime.parse(rs.getString("orarioPart")));
+			volo.setCompreso(rs.getBoolean("bagaglioStivaCompreso"));
+			
+			CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
+			CompagniaAerea compagniaAerea=compagniaAereaManager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
+			volo.setCa(compagniaAerea);
+			
+			volo.setAeroportoP(aeroportoP);
+			volo.setAeroportoA(aeroportoA);
+			
+			arrayList.add(volo);
+		} 
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		try {
+			if (st != null)
+				st.close();
+			DriverManagerConnectionPool.releaseConnection(con);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	return arrayList;
+}
+
+public ArrayList<Volo> cercaVoli(String[] ricerca,String compagnia) throws SQLException {
+	Connection con = null;
+	Statement st = null;
+	ResultSet rs = null;
+	ArrayList<Volo> arrayList=new ArrayList<Volo>();
+	AeroportoManager aeroportoManager=new AeroportoManager();
+	
+	try {
+		con = DriverManagerConnectionPool.getConnection();
+		st = con.createStatement();
+		String sql="SELECT * FROM volo WHERE ";
+		
+		if (!ricerca[0].equals(""))
+			sql+= "aeroportoPart=?";
+		
+		if (!ricerca[1].equals("")) {
+			if (ricerca[0].equals(""))
+				sql+= "aeroportoArr=?";
+			else
+				sql+= " AND aeroportoArr=?";
+		}
+		
+		if (!ricerca[2].equals("")) {
+			if (ricerca[0].equals("")||ricerca[1].equals(""))
+				sql+= "dataPart=? ";
+			else
+				sql+= " AND dataPart=?"; //avevi inserito aeroportoArr ma ti perdono
+		}
+		
+		sql+=" AND compagniaAerea=?";
+		
+		PreparedStatement ps = con.prepareStatement(sql);
+		if (!ricerca[0].equals("") && !ricerca[1].equals("") && !ricerca[2].equals("")) {
+			ps.setString(1, ricerca[0]);
+			ps.setString(2, ricerca[1]);
+			ps.setString(3, ricerca[2]);
+			ps.setString(4,compagnia);
+		} else if (!ricerca[0].equals("") &&  ricerca[1].equals("") && !ricerca[2].equals("")) {
+			ps.setString(1, ricerca[0]);
+			ps.setString(2, ricerca[2]);
+			ps.setString(3,compagnia);
+		} else if (ricerca[0].equals("") &&  !ricerca[1].equals("") && !ricerca[2].equals("")) {
+			ps.setString(1, ricerca[1]);
+			ps.setString(2, ricerca[2]);
+			ps.setString(3,compagnia);
+		} else if (!ricerca[0].equals("") &&  !ricerca[1].equals("") && ricerca[2].equals("")) {
+			ps.setString(1, ricerca[0]);
+			ps.setString(2, ricerca[1]);
+			ps.setString(3,compagnia);
+		} else if (!ricerca[0].equals("") &&  ricerca[1].equals("") && ricerca[2].equals("")) {
+			ps.setString(1, ricerca[0]);
+			ps.setString(2,compagnia);
+		} else if (ricerca[0].equals("") &&  !ricerca[1].equals("") && ricerca[2].equals("")) {
+			ps.setString(1, ricerca[1]);
+			ps.setString(2,compagnia);
+		} else if (ricerca[0].equals("") &&  ricerca[1].equals("") && !ricerca[2].equals("")) {
+			ps.setString(1, ricerca[2]);
+			ps.setString(2,compagnia);
+		} 
 		
 		System.out.println("CercaVoli" + ps.toString());
 		rs=ps.executeQuery();
@@ -381,99 +484,6 @@ public ArrayList<Volo> cercaVoli() throws SQLException {
 	return arrayList;
 }
 
-public ArrayList<Volo> cercaVoli(String[] ricerca) throws SQLException {
-	Connection con = null;
-	Statement st = null;
-	ResultSet rs = null;
-	ArrayList<Volo> arrayList=new ArrayList<Volo>();
-	AeroportoManager aeroportoManager=new AeroportoManager();
-	
-	try {
-		con = DriverManagerConnectionPool.getConnection();
-		st = con.createStatement();
-		String sql="SELECT * FROM volo WHERE ";
-		
-		if (!ricerca[0].equals(""))
-			sql+= "aeroportoPart=?";
-		
-		if (!ricerca[1].equals("")) {
-			if (ricerca[0].equals(""))
-				sql+= "aeroportoArr=?";
-			else
-				sql+= " AND aeroportoArr=?";
-		}
-		
-		if (!ricerca[2].equals("")) {
-			if (ricerca[0].equals("")||ricerca[1].equals(""))
-				sql+= "dataPart=?";
-			else
-				sql+= " AND dataPart=?"; //avevi inserito aeroportoArr ma ti perdono
-		}
-		
-		PreparedStatement ps = con.prepareStatement(sql);
-		if (!ricerca[0].equals("") && !ricerca[1].equals("") && !ricerca[2].equals("")) {
-			ps.setString(1, ricerca[0]);
-			ps.setString(2, ricerca[1]);
-			ps.setString(3, ricerca[2]);
-		} else if (!ricerca[0].equals("") &&  ricerca[1].equals("") && !ricerca[2].equals("")) {
-			ps.setString(1, ricerca[0]);
-			ps.setString(2, ricerca[2]);
-		} else if (ricerca[0].equals("") &&  !ricerca[1].equals("") && !ricerca[2].equals("")) {
-			ps.setString(1, ricerca[1]);
-			ps.setString(2, ricerca[2]);
-		} else if (!ricerca[0].equals("") &&  !ricerca[1].equals("") && ricerca[2].equals("")) {
-			ps.setString(1, ricerca[0]);
-			ps.setString(2, ricerca[1]);
-		} else if (!ricerca[0].equals("") &&  ricerca[1].equals("") && ricerca[2].equals("")) {
-			ps.setString(1, ricerca[0]);
-		} else if (ricerca[0].equals("") &&  !ricerca[1].equals("") && ricerca[2].equals("")) {
-			ps.setString(1, ricerca[1]);
-		} else if (ricerca[0].equals("") &&  ricerca[1].equals("") && !ricerca[2].equals("")) {
-			ps.setString(1, ricerca[2]);
-		} 
-		
-		System.out.println("CercaVoli" + ps.toString());
-		rs=ps.executeQuery();
-		
-		while (rs.next()) {
-			Volo volo=new Volo();
-			
-			volo.setId(rs.getInt("idVolo"));
-			
-			Aeroporto aeroportoP=aeroportoManager.findAeroportoById(rs.getString("aeroportoPart"));
-			Aeroporto aeroportoA=aeroportoManager.findAeroportoById(rs.getString("aeroportoArr"));
-			
-			volo.setId(rs.getInt("idVolo"));
-			volo.setOtherDayDate(LocalDate.parse(rs.getString("dataPart"),FORMATO_DIA));
-			volo.setPrezzo(rs.getFloat("prezzo"));
-			volo.setSeats(rs.getInt("postiDisponibili"));
-			volo.setDurataVolo(LocalTime.parse(rs.getString("durata")));
-			volo.setOrarioPartenza(LocalTime.parse(rs.getString("orarioPart")));
-			volo.setCompreso(rs.getBoolean("bagaglioStivaCompreso"));
-			
-			CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
-			CompagniaAerea compagniaAerea=compagniaAereaManager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
-			volo.setCa(compagniaAerea);
-			
-			volo.setAeroportoP(aeroportoP);
-			volo.setAeroportoA(aeroportoA);
-			
-			arrayList.add(volo);
-		} 
-	} catch (SQLException e) {
-		e.printStackTrace();
-	} finally {
-		try {
-			if (st != null)
-				st.close();
-			DriverManagerConnectionPool.releaseConnection(con);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	return arrayList;
-}
 
 public Volo findByID(String id) throws SQLException {
 		Connection con = null;

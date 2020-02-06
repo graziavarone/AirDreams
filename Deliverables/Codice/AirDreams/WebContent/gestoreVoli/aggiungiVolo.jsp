@@ -197,7 +197,7 @@ http://www.tooplate.com/view/2095-level
                                             	<% for(int i=0;i<=9;i++) { %>
                                            		<option>0<%=i%></option>
                                             	<% } %>
-                                            	<% for(int i=10;i<=24;i++) { %>
+                                            	<% for(int i=10;i<24;i++) { %>
                                            		<option><%=i%></option>
                                             	<% } %>  
                                        		</select>
@@ -220,6 +220,9 @@ http://www.tooplate.com/view/2095-level
                                         	<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i> 
                                         	<select name="hFly" class="form-control form-control-lg">
                                            		<option>h</option>
+                                           		<% for(int i=0;i<=9;i++) { %>
+                                           		<option>0<%=i%></option>
+                                            	<% } %>
                                                 <% for(int i=10;i<24;i++) { %>
                                             	<option><%=i%></option>
                                                 <% } %> 
@@ -230,7 +233,10 @@ http://www.tooplate.com/view/2095-level
                                         	<i class="fa fa-clock-o fa-2x tm-form-element-icon"></i>                          
                                        		<select name="minFly" class="form-control form-control-lg">
                                             	<option>min</option>
-                                                 <% for(int i=0;i<60;i++) { %>
+                                            		<% for(int i=0;i<=9;i++) { %>
+                                           		<option>0<%=i%></option>
+                                            	<% } %>
+                                                 <% for(int i=10;i<60;i++) { %>
                                             	<option><%=i%></option>
                                                 <% } %> 
                                             </select>
