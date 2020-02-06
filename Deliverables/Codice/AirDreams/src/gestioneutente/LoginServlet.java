@@ -38,18 +38,18 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("Ho salvato "+account);
 			request.getSession().setAttribute("roles",account.getRuolo());
 			System.out.println("Ho salvato");
-			redirectedPage="index.jsp";
+			redirectedPage="/index.jsp";
 			response.getWriter().write("Success");
 		} else {
 			String error="autenticazione fallita";
 			request.setAttribute("message", error);
 			response.getWriter().write("Failed");
-			redirectedPage="errorPage.jsp";
+			redirectedPage="/errorPage.jsp";
 		}
 		
 		//redirect alla pagina
 		//response.sendRedirect(request.getContextPath() + redirectedPage);
-		request.getRequestDispatcher(redirectedPage).forward(request, response);
+		request.getServletContext().getRequestDispatcher(redirectedPage).forward(request, response);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
