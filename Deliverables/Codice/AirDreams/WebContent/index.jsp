@@ -5,6 +5,8 @@
 
 if(mod==null)
 	mod=true;
+
+String message=(String)request.getAttribute("message");
 %>
     
 <!DOCTYPE html>
@@ -83,7 +85,7 @@ http://www.tooplate.com/view/2095-level
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
 									  <a href="#">Visualizza gli account</a>
-									  <a href="#">Aggiungi compagnia aerea</a>
+									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
@@ -108,8 +110,8 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
-									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
+									  <a href="#">Visualizza voli</a>
+									  <a href="#">Aggiungi volo</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
@@ -139,80 +141,66 @@ http://www.tooplate.com/view/2095-level
                 </div>
             </div>
             
+    
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
-                    <div class="container ie-h-align-center-fix">
-                        <div class="row">
+                	  <% if(message!=null){ %>
+				                <p id="messageError"><%=message %></p>
+				                <% } %>
+                    <div style="height: 350px;" class="container ie-h-align-center-fix">
+            		
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                                <form action="index.html" method="post" class="tm-search-form tm-section-pad-2">
+                        <div class="row">
+                      
+                                <form action="RicercaVoliServlet" method="post" class="tm-search-form tm-section-pad-2">
+                                		
+                                		  Andata e ritorno<input type="radio" id="andERit" style="margin-right: 30px;" name="tipoViaggio" value="Andata e ritorno" checked="checked">
+                        					Solo andata<input type="radio" id="and"  style="margin-right: 30px;"  name="tipoViaggio" value="Solo andata">
+                        					 Solo voli diretti <input type="checkbox" name="Diretto"  value="Diretto">
                                     <div class="form-row tm-search-form-row">
+                                    	
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                             <i class="fa fa-map-marker fa-2x tm-form-element-icon"></i> 
-                                            <input name="city" type="text" class="form-control" id="inputCity" placeholder="Type your destination...">
+                                           <i class="fa fa-plane fa-2x tm-form-element-icon"></i>
+                                            <input name="city" id="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                            <datalist id="ricerca-datalist"></datalist>
                                         </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                            <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                            <input name="check-in" type="text" class="form-control" id="inputCheckIn" placeholder="Check In">
+                             				<i id=scambia class="fa fa-arrows-h fa-2x"></i>
+                                           <div class="form-group tm-form-element tm-form-element-100">
+                                            	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
+                                           <input name="cityArrivals" id="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                            <datalist id="ricerca-datalist"></datalist>
                                         </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                            <i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                            <input name="check-out" type="text" class="form-control" id="inputCheckOut" placeholder="Check Out">
-                                        </div>
+                                        
+                                        	<div class="form-group tm-form-element tm-form-element-50">
+                                   			<i class="fa fa-group fa-2x tm-form-element-icon"></i>
+                                   			<input class="form-control input-group-lg" type="number" id="inputNumber2" name="seats" value="1" min="1" max="100" required>
+							        	</div>
+				
+                                   
                                     </div>
-                                    <div class="form-row tm-search-form-row">
-                                        <div class="form-group tm-form-element tm-form-element-2">                                            
-                                            <select name="adult" class="form-control tm-select" id="adult">
-                                                <option value="">Adult</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
-                                            <i class="fa fa-2x fa-user tm-form-element-icon"></i>
+                                    
+              					 <div class="form-row tm-search-form-row">
+                                		<div class="form-group tm-form-element tm-form-element-50">
+                                    	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
+                                           	<input name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza" required>
                                         </div>
-                                        <div class="form-group tm-form-element tm-form-element-2">                                            
-                                            <select name="children" class="form-control tm-select" id="children">
-                                                <option value="">Children</option>
-                                                <option value="0">0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
-                                            <i class="fa fa-user tm-form-element-icon tm-form-element-icon-small"></i>
+                                        
+                                        	<div class="form-group tm-form-element tm-form-element-50">
+                                    	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
+                                           	<input name="dateReturn" type="text" class="form-control" id="return" placeholder="Data ritorno" 
+                          
+                                           	required>
                                         </div>
+                                   
+                                    </div>
+                        
+                         
+				
+                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
-                                            <select name="room" class="form-control tm-select" id="room">
-                                                <option value="">Room</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
-                                            <i class="fa fa-2x fa-bed tm-form-element-icon"></i>
+                                            <button type="submit" style="margin-left: 600px" class="btn btn-primary tm-btn-search">Cerca</button>
                                         </div>
-                                        <div class="form-group tm-form-element tm-form-element-2">
-                                            <button type="submit" class="btn btn-primary tm-btn-search">Check Availability</button>
-                                        </div>
-                                      </div>
+                                     
                                     
                                 </form>
                             </div>                        
@@ -266,21 +254,49 @@ http://www.tooplate.com/view/2095-level
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		
-		<script>
-
-       
-            $(document).ready(function(){
-
-
-                // Date Picker
-                const pickerCheckIn = datepicker('#inputCheckIn');
-                const pickerCheckOut = datepicker('#inputCheckOut');
-                
-                                         
-            });
-
-        </script>             
-
-		
+		 <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
+        <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
+		<script src="scripts/ricercaAeroporti.js"> </script>
+        
+        <script>
+      
+        $("#start").datepicker({
+            defaultDate:"+1w",
+            dateFormat:"dd/mm/yy",
+            minDate:0,
+            changeMonth:false,
+            numberOfMonth:1,
+            onClose: function(selectedDate){
+                $("#return").datepicker("option","minDate",selectedDate);
+            }
+         })
+         
+           $("#return").datepicker({
+            defaultDate:"+1w",
+            dateFormat:"dd/mm/yy",
+            changeMonth:false,
+            numberOfMonth:1,
+            onClose: function(selectedDate){
+                $("#start").datepicker("option","maxDate",selectedDate);
+            }
+         })
+         
+         $("#and").click(function(){
+        	 $('#return').val(null);
+        	 $("#return").prop('disabled', true);
+         });
+        
+        $("#andERit").click(function(){
+       	 $("#return").prop('disabled', false);
+        });
+        
+        $("#scambia").click(function(){
+        var temp=$("#city").val();
+       	 $("#city").val($("#cityArrivals").val());
+       	 $("#cityArrivals").val(temp);
+        });
+         
+         
+         </script>
 </body>
 </html>
