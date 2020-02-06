@@ -21,5 +21,5 @@ function ricerca(str,name) {
 		}
 	}
 		xmlHttpReq.open("GET", "RicercaAeroportiServlet?"+ name + "=" + encodeURIComponent(str), true);
-		xmlHttpReq.send();	
+		xmlHttpReq.send();
 }
