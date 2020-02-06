@@ -7,8 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import db.DriverManagerConnectionPool;
+import gestioneutente.Account;
+
+
 
 public class AeroportoManager {
+
 	public ArrayList<Aeroporto> getAeroportiByCity(String a) {
 		 ArrayList<Aeroporto> listAeroportiByCity = new ArrayList<Aeroporto>();
 		 Connection con = null;
@@ -68,4 +72,4 @@ public class AeroportoManager {
 		    return aeroporto;
 		}
 	
-}
+	}
