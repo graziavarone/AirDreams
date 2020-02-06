@@ -11,6 +11,8 @@
 	System.out.println("ACCOUNT: " + account);
 	
 	System.out.println("MESSAGE: " + request.getAttribute("message"));
+	
+	ArrayList<CartaDiCredito> carte=(ArrayList<CartaDiCredito>)request.getAttribute("carte");
 %>
 
 <html>
@@ -23,13 +25,13 @@
     
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">                                      <!-- Bootstrap style -->
-    <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
-    <link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
-    <link rel="stylesheet" href="css/tooplate-style.css"> 
-    <link rel="stylesheet" href="css/prova.css">
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">                <!-- Font Awesome -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">                                      <!-- Bootstrap style -->
+    <link rel="stylesheet" type="text/css" href="../slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="../slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/datepicker.css"/>
+    <link rel="stylesheet" href="../css/tooplate-style.css"> 
+    <link rel="stylesheet" href="../css/prova.css">
 </head>
 <body>
         <div class="tm-main-content" id="top">
@@ -40,7 +42,7 @@
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
                             <a class="navbar-brand mr-auto" href="index.jsp">
-                                <img src="img/logo.png" alt="Site logo">
+                                <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -61,7 +63,7 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
+									  <a href="DettagliAccountServlet">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
 									  </div>
 									</li>
@@ -75,16 +77,16 @@
 									  <div class="dropdown-content">
 									  <a href="#">Visualizza gli account</a>
 									  <a href="#">Aggiungi compagnia aerea</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
+									  <a href="DettagliAccountServlet">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -101,16 +103,16 @@
 									  <div class="dropdown-content">
 									  <a href="#">Visualizza voli</a>
 									  <a href="#">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
+									  <a href="DettagliAccountServlet">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -118,7 +120,7 @@
                					
                					<% } %>
                        					
-									<li class="nav-item"><a class="nav-link" href="LogoutServlet">Logout</a></li>
+									<li class="nav-item"><a class="nav-link" href="../LogoutServlet">Logout</a></li>
                        	
 								<% } %>
                             
@@ -179,7 +181,7 @@
       						<h6><%=request.getAttribute("message")%></h6>
       					</div>
       					<% } %>
-      					<form action="ModificaInfoPersonaliServlet" method="post" class="tm-search-form tm-section-pad-2">
+      					<form action="ModificaInfoPersonaliServlet" id="form1" method="post" class="tm-search-form tm-section-pad-2">
                         	<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Nome</label>
    					 			<div class="col-sm-5">
@@ -201,7 +203,7 @@
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Password</label>
    					 			<div class="col-sm-5">
-   					 				<input id="password" type="text" class="form-control form-control-sm" name="password" value="<%=account.getPassword()%>" readonly>
+   					 				<input id="password" type="password" class="form-control form-control-sm" name="password" value="<%=account.getPassword()%>" readonly>
    					 			</div>
   							</div>			
   							<button onclick="confermaModifica()" id="modifica" type="submit" class="btn btn-primary" hidden="true">Modifica </button>
@@ -209,22 +211,33 @@
       				</div>
       				<div class="p-2" id="pagamenti">
       					<h2>Metodi di pagamento <i class="fa fa-pencil-square-o"></i></h2>
-      					<form action="" method="post" class="tm-search-form tm-section-pad-2">
+      					<% 
+      					if(carte!=null){
+      					for(CartaDiCredito carta: carte) {%>
   							<div class="form-row align-items-center">
   								<label class="col-sm-1.5 col-form-label">Numero carta</label>
    	 							<div class="col-sm-3">
-      								<input type="text" value="3333 3333 3333 3333" class="form-control-plaintext form-control-sm">
+      								<input type="text" value="<%=carta.getnCarta() %>" class="form-control-plaintext form-control-sm">
     							</div>
     							<label class="col-sm-1.5 col-form-label">Titolare</label>
     							<div class="col-sm-2">
-      								<input type="text" value="Mario Rossi" class="form-control-plaintext form-control-sm">
+      								<input type="text" value="<%=carta.getTitolare() %>" class="form-control-plaintext form-control-sm">
     							</div>
     							<label class="col-sm-1.5 col-form-label">Scadenza</label>
     							<div class="col-sm-2">
-      								<input type="text" value="21/05" class="form-control-plaintext form-control-sm">
+      								<input type="text" value="<%=carta.getDataScadenza() %>" class="form-control-plaintext form-control-sm">
     							</div>
+    							
+    							<form action="RimuoviCartaServlet" method="post">
+    							<input type="hidden" name="nCarta" value="<%=carta.getnCarta()%>">
+    							<button class="fa fa-trash" aria-hidden="true" style="margin-left: 30px;"></button>
+    							</form>
     						</div>
-						</form>
+						<% 
+      					}
+      					} %>
+						
+						<a   class="btn btn-primary tm-btn-search" style="width: 150px;"  href="aggiungiCarta.jsp">Aggiungi carta</a>
       				</div>
       				<div class="p-2" id="ordini">
       					<h2>Ordini <i class="fa fa-pencil-square-o"></i></h2>
@@ -269,25 +282,28 @@
         </div>
         
         <!-- load JS files -->
-        <script src="js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
-        <script src="js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
-        <script src="js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
-        <script src="js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
-        <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
-        <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
+        <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
+        <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
+        <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
+        <script src="../js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
+        <script src="../js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
+        <script src="../slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		<script type="text/javascript">
+		
+		   $("#form1").submit(function(e) {    
+	        	if(!confirm("sei sicuro di voler modificare il tuo account?")){      
+	        		e.preventDefault();  
+	        	} 
+	        }); 
+		   
         	function confermaElimina() {
           		var r = confirm("Cofermi di voler eliminare l'account?");
           		if (r == true) 
           			location.href = 'EliminaAccountServlet';
           	}
 
-        	function confermaModifica() {
-          		var r = confirm("Cofermi di voler modificare le tue informazioni?");
-          		if (r == true) 
-          			location.href = 'ModificaInfoPersonaliServlet';
-          	}
+        
           						
           	function editabiliInfo() {
           		document.getElementById("nome").removeAttribute("readonly");
