@@ -341,4 +341,54 @@ public class UtenteManager {
 		}
 		
 	}
+	
+	
+	public boolean modificaAccount(String email, Account newAccount) throws SQLException {
+		boolean b=false;
+		Connection con = null;
+		Statement st = null;
+		
+		try {
+			con = DriverManagerConnectionPool.getConnection();
+			st = con.createStatement();
+		
+			String sql= "UPDATE utente SET nome=?, cognome=?, email=?, ruolo=?, compagniaAerea=? WHERE email=?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1,newAccount.getNome());
+			ps.setString(2,newAccount.getCognome());
+			ps.setString(3,newAccount.getEmail());
+	
+			if (newAccount.getRuolo()!=null) {
+				if (newAccount.getRuolo()==Ruolo.gestoreCompagnie){
+				ps.setString(4,"gestoreCompagnie");
+			} else {
+				ps.setString(4,"gestoreVoli");
+			}
+			}
+				else
+					ps.setString(4,null);
+			
+			if(newAccount.getCompagniaAerea()!=null) {
+			ps.setString(5,newAccount.getCompagniaAerea().getNome());
+			}
+			else
+				ps.setString(5, null);
+			ps.setString(6,email);
+			ps.executeUpdate();
+			
+			b=true; //se l'update va a buon fine
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+				DriverManagerConnectionPool.releaseConnection(con);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return b;			
+	}
 }
