@@ -281,10 +281,10 @@
       				</div>
       				<div class="d-flex justify-content-center">
       					<% if (((pagina-1)*4)>0) { %>
-      					<h2 class="p-2"><a href="listaVoli.jsp?page=<%=(pagina-1)%>&action=<%=action%>"><i class="fa fa-arrow-left"></i></a></h2>
+      					<h2 class="p-2"><a href="ListaVoliServlet?page=<%=(pagina-1)%>&action=<%=action%>"><i class="fa fa-arrow-left"></i></a></h2>
       					<% } %>
       					<% if (((pagina)*4)<voli.size()) { %>
-      					<h2 class="p-2"><a href="listaVoli.jsp?page=<%=(pagina+1)%>&action=<%=action%>"><i class="fa fa-arrow-right"></i></a></h2>
+      					<h2 class="p-2"><a href="ListaVoliServlet?page=<%=(pagina+1)%>&action=<%=action%>"><i class="fa fa-arrow-right"></i></a></h2>
       					<% } %>
       				</div>
       			</div>
