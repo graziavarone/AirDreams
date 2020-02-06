@@ -1,6 +1,7 @@
 package gestionevolo;
 
 public class Aeroporto {
+	
 	private String codice;
 	private String nome;
 	private String city;
@@ -57,4 +58,5 @@ public class Aeroporto {
 				return true; 	
 		return false; 
 		}
+	
 }
