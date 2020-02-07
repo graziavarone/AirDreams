@@ -313,7 +313,7 @@ public class RicercaVoliServlet extends HttpServlet {
 					  response.getWriter().write("Success");
 					  request.setAttribute("city",aeroportoP.getCodice());
 					  request.setAttribute("cityArrivals", aeroportoA.getCodice());
-					  request.setAttribute("seats", numPasseggeri);
+					  request.getSession().setAttribute("seats", numPasseggeri);
 					  request.setAttribute("dateDeparture", dateDeparture);
 					  request.setAttribute("dateReturn", dateReturn);
 					  request.setAttribute("Diretto", checkbox);

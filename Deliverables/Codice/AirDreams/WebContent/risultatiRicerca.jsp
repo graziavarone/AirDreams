@@ -9,7 +9,7 @@
 	
 	  String city=(String)request.getAttribute("city");
 	  String cityArrivals=(String)request.getAttribute("cityArrivals");
-	  String seats=(String)request.getAttribute("seats");
+	  String seats=(String)request.getSession().getAttribute("seats");
 	  String dateDeparture=(String)request.getAttribute("dateDeparture");
 	  String dateReturn=(String)request.getAttribute("dateReturn");
 	  String diretto=(String)request.getAttribute("Diretto");
@@ -315,8 +315,10 @@
     					<% } %>
     				
  						
+ 						<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata.getId()%>">
   						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
-  					
+  					</form>
    					
    									</div> 
    									<br>
@@ -373,7 +375,11 @@
     					<% } %>
     				
  						
+  							<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
   						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+  						</form>
   							</div> 
     							<br>
    								<%  }%>
@@ -443,7 +449,12 @@
     					<% } %>
     				
  						
+  						<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
+ 						<input type="hidden" name="terzoVolo" value="<%=voloAndata[2].getId()%>">
   						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+  						</form>
   							</div> 
     							<br>
    					
@@ -523,8 +534,11 @@
     					if((posti2=voloRitorno.getSeats())<=10){ %>
     					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
     					<% } %>
-    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
-    					
+    				<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata.getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloRitorno.getId()%>">
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					</form>
     							</div>
     				
     							<br>
@@ -616,8 +630,12 @@
     					if((posti2=voloRitorno[0].getSeats())<=10){ %>
     					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
     					<% } %>
-    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
-    					
+    					<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata.getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloRitorno[0].getId()%>">
+ 						<input type="hidden" name="terzoVolo" value="<%=voloRitorno[1].getId()%>">
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					</form>
     								</div>
     					
 										<br>
@@ -723,7 +741,13 @@
     					if((posti2=voloRitorno[0].getSeats())<=10){ %>
     					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
     					<% } %>
-    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    						<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata.getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloRitorno[0].getId()%>">
+ 						<input type="hidden" name="terzoVolo" value="<%=voloRitorno[1].getId()%>">
+ 						<input type="hidden" name="quartoVolo" value="<%=voloRitorno[2].getId()%>">
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					</form>
     					
     								</div>
     					
@@ -813,7 +837,12 @@
     					if((posti2=voloRitorno.getSeats())<=10){ %>
     					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
     					<% } %>
-    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
+ 						<input type="hidden" name="terzoVolo" value="<%=voloRitorno.getId()%>">
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					</form>
     					
     								</div>
     					
@@ -919,7 +948,13 @@
     					if((posti2=voloRitorno[0].getSeats())<=10){ %>
     					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
     					<% } %>
-    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
+ 						<input type="hidden" name="terzoVolo" value="<%=voloRitorno[0].getId()%>">
+ 						<input type="hidden" name="quartoVolo" value="<%=voloRitorno[1].getId()%>">
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					</form>
     					
     								</div>
     					
@@ -1038,7 +1073,14 @@
     					if((posti2=voloRitorno[0].getSeats())<=10){ %>
     					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
     					<% } %>
-    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
+ 						<input type="hidden" name="terzoVolo" value="<%=voloRitorno[0].getId()%>">
+ 						<input type="hidden" name="quartoVolo" value="<%=voloRitorno[1].getId()%>">
+ 							<input type="hidden" name="quintoVolo" value="<%=voloRitorno[2].getId()%>">
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					</form>
     					
     								</div>
     					
@@ -1143,7 +1185,16 @@
     					if((posti2=voloRitorno.getSeats())<=10){ %>
     					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
     					<% } %>
-    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					
+    					<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
+ 						<input type="hidden" name="terzoVolo" value="<%=voloAndata[2].getId()%>">
+ 						<input type="hidden" name="quartoVolo" value="<%=voloRitorno.getId()%>">
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					</form>
+    					
+    					
     					
     								</div>
     					
@@ -1263,7 +1314,14 @@
     					if((posti2=voloRitorno[0].getSeats())<=10){ %>
     					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
     					<% } %>
-    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
+ 						<input type="hidden" name="terzoVolo" value="<%=voloAndata[2].getId()%>">
+ 						<input type="hidden" name="quartoVolo" value="<%=voloRitorno[0].getId()%>">
+ 						<input type="hidden" name="quintoVolo" value="<%=voloRitorno[1].getId()%>">
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					</form>
     					
     								</div>
     					
@@ -1395,7 +1453,15 @@
     					if((posti2=voloRitorno[0].getSeats())<=10){ %>
     					<span style="color:red; margin-left: 35px;">Solo <%=posti2%> posti rimasti</span>
     					<% } %>
-    					<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    						<form action="DettagliViaggioServlet" method="get">
+ 						<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
+ 						<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
+ 						<input type="hidden" name="terzoVolo" value="<%=voloAndata[2].getId()%>">
+ 						<input type="hidden" name="quartoVolo" value="<%=voloRitorno[0].getId()%>">
+ 						<input type="hidden" name="quintoVolo" value="<%=voloRitorno[1].getId()%>">
+ 							<input type="hidden" name="sestoVolo" value="<%=voloRitorno[2].getId()%>">
+  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+    					</form>
     					
     								</div>
     					

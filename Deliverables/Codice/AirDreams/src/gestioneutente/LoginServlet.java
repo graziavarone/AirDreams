@@ -38,7 +38,13 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("Ho salvato "+account);
 			request.getSession().setAttribute("roles",account.getRuolo());
 			System.out.println("Ho salvato");
+			
+			
+			if(request.getSession().getAttribute("voli")!=null) {
+				redirectedPage="/cliente/AggiungiAlCarrelloServlet";
+			} else {
 			redirectedPage="/index.jsp";
+			}
 			response.getWriter().write("Success");
 		} else {
 			String error="autenticazione fallita";
@@ -48,8 +54,8 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		//redirect alla pagina
-		//response.sendRedirect(request.getContextPath() + redirectedPage);
-		request.getServletContext().getRequestDispatcher(redirectedPage).forward(request, response);
+			response.sendRedirect(request.getContextPath() + redirectedPage);
+		//request.getServletContext().getRequestDispatcher(redirectedPage).forward(request, response);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

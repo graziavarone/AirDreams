@@ -20,7 +20,6 @@ import gestionevolo.Volo;
 import gestionevolo.VoloManager;
 
 public class CarrelloManager {
-	private DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	public Carrello getCarrelloUtente(String email) throws SQLException {
 		Carrello carrello = new Carrello();
@@ -56,4 +55,113 @@ public class CarrelloManager {
         	}
         return carrello; 
     }
+
+	public boolean aggiungiVoloAlCarrello(String email, int id, int quantity) throws SQLException {
+		boolean b = false;
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+	
+		String updateSQL="INSERT into carrello (utente,volo,quantity) values (?,?,?)";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+               
+
+                preparedStatement.setString(1, email);
+                preparedStatement.setInt(2, id);
+                preparedStatement.setInt(3,quantity );
+       
+                
+            	System.out.println("aggiungiAlCarrello: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
+                b=true;
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return b;
+		
+	}
+	
+	public boolean updateQuantity(String email, int id, int quantity) throws SQLException {
+		boolean b = false;
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+	
+		String updateSQL="UPDATE carrello set quantity=? where utente=? and volo=?";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+               
+                preparedStatement.setInt(1,quantity );
+                preparedStatement.setString(2, email);
+                preparedStatement.setInt(3, id);
+ 
+       
+                
+            	System.out.println("updateQuantity: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
+                b=true;
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return b;
+		
+	}
+	
+	public Volo cercaVoloNelCarrello(String email, int idVolo) throws SQLException {
+		Volo volo = null;
+        Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String selectSQL="SELECT * FROM carrello WHERE utente=? and volo=?";
+		
+        try {
+        	connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setString(1, email);
+			preparedStatement.setInt(2, idVolo);
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            if (rs.next()) {
+            	String id=rs.getString("volo");
+            	
+            	VoloManager voloManager=new VoloManager();
+            	 volo = voloManager.findByID(id);		
+            	
+            }
+
+        } finally {
+        	try {
+        		if(preparedStatement!=null) preparedStatement.close();
+        		}
+        		finally {
+        			DriverManagerConnectionPool.releaseConnection(connection);
+        		}
+        	}
+        return volo; 
+	}
+
+
 }
