@@ -37,7 +37,7 @@ public class CheckCliente implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		 Account user = (Account) ((HttpServletRequest) request).getSession().getAttribute("account");
 
-	        if (user != null && user.getRuolo()==null) {
+	        if (user != null) {
 	            chain.doFilter(request, response);
 	        } else {
 	            ((HttpServletResponse) response).sendRedirect("../login.jsp");
