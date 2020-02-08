@@ -56,6 +56,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
 			}
 		}
 		
+		request.setAttribute("message", "Volo/i aggiunto/i al tuo carrello");
 		request.getServletContext().getRequestDispatcher("/cliente/CarrelloServlet").forward(request, response);
 	}
 
