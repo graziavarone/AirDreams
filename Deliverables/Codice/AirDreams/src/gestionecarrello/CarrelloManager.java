@@ -163,5 +163,43 @@ public class CarrelloManager {
         return volo; 
 	}
 
+	public boolean rimuoviVoloDalCarrello(String id, String email) throws SQLException {
+		boolean b = false;
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+	
+		String updateSQL="DELETE from carrello WHERE volo=? and utente=?";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+               
+                preparedStatement.setString(1, id);
+                preparedStatement.setString(2, email);
+             
+              
+       
+                
+            	System.out.println("rimuoviDalCarrello: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
+                b=true;
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return b;
+		
+		
+	}
+
 
 }
