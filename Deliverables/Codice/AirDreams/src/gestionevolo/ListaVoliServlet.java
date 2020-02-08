@@ -31,7 +31,7 @@ public class ListaVoliServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		VoloManager voloManager=new VoloManager();
-
+		
 		String action=request.getParameter("action");
 		int pagina=Integer.parseInt(request.getParameter("page"));
 		Account utente= (Account) request.getSession().getAttribute("account");
@@ -61,13 +61,10 @@ public class ListaVoliServlet extends HttpServlet {
 			String codAeroportoP =null;
 			String codAeroportoA =null;
 			
-			
 			List<Volo> voli=new ArrayList<Volo>();
 			String[] ricerca=new String[3];
 			
-
-		
-				if (!valida(aeroportoP,aeroportoA,data)) {
+			if (!valida(aeroportoP,aeroportoA,data)) {
 					System.out.println("Formato non valido");
 					response.getWriter().write("Failed");
 					request.setAttribute("page",pagina);
@@ -75,73 +72,60 @@ public class ListaVoliServlet extends HttpServlet {
 					request.setAttribute("voli",voli);
 					request.setAttribute("message","Formato non valido");
 					redirect = "/gestoreVoli/listaVoli.jsp";
-				} else {
-					try {
-						if(pagina==1) {
-							if(aeroportoP.length()>=3)
-								codAeroportoP = aeroportoP.substring(0,3);
-							if(aeroportoA.length()>=3)
-								codAeroportoA= aeroportoA.substring(0,3);
+			} else {
+				try {
+					if(pagina==1) {
+						if(aeroportoP.length()>=3)
+							codAeroportoP = aeroportoP.substring(0,3);
+						if(aeroportoA.length()>=3)
+							codAeroportoA= aeroportoA.substring(0,3);
 							
+						ricerca[0]="";
+						ricerca[1]="";
+						ricerca[2]="";
 						
-								ricerca[0]="";
-								ricerca[1]="";
-								ricerca[2]="";
-						
-								if (codAeroportoP!=null && codAeroportoP.length()!=0) {
-									ricerca[0]=codAeroportoP;
-									ricercaSalvata[0]=codAeroportoP;
-								}
-								if (codAeroportoA!=null && codAeroportoA.length()!=0) {
-									ricerca[1]=codAeroportoA;
-									ricercaSalvata[1]=codAeroportoA;
-								}
-								if (data!=null && data.length()!=0) {
-									ricerca[2]=data;
-									ricercaSalvata[2]=data;
-								}
-						
-								String compagnia=utente.getCompagniaAerea().getNome();
-								System.out.println("compagnia aerea di cui il gestore è tenuto: " + compagnia);
-								voli=voloManager.cercaVoli(ricerca,compagnia);
-							 
-						}  else {
-
-							ricerca[0]=ricercaSalvata[0];
-							ricerca[1]=ricercaSalvata[1];
-							ricerca[2]=ricercaSalvata[2];
-								
-							
-							
-							String compagnia=utente.getCompagniaAerea().getNome();
-							System.out.println("compagnia aerea di cui il gestore è tenuto: " + compagnia);
-							voli=voloManager.cercaVoli(ricerca,compagnia);
-							
-							
+						if (codAeroportoP!=null && codAeroportoP.length()!=0) {
+							ricerca[0]=codAeroportoP;
+							ricercaSalvata[0]=codAeroportoP;
+						}
+						if (codAeroportoA!=null && codAeroportoA.length()!=0) {
+							ricerca[1]=codAeroportoA;
+							ricercaSalvata[1]=codAeroportoA;
+						}
+						if (data!=null && data.length()!=0) {
+							ricerca[2]=data;
+							ricercaSalvata[2]=data;
 						}
 						
-					} 	 catch (SQLException e) {
-						e.printStackTrace();
-					}
+						String c=utente.getCompagniaAerea().getNome();
+						System.out.println("compagnia aerea di cui il gestore e' tenuto: " + c);
+						voli=voloManager.cercaVoli(ricerca,c);
+							 
+					}  else {
 
-					request.setAttribute("voli", voli);
-					request.setAttribute("page",pagina);
-					redirect="/gestoreVoli/listaVoli.jsp";
-			
-			
+						ricerca[0]=ricercaSalvata[0];
+						ricerca[1]=ricercaSalvata[1];
+						ricerca[2]=ricercaSalvata[2];
+								
+						String c=utente.getCompagniaAerea().getNome();
+						System.out.println("compagnia aerea di cui il gestore e' tenuto: " + c);
+						voli=voloManager.cercaVoli(ricerca,c);
 					}
-				
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				request.setAttribute("voli", voli);
+				request.setAttribute("page",pagina);
+				redirect="/gestoreVoli/listaVoli.jsp";
 			
-				
-			}	
+			}				
+		}	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(redirect);
 	    dispatcher.forward(request, response);
 		
-		}
+	}
 			
-	
-	
-	
 	private boolean valida(String aeroportoP, String aeroportoA, String dateDeparture) {
 		boolean valido=true;
 		
@@ -166,19 +150,14 @@ public class ListaVoliServlet extends HttpServlet {
 			System.out.println("dataPartenza non corrisponde");
 			}
 		}
-		
-	
-		
-		return valido;
-		
-	}
-	
 
+		return valido;
+	}
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
