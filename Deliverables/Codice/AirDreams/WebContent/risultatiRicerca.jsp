@@ -101,11 +101,11 @@
                             <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
                             
                             <ul class="navbar-nav ml-auto">
-                            	<% if (request.getAttribute("account")==null){ %>
+                            	<% if (request.getSession().getAttribute("account")==null){ %>
                             		<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
                             	<% } %>
-                            	<%  if (request.getAttribute("account")!=null){
-                            		account=(Account)request.getAttribute("account");
+                            	<%  if (request.getSession().getAttribute("account")!=null){
+                            		account=(Account)request.getSession().getAttribute("account");
                             		Ruolo ruolo=account.getRuolo();
                             		
                             		if(ruolo==null){
