@@ -14,10 +14,12 @@ if(mod==null)
 	String message=(String) request.getAttribute("message");
 	
 	
-	Carrello carrello=(Carrello)request.getAttribute("carrello");
+	Carrello carrello=(Carrello)request.getSession().getAttribute("carrello");
 	HashMap<Volo,Integer> voliCarrello=carrello.getVoli();
 	
-	
+	int seats=0;
+	for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) 
+   		 seats=entry.getValue();
 
 	
 %>
@@ -138,19 +140,29 @@ if(mod==null)
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
-                  <% if(message!=null){ %>
-				                <p id="messageError"><%=message %></p>
-				                <% } %>
+                 <%
+      						if (message!=null) {
+      					%>
+      					<div class="alert alert-primary" role="alert">
+      						<h6><%=message%></h6>
+      					</div>
+      					<% } %>	
                     <div class="container ie-h-align-center-fix">
                     <h3>Il tuo carrello</h3>
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                  				<form action="" method="post" class="tm-search-form tm-section-pad-2" id="card1">
+                  
                                    		<div class="pl-5">
                                    		
-                                   		<% for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) { %>
+                                   		<% for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) { 
+              
+                                   		%>
                                 <div class="p-3 border border-light rounded bg-light">
                                 	<h4><%=entry.getValue()%> Biglietti/o</h4>
+                                		<form action="RimuoviDalCarrelloServlet" method="post">
+    							<input type="hidden" name="idVolo" value="<%=entry.getKey().getId()%>">
+    							<button class="fa fa-trash" aria-hidden="true" style="margin-left: 30px;"></button>
+    							</form>
       						<div class="form-row align-items-center">
       							
   									 <h5><%=entry.getKey().getCa().getNome() %></h5>
@@ -169,7 +181,8 @@ if(mod==null)
     					
     			
     							</div>
-    				
+    						
+    						
     							<br>
    					
    					<% } %>
@@ -182,11 +195,14 @@ if(mod==null)
     							
                                     <div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
-                                            <button type="submit" class="btn btn-primary tm-btn-search" value="aggiungiCarta">Checkout</button>
+                                   	<form action="NominativiBigliettiServlet"  method="post">
+                            				<a class="btn btn-primary tm-btn-search"  href="nominativiBiglietti.jsp?seats=<%=seats%>">Procedi all'acquisto</a>
+                                            
+                                          </form>
                                         </div>
                                       </div>
                                     
-                                </form>
+                              
                             </div>                        
                         </div>      
                     </div>
