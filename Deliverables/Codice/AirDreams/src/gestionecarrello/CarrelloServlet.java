@@ -39,7 +39,7 @@ public class CarrelloServlet extends HttpServlet {
 		try {
 			Carrello carrello=carrelloManager.getCarrelloUtente(account.getEmail());
 			
-			request.setAttribute("carrello", carrello);
+			request.getSession().setAttribute("carrello", carrello);
 			
 			request.getServletContext().getRequestDispatcher("/cliente/carrello.jsp").forward(request, response);
 		} catch (SQLException e) {
