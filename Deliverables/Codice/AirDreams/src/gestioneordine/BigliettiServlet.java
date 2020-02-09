@@ -2,7 +2,9 @@ package gestioneordine;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
@@ -13,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import gestionecarrello.Carrello;
 import gestionecarrello.CarrelloManager;
+import gestionecompagniaaerea.PoliticaBagaglioManager;
+import gestionecompagniaaerea.PoliticaBagaglioMano;
+import gestionecompagniaaerea.PoliticaBagaglioStiva;
 import gestioneutente.Account;
 import gestionevolo.Volo;
 
@@ -38,6 +43,10 @@ public class BigliettiServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Carrello carrello=(Carrello)request.getSession().getAttribute("carrello");
 		HashMap<Volo,Integer> voliCarrello=carrello.getVoli();
+		ArrayList<Biglietto> biglietti=new ArrayList<Biglietto>();
+		ArrayList<BagaglioMano> bagagliMano=new ArrayList<BagaglioMano>();
+		ArrayList<BagaglioStiva> bagagliStiva=new ArrayList<BagaglioStiva>();
+		PoliticaBagaglioManager politicaBagaglioManager=new PoliticaBagaglioManager();
 		
 		int seats=0;
 		for(Entry<Volo, Integer> entry : voliCarrello.entrySet()) 
@@ -48,21 +57,73 @@ public class BigliettiServlet extends HttpServlet {
 			String cognomePasseggero=request.getParameter("cognomePasseggero"+(i+1));
 			String sesso=request.getParameter("sesso"+(i+1));
 			String nBagagli=request.getParameter("bagaglioStiva"+(i+1));
-			
-			System.out.println(
-					"Passeggero n. "+(i+1)+": "
-							+ "Nome "+nomePasseggero+" cognome "+cognomePasseggero+" sesso "+sesso+"  Bagagli "+nBagagli
-					
-					);
-			
-		
+			int numeroBagagli=Integer.parseInt(nBagagli);
+	
 			for(Entry<Volo, Integer> entry : voliCarrello.entrySet()) {
-				Biglietto biglietto=new Biglietto(nomePasseggero, cognomePasseggero, Sesso.valueOf(sesso), entry.getKey().getPrezzo());
 				
-				System.out.println("Sto creando il biglietto "+biglietto+"per il passseggero"+(i+1));
+				try {
+				Biglietto biglietto=new Biglietto(nomePasseggero, cognomePasseggero, Sesso.valueOf(sesso), entry.getKey().getPrezzo(),
+						entry.getKey());
+				//biglietti.add(biglietto);
+				
+				PoliticaBagaglioMano politicaBagaglioMano=politicaBagaglioManager.trovaPoliticaCompagniaMano(entry.getKey().getCa().getNome());
+				BagaglioMano bagaglioMano=new BagaglioMano(politicaBagaglioMano.getPeso(), politicaBagaglioMano.getDimensioni(), biglietto 
+						);
+				bagagliMano.add(bagaglioMano);
+				biglietto.setBagaglioMano(bagaglioMano);
+	
+				
+				if(numeroBagagli!=0) {
+					
+					
+					PoliticaBagaglioStiva politicaBagaglioStiva=politicaBagaglioManager.trovaPoliticaCompagniaStiva(entry.getKey().getCa().getNome());
+					BagaglioStiva bagaglioStiva=new BagaglioStiva(politicaBagaglioStiva.getPeso(), politicaBagaglioStiva.getDimensioni(), biglietto, 
+							politicaBagaglioStiva.getPrezzo(),numeroBagagli);
+					
+					HashSet<BagaglioStiva> bagagli=new HashSet<BagaglioStiva>();
+					
+					for(int j=0;j<numeroBagagli;j++) {
+						bagagli.add(bagaglioStiva);
+					}
+						
+					biglietto.setBagagliStiva(bagagli);
+					
+					if(entry.getKey().isCompreso() && numeroBagagli==1) {
+						biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo());
+					} else if(entry.getKey().isCompreso() && numeroBagagli>1) {
+						biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo()+politicaBagaglioStiva.getPrezzo());
+					} else {
+						System.out.println("Non ho il bagaglio compreso pago anche l'aria");
+						biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo()+politicaBagaglioStiva.getPrezzo());
+					}
+				}
+				
+			
+				biglietti.add(biglietto);
+				
+				
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			
+			
 		}
 		
+		request.getSession().setAttribute("biglietti",biglietti);
+	
+		
+		for(Biglietto biglietto: biglietti) {
+			System.out.println("############ Mano per il biglietto di "+biglietto.getNome()+"..."+biglietto.getBagaglioMano());
+		}
+		
+		for(Biglietto biglietto: biglietti) {
+			System.out.println("############ Stiva per il biglietto di "+biglietto.getNome()+"..."+biglietto.getBagagliStiva());
+		}
+
+
+		
+		request.getServletContext().getRequestDispatcher("/cliente/DettagliAccountServlet").forward(request, response);
 	}
 
 	/**

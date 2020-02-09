@@ -97,9 +97,12 @@ public class ListaVoliServlet extends HttpServlet {
 							ricercaSalvata[2]=data;
 						}
 						
+						System.out.println("Utente è: "+utente);
+						System.out.println("Compagnia è: "+utente.getCompagniaAerea());
 						String c=utente.getCompagniaAerea().getNome();
 						System.out.println("compagnia aerea di cui il gestore e' tenuto: " + c);
 						voli=voloManager.cercaVoli(ricerca,c);
+						
 							 
 					}  else {
 
@@ -114,7 +117,8 @@ public class ListaVoliServlet extends HttpServlet {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-
+				
+				response.getWriter().write("Success");
 				request.setAttribute("voli", voli);
 				request.setAttribute("page",pagina);
 				redirect="/gestoreVoli/listaVoli.jsp";

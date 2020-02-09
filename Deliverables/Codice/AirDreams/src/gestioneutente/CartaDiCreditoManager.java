@@ -51,6 +51,46 @@ public class CartaDiCreditoManager {
         return allCarte; 
 		
 	}
+	
+	public CartaDiCredito cercaCarta(String numeroCarta,String email) throws SQLException{
+		CartaDiCredito carta = null;
+        Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		String selectSQL="SELECT * FROM cartaDiCredito WHERE utente=? and nCarta=?";
+		
+        try {
+        	connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			
+			preparedStatement.setString(1, email);
+			preparedStatement.setString(2, numeroCarta);
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()) {
+            	 carta = new CartaDiCredito();
+            	
+            	 carta.setnCarta(rs.getString("nCarta"));
+            	 carta.setTitolare(rs.getString("titolare"));
+            	 carta.setDataScadenza(rs.getString("dataScadenza"));
+            	 carta.setCvc(rs.getInt("cvc"));
+            	UtenteManager utenteManager=new UtenteManager();
+            	Account account=utenteManager.findAccountByEmail(email);
+            	carta.setAccount(account);
+				
+				
+            }
+        } finally {
+        	try {
+        		if(preparedStatement!=null) preparedStatement.close();
+        		}
+        		finally {
+        			DriverManagerConnectionPool.releaseConnection(connection);
+        		}
+        	}
+        return carta; 
+		
+	}
 	public boolean creaCartaDiCredito(CartaDiCredito cc) throws SQLException {
 		Connection con = null;
 		Statement st = null;

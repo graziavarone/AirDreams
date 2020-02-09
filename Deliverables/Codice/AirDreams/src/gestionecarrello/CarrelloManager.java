@@ -201,5 +201,42 @@ public class CarrelloManager {
 		
 	}
 
+	public boolean svuotaCarrello(String email) throws SQLException {
+		boolean b = false;
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+	
+		String updateSQL="DELETE from carrello WHERE utente=?";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+               
+
+                preparedStatement.setString(1, email);
+               
+       
+                
+            	System.out.println("aggiungiAlCarrello: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
+                b=true;
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return b;
+		
+		
+	}
+
 
 }

@@ -59,6 +59,7 @@ public class RicercaVoloGestoreTest {
         
         utente = new UtenteManager();
         account = utente.findAccountByEmail("noemi@gmail.com");
+        
 	}
 	
 	//TC_4.3_1 aeroporto di partenza inesistente

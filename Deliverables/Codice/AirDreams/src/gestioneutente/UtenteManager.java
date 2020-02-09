@@ -102,6 +102,7 @@ public class UtenteManager {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		Account account=null;
+		Ruolo ruolo=null;
 	
 		String selectSQL = "SELECT * FROM utente WHERE email = ?";
 		
@@ -114,12 +115,22 @@ public class UtenteManager {
 			ResultSet rs = preparedStatement.executeQuery();
 			
 			if(rs.next()) {
+				CompagniaAereaManager manager=new CompagniaAereaManager();
+				
 				account = new Account();
 				
 				account.setNome(rs.getString("nome"));
 				account.setCognome(rs.getString("cognome"));
 				account.setEmail(rs.getString("email"));
-				account.setPassword(rs.getString("passwordUtente"));			
+				account.setPassword(rs.getString("passwordUtente"));	
+				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
+				account.setCompagniaAerea(compagniaAerea);
+				if(rs.getString("ruolo")!=null) {
+					ruolo= Ruolo.valueOf(rs.getString("ruolo"));
+				}
+					System.out.println("Ho ricevuto "+ruolo);
+					account.setRuolo(ruolo);
+				
 			}
 			
 		} finally {

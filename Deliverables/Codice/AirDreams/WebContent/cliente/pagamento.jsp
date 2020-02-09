@@ -1,35 +1,27 @@
-<%@page import="java.util.HashMap"%>
-<%@page import="gestioneutente.Account"%>
-<%@page import="gestioneutente.Ruolo"%>
-<%@page import="gestionecarrello.*"%>
-<%@page import="gestionevolo.*"%>
-<%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*,gestioneordine.*"%>
+    
+    <%
+	Boolean mod=(Boolean)request.getAttribute("mod");
+	if(mod==null)
+		mod=true;
+	
+	
+	ArrayList<CartaDiCredito> carte=(ArrayList<CartaDiCredito>)request.getAttribute("carte");
+    ArrayList<Biglietto> biglietti=(ArrayList<Biglietto>)request.getSession().getAttribute("biglietti");
+	ArrayList<BagaglioMano> bagagliMano=(ArrayList<BagaglioMano>)request.getSession().getAttribute("bagagliMano");
+	ArrayList<BagaglioStiva> bagagliStiva=(ArrayList<BagaglioStiva>)request.getSession().getAttribute("bagagliStiva");
+    
+	System.out.println(""+carte+biglietti+bagagliMano+bagagliStiva);
+    
+    %>
 <!DOCTYPE html>
-<% Boolean mod=(Boolean)request.getAttribute("mod");
-
-if(mod==null)
-	mod=true;
-	String message=(String) request.getAttribute("message");
-	
-	
-	Carrello carrello=(Carrello)request.getSession().getAttribute("carrello");
-	HashMap<Volo,Integer> voliCarrello=carrello.getVoli();
-	
-	int seats=0;
-	for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) 
-   		 seats=entry.getValue();
-	
-	System.out.println("I posti sono "+seats);
-	
-%>
 <html>
 <head>
 <meta charset="utf-8">
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Carrello</title>
+		<title>Biglietti</title>
     
     	<!-- load stylesheets -->
     	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
@@ -70,7 +62,7 @@ if(mod==null)
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
+									  <a href="profilo.jsp">Il mio profilo</a>
 									  <a href="CarrelloServlet">Il mio carrello</a>
 									  </div>
 									</li>
@@ -141,66 +133,58 @@ if(mod==null)
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
-                 <%
-      						if (message!=null) {
-      					%>
-      					<div class="alert alert-primary" role="alert">
-      						<h6><%=message%></h6>
-      					</div>
-      					<% } %>	
+          
                     <div class="container ie-h-align-center-fix">
-                    <h3>Il tuo carrello</h3>
+            
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                  
-                                   		<div class="pl-5">
-                                   		
-                                   		<% for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) { 
-              
-                                   		%>
-                                <div class="p-3 border border-light rounded bg-light">
-                                	<h4><%=entry.getValue()%> Biglietti/o</h4>
-                                		<form action="RimuoviDalCarrelloServlet" method="post">
-    							<input type="hidden" name="idVolo" value="<%=entry.getKey().getId()%>">
-    							<button class="fa fa-trash" aria-hidden="true" style="margin-left: 30px;"></button>
-    							</form>
-      						<div class="form-row align-items-center">
-      							
-  									 <h5><%=entry.getKey().getCa().getNome() %></h5>
-  									 
-  									<h3 style="margin-left: 100px;"><%=entry.getKey().getOrarioPartenza()%></h3> 
-  										<img alt="" src="../img/icon-route.png" width="250px" height="100px">
-  									<h3><%=entry.getKey().getOrarioArrivo()%></h3>
-  										<span style="margin-left: 10px;"> Totale : &euro; <%=entry.getKey().getPrezzo() %></span>
-  							
-    						</div>
-    							
-    					<b><span style="margin-left:177px;"><%=entry.getKey().getAeroportoP().getCodice()%></span> </b>
-    					<span style="margin-left:100px;"><%=entry.getKey().getDurataVolo() %></span> 
-    					<b><span style="margin-left:115px;"><%=entry.getKey().getAeroportoA().getCodice() %></span></b><br>
-    		
-    					
-    			
-    							</div>
-    						
-    						
-    							<br>
-   					
-   					<% } %>
-   					
-   					
-   									</div> 
-   									
-   									
-    					
-    							
-                                    <div class="form-row tm-search-form-row">                                  
+                            
+                            <form action="PagamentoServlet" method="post" id="pagamento">
+                            		<% for(int i=0;i<carte.size();i++){ %>
+              						Carta <%=carte.get(i).getnCarta() %><input onclick="mostra(this.value)" type="radio" name="carta" value="<%=carte.get(i).getnCarta()%>">
+        								<br>
+              						<% } %>
+              			
+              							Inserisci una nuova carta<input type="radio" name="carta" value="crea" id="crea" onclick="mostra(this.value)">
+                            	  <div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
-                           
-                            				<a  class="btn btn-primary tm-btn-search" href="nominativiBiglietti.jsp?seats=<%=seats%>">Procedi all'acquisto</a>
-                                      
+                                            <button type="submit" id="cartaEsistente" class="btn btn-primary tm-btn-search">Paga</button>
                                         </div>
-                                      </div>
+                                      </div>	
+                            
+                            </form>
+                  				<form action="PagamentoServlet" method="post" id="pagamento">
+                  				    		
+                                   	 <div class="form-row tm-search-form-row">
+                                   	 
+                                        <div class="form-group tm-form-element tm-form-element-100">
+                                            <input  hidden=true name="nCarta" type="text" class="form-control" id="inputnCarta" placeholder="Inserire numero carta..." required="required">
+                                        </div>
+                                        <div class="form-group tm-form-element tm-form-element-50">
+                                            <input  hidden=true name="titolare" type="text"  class="form-control" id="inputTitolare" placeholder="Titolare della carta" required="required">
+                                        	<br>
+                                        </div>
+                                        <div class="form-group tm-form-element tm-form-element-50">                                      
+                                            <input  hidden=true name="dataScadenza" type="text" class="form-control" id="inputDataScadenza" placeholder="data scadenza nel formato mm/yy" required="required">
+                                        	<br>
+                                        </div>                                      
+                                        <div class="form-group tm-form-element tm-form-element-50">                                      
+                                            <input  hidden=true name="cvc" type="text"  class="form-control" id="inputCvc" placeholder="cvc" required="required">
+                                       		<br>
+                                        </div>
+                                          <div class="form-row tm-search-form-row">                                  
+                                        <div class="form-group tm-form-element tm-form-element-2">
+                                            <button type="submit" class="btn btn-primary tm-btn-search" id="submit" hidden=true>Paga</button>
+                                        </div>
+                                      </div>	
+                                    </div>
+                                  
+   								
+                                    
+   							</form>		
+    					
+    							
+                             
                                     
                               
                             </div>                        
@@ -209,7 +193,7 @@ if(mod==null)
                 </div>                  
             </div>
 
-              
+            
         </div>
         
          <!-- load JS files -->
@@ -222,24 +206,29 @@ if(mod==null)
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 			<script type="text/javascript">
 		
-			$('#card1').submit(function(e) {
+			/*$('#card1').submit(function(e) {
 				if(!confirm("sicuro di voler proseguire?")) {
 					e.preventDefault();
 				}
-			});
+			});*/
 			
-        	function annullaInserimentoCarta() {
-          		var r = confirm("Cofermi di voler annullare l'inserimento della carta di credito?");
-          		if (r == true) 
-          			location.href = 'AggiungiCartaServlet';
-          	}
-          						
-          	function editabiliInfo() {
-          		document.getElementById("nCarta").removeAttribute("readonly");
-          		document.getElementById("titolare").removeAttribute("readonly");
-          		document.getElementById("dataScadenza").removeAttribute("readonly");
-          		document.getElementById("cvc").removeAttribute("readonly");
-          		document.getElementById("email").removeAttribute("hidden");
+       
+          	function mostra(text) {
+				if(text=='crea'){
+          		document.getElementById("inputnCarta").removeAttribute("hidden");
+          		document.getElementById("inputTitolare").removeAttribute("hidden");
+          		document.getElementById("inputDataScadenza").removeAttribute("hidden");
+          		document.getElementById("inputCvc").removeAttribute("hidden");
+         		document.getElementById("submit").removeAttribute("hidden");
+         		$("#cartaEsistente").prop('hidden', true);
+         		
+				} else {
+					$("#inputnCarta").prop('hidden', true);
+					$("#inputTitolare").prop('hidden', true);
+					$("#inputDataScadenza").prop('hidden', true);
+					$("#inputCvc").prop('hidden', true);
+					$("#submit").prop('hidden', true);
+				}
           	}
         </script>
 

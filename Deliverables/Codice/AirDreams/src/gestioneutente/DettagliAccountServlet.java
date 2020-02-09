@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import gestioneordine.BagaglioMano;
+import gestioneordine.BagaglioStiva;
+import gestioneordine.Biglietto;
+
 /**
  * Servlet implementation class DettagliAccountServlet
  */
@@ -25,19 +29,33 @@ public class DettagliAccountServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//prelevo l'utente dalla sessione
 		Account account=(Account) request.getSession().getAttribute("account");
+		String redirect=null;
 		
 		CartaDiCreditoManager cm=new CartaDiCreditoManager();
 		try {
 			ArrayList<CartaDiCredito> carteUtente=cm.findAll(account.getEmail());
 			
 			request.setAttribute("carte", carteUtente);
+			
+			
+			if (request.getSession().getAttribute("biglietti")!=null) {
+				ArrayList<Biglietto> biglietti=(ArrayList<Biglietto>)request.getSession().getAttribute("biglietti");
+	
+				
+				request.getSession().setAttribute("biglietti",biglietti);
+				
+				 redirect="/cliente/pagamento.jsp";
+			}
+			else {
+			 redirect="/cliente/profilo.jsp";
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//da implementare successivamente quando si implementeranno le funzionalità ordine e carta di credito
 	
-		request.getServletContext().getRequestDispatcher("/cliente/profilo.jsp").forward(request, response);
+		request.getServletContext().getRequestDispatcher(redirect).forward(request, response);
 	}
 
 	/**

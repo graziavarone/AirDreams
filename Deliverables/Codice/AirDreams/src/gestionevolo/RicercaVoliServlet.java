@@ -260,7 +260,7 @@ public class RicercaVoliServlet extends HttpServlet {
 				if(!success.equals("Success")) {
 					response.getWriter().write("Aeroporto non esistente");
 					request.setAttribute("message",success);
-					redirect = "index.jsp";
+					redirect = "/index.jsp";
 				} 	else {
 			
 					  LocalDate dataDepartureLd = LocalDate.parse(dateDeparture, FORMATO_DIA);
