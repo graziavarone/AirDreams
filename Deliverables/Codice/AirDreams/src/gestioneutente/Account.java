@@ -3,7 +3,8 @@ package gestioneutente;
 import gestionecompagniaaerea.CompagniaAerea;
 
 /**
- * Questa classe rappresenta l'entita Account.
+ * La classe rappresenta l’utente registrato, ovvero un qualsiasi utente che si è registrato al sistema 
+ * e può effettuare il login in qualunque momento, accedendo alla propria area personale.
  */
 
 public class Account {
@@ -19,10 +20,11 @@ public class Account {
 	}
 	
 	/**
+	 * metodo costuttore della classe Account
 	 * @param nome nome dell'utente
 	 * @param cognome cognome dell'utente
-	 * @param email email dell'utente
-	 * @param password password dell'utente
+	 * @param email email di accesso dell'utente
+	 * @param password password di accesso dell'utente
 	 * @return 
 	 */
 	public Account(String nome, String cognome, String email, String password) {
@@ -34,6 +36,7 @@ public class Account {
 	}
 	
 	/**
+	 * metodo getter di restituzione del nome dell'utente
 	 * @return nome nome dell'utente
 	 */
 	public String getNome() {
@@ -41,14 +44,15 @@ public class Account {
 	}
 	
 	/**
-	 * @param nome nome da assegnare all'utente
-	 * @return 
+	 * metodo setter di modifica del nome dell'utente
+	 * @param nome nuovo nome dell'utente
 	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 	
 	/**
+	 * metodo getter di restituzione del cognome dell'utente
 	 * @return cognome cognome dell'utente
 	 */
 	public String getCognome() {
@@ -56,8 +60,8 @@ public class Account {
 	}
 	
 	/**
-	 * @param cognome cognome da assegnare all'utente
-	 * @return 
+	 * metodo setter di modifica del cognome dell'utente
+	 * @param cognome nuovo cognome dell'utente 
 	 */
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
@@ -65,56 +69,78 @@ public class Account {
 
 
 	/**
-	 * @return password password dell'utente
+	 * metodo getter di restituzione della password di accesso dell'utente
+	 * @return password password di accesso dell'utente
 	 */
 	public String getPassword() {
 		return password;
 	}
 	
 	/**
-	 * @param password password da assegnare all'utente
-	 * @return 
+	 * metodo setter di modifica della password di accesso dell'utente
+	 * @param password nuova password di accesso dell'utente 
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 	
 	/**
-	 * @return email email dell'utente
+	 * metodo getter di restituzione della email di accesso dell'utente
+	 * @return email email di accesso dell'utente
 	 */
 	public String getEmail() {
 		return email;
 	}
 	
 	/**
-	 * @param email email da assegnare all'utente
-	 * @return 
+	 * metodo setter di modifica della email di accesso dell'utente 
+	 * @param email nuova email di accesso dell'utente
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	
+	/**
+	 * metodo getter di restituzione della eventuale compagnia aerea di gestione dell'utente, 
+	 * se quest ultimo riveste il ruolo di gestore voli
+	 * @return CompagniaAerea compagnia aerea di gestione dell'utente
+	 */
 	public CompagniaAerea getCompagniaAerea() {
 		return compagniaAerea;
 	}
 
+	/**
+	 * metodo setter di modifica della eventuale compagnia aerea di gestione dell'utente, 
+	 * se quest ultimo riveste il ruolo di gestore voli
+	 * @param compagniaAerea nuova compagnia aerea di gestione dell'utente
+	 */
 	public void setCompagniaAerea(CompagniaAerea compagniaAerea) {
 		this.compagniaAerea = compagniaAerea;
 	}
 
+	/**
+	 * metodo getter di restituzione del ruolo rivestito dall'utente
+	 * @return Ruolo ruolo rivestito dall'utente nel sistema
+	 */
 	public Ruolo getRuolo() {
 		return ruolo;
 	}
 
+	/**
+	 * metodo setter di modifica del ruolo rivestito dall'utente
+	 * @param ruolo nuovo ruolo rivestito dall'utente nel sistema
+	 */
 	public void setRuolo(Ruolo ruolo) {
 		this.ruolo = ruolo;
 	}
 
+	/**
+	 * metodo ereditato dalla classe Object che permette di visualizzare le informazioni relative ad un oggetto di tipo Account
+	 * @return String contenente lo stato dell'oggetto Account
+	 */
 	@Override
 	public String toString() {
 		return "Account [nome=" + nome + ", cognome=" + cognome + ", password=" + password + ", email=" + email
 				+ ", ruolo=" + ruolo + "]";
 	}
-
-
 }
