@@ -14,15 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ModificaInfoPersonaliServlet
  */
-@WebServlet("/ModificaInfoPersonaliServlet")
+@WebServlet("/cliente/ModificaInfoPersonaliServlet")
 public class ModificaInfoPersonaliServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger= Logger.getLogger("global");
+	private String messageValidation="";
 	private String expNome="^[A-Za-z]{1,}$";
 	private String expCognome="^[A-Za-z]{1,}$";
 	private String expEmail="^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$";
 	private String expPassword="^(?=.{6,}$)(?=.*[A-Z])(?=.*[0-9])([\\.-]?\\w+)*.*$";
-	private String messageValidation="";
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -32,6 +32,8 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 		Account oldAccount=(Account) request.getSession().getAttribute("account");
 		System.out.println("Ho letto questo account dalla sessione: " + oldAccount);
 		String message="";
+		String redirect="";
+		
 		
 		//prelevo i dati del form
 		String nome=request.getParameter("nome");
@@ -54,9 +56,11 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 				manager.aggiornaProfilo(oldAccount, newAccount);
 				message="aggiornamento dati eseguito";
 				response.getWriter().write("success");
-				request.setAttribute("message",message);
+				
 				System.out.println("Modifica eseguita direttamente poiche' la email e' rimasta invariata");
 				request.getSession().setAttribute("account",newAccount);
+				
+				redirect="/cliente/DettagliAccountServlet";
 			} else {
 				try {
 					Account a=manager.findAccountByEmail(newAccount.getEmail());
@@ -65,15 +69,17 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 						//e' stato trovato un account con la email appena inserita
 						message="L'email inserita è gia' presente, inserirne una nuova";
 						response.getWriter().write("Failed");
-						request.setAttribute("message",message);
+						
 						System.out.println("Non ho modificato l'utente poiche' esiste gia' la mail appena inserita");
+						redirect="/cliente/DettagliAccountServlet";
 					} else {
 						manager.aggiornaProfilo(oldAccount, newAccount);
 						message="aggiornamento dati eseguito";
 						response.getWriter().write("Success");
-						request.setAttribute("message",message);
+						
 						System.out.println("Modifica eseguita poiche' la mail inserita non è gia' presente nel DB");
 						request.getSession().setAttribute("account",newAccount);
+						redirect="/cliente/DettagliAccountServlet";
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -81,10 +87,11 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 			}
 		} else {
 			response.getWriter().write("Failed");
-			request.setAttribute("message",messageValidation);
+			redirect="/cliente/DettagliAccountServlet";
 		}
-		
-		request.getRequestDispatcher("profilo.jsp").forward(request, response);
+		request.setAttribute("message",message);
+		request.setAttribute("messageValidation", messageValidation);
+		request.getServletContext().getRequestDispatcher(redirect).forward(request, response);
 	}
 
 	/**

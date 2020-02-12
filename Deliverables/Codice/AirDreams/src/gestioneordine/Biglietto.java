@@ -38,6 +38,10 @@ public class Biglietto {
 		bagagliStiva=new HashSet<BagaglioStiva>();
 	}
 	
+	public Biglietto() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * metodo getter di restituzione delle informazioni riguardanti il bagaglio a mano previsto dal biglietto
 	 * @return BagaglioMano informazioni politica bagaglio a mano prevista dal biglietto

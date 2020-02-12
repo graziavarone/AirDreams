@@ -103,6 +103,7 @@ public class PagamentoServlet extends HttpServlet {
 			CarrelloManager carrelloManager=new CarrelloManager();
 			carrelloManager.svuotaCarrello(account.getEmail());
 			
+			request.getSession().removeAttribute("biglietti");
 			request.getServletContext().getRequestDispatcher("/cliente/acquisto.jsp").forward(request, response);
 			
 			

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*,gestioneutente.*,gestioneordine.*"%>
+    pageEncoding="UTF-8" import="java.util.*,gestioneutente.*,gestioneordine.*,java.time.format.DateTimeFormatter"%>
 <!DOCTYPE html>
 
 <% 
@@ -14,6 +14,8 @@
 	
 	ArrayList<CartaDiCredito> carte=(ArrayList<CartaDiCredito>)request.getAttribute("carte");
 	ArrayList<Ordine> ordini=(ArrayList<Ordine>)request.getAttribute("ordini");
+	
+	 DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 %>
 
 <html>
@@ -175,35 +177,50 @@
            			</div>
                 	<div class="p-2" id="info">
       					<h2>Informazioni personali <a href='javascript:editabiliInfo()'><span class="fa fa-pencil-square-o"></span></a></h2>
-      					<%
-      						if (request.getAttribute("message")!=null) {
+      				
+      					
+      						<%
+      						if (request.getAttribute("message")!=null && !request.getAttribute("message").equals("")) {
       					%>
       					<div class="alert alert-primary" role="alert">
       						<h6><%=request.getAttribute("message")%></h6>
-      					</div>
-      					<% } %>
+      						</div>
+      							<% } %>
+      							
+      									<%
+      						if (request.getAttribute("messageValidation")!=null && !request.getAttribute("messageValidation").equals("")) {
+      					%>
+      					
+      					<div class="alert alert-primary" role="alert">
+      						<h6><%=request.getAttribute("messageValidation")%></h6>
+      						</div>
+      						
+      							<% } %>
+      				
+      				
+      				
       					<form action="ModificaInfoPersonaliServlet" id="form1" method="post" class="tm-search-form tm-section-pad-2">
                         	<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Nome</label>
-   					 			<div class="col-sm-5">
+   					 			<div class="col-sm-7">
    					 				<input id="nome" type="text" class="form-control" name="nome" value="<%=account.getNome()%>" readonly>
    					 			</div>
   							</div>
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Cognome</label>
-   					 			<div class="col-sm-5">
+   					 			<div class="col-sm-7">
    					 				<input id="cognome" type="text" class="form-control form-control-sm" name="cognome" value="<%=account.getCognome()%>" readonly>
    					 			</div>
   							</div>
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Email</label>
-   					 			<div class="col-sm-5">
+   					 			<div class="col-sm-9">
    					 				<input id="email" type="text" class="form-control form-control-sm" name="email" value="<%=account.getEmail()%>" readonly>
    					 			</div>
   							</div>
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Password</label>
-   					 			<div class="col-sm-5">
+   					 			<div class="col-sm-7">
    					 				<input id="password" type="password" class="form-control form-control-sm" name="password" value="<%=account.getPassword()%>" readonly>
    					 			</div>
   							</div>			
@@ -240,38 +257,104 @@
 						
 						<a   class="btn btn-primary tm-btn-search" style="width: 150px;"  href="aggiungiCarta.jsp">Aggiungi carta</a>
       				</div>
-      				
-      					<% for(Ordine ordine:ordini){
-      						
-      					%>
+      			
       				
       				<div class="p-2" id="ordini">
       			
       					<h2>Ordini <i class="fa fa-pencil-square-o"></i></h2>
-      					<form action="" method="post" class="tm-search-form tm-section-pad-2">
+      					
+      						
+      					<% for(Ordine ordine:ordini){
+      						
+      					%>
+      			
   							<div class="form-row align-items-center">
   								<label class="col-sm-2 col-form-label">Codice ordine</label>
-   	 							<div class="col-sm-2">
+   	 							<div class="col-sm-1">
       								<input type="text" readonly="readonly" value="<%=ordine.getCodOrdine()%>" class="form-control-plaintext form-control-sm">
     							</div>
-    							<!-- <label class="col-sm-2 col-form-label">Lista biglietti</label>
-    							<div class="col-sm-2">
-      								<select class="custom-select-plaintext my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-    									<option selected>Lista Biglietti</option>
-   		 								<option value="1">One</option>
-    									<option value="2">Two</option>
-    									<option value="3">Three</option>
-  									</select>
-    							</div> -->
-    							<label class="col-sm-2 col-form-label">Totale spesa</label>
-    							<div class="col-sm-2">
-      								<input type="text" value="totale spesa" class="form-control-plaintext form-control-sm">
+    							
+    							<label class="col-sm-2 col-form-label">Data acquisto</label>
+   	 							<div class="col-sm-2">
+      								<input type="text" readonly="readonly" value="<%=ordine.getDataAcquisto().format(FORMATO_DIA)%>" class="form-control-plaintext form-control-sm">
     							</div>
+    							
+    							<% if(request.getAttribute("bigliettiOrdine"+ordine.getCodOrdine())!=null){ 
+    								ArrayList<Biglietto> biglietti=(ArrayList<Biglietto>)request.getAttribute("bigliettiOrdine"+ordine.getCodOrdine());
+    								
+    								float totale=0;
+    								
+    								for(Biglietto biglietto: biglietti)
+    									totale+=biglietto.getPrezzoBiglietto();
+    							%>
+    							<label class="col-sm-2 col-form-label">Totale spesa </label>
+    							&euro;
+    							<div class="col-sm-1">
+      								 <input type="text" 
+      								value="<%=String.format("%.2f", totale) %>" 
+      								class="form-control-plaintext form-control-sm">
+      								
+    							</div>
+    							
+    										<button id="mostra<%=ordine.getCodOrdine()%>" onclick="mostraBiglietti(<%=ordine.getCodOrdine()%>);" class="fa fa-plus" aria-hidden="true" style="margin-left: 90px;"></button>
+    										<button id="nascondi<%=ordine.getCodOrdine()%>" hidden=true onclick="nascondiBiglietti(<%=ordine.getCodOrdine()%>);" class="fa fa-minus" aria-hidden="true" style="margin-left: 90px;"></button>
     						</div>
-						</form>
-      				</div>
-      				
+    						
+    						<% ArrayList<Biglietto> bigliettiOrdine=(ArrayList<Biglietto>)request.getAttribute("bigliettiOrdine"+ordine.getCodOrdine()); %>
+    						<div id="listaBiglietti<%=ordine.getCodOrdine()%>" hidden="true">
+    							<b>Biglietti</b>
+    							
+							<table>
+    					
+							  <tr>
+							    <th>Nome</th>
+							    <th>Cognome</th>
+							    <th>Prezzo</th>
+							    <th>Partenza</th>
+							    <th>Arrivo</th>
+							    <th>Compagnia aerea</th>
+							    <th>Regole bagaglio a mano</th>
+							       <th>Regole bagaglio a stiva</th>
+							  </tr>
+							  
+							  <% for(Biglietto biglietto: bigliettiOrdine){ %>
+							  <tr>
+							     <td><%=biglietto.getNome() %></td>
+							    <td><%=biglietto.getCognome() %></td>
+							    <td>&euro;<%=String.format("%.2f",biglietto.getPrezzoBiglietto())%></td>
+							    <td><%=biglietto.getVolo().getAeroportoP().getCity() %></td>
+							       <td><%=biglietto.getVolo().getAeroportoA().getCity() %></td>
+							       <td><%=biglietto.getVolo().getCa().getNome() %></td>
+							       <td>Peso=<%=biglietto.getBagaglioMano().getPeso() %> kg, dimensioni=<%=biglietto.getBagaglioMano().getDimensioni() %></td>
+							       <% 
+							       Iterator<BagaglioStiva> iterator=biglietto.getBagagliStiva().iterator();
+									
+									if(iterator.hasNext()) {
+										BagaglioStiva bagaglioStiva=iterator.next();
+									
+							       %>
+							       <td>Peso=<%=bagaglioStiva.getPeso() %> kg, dimensioni=<%=bagaglioStiva.getDimensioni() %>, 
+							       prezzo=&euro; <%=String.format("%.2f",bagaglioStiva.getPrezzo())%>,
+							    	quantità bagagli= <%=biglietto.getBagagliStiva().size() %>
+							       </td>
+							       
+							       <% }  else { %>
+							       <td>Non è compreso nel biglietto il/i bagaglio/gli a stiva</td>
+							       <% } %>
+							       
+							  </tr>
+							  
+							  <% } %>
+							</table>
+							
+							</div>
+    						<% } %>
+    							
+    					
+								
       				<% } %>
+      				</div>
+      		
       				<div class="tm-section tm-position-relative">
       					<div class="container tm-pt-3 tm-pb-3">
                     	</div>
@@ -320,6 +403,18 @@
           		document.getElementById("email").removeAttribute("readonly");
           		document.getElementById("password").removeAttribute("readonly");
           		document.getElementById("modifica").removeAttribute("hidden");
+          	}
+          	
+          	function mostraBiglietti(codice){
+          		$("#mostra"+codice).prop('hidden', true);
+          		$("#nascondi"+codice).prop('hidden', false);
+          		$("#listaBiglietti"+codice).prop('hidden', false);
+          	}
+          	
+          	function nascondiBiglietti(codice){
+          		$("#mostra"+codice).prop('hidden', false);
+          		$("#nascondi"+codice).prop('hidden', true);
+          		$("#listaBiglietti"+codice).prop('hidden', true);
           	}
         </script>
 	</body>

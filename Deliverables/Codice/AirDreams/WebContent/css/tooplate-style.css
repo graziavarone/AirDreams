@@ -5,6 +5,18 @@ Template 2095 Level
 http://www.tooplate.com/view/2095-level
 
 */
+
+    					
+table, th, td {
+	text-align: center;
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 5px;
+}
+    	
 /*slider*/
 
 .slidecontainer {

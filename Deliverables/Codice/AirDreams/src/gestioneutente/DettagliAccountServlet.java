@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import gestioneordine.BagaglioMano;
 import gestioneordine.BagaglioStiva;
 import gestioneordine.Biglietto;
+import gestioneordine.BigliettoManager;
+import gestioneordine.Ordine;
+import gestioneordine.OrdineManager;
 
 /**
  * Servlet implementation class DettagliAccountServlet
@@ -32,11 +35,23 @@ public class DettagliAccountServlet extends HttpServlet {
 		String redirect=null;
 		
 		CartaDiCreditoManager cm=new CartaDiCreditoManager();
+		  OrdineManager ordineManager= new OrdineManager();
+		  BigliettoManager bigliettoManager=new BigliettoManager();
+		 
 		try {
 			ArrayList<CartaDiCredito> carteUtente=cm.findAll(account.getEmail());
+			ArrayList<Ordine> ordini=	ordineManager.cercaOrdiniUtente(account.getEmail());
 			
+			for(Ordine ordine: ordini) {
+			ArrayList<Biglietto> bigliettiOrdine=bigliettoManager.trovaBigliettiOrdine(ordine.getCodOrdine());
+			
+			
+			request.setAttribute("bigliettiOrdine"+ordine.getCodOrdine(), bigliettiOrdine);
+			
+			}
 			request.setAttribute("carte", carteUtente);
-			
+			request.setAttribute("ordini", ordini);
+			 redirect="/cliente/profilo.jsp";
 			
 			if (request.getSession().getAttribute("biglietti")!=null) {
 				ArrayList<Biglietto> biglietti=(ArrayList<Biglietto>)request.getSession().getAttribute("biglietti");

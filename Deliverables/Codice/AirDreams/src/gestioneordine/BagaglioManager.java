@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import db.DriverManagerConnectionPool;
 
@@ -82,6 +84,105 @@ public class BagaglioManager {
         
         
         return b;
+		
+	}
+	
+	public BagaglioMano cercaBagaglioManoBiglietto(Biglietto biglietto) throws SQLException {
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		ResultSet rs=null;
+		BagaglioMano bagaglioMano=null;
+		
+	
+		String selectSQL="SELECT * from bagaglioMano where biglietto=?";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(selectSQL);
+               
+
+                preparedStatement.setInt(1, biglietto.getCodBiglietto());
+                
+            	System.out.println("cercaBagagliManoBiglietto: "+ preparedStatement.toString());
+                rs=preparedStatement.executeQuery();
+               
+                
+                if(rs.next()) {
+                		 bagaglioMano=new BagaglioMano();
+                		
+                		bagaglioMano.setBiglietto(biglietto);
+                		 bagaglioMano.setDimensioni(rs.getString("dimensioni"));
+                		 bagaglioMano.setPeso(rs.getInt("peso"));
+                		
+                	}
+            
+                }
+                
+            
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return bagaglioMano;
+		
+	}
+	
+	public HashSet<BagaglioStiva> cercaBagagliStivaBiglietto(Biglietto biglietto) throws SQLException {
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		ResultSet rs=null;
+		HashSet<BagaglioStiva> bagagliStiva=new HashSet<BagaglioStiva>();
+		
+	
+		String selectSQL="SELECT * from bagaglioStiva where biglietto=?";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(selectSQL);
+               
+
+                preparedStatement.setInt(1, biglietto.getCodBiglietto());
+                
+            	System.out.println("cercaBagagliStivaBiglietto: "+ preparedStatement.toString());
+                rs=preparedStatement.executeQuery();
+               
+                
+                if(rs.next()) {
+                	int quantity=rs.getInt("quantity");
+                	
+                	for(int i=0;i<quantity;i++) {
+                		BagaglioStiva bagaglioStiva=new BagaglioStiva();
+                		
+                		bagaglioStiva.setBiglietto(biglietto);
+                		bagaglioStiva.setDimensioni(rs.getString("dimensioni"));
+                		bagaglioStiva.setPeso(rs.getInt("peso"));
+                		bagaglioStiva.setPrezzo(rs.getFloat("prezzo"));
+                		
+                		bagagliStiva.add(bagaglioStiva);
+                	}
+            
+                }
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return bagagliStiva;
 		
 	}
 

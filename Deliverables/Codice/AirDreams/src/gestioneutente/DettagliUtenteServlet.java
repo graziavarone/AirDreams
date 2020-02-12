@@ -40,19 +40,18 @@ public class DettagliUtenteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email=request.getParameter("email");
 		
-		String redirect="";
         
         UtenteManager utenteManager=new UtenteManager();
-        OrdineManager ordineManager= new OrdineManager();
+      
         CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
         try {
 			Account utente=utenteManager.findAccountByEmail(email);
-			ArrayList<Ordine> ordini=	ordineManager.cercaOrdiniUtente(email);
+			
 			
 		
 	    	request.setAttribute("utente", utente);
 	    	request.setAttribute("compagnie", compagniaAereaManager.getCompagnie());
-	    	request.setAttribute("ordini", ordini);
+	    	
 			} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
