@@ -29,6 +29,10 @@ public class Ordine {
 		this.cartaDiCredito = cartaDiCredito;
 	}
 
+	public Ordine() {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * metodo getter per la restituzione del codice dell'ordine
 	 * @return int codice dell'ordine

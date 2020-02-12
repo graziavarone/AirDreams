@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*,gestioneutente.*"%>
+    pageEncoding="UTF-8" import="java.util.*,gestioneutente.*,gestioneordine.*"%>
 <!DOCTYPE html>
 
 <% 
@@ -13,6 +13,7 @@
 	System.out.println("MESSAGE: " + request.getAttribute("message"));
 	
 	ArrayList<CartaDiCredito> carte=(ArrayList<CartaDiCredito>)request.getAttribute("carte");
+	ArrayList<Ordine> ordini=(ArrayList<Ordine>)request.getAttribute("ordini");
 %>
 
 <html>
@@ -239,15 +240,21 @@
 						
 						<a   class="btn btn-primary tm-btn-search" style="width: 150px;"  href="aggiungiCarta.jsp">Aggiungi carta</a>
       				</div>
+      				
+      					<% for(Ordine ordine:ordini){
+      						
+      					%>
+      				
       				<div class="p-2" id="ordini">
+      			
       					<h2>Ordini <i class="fa fa-pencil-square-o"></i></h2>
       					<form action="" method="post" class="tm-search-form tm-section-pad-2">
   							<div class="form-row align-items-center">
   								<label class="col-sm-2 col-form-label">Codice ordine</label>
    	 							<div class="col-sm-2">
-      								<input type="text" value="codice ordine" class="form-control-plaintext form-control-sm">
+      								<input type="text" readonly="readonly" value="<%=ordine.getCodOrdine()%>" class="form-control-plaintext form-control-sm">
     							</div>
-    							<label class="col-sm-2 col-form-label">Lista biglietti</label>
+    							<!-- <label class="col-sm-2 col-form-label">Lista biglietti</label>
     							<div class="col-sm-2">
       								<select class="custom-select-plaintext my-1 mr-sm-2" id="inlineFormCustomSelectPref">
     									<option selected>Lista Biglietti</option>
@@ -255,7 +262,7 @@
     									<option value="2">Two</option>
     									<option value="3">Three</option>
   									</select>
-    							</div>
+    							</div> -->
     							<label class="col-sm-2 col-form-label">Totale spesa</label>
     							<div class="col-sm-2">
       								<input type="text" value="totale spesa" class="form-control-plaintext form-control-sm">
@@ -263,6 +270,8 @@
     						</div>
 						</form>
       				</div>
+      				
+      				<% } %>
       				<div class="tm-section tm-position-relative">
       					<div class="container tm-pt-3 tm-pb-3">
                     	</div>

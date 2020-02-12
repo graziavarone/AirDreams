@@ -139,7 +139,7 @@
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                             
-                            <form action="PagamentoServlet" method="post" id="pagamento">
+                            <form action="PagamentoServlet" method="post" id="form1">
                             		<% for(int i=0;i<carte.size();i++){ %>
               						Carta <%=carte.get(i).getnCarta() %><input onclick="mostra(this.value)" type="radio" name="carta" value="<%=carte.get(i).getnCarta()%>">
         								<br>
@@ -153,7 +153,7 @@
                                       </div>	
                             
                             </form>
-                  				<form action="PagamentoServlet" method="post" id="pagamento">
+                  				<form action="PagamentoServlet" method="post" id="form1">
                   				    		
                                    	 <div class="form-row tm-search-form-row">
                                    	 
@@ -206,11 +206,11 @@
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 			<script type="text/javascript">
 		
-			/*$('#card1').submit(function(e) {
+			$('#form1').submit(function(e) {
 				if(!confirm("sicuro di voler proseguire?")) {
 					e.preventDefault();
 				}
-			});*/
+			});
 			
        
           	function mostra(text) {

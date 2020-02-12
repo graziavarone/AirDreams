@@ -4,9 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import db.DriverManagerConnectionPool;
+import gestioneutente.CartaDiCreditoManager;
+import gestioneutente.UtenteManager;
 
 public class OrdineManager {
 	private DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -58,6 +62,54 @@ public class OrdineManager {
         
         return ordine;
     }
+	
+	public ArrayList<Ordine> cercaOrdiniUtente(String email) throws SQLException {
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		PreparedStatement preparedStatement1=null;
+		ResultSet rs=null;
+		ArrayList <Ordine> ordini= new ArrayList <Ordine>();
+		UtenteManager utenteManager= new UtenteManager();
+		CartaDiCreditoManager cartaDiCreditoManager=new CartaDiCreditoManager();
+		String selectSQL="SELECT * from ordine WHERE email=?";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(selectSQL);
+               
+                preparedStatement.setString(1, email);
+              
+             
+            	System.out.println("cercaOrdiniUtente: "+ preparedStatement.toString());
+                rs=preparedStatement.executeQuery();
+                
+                while(rs.next()) {
+                	Ordine ordine= new Ordine();
+                	ordine.setCodOrdine(rs.getInt("codOrdine"));
+                	ordine.setDataAcquisto(LocalDate.parse(rs.getString("dataAcquisto"),FORMATO_DIA));
+                	ordine.setAccount(utenteManager.findAccountByEmail(email));
+        			ordine.setCartaDiCredito(cartaDiCreditoManager.cercaCarta(rs.getString("cartaDiCredito"), email));
+        			
+        			ordini.add (ordine);
+        		}
+         		
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return ordini;
+    }
+	
+	
 	
 	
 

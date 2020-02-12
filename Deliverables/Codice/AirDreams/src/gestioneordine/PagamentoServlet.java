@@ -16,6 +16,8 @@ import gestionecarrello.CarrelloManager;
 import gestioneutente.Account;
 import gestioneutente.CartaDiCredito;
 import gestioneutente.CartaDiCreditoManager;
+import gestionevolo.Volo;
+import gestionevolo.VoloManager;
 
 /**
  * Servlet implementation class PagamentoServlet
@@ -61,11 +63,14 @@ public class PagamentoServlet extends HttpServlet {
 				String cvc=request.getParameter("cvc");
 				
 				carta=new CartaDiCredito(nCarta, titolare, dataScadenza, Integer.parseInt(cvc));
+				carta.setAccount(account);
 				
-				System.out.println("Ho creato una nuova carta");
+				cartaDiCreditoManager.creaCartaDiCredito(carta);
+				
 				
 			}
 			Ordine ordine=new Ordine(LocalDate.now(), account, carta);
+			System.out.println(LocalDate.now());
 			ordine=ordineManager.aggiungiOrdine(ordine);
 		
 			for(Biglietto biglietto: biglietti) {
@@ -87,7 +92,11 @@ public class PagamentoServlet extends HttpServlet {
 						
 						bagaglioManager.aggiungiBagaglioStiva(bagaglioStiva);
 					}
-	
+					
+					Volo voloBiglietto=biglietto.getVolo();
+					voloBiglietto.setSeats(voloBiglietto.getSeats()-1);
+					VoloManager voloManager = new VoloManager();
+					voloManager.modificaVolo(voloBiglietto);
 				
 			}
 			

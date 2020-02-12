@@ -218,7 +218,7 @@ public class CarrelloManager {
                
        
                 
-            	System.out.println("aggiungiAlCarrello: "+ preparedStatement.toString());
+            	System.out.println("svuotaCarrello: "+ preparedStatement.toString());
                 preparedStatement.executeUpdate();
                 b=true;
                 

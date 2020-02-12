@@ -2,6 +2,7 @@ package gestioneutente;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,8 @@ import gestionecompagniaaerea.CompagniaAereaManager;
 import gestionecompagniaaerea.PoliticaBagaglioManager;
 import gestionecompagniaaerea.PoliticaBagaglioMano;
 import gestionecompagniaaerea.PoliticaBagaglioStiva;
+import gestioneordine.Ordine;
+import gestioneordine.OrdineManager;
 
 /**
  * Servlet implementation class DettagliUtenteServlet
@@ -36,16 +39,20 @@ public class DettagliUtenteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email=request.getParameter("email");
-
+		
 		String redirect="";
         
         UtenteManager utenteManager=new UtenteManager();
+        OrdineManager ordineManager= new OrdineManager();
         CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
         try {
 			Account utente=utenteManager.findAccountByEmail(email);
+			ArrayList<Ordine> ordini=	ordineManager.cercaOrdiniUtente(email);
 			
+		
 	    	request.setAttribute("utente", utente);
 	    	request.setAttribute("compagnie", compagniaAereaManager.getCompagnie());
+	    	request.setAttribute("ordini", ordini);
 			} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
