@@ -141,6 +141,14 @@ if(mod==null)
             
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
+                           		<%
+      						if (request.getAttribute("message")!=null && !request.getAttribute("message").equals("")) {
+      					%>
+      					<div class="alert alert-primary" role="alert">
+      						<h6><%=request.getAttribute("message")%></h6>
+      						</div>
+      							<% } %>
+      							
                   				<form action="BigliettiServlet" method="post">
                                    		<div class="pl-5">
                                    		

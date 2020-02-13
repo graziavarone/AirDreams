@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +30,9 @@ import gestionevolo.Volo;
 @WebServlet(name="/BigliettiServlet", urlPatterns= {"/cliente/BigliettiServlet"})
 public class BigliettiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static Logger logger= Logger.getLogger("global");
+	private String expNome="^[A-Za-z]{1,}$";
+	private String expCognome="^[A-Za-z]{1,}$";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,8 +50,8 @@ public class BigliettiServlet extends HttpServlet {
 		HashMap<Volo,Integer> voliCarrello=carrello.getVoli();
 		ArrayList<Biglietto> biglietti=new ArrayList<Biglietto>();
 		ArrayList<BagaglioMano> bagagliMano=new ArrayList<BagaglioMano>();
-		ArrayList<BagaglioStiva> bagagliStiva=new ArrayList<BagaglioStiva>();
 		PoliticaBagaglioManager politicaBagaglioManager=new PoliticaBagaglioManager();
+		String redirect=null;
 		
 		int seats=0;
 		for(Entry<Volo, Integer> entry : voliCarrello.entrySet()) 
@@ -58,7 +63,8 @@ public class BigliettiServlet extends HttpServlet {
 			String sesso=request.getParameter("sesso"+(i+1));
 			String nBagagli=request.getParameter("bagaglioStiva"+(i+1));
 			int numeroBagagli=Integer.parseInt(nBagagli);
-	
+			
+			if(valida(nomePasseggero, cognomePasseggero)) {
 			for(Entry<Volo, Integer> entry : voliCarrello.entrySet()) {
 				
 				try {
@@ -106,11 +112,16 @@ public class BigliettiServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-			
+			request.getSession().setAttribute("biglietti",biglietti);
+			redirect="/cliente/DettagliAccountServlet";
+			} else {
+				request.setAttribute("message", "Formato errato dati");
+				redirect="/cliente/nominativiBiglietti.jsp?seats="+seats;
+			}
 			
 		}
 		
-		request.getSession().setAttribute("biglietti",biglietti);
+	
 	
 		
 		for(Biglietto biglietto: biglietti) {
@@ -123,7 +134,7 @@ public class BigliettiServlet extends HttpServlet {
 
 
 		
-		request.getServletContext().getRequestDispatcher("/cliente/DettagliAccountServlet").forward(request, response);
+		request.getServletContext().getRequestDispatcher(redirect).forward(request, response);
 	}
 
 	/**
@@ -132,6 +143,26 @@ public class BigliettiServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	private boolean valida(String nome, String cognome) {
+		boolean valido=true;
+	
+		if (!Pattern.matches(expNome, nome)) {
+			logger.info("Nome non corrisponde");
+			valido=false;
+			System.out.print(nome);
+		}
+		if (!Pattern.matches(expCognome, cognome)) {
+			logger.info("Cognome non corrisponde");
+			valido=false;
+			System.out.print(cognome);
+		}
+	
+		
+		
+		return valido;
+	
 	}
 
 }

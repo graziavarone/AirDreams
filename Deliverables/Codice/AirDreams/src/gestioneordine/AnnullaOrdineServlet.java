@@ -1,4 +1,4 @@
-package gestioneutente;
+package gestioneordine;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class RimuoviCartaServlet
+ * Servlet implementation class AnnullaOrdineServlet
  */
-@WebServlet(name="/RimuoviCartaServlet",
-urlPatterns= {"/cliente/RimuoviCartaServlet"})
-public class RimuoviCartaServlet extends HttpServlet {
+
+@WebServlet(name="/AnnullaOrdineServlet", urlPatterns= {"/cliente/AnnullaOrdineServlet"})
+public class AnnullaOrdineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RimuoviCartaServlet() {
+    public AnnullaOrdineServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,19 +29,22 @@ public class RimuoviCartaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Account account=(Account) request.getSession().getAttribute("account");
+		String idOrdine=request.getParameter("idOrdine");
 		
-		CartaDiCreditoManager cartaDiCreditoManager=new CartaDiCreditoManager();
-		String nCarta=request.getParameter("nCarta");
-		cartaDiCreditoManager.eliminaCarta(nCarta,account.getEmail());
+		OrdineManager ordineManager=new OrdineManager();
 		
-		request.setAttribute("message", "Carta di credito eliminata");
 		try {
-			request.setAttribute("carte", cartaDiCreditoManager.findAll(account.getEmail()));
+			ordineManager.annullaOrdine(Integer.parseInt(idOrdine));
+			
+			request.setAttribute("messageOrdine", "Ordine annullato con successo");
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		request.getServletContext().getRequestDispatcher("/cliente/DettagliAccountServlet").forward(request, response);
 	}
 

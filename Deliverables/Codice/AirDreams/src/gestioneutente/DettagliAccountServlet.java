@@ -47,12 +47,15 @@ public class DettagliAccountServlet extends HttpServlet {
 			
 			
 			request.setAttribute("bigliettiOrdine"+ordine.getCodOrdine(), bigliettiOrdine);
-			
+			System.out.println("Nuemro biglietti "+bigliettiOrdine.size());
 			}
 			request.setAttribute("carte", carteUtente);
 			request.setAttribute("ordini", ordini);
+			
+			System.out.println("Nuemro ordini "+ordini.size());
 			 redirect="/cliente/profilo.jsp";
 			
+			 System.out.println("biglietti è null....."+(request.getSession().getAttribute("biglietti")==null));
 			if (request.getSession().getAttribute("biglietti")!=null) {
 				ArrayList<Biglietto> biglietti=(ArrayList<Biglietto>)request.getSession().getAttribute("biglietti");
 	

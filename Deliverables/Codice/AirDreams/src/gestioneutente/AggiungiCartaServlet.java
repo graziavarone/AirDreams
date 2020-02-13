@@ -88,7 +88,7 @@ public class AggiungiCartaServlet extends HttpServlet {
 				}  
 				if(!Pattern.matches(expCvc, cvc)) {
 					message+="Formato cvc non valido<br/>";
-					int newCvc = Integer.parseInt(cvc);
+			
 					System.out.println(message);
 					response.getWriter().write("Formato errato dati");
 					redirect="/cliente/aggiungiCarta.jsp";

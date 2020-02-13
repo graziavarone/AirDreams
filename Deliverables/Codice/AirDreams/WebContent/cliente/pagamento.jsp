@@ -138,11 +138,22 @@
             
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                            
+                            <%
+      						if (request.getAttribute("message")!=null && !request.getAttribute("message").equals("")) {
+      					%>
+      					<div class="alert alert-primary" role="alert">
+      						<h6><%=request.getAttribute("message")%></h6>
+      						</div>
+      							<% } %>
+      							
                             <form action="PagamentoServlet" method="post" id="form1">
-                            		<% for(int i=0;i<carte.size();i++){ %>
+                            
+                            		<% if(carte!=null && carte.size()!=0){ %>
+                            		Carta <%=carte.get(0).getnCarta() %><input checked="checked" onclick="mostra(this.value)" type="radio" name="carta" value="<%=carte.get(0).getnCarta()%>">
+                            		<% for(int i=1;i<carte.size();i++){ %>
               						Carta <%=carte.get(i).getnCarta() %><input onclick="mostra(this.value)" type="radio" name="carta" value="<%=carte.get(i).getnCarta()%>">
         								<br>
+        								<% } %>
               						<% } %>
               			
               							Inserisci una nuova carta<input type="radio" name="carta" value="crea" id="crea" onclick="mostra(this.value)">
@@ -228,6 +239,7 @@
 					$("#inputDataScadenza").prop('hidden', true);
 					$("#inputCvc").prop('hidden', true);
 					$("#submit").prop('hidden', true);
+					$("#cartaEsistente").prop('hidden', false);
 				}
           	}
         </script>

@@ -86,6 +86,7 @@ public class OrdineManager {
                 
                 while(rs.next()) {
                 	Ordine ordine= new Ordine();
+                	System.out.println("Ho instanziato ordine");
                 	ordine.setCodOrdine(rs.getInt("codOrdine"));
                 	ordine.setDataAcquisto(LocalDate.parse(rs.getString("dataAcquisto"),FORMATO_DIA));
                 	ordine.setAccount(utenteManager.findAccountByEmail(email));
@@ -108,6 +109,47 @@ public class OrdineManager {
         
         return ordini;
     }
+
+	public boolean annullaOrdine(int codice) throws SQLException {
+		boolean b=false;
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		PreparedStatement preparedStatement1=null;
+
+	
+		String updateSQL="DELETE from ordine WHERE codOrdine=?";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+               
+
+                preparedStatement.setInt(1, codice);
+
+              
+             
+            	System.out.println("annullaOrdine: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
+                
+
+                b=true;
+         		
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return b;
+		
+	}
 	
 	
 	

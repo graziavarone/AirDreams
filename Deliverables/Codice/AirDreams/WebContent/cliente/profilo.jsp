@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*,gestioneutente.*,gestioneordine.*,java.time.format.DateTimeFormatter"%>
 <!DOCTYPE html>
@@ -260,6 +261,15 @@
       			
       				
       				<div class="p-2" id="ordini">
+      				
+      					<%
+      						if (request.getAttribute("messageOrdine")!=null && !request.getAttribute("messageOrdine").equals("")) {
+      					%>
+      					<div class="alert alert-primary" role="alert">
+      						<h6><%=request.getAttribute("messageOrdine")%></h6>
+      						</div>
+      							<% } %>
+      							
       			
       					<h2>Ordini <i class="fa fa-pencil-square-o"></i></h2>
       					
@@ -297,7 +307,36 @@
     							</div>
     							
     										<button id="mostra<%=ordine.getCodOrdine()%>" onclick="mostraBiglietti(<%=ordine.getCodOrdine()%>);" class="fa fa-plus" aria-hidden="true" style="margin-left: 90px;"></button>
-    										<button id="nascondi<%=ordine.getCodOrdine()%>" hidden=true onclick="nascondiBiglietti(<%=ordine.getCodOrdine()%>);" class="fa fa-minus" aria-hidden="true" style="margin-left: 90px;"></button>
+    										<button
+    										
+    										<%
+    										boolean test=false;
+											LocalDate oggi=LocalDate.now();
+    										
+											
+    										if(oggi.isBefore(biglietti.get(0).getVolo().getDataPartenza()))
+    											test=true;
+											
+    										%>
+    										
+    										
+    										 id="nascondi<%=ordine.getCodOrdine()%>" hidden=true onclick="nascondiBiglietti(<%=ordine.getCodOrdine()%>,<%=test %>);" class="fa fa-minus" aria-hidden="true" style="margin-left: 90px;"></button>
+    										
+    										<form action="AnnullaOrdineServlet">
+    										<input type="hidden" name="idOrdine" value="<%=ordine.getCodOrdine()%>">
+    										<button 
+    										
+    										<%
+    									
+    										if(oggi.isAfter(biglietti.get(0).getVolo().getDataPartenza())){
+    										%>
+    										
+    										hidden=true,
+    										
+    										<% } %>
+    										type="submit" id="annulla<%=ordine.getCodOrdine()%>" class="	fa fa-times-circle"></button>
+    										</form>
+    						
     						</div>
     						
     						<% ArrayList<Biglietto> bigliettiOrdine=(ArrayList<Biglietto>)request.getAttribute("bigliettiOrdine"+ordine.getCodOrdine()); %>
@@ -322,8 +361,8 @@
 							     <td><%=biglietto.getNome() %></td>
 							    <td><%=biglietto.getCognome() %></td>
 							    <td>&euro;<%=String.format("%.2f",biglietto.getPrezzoBiglietto())%></td>
-							    <td><%=biglietto.getVolo().getAeroportoP().getCity() %></td>
-							       <td><%=biglietto.getVolo().getAeroportoA().getCity() %></td>
+							    <td><%=biglietto.getVolo().getAeroportoP().getCity() %>  il <%=biglietto.getVolo().getDataPartenza().format(FORMATO_DIA) %></td>
+							       <td><%=biglietto.getVolo().getAeroportoA().getCity() %> il <%=biglietto.getVolo().getDataArrivo().format(FORMATO_DIA) %></td>
 							       <td><%=biglietto.getVolo().getCa().getNome() %></td>
 							       <td>Peso=<%=biglietto.getBagaglioMano().getPeso() %> kg, dimensioni=<%=biglietto.getBagaglioMano().getDimensioni() %></td>
 							       <% 
@@ -409,12 +448,18 @@
           		$("#mostra"+codice).prop('hidden', true);
           		$("#nascondi"+codice).prop('hidden', false);
           		$("#listaBiglietti"+codice).prop('hidden', false);
+          		$("#annulla"+codice).prop('hidden',true);
           	}
           	
-          	function nascondiBiglietti(codice){
+          	function nascondiBiglietti(codice,test){
+          	
           		$("#mostra"+codice).prop('hidden', false);
           		$("#nascondi"+codice).prop('hidden', true);
           		$("#listaBiglietti"+codice).prop('hidden', true);
+          		
+          		if(test==true){
+          		$("#annulla"+codice).prop('hidden',false);
+          		}
           	}
         </script>
 	</body>

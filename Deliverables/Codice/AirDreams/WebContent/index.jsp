@@ -164,7 +164,7 @@ http://www.tooplate.com/view/2095-level
                                             <input name="city" id="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
-                             				<i id=scambia class="fa fa-arrows-h fa-2x"></i>
+                             				<i id=scambia class="fa fa-exchange fa-2x"></i>
                                            <div class="form-group tm-form-element tm-form-element-100">
                                             	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
                                            <input name="cityArrivals" id="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
