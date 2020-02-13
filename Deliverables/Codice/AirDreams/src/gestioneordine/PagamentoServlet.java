@@ -225,7 +225,7 @@ public class PagamentoServlet extends HttpServlet {
 		
 
 		request.setAttribute("message", message);
-
+		System.out.println(redirect);
 		request.getServletContext().getRequestDispatcher(redirect).forward(request, response);
 
 	}
