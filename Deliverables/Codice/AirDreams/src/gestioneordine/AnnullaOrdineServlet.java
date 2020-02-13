@@ -2,6 +2,9 @@ package gestioneordine;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,11 +35,29 @@ public class AnnullaOrdineServlet extends HttpServlet {
 		String idOrdine=request.getParameter("idOrdine");
 		
 		OrdineManager ordineManager=new OrdineManager();
+		BigliettoManager bigliettoManager=new BigliettoManager();
 		
 		try {
-			ordineManager.annullaOrdine(Integer.parseInt(idOrdine));
+			LocalDateTime oggi=LocalDateTime.now();
 			
-			request.setAttribute("messageOrdine", "Ordine annullato con successo");
+			LocalDateTime tempoCheManca = LocalDateTime.from(oggi);
+			
+		
+			
+			LocalDateTime dataPartenza=LocalDateTime.of(bigliettoManager.trovaBigliettiOrdine(Integer.parseInt(idOrdine)).get(0).getVolo().getDataPartenza(), 
+					bigliettoManager.trovaBigliettiOrdine(Integer.parseInt(idOrdine)).get(0).getVolo().getOrarioPartenza());
+				
+			long giorniCheMancano = tempoCheManca.until(dataPartenza , ChronoUnit.DAYS);
+			System.out.println("Mancano "+giorniCheMancano+" giorni");
+			
+			if(giorniCheMancano>7) {
+				ordineManager.annullaOrdine(Integer.parseInt(idOrdine));
+				
+				request.setAttribute("messageOrdine", "Ordine annullato con successo");
+			} else {
+				request.setAttribute("messageOrdine", "Non è possibile annullare l'ordine perchè mancano meno di 7 giorni alla partenza");
+			}
+
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
