@@ -54,6 +54,7 @@ public class AggiungiCartaTest {
 		MockitoAnnotations.initMocks(this);
 		when(request.getServletContext()).thenReturn(context); 		
 		when(request.getServletContext().getRequestDispatcher("/cliente/aggiungiCarta.jsp")).thenReturn(dispatcher);
+		when(request.getServletContext().getRequestDispatcher("/cliente/DettagliAccountServlet")).thenReturn(dispatcherSuccess);
 		when(request.getSession()).thenReturn(session);
         servlet = new AggiungiCartaServlet();
         DbPopulator.initializeDatabase();
