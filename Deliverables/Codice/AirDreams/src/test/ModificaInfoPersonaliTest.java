@@ -17,6 +17,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockRequestDispatcher;
+import org.springframework.mock.web.MockServletContext;
 
 import db.DriverManagerConnectionPool;
 import gestioneutente.Account;
@@ -34,13 +35,17 @@ public class ModificaInfoPersonaliTest {
 	
 	@Mock
 	MockHttpSession session;
+	
+	@Mock
+	MockServletContext context;
 
 	private ModificaInfoPersonaliServlet servlet;
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(request.getRequestDispatcher("profilo.jsp")).thenReturn(dispatcher);
+		when(request.getServletContext()).thenReturn(context);
+		when(request.getServletContext().getRequestDispatcher("/cliente/DettagliAccountServlet")).thenReturn(dispatcher);
 
         servlet = new ModificaInfoPersonaliServlet();
         DbPopulator.initializeDatabase();
