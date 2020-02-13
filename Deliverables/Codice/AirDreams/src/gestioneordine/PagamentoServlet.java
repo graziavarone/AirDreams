@@ -146,17 +146,62 @@ public class PagamentoServlet extends HttpServlet {
 								redirect="/cliente/pagamento.jsp";
 							}
 						}
+					
+					if(!cartaScaduta) {
+						carta=new CartaDiCredito();
+						carta.setnCarta(nCarta);
+						carta.setTitolare(titolare);
+						carta.setDataScadenza(dataScadenza);
+						carta.setCvc(Integer.parseInt(cvc));
+						carta.setAccount(account);
+			
+						cartaDiCreditoManager.creaCartaDiCredito(carta);
 				}
 				
-					if(!cartaScaduta) {
-					carta=new CartaDiCredito();
-					carta.setnCarta(nCarta);
-					carta.setTitolare(titolare);
-					carta.setDataScadenza(dataScadenza);
-					carta.setCvc(Integer.parseInt(cvc));
-					carta.setAccount(account);
-		
-					cartaDiCreditoManager.creaCartaDiCredito(carta);
+					if(carta!=null) {
+						System.out.println("CARTA NON è NULL MA è"+carta);
+						Ordine ordine=new Ordine(LocalDate.now(), account, carta);
+						System.out.println(LocalDate.now());
+						ordine=ordineManager.aggiungiOrdine(ordine);
+					
+						for(Biglietto biglietto: biglietti) {
+							//creo prima il biglietto
+							biglietto.setOrdine(ordine.getCodOrdine());
+							biglietto=bigliettoManager.aggiungiBiglietto(biglietto);
+							
+							
+								System.out.println("Bagaglio a mano di biglietto "+biglietto.getCodBiglietto()+" per il volo "
+										+ ""+biglietto.getVolo().getId());
+						
+								bagaglioManager.aggiungiBagaglioMano(biglietto.getBagaglioMano());
+							
+							
+								Iterator<BagaglioStiva> iterator=biglietto.getBagagliStiva().iterator();
+								
+								while(iterator.hasNext()) {
+									BagaglioStiva bagaglioStiva=iterator.next();
+									
+									bagaglioManager.aggiungiBagaglioStiva(bagaglioStiva);
+								}
+								
+								Volo voloBiglietto=biglietto.getVolo();
+								voloBiglietto.setSeats(voloBiglietto.getSeats()-1);
+								VoloManager voloManager = new VoloManager();
+								voloManager.modificaVolo(voloBiglietto);
+								
+								CarrelloManager carrelloManager=new CarrelloManager();
+								carrelloManager.svuotaCarrello(account.getEmail());
+							
+
+								
+							
+						}
+						response.getWriter().write("Success");
+						request.getSession().removeAttribute("biglietti");
+						System.out.println("REMOVE ATTRIBUTE");
+						redirect="/cliente/acquisto.jsp";
+				}
+					
 					
 				
 			}
@@ -165,49 +210,7 @@ public class PagamentoServlet extends HttpServlet {
 			
 			
 			
-			if(carta!=null) {
-				System.out.println("CREO ORDINE");
-				Ordine ordine=new Ordine(LocalDate.now(), account, carta);
-				System.out.println(LocalDate.now());
-				ordine=ordineManager.aggiungiOrdine(ordine);
 			
-				for(Biglietto biglietto: biglietti) {
-					//creo prima il biglietto
-					biglietto.setOrdine(ordine.getCodOrdine());
-					biglietto=bigliettoManager.aggiungiBiglietto(biglietto);
-					
-					
-						System.out.println("Bagaglio a mano di biglietto "+biglietto.getCodBiglietto()+" per il volo "
-								+ ""+biglietto.getVolo().getId());
-				
-						bagaglioManager.aggiungiBagaglioMano(biglietto.getBagaglioMano());
-					
-					
-						Iterator<BagaglioStiva> iterator=biglietto.getBagagliStiva().iterator();
-						
-						while(iterator.hasNext()) {
-							BagaglioStiva bagaglioStiva=iterator.next();
-							
-							bagaglioManager.aggiungiBagaglioStiva(bagaglioStiva);
-						}
-						
-						Volo voloBiglietto=biglietto.getVolo();
-						voloBiglietto.setSeats(voloBiglietto.getSeats()-1);
-						VoloManager voloManager = new VoloManager();
-						voloManager.modificaVolo(voloBiglietto);
-						
-						CarrelloManager carrelloManager=new CarrelloManager();
-						carrelloManager.svuotaCarrello(account.getEmail());
-					
-
-						
-					
-				}
-			
-				request.getSession().removeAttribute("biglietti");
-				System.out.println("REMOVE ATTRIBUTE");
-				redirect="/cliente/acquisto.jsp";
-		}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -230,7 +233,7 @@ public class PagamentoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
