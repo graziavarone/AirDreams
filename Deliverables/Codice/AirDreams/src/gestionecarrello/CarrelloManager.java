@@ -76,6 +76,7 @@ public class CarrelloManager {
                 
             	System.out.println("aggiungiAlCarrello: "+ preparedStatement.toString());
                 preparedStatement.executeUpdate();
+                
                 b=true;
                 
             }
