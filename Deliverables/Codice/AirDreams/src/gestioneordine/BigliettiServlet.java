@@ -33,6 +33,7 @@ public class BigliettiServlet extends HttpServlet {
 	private static Logger logger= Logger.getLogger("global");
 	private String expNome="^[A-Za-z]{1,}$";
 	private String expCognome="^[A-Za-z]{1,}$";
+	int seats = 0;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -52,12 +53,15 @@ public class BigliettiServlet extends HttpServlet {
 		ArrayList<BagaglioMano> bagagliMano=new ArrayList<BagaglioMano>();
 		PoliticaBagaglioManager politicaBagaglioManager=new PoliticaBagaglioManager();
 		String redirect=null;
+
 		
-		int seats=0;
 		for(Entry<Volo, Integer> entry : voliCarrello.entrySet()) 
 	   		 seats=entry.getValue();
 		
+		System.out.println("seats è "+seats);
 		for(int i=0;i<seats;i++) {
+			
+
 			String nomePasseggero=request.getParameter("nomePasseggero"+(i+1));
 			String cognomePasseggero=request.getParameter("cognomePasseggero"+(i+1));
 			String sesso=request.getParameter("sesso"+(i+1));
@@ -112,11 +116,15 @@ public class BigliettiServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
+			response.getWriter().write("Success");
 			request.getSession().setAttribute("biglietti",biglietti);
 			redirect="/cliente/DettagliAccountServlet";
 			} else {
+				response.getWriter().write("Failed");
 				request.setAttribute("message", "Formato errato dati");
 				redirect="/cliente/nominativiBiglietti.jsp?seats="+seats;
+				
+				
 			}
 			
 		}
@@ -140,7 +148,7 @@ public class BigliettiServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
