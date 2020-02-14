@@ -140,7 +140,7 @@ public class BagaglioManager {
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
 		ResultSet rs=null;
-		HashSet<BagaglioStiva> bagagliStiva=new HashSet<BagaglioStiva>();
+		HashSet<BagaglioStiva> bagagliStiva=null;
 		
 	
 		String selectSQL="SELECT * from bagaglioStiva where biglietto=?";
@@ -158,6 +158,7 @@ public class BagaglioManager {
                
                 
                 if(rs.next()) {
+                	 bagagliStiva=new HashSet<BagaglioStiva>();
                 	int quantity=rs.getInt("quantity");
                 	
                 	for(int i=0;i<quantity;i++) {
