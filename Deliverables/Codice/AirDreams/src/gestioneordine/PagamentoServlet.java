@@ -156,6 +156,7 @@ public class PagamentoServlet extends HttpServlet {
 						carta.setAccount(account);
 			
 						cartaDiCreditoManager.creaCartaDiCredito(carta);
+			
 				}
 				
 					if(carta!=null) {
@@ -196,11 +197,12 @@ public class PagamentoServlet extends HttpServlet {
 								
 							
 						}
+			
 						response.getWriter().write("Success");
 						request.getSession().removeAttribute("biglietti");
 						System.out.println("REMOVE ATTRIBUTE");
 						redirect="/cliente/acquisto.jsp";
-				}
+				} 
 					
 					
 				

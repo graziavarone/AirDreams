@@ -32,6 +32,8 @@ public class BagaglioManager {
                 
             	System.out.println("aggiungiBagaglioMano: "+ preparedStatement.toString());
                 preparedStatement.executeUpdate();
+                
+                System.out.println("Ho eseguito query per aggiungere bagaglio");
                 b=true;
                 
             }
