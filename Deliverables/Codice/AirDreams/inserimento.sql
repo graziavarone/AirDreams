@@ -3,6 +3,10 @@ SET SQL_SAFE_UPDATES = 0;
 delete from utente;
 delete from volo;
 delete from cartaDiCredito;
+delete from ordine;
+delete from biglietto;
+ALTER table volo AUTO_INCREMENT = 1;
+ALTER table ordine AUTO_INCREMENT = 1;
 
 
 INSERT INTO utente(nome,cognome,email,passwordUtente)
@@ -26,7 +30,9 @@ values ('Rosaria','Rossi','rosaria@gmail.com','Rosaria1998'),
 	("Ryanair","12/02/2020",55,3,"02:15","16:55",false,"AMS","FCO"),
 	("Ryanair","12/02/2020",55,3,"00:50","21:45",false,"FCO","NAP");
     
-	
-insert into cartaDiCredito values("1111 1111 1111 1111","prova prova","12/22","123","rosaria@gmail.com");
-    
+insert into cartaDiCredito(nCarta,titolare,dataScadenza, cvc,utente) values ("1111 1111 1111 1111","Rosaria Rossi","12/22","123","rosaria@gmail.com");
+
+insert into ordine(dataAcquisto,cartaDiCredito,email) values ("13/02/2020","1111 1111 1111 1111","rosaria@gmail.com");
+
+insert into biglietto(nome,cognome,sesso,prezzoBiglietto,volo,ordine) values ("Rosaria","Rossi","F",26,1,1);
     
