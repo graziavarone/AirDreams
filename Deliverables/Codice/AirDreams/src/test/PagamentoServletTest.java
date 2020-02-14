@@ -161,7 +161,7 @@ public class PagamentoServletTest {
 	} 
 	
 	// success
-/*	@Test
+	@Test
 		public void testCase_6() throws IOException, ServletException, SQLException {	
 		when(request.getParameter("carta")).thenReturn(null);
 		when(request.getParameter("nCarta")).thenReturn("3456 6009 7566 8008");
@@ -192,7 +192,7 @@ public class PagamentoServletTest {
 			when(response.getWriter()).thenReturn(MyWriter);
 			servlet.doPost(request, response);	
 			Mockito.verify(MyWriter).write("Success");
-		}*/
+		}
 	
 	@After
 	public void tearDown() throws Exception{
