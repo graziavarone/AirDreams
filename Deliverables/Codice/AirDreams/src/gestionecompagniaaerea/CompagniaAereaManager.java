@@ -200,4 +200,38 @@ public class CompagniaAereaManager {
         	}
         return allComA; 
     }
+	
+	public boolean eliminaCompagnia(String nome) throws SQLException {
+		boolean b = false;
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+	
+		String updateSQL="DELETE from compagniaAerea where nome=?";
+        
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+
+                preparedStatement.setString(1, nome);
+                
+            	System.out.println("eliminaCompagnia: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
+                b=true;
+                
+            }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
+        
+        return b;
+		
+	}
+	
 }
