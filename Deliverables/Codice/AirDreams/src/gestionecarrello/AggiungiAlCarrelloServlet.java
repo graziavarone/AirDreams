@@ -14,7 +14,8 @@ import gestioneutente.Account;
 import gestionevolo.Volo;
 
 /**
- * Servlet implementation class AggiungiAlCarrelloServlet
+ * La servlet gestisce tutte le operazioni per l'aggiunta di uno o pi√π voli al carrello di un utente
+ * correntemente loggato al sistema
  */
 @WebServlet(name="/AggiungiAlCarrelloServlet", urlPatterns= {"/cliente/AggiungiAlCarrelloServlet"})
 public class AggiungiAlCarrelloServlet extends HttpServlet {
@@ -44,10 +45,10 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
 				Volo voloPresente=carrelloManager.cercaVoloNelCarrello(account.getEmail(), volo.getId());
 				
 				if(voloPresente==null) {
-					System.out.println("Non presnete nel carrello");
+					System.out.println("Non presenete nel carrello");
 					carrelloManager.aggiungiVoloAlCarrello(account.getEmail(),volo.getId(),Integer.parseInt(seats));
 				} else {
-					System.out.println("Gi‡ presnete nel carrello");
+					System.out.println("Gia' presente nel carrello");
 					carrelloManager.updateQuantity(account.getEmail(), volo.getId(), Integer.parseInt(seats));
 				}
 			} catch (NumberFormatException | SQLException e) {
@@ -67,5 +68,4 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

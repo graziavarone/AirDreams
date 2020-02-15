@@ -13,7 +13,7 @@ public class Carrello {
 	private HashMap<Volo, Integer> voli;
 	
 	/**
-	 * metodo costruttore della classe Carrello
+	 * metodo costruttore vuoto della classe Carrello
 	 */
 	public Carrello() {
 		voli=new HashMap<Volo, Integer>();
@@ -44,7 +44,7 @@ public class Carrello {
 	}
 
 	/**
-	 * metodo setter per la modifica della lista presente nel carrello
+	 * metodo setter per la modifica della lista di voli presente nel carrello
 	 * @param voli nuova lista di voli da impostare nel carrello
 	 */
 	public void setVoli(HashMap<Volo, Integer> voli) {

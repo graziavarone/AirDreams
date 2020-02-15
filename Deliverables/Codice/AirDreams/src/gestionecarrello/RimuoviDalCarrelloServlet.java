@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import gestioneutente.Account;
 
 /**
- * Servlet implementation class RimuoviDalCarrelloServletm
+ * La servlet gestisce tutte le operazioni per la rimozione di un volo
+ * dal carrello di un utente correttemente loggato al sistema
  */
-
 @WebServlet(name="/RimuoviDalCarrelloServlet", urlPatterns= {"/cliente/RimuoviDalCarrelloServlet"})
 public class RimuoviDalCarrelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -54,5 +54,4 @@ public class RimuoviDalCarrelloServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

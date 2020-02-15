@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import gestioneutente.Account;
 
 /**
- * Servlet implementation class CarrelloServlet
+ * La servlet gestisce tutte le operazioni per la visualizzazione
+ * di contenuto e dettagli di un carrello relato ad un utente
+ * correntemente loggato al sistema
  */
-
 @WebServlet(name="/CarrelloServlet",
 urlPatterns= {"/cliente/CarrelloServlet"})
 public class CarrelloServlet extends HttpServlet {
@@ -55,5 +56,4 @@ public class CarrelloServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
