@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ChangeMod
+ * La servlet gestisce tutte le operazioni per permettere il cambio di ruolo da parte di un utente
+ * che generalizza le figure di cliente, gestore voli e gestore compagnie
  */
 @WebServlet("/ChangeMod")
 public class ChangeMod extends HttpServlet {
@@ -43,5 +44,4 @@ public class ChangeMod extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

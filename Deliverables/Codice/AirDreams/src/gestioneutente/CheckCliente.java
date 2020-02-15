@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet Filter implementation class CheckCliente
+ * La Servlet filter permette di controllare il ruolo dell'utente correntemente loggato
+ * per permettere o negare l'accesso alle pagine riservate al cliente 
  */
 @WebFilter(filterName = "CheckCliente",urlPatterns = {"/cliente/*"})
 public class CheckCliente implements Filter {
@@ -37,11 +38,11 @@ public class CheckCliente implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		 Account user = (Account) ((HttpServletRequest) request).getSession().getAttribute("account");
 
-	        if (user != null) {
-	            chain.doFilter(request, response);
-	        } else {
-	            ((HttpServletResponse) response).sendRedirect("../login.jsp");
-	        }
+		 if (user != null) {
+			 chain.doFilter(request, response);
+	     } else {
+	         ((HttpServletResponse) response).sendRedirect("../login.jsp");
+	     }
 	}
 
 	/**
@@ -50,5 +51,4 @@ public class CheckCliente implements Filter {
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
 	}
-
 }

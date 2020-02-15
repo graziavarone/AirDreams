@@ -3,8 +3,8 @@ package gestioneutente;
 import gestionecompagniaaerea.CompagniaAerea;
 
 /**
- * La classe rappresenta l’utente registrato, ovvero un qualsiasi utente che si è registrato al sistema 
- * e può effettuare il login in qualunque momento, accedendo alla propria area personale.
+ * La classe rappresenta l'utente registrato, ovvero un qualsiasi utente che si e' registrato al sistema 
+ * e puo' effettuare il login in qualunque momento, accedendo alla propria area personale
  */
 
 public class Account {
@@ -15,6 +15,9 @@ public class Account {
 	private CompagniaAerea compagniaAerea;
 	private Ruolo ruolo;
 	
+	/**
+	 * metodo costruttore della classe Account privo di argomenti
+	 */
 	public Account() {
 		
 	}

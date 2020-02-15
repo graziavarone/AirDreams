@@ -3,7 +3,6 @@ package gestioneutente;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,10 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import db.DriverManagerConnectionPool;
-
 /**
- * Servlet implementation class listaAccountServlet
+ * La servlet gestisce le operazioni per la visualizzazione di tutti gli account 
+ * registrati al sistema da parte del gestore compagnie
  */
 @WebServlet(name="/ListaAccountServlet", urlPatterns= {"/gestoreCompagnie/ListaAccountServlet"})
 public class ListaAccountServlet extends HttpServlet {
@@ -59,5 +57,4 @@ public class ListaAccountServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

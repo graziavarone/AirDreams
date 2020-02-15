@@ -3,7 +3,6 @@ package gestioneutente;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class RicercaAccountServlet
+ * La servlet gestisce le operazioni per la ricerca di account, secondo differenti criteri,
+ * da parte del gestore compagnie
  */
 @WebServlet(name="/RicercaAccountServlet", urlPatterns= {"/gestoreCompagnie/RicercaAccountServlet"})
 public class RicercaAccountServlet extends HttpServlet {
@@ -55,8 +55,6 @@ public class RicercaAccountServlet extends HttpServlet {
 
 				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/gestoreCompagnie/listaAccount.jsp");
 				dispatcher.forward(request, response);
-				
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -70,5 +68,4 @@ public class RicercaAccountServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

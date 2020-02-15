@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class EliminaAccountServlet
+ * La servlet gestisce le operazioni per la cancellazione di un account dal sistema
  */
 @WebServlet("/EliminaAccountServlet")
 public class EliminaAccountServlet extends HttpServlet {
@@ -28,7 +28,6 @@ public class EliminaAccountServlet extends HttpServlet {
 		if (conferma) {
 			message+="account eliminato";
 			request.setAttribute("message",message);
-			
 		} else {
 			message+="cancellazione account fallita";
 			request.setAttribute("message",message);
@@ -49,5 +48,4 @@ public class EliminaAccountServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

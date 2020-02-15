@@ -10,8 +10,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 /**
- * Servlet Filter implementation class CheckGestoreVoli
+ * La Servlet filter permette di controllare il ruolo dell'utente correntemente loggato
+ * per permettere o negare l'accesso alle pagine riservate al gestore voli
  */
 @WebFilter(filterName = "CheckGestoreVoli",urlPatterns = {"/gestoreVoli/*"})
 public class CheckGestoreVoli implements Filter {
@@ -35,7 +37,6 @@ public class CheckGestoreVoli implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-
         Account user = (Account) ((HttpServletRequest) request).getSession().getAttribute("account");
 
         if (user != null && user.getRuolo().equals(Ruolo.gestoreVoli)) {
@@ -45,12 +46,10 @@ public class CheckGestoreVoli implements Filter {
         }
 	}
 
-
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
 	}
-
 }

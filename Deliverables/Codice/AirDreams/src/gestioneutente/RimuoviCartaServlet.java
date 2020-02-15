@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class RimuoviCartaServlet
+ * La servlet gestisce le operazioni per la rimozione di una carta di credito
+ * precedentemente registrata dall'utente correntemente loggato
  */
-@WebServlet(name="/RimuoviCartaServlet",
-urlPatterns= {"/cliente/RimuoviCartaServlet"})
+@WebServlet(name="/RimuoviCartaServlet", urlPatterns= {"/cliente/RimuoviCartaServlet"})
 public class RimuoviCartaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -52,5 +52,4 @@ public class RimuoviCartaServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

@@ -6,10 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class LoginServlet
+ * La servlet gestisce le operazioni per il login di un utente al sistema
  */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -39,11 +38,10 @@ public class LoginServlet extends HttpServlet {
 			request.getSession().setAttribute("roles",account.getRuolo());
 			System.out.println("Ho salvato");
 			
-			
 			if(request.getSession().getAttribute("voli")!=null) {
 				redirectedPage="/cliente/AggiungiAlCarrelloServlet";
 			} else {
-			redirectedPage="/index.jsp";
+				redirectedPage="/index.jsp";
 			}
 			response.getWriter().write("Success");
 		} else {
@@ -54,13 +52,11 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		//redirect alla pagina
-			response.sendRedirect(request.getContextPath() + redirectedPage);
-		//request.getServletContext().getRequestDispatcher(redirectedPage).forward(request, response);
+		response.sendRedirect(request.getContextPath() + redirectedPage);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

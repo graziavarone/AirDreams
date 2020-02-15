@@ -2,7 +2,6 @@ package gestioneutente;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,16 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import gestionecompagniaaerea.CompagniaAerea;
 import gestionecompagniaaerea.CompagniaAereaManager;
-import gestionecompagniaaerea.PoliticaBagaglioManager;
-import gestionecompagniaaerea.PoliticaBagaglioMano;
-import gestionecompagniaaerea.PoliticaBagaglioStiva;
-import gestioneordine.Ordine;
-import gestioneordine.OrdineManager;
 
 /**
- * Servlet implementation class DettagliUtenteServlet
+ * La servlet gestisce tutte le operazioni per la visualizzazione dei dettagli
+ * di un dato utente da parte del gestore compagnie
  */
 @WebServlet(name="/DettagliUtenteServlet",
 urlPatterns= {"/gestoreCompagnie/DettagliUtenteServlet"})
@@ -40,26 +34,22 @@ public class DettagliUtenteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email=request.getParameter("email");
 		
-        
         UtenteManager utenteManager=new UtenteManager();
       
         CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
+        
         try {
 			Account utente=utenteManager.findAccountByEmail(email);
-			
-			
-		
+
 	    	request.setAttribute("utente", utente);
-	    	request.setAttribute("compagnie", compagniaAereaManager.getCompagnie());
+	    	request.setAttribute("compagnie", compagniaAereaManager.getAllCompanies());
 	    	
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}    
         
-    
-			request.getRequestDispatcher("dettagliAccount.jsp").forward(request, response);
-		
+        request.getRequestDispatcher("dettagliAccount.jsp").forward(request, response);
 	}
 
 	/**
@@ -69,5 +59,4 @@ public class DettagliUtenteServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

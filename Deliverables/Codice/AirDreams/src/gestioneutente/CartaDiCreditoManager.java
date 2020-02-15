@@ -8,11 +8,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import db.DriverManagerConnectionPool;
-import gestionecompagniaaerea.CompagniaAerea;
-import gestionecompagniaaerea.CompagniaAereaManager;
 
+/**
+ * La classe si occupa di implementare i metodi per effettuare l'inserimento,
+ * la cancellazione e la ricerca di una carta di credito associata ad un dato utente,
+ * memorizzato nel DB
+ */
 public class CartaDiCreditoManager {
 	
+	/**
+	 * metodo che permette di recuperare la lista di tutte le carte di credito registrate da un cliente nel sistema
+	 * @param email email di accesso dell'utente
+	 * @return ArrayList<CartaDiCredito> lista delle carte di credito registrate dal cliente dato
+	 * @throws SQLException
+	 */
 	public ArrayList<CartaDiCredito> findAll(String email) throws SQLException{
 		ArrayList<CartaDiCredito> allCarte = new ArrayList<CartaDiCredito>();
         Connection connection=null;
@@ -42,16 +51,23 @@ public class CartaDiCreditoManager {
             }
         } finally {
         	try {
-        		if(preparedStatement!=null) preparedStatement.close();
-        		}
-        		finally {
-        			DriverManagerConnectionPool.releaseConnection(connection);
-        		}
+        		if(preparedStatement!=null) 
+        			preparedStatement.close();
+        	} finally {
+        		DriverManagerConnectionPool.releaseConnection(connection);
         	}
+        }
+        
         return allCarte; 
-		
 	}
 	
+	/**
+	 * metodon che permette di recuperare una data carta di credito di un utente dato il numero
+	 * @param numeroCarta numero della carta da ricercare
+	 * @param email email di accesso dell'utente
+	 * @return CartaDiCredito carta di credito recuperata dal DB
+	 * @throws SQLException
+	 */
 	public CartaDiCredito cercaCarta(String numeroCarta,String email) throws SQLException{
 		CartaDiCredito carta = null;
         Connection connection=null;
@@ -76,25 +92,29 @@ public class CartaDiCreditoManager {
             	 carta.setCvc(rs.getInt("cvc"));
             	UtenteManager utenteManager=new UtenteManager();
             	Account account=utenteManager.findAccountByEmail(email);
-            	carta.setAccount(account);
-				
-				
+            	carta.setAccount(account);	
             }
         } finally {
         	try {
-        		if(preparedStatement!=null) preparedStatement.close();
-        		}
-        		finally {
-        			DriverManagerConnectionPool.releaseConnection(connection);
-        		}
+        		if(preparedStatement!=null)
+        			preparedStatement.close();
+        	} finally {
+        		DriverManagerConnectionPool.releaseConnection(connection);
         	}
+        }
+        
         return carta; 
-		
 	}
+	
+	/**
+	 * metodo che permette di inserire una carta di credito all'interno del DB assegnata ad un cliente
+	 * @param cc carta di credito da inserire
+	 * @return boolean true se l'inserimento nel DB va a buon fine, false in caso contrario
+	 * @throws SQLException
+	 */
 	public boolean creaCartaDiCredito(CartaDiCredito cc) throws SQLException {
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;
 		
 		try {
 			con = DriverManagerConnectionPool.getConnection();
@@ -107,7 +127,6 @@ public class CartaDiCreditoManager {
 			ps.setString(3,cc.getDataScadenza());
 			ps.setInt(4,cc.getCvc());
 			ps.setString(5, cc.getAccount().getEmail());
-			
 			
 			System.out.println("creaCartaDiCredito: "+ ps.toString());
             ps.executeUpdate();
@@ -126,10 +145,16 @@ public class CartaDiCreditoManager {
 		
 		return true;
 	}
+	
+	/**
+	 * metodo che permette di eliminare una carta di credito all'interno del DB assegnata ad un cliente
+	 * @param nCarta numero della carta di credito da eliminare
+	 * @param email email di accesso dell'utente
+	 * @return true se la cancellazione nel DB va a buon fine, false in caso contrario
+	 */
 	public boolean eliminaCarta(String nCarta, String email) {
 		Connection con = null;
 		Statement st = null;
-		ResultSet rs = null;
 		
 		try {
 			con = DriverManagerConnectionPool.getConnection();
@@ -140,8 +165,6 @@ public class CartaDiCreditoManager {
 			ps.setString(1,nCarta);
 			ps.setString(2,email);
 
-			
-			
 			System.out.println("eliminaCarta: "+ ps.toString());
             ps.executeUpdate();
        
@@ -158,7 +181,5 @@ public class CartaDiCreditoManager {
 		}
 		
 		return true;
-		
 	}
-
 }

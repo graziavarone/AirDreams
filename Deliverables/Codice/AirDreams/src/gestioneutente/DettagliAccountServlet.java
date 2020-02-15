@@ -10,15 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import gestioneordine.BagaglioMano;
-import gestioneordine.BagaglioStiva;
 import gestioneordine.Biglietto;
 import gestioneordine.BigliettoManager;
 import gestioneordine.Ordine;
 import gestioneordine.OrdineManager;
 
 /**
- * Servlet implementation class DettagliAccountServlet
+ * La servlet gestisce tutte le operazioni per la visualizzazione dei dettagli
+ * di un dato utente correntemente loggato al sistema
  */
 @WebServlet(name="/DettagliAccountServlet",
 urlPatterns= {"/cliente/DettagliAccountServlet"})
@@ -35,37 +34,35 @@ public class DettagliAccountServlet extends HttpServlet {
 		String redirect=null;
 		
 		CartaDiCreditoManager cm=new CartaDiCreditoManager();
-		  OrdineManager ordineManager= new OrdineManager();
-		  BigliettoManager bigliettoManager=new BigliettoManager();
+		OrdineManager ordineManager= new OrdineManager();
+		BigliettoManager bigliettoManager=new BigliettoManager();
 		 
 		try {
 			ArrayList<CartaDiCredito> carteUtente=cm.findAll(account.getEmail());
 			ArrayList<Ordine> ordini=	ordineManager.cercaOrdiniUtente(account.getEmail());
 			
 			for(Ordine ordine: ordini) {
-			ArrayList<Biglietto> bigliettiOrdine=bigliettoManager.trovaBigliettiOrdine(ordine.getCodOrdine());
+				ArrayList<Biglietto> bigliettiOrdine=bigliettoManager.trovaBigliettiOrdine(ordine.getCodOrdine());
 			
-			
-			request.setAttribute("bigliettiOrdine"+ordine.getCodOrdine(), bigliettiOrdine);
-			System.out.println("Nuemro biglietti "+bigliettiOrdine.size());
+				request.setAttribute("bigliettiOrdine"+ordine.getCodOrdine(), bigliettiOrdine);
+				System.out.println("Nuemro biglietti "+bigliettiOrdine.size());
 			}
+			
 			request.setAttribute("carte", carteUtente);
 			request.setAttribute("ordini", ordini);
 			
 			System.out.println("Nuemro ordini "+ordini.size());
-			 redirect="/cliente/profilo.jsp";
+			redirect="/cliente/profilo.jsp";
 			
-			 System.out.println("biglietti è null....."+(request.getSession().getAttribute("biglietti")==null));
+			System.out.println("biglietti e' null....."+(request.getSession().getAttribute("biglietti")==null));
 			if (request.getSession().getAttribute("biglietti")!=null) {
 				ArrayList<Biglietto> biglietti=(ArrayList<Biglietto>)request.getSession().getAttribute("biglietti");
 	
-				
 				request.getSession().setAttribute("biglietti",biglietti);
 				
-				 redirect="/cliente/pagamento.jsp";
-			}
-			else {
-			 redirect="/cliente/profilo.jsp";
+				redirect="/cliente/pagamento.jsp";
+			} else {
+				redirect="/cliente/profilo.jsp";
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -83,5 +80,4 @@ public class DettagliAccountServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

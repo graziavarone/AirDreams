@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ModificaInfoPersonaliServlet
+ * La servlet gestisce le operazioni per la modifica delle informazioni personali
+ * di un utente correntemente loggato
  */
 @WebServlet("/cliente/ModificaInfoPersonaliServlet")
 public class ModificaInfoPersonaliServlet extends HttpServlet {
@@ -23,6 +24,7 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 	private String expCognome="^[A-Za-z]{1,}$";
 	private String expEmail="^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$";
 	private String expPassword="^(?=.{6,}$)(?=.*[A-Z])(?=.*[0-9])([\\.-]?\\w+)*.*$";
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -33,7 +35,6 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 		System.out.println("Ho letto questo account dalla sessione: " + oldAccount);
 		String message="";
 		String redirect="";
-		
 		
 		//prelevo i dati del form
 		String nome=request.getParameter("nome");
@@ -65,7 +66,6 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 				try {
 					Account a=manager.findAccountByEmail(newAccount.getEmail());
 					if (a!=null) { 
-						
 						//e' stato trovato un account con la email appena inserita
 						message="L'email inserita è gia' presente, inserirne una nuova";
 						response.getWriter().write("Failed");
@@ -89,6 +89,7 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 			response.getWriter().write("Failed");
 			redirect="/cliente/DettagliAccountServlet";
 		}
+		
 		request.setAttribute("message",message);
 		request.setAttribute("messageValidation", messageValidation);
 		request.getServletContext().getRequestDispatcher(redirect).forward(request, response);
@@ -116,6 +117,7 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 			valido=false;
 			System.out.print(nome);
 		}
+		
 		if (!Pattern.matches(expCognome, cognome)) {
 			logger.info("Cognome non corrisponde");
 			valido=false;
@@ -129,6 +131,7 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 			messageValidation+="La password non rispetta il formato previsto (deve contenere almeno una cifra)";
 			System.out.print(password);
 		}
+		
 		if (!Pattern.matches(expEmail, email)) {
 			valido=false;
 			messageValidation+="L'email non rispetta il formato previsto (esempio: mariorossi@gmail.com)";

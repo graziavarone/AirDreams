@@ -12,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.util.regex.*;
 
-
 /**
- * Servlet implementation class RegistrazioneServlet
+ * La servlet gestisce le operazioni per la registrazione di un visitatore al sistema
  */
 @WebServlet("/RegistrazioneServlet")
 public class RegistrazioneServlet extends HttpServlet {
@@ -53,45 +52,42 @@ public class RegistrazioneServlet extends HttpServlet {
 					System.out.println(message);
 					response.getWriter().write("Email gia' esistente");
 					redirect="registrazione.jsp";
-				} 
-			
-			else if(!valida(nome, cognome, email, password, cPassword)) {
+			} else if(!valida(nome, cognome, email, password, cPassword)) {
 				if(!Pattern.matches(expNome, nome)) {
-					 message+="Il nome deve contenere solo lettere dell'alfabeto<br/>";
-					 System.out.println(message);
-					 response.getWriter().write("Formato errato dati");
-				
-						
+					message+="Il nome deve contenere solo lettere dell'alfabeto<br/>";
+					System.out.println(message);
+					response.getWriter().write("Formato errato dati");
 					redirect="registrazione.jsp";
 				}  
+				
 				if(!Pattern.matches(expCognome, cognome)) {
 					message+="Il cognome deve contenere solo lettere dell'alfabeto<br/>";
 					System.out.println(message);
 					response.getWriter().write("Formato errato dati");
 					redirect="registrazione.jsp";
-				}  
+				} 
+				
 				if(!Pattern.matches(expEmail, email)) {
 					message+="Formato email non valido, formato email: mariorossi@gmail.com<br/>";
 					System.out.println(message);
 					response.getWriter().write("Formato errato dati");
 					redirect="registrazione.jsp";
-				}  
+				} 
+				
 				if(!Pattern.matches(expPassword, password)) {
 					message+="Formato password non valido, deve contenere almeno 6 caratteri, almeno una lettera maiuscola e almeno una cifra<br/>";
 					System.out.println(message);
 					response.getWriter().write("Formato errato dati");
 					redirect="registrazione.jsp";
-				}  
+				} 
+				
 				if(!password.equals(cPassword)) {
 					message+="La password non corrisponde a quella inserita<br/>";
 					System.out.println(message);
 					response.getWriter().write("Password non corrisponde");
 					redirect="registrazione.jsp";
 				}
-				
-			}
-			
-			else{
+			} else {
 				message="Registrazione effettuata con successo";
 				System.out.println(message);
 				account=new Account(nome,cognome,email,password);
@@ -99,18 +95,13 @@ public class RegistrazioneServlet extends HttpServlet {
 				response.getWriter().write("Success");
 				redirect="login.jsp";
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		
-
-		
 		request.setAttribute("message", message);
 		request.getRequestDispatcher(redirect).forward(request, response);
 	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -119,18 +110,18 @@ public class RegistrazioneServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
-
-	
 	private boolean valida(String nome, String cognome, String email, String password, String cPassword) {
 		boolean valido=true;
 		logger.info("Ho ricevuto "+nome);
 		logger.info("Ho ricevuto "+password);
 		logger.info("Ho ricevuto "+cPassword);
+		
 		if (!Pattern.matches(expNome, nome)) {
 			logger.info("Nome non corrisponde");
 			valido=false;
 			System.out.print(nome);
 		}
+		
 		if (!Pattern.matches(expCognome, cognome)) {
 			logger.info("Cognome non corrisponde");
 			valido=false;
@@ -142,6 +133,7 @@ public class RegistrazioneServlet extends HttpServlet {
 			valido=false;
 			System.out.print(password);
 		}
+		
 		if (!Pattern.matches(expEmail, email)) {
 			valido=false;
 			System.out.print(email);
@@ -154,10 +146,5 @@ public class RegistrazioneServlet extends HttpServlet {
 		}
 		
 		return valido;
-	
 	}
-	
-
-
-
 }

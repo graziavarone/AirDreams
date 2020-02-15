@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
@@ -19,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AggiungiCartaServlet
+ * La servlet gestisce le operazioni di inserimento di una carta di credito
+ * all'account dell'utente correntemente loggato, che potrà utilizzarla per l'acquisto di biglietti
  */
 @WebServlet(name="/AggiungiCartaServlet", urlPatterns= {"/cliente/AggiungiCartaServlet"})
 public class AggiungiCartaServlet extends HttpServlet {
@@ -69,23 +66,24 @@ public class AggiungiCartaServlet extends HttpServlet {
 					 System.out.println(message);
 					 response.getWriter().write("Formato errato dati");
 					 redirect="/cliente/aggiungiCarta.jsp";
-				}  
+				} 
+				
 				if(!Pattern.matches(expTitolare, titolare)) {
 					message+="Il titolare deve contenere solo lettere dell'alfabeto<br/>";
 					System.out.println(message);
 					response.getWriter().write("Formato errato dati");
 					redirect="/cliente/aggiungiCarta.jsp";
 				} 
+				
 				if(!Pattern.matches(expDataScadenza, dataScadenza)) {
 					message+="Formato dataScadenza non valido<br/>";
-				
-					
 					//vedere se scaduta
 					System.out.println(message);
 					response.getWriter().write("Formato errato dati");
 					redirect="/cliente/aggiungiCarta.jsp";
 					
 				}  
+				
 				if(!Pattern.matches(expCvc, cvc)) {
 					message+="Formato cvc non valido<br/>";
 			
@@ -93,11 +91,8 @@ public class AggiungiCartaServlet extends HttpServlet {
 					response.getWriter().write("Formato errato dati");
 					redirect="/cliente/aggiungiCarta.jsp";
 				}  
-				
-			}else{
-				
+			} else {
 				System.out.println(message);
-				
 				
 				int mese = Integer.parseInt(dataScadenza.substring(0,2));
 				System.out.println(mese);
@@ -113,28 +108,25 @@ public class AggiungiCartaServlet extends HttpServlet {
 					response.getWriter().write("Carta scaduta");
 					message+="Data Scadenza non valida<br/>";
 					redirect="/cliente/aggiungiCarta.jsp";
-					} else if(anno==annoCorrente){
-						if(mese<=meseCorrente) 
-							response.getWriter().write("Carta scaduta");
-							redirect="/cliente/aggiungiCarta.jsp";
-							message+="Carta di credito scaduta, gentilmente inserirne un'altra!<br/>";
-						}
-					else {
-				cardCred.setnCarta(nCarta);
-				cardCred.setTitolare(titolare);
-				cardCred.setDataScadenza(dataScadenza);
-				cardCred.setCvc(Integer.parseInt(cvc));
-				cardCred.setAccount(a);
+				} else if(anno==annoCorrente){
+					if(mese<=meseCorrente) 
+						response.getWriter().write("Carta scaduta");
+						redirect="/cliente/aggiungiCarta.jsp";
+						message+="Carta di credito scaduta, gentilmente inserirne un'altra!<br/>";
+				} else {
+					cardCred.setnCarta(nCarta);
+					cardCred.setTitolare(titolare);
+					cardCred.setDataScadenza(dataScadenza);
+					cardCred.setCvc(Integer.parseInt(cvc));
+					cardCred.setAccount(a);
 	
-				cm.creaCartaDiCredito(cardCred);
-				message="Inserimento carta effettuato con successo";
-				response.getWriter().write("Success");
-				
-				
-				redirect="/cliente/DettagliAccountServlet";
+					cm.creaCartaDiCredito(cardCred);
+					message="Inserimento carta effettuato con successo";
+					response.getWriter().write("Success");
+			
+					redirect="/cliente/DettagliAccountServlet";
+				}
 			}
-		
-		}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
@@ -143,7 +135,6 @@ public class AggiungiCartaServlet extends HttpServlet {
 		}
 
 		request.setAttribute("message", message);
-
 		request.getServletContext().getRequestDispatcher(redirect).forward(request, response);
 	}
 	
@@ -153,11 +144,13 @@ public class AggiungiCartaServlet extends HttpServlet {
 		logger.info("Ho ricevuto "+titolare);
 		logger.info("Ho ricevuto "+dataScadenza);
 		logger.info("Ho ricevuto "+cvc);
+		
 		if (!Pattern.matches(expNCarta, nCarta)) {
 			logger.info("nCarta non corrisponde");
 			valido=false;
 			System.out.print(nCarta);
 		}
+		
 		if (!Pattern.matches(expTitolare, titolare)) {
 			logger.info("Titolare non corrisponde");
 			valido=false;
@@ -169,6 +162,7 @@ public class AggiungiCartaServlet extends HttpServlet {
 			valido=false;
 			System.out.print(dataScadenza);
 		}
+		
 		if (!Pattern.matches(expCvc, cvc)) {
 			logger.info("cvc non corrisponde");
 			valido=false;
@@ -176,7 +170,5 @@ public class AggiungiCartaServlet extends HttpServlet {
 		}
 		
 		return valido;
-	
 	}
-
 }
