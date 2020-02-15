@@ -21,9 +21,9 @@ public class Biglietto {
 	
 	/**
 	 * metodo costruttore della classe Biglietto
-	 * @param nome nome del passeggero al quale è assegnato il biglietto
-	 * @param cognome cognome del passeggero al quale è assegnato il biglietto
-	 * @param sesso sesso del passeggero al quale è assegnato il biglietto
+	 * @param nome nome del passeggero al quale ï¿½ assegnato il biglietto
+	 * @param cognome cognome del passeggero al quale ï¿½ assegnato il biglietto
+	 * @param sesso sesso del passeggero al quale ï¿½ assegnato il biglietto
 	 * @param prezzoBiglietto prezzo del biglietto
 	 * @param volo informazioni del volo relativo al biglietto
 	 * @return
@@ -38,6 +38,9 @@ public class Biglietto {
 		bagagliStiva=new HashSet<BagaglioStiva>();
 	}
 	
+	/**
+	 * metodo costruttore della classe Biglietto privo di argomenti
+	 */
 	public Biglietto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -107,48 +110,48 @@ public class Biglietto {
 	}
 
 	/**
-	 * metodo getter di restituzione del nome del passeggero al quale è assegnato il biglietto
-	 * @return String nome del passeggero al quale è assegnato il biglietto
+	 * metodo getter di restituzione del nome del passeggero al quale ï¿½ assegnato il biglietto
+	 * @return String nome del passeggero al quale ï¿½ assegnato il biglietto
 	 */
 	public String getNome() {
 		return nome;
 	}
 
 	/**
-	 * metodo setter di modifica del nome del passeggero al quale è assegnato il biglietto
-	 * @param nome nuovo nome del passeggero al quale è assegnato il biglietto
+	 * metodo setter di modifica del nome del passeggero al quale ï¿½ assegnato il biglietto
+	 * @param nome nuovo nome del passeggero al quale ï¿½ assegnato il biglietto
 	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
 	/**
-	 * metodo getter di restituzione del cognome del passeggero al quale è assegnato il biglietto
-	 * @return String cognome del passeggero al quale è assegnato il biglietto
+	 * metodo getter di restituzione del cognome del passeggero al quale ï¿½ assegnato il biglietto
+	 * @return String cognome del passeggero al quale ï¿½ assegnato il biglietto
 	 */
 	public String getCognome() {
 		return cognome;
 	}
 	
 	/**
-	 * metodo setter di modifica del cognome del passeggero al quale è assegnato il biglietto
-	 * @param cognome nuovo cognome del passeggero al quale è assegnato il biglietto
+	 * metodo setter di modifica del cognome del passeggero al quale ï¿½ assegnato il biglietto
+	 * @param cognome nuovo cognome del passeggero al quale ï¿½ assegnato il biglietto
 	 */
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
 	
 	/**
-	 * metodo getter di restituzione del sesso del passeggero al quale è assegnato il biglietto
-	 * @return Sesso sesso del passeggero al quale è assegnato il biglietto
+	 * metodo getter di restituzione del sesso del passeggero al quale ï¿½ assegnato il biglietto
+	 * @return Sesso sesso del passeggero al quale ï¿½ assegnato il biglietto
 	 */
 	public Sesso getSesso() {
 		return sesso;
 	}
 	
 	/**
-	 * metodo setter di modifica del sesso del passeggero al quale è assegnato il biglietto
-	 * @param sesso nuovo sesso del passeggero al quale è assegnato il biglietto
+	 * metodo setter di modifica del sesso del passeggero al quale ï¿½ assegnato il biglietto
+	 * @param sesso nuovo sesso del passeggero al quale ï¿½ assegnato il biglietto
 	 */
 	public void setSesso(Sesso sesso) {
 		this.sesso = sesso;

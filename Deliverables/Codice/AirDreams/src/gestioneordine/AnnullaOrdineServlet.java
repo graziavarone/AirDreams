@@ -2,7 +2,6 @@ package gestioneordine;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -13,9 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AnnullaOrdineServlet
+ * La servlet gestisce tutte le operazioni per la cancellazione di un ordine
+ * richiesto da un utente correntemente loggato al sistema
  */
-
 @WebServlet(name="/AnnullaOrdineServlet", urlPatterns= {"/cliente/AnnullaOrdineServlet"})
 public class AnnullaOrdineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,10 +41,7 @@ public class AnnullaOrdineServlet extends HttpServlet {
 			
 			LocalDateTime tempoCheManca = LocalDateTime.from(oggi);
 			
-		
-			
-			LocalDateTime dataPartenza=LocalDateTime.of(bigliettoManager.trovaBigliettiOrdine(Integer.parseInt(idOrdine)).get(0).getVolo().getDataPartenza(), 
-					bigliettoManager.trovaBigliettiOrdine(Integer.parseInt(idOrdine)).get(0).getVolo().getOrarioPartenza());
+			LocalDateTime dataPartenza=LocalDateTime.of(bigliettoManager.trovaBigliettiOrdine(Integer.parseInt(idOrdine)).get(0).getVolo().getDataPartenza(), bigliettoManager.trovaBigliettiOrdine(Integer.parseInt(idOrdine)).get(0).getVolo().getOrarioPartenza());
 				
 			long giorniCheMancano = tempoCheManca.until(dataPartenza , ChronoUnit.DAYS);
 			System.out.println("Mancano "+giorniCheMancano+" giorni");
@@ -55,9 +51,8 @@ public class AnnullaOrdineServlet extends HttpServlet {
 				
 				request.setAttribute("messageOrdine", "Ordine annullato con successo");
 			} else {
-				request.setAttribute("messageOrdine", "Non è possibile annullare l'ordine perchè mancano meno di 7 giorni alla partenza");
+				request.setAttribute("messageOrdine", "Non e' possibile annullare l'ordine perchï¿½ mancano meno di 7 giorni alla partenza");
 			}
-
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,5 +71,4 @@ public class AnnullaOrdineServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

@@ -7,7 +7,7 @@ import gestioneutente.Account;
 import gestioneutente.CartaDiCredito;
 
 /**
- * La classe rappresenta l'ordine concluso da un cliente
+ * La classe rappresenta un ordine concluso da un cliente
  */
 public class Ordine {
 	
@@ -29,6 +29,9 @@ public class Ordine {
 		this.cartaDiCredito = cartaDiCredito;
 	}
 
+	/**
+	 * metodo costruttore della classe Ordine privo di argomenti
+	 */
 	public Ordine() {
 		// TODO Auto-generated constructor stub
 	}

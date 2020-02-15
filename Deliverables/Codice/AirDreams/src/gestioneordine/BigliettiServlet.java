@@ -16,17 +16,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import gestionecarrello.Carrello;
-import gestionecarrello.CarrelloManager;
 import gestionecompagniaaerea.PoliticaBagaglioManager;
 import gestionecompagniaaerea.PoliticaBagaglioMano;
 import gestionecompagniaaerea.PoliticaBagaglioStiva;
-import gestioneutente.Account;
 import gestionevolo.Volo;
 
 /**
- * Servlet implementation class NominativiBigliettiServlet
+ * La servlet gestisce tutte le operazioni per la creazione di biglietti per i voli
+ * presenti nel carrello di un utente correntemente loggato al sistem
  */
-
 @WebServlet(name="/BigliettiServlet", urlPatterns= {"/cliente/BigliettiServlet"})
 public class BigliettiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -54,14 +52,11 @@ public class BigliettiServlet extends HttpServlet {
 		PoliticaBagaglioManager politicaBagaglioManager=new PoliticaBagaglioManager();
 		String redirect=null;
 
-		
 		for(Entry<Volo, Integer> entry : voliCarrello.entrySet()) 
 	   		 seats=entry.getValue();
+		System.out.println("seats e' "+seats);
 		
-		System.out.println("seats è "+seats);
 		for(int i=0;i<seats;i++) {
-			
-
 			String nomePasseggero=request.getParameter("nomePasseggero"+(i+1));
 			String cognomePasseggero=request.getParameter("cognomePasseggero"+(i+1));
 			String sesso=request.getParameter("sesso"+(i+1));
@@ -69,69 +64,55 @@ public class BigliettiServlet extends HttpServlet {
 			int numeroBagagli=Integer.parseInt(nBagagli);
 			
 			if(valida(nomePasseggero, cognomePasseggero)) {
-			for(Entry<Volo, Integer> entry : voliCarrello.entrySet()) {
-				
-				try {
-				Biglietto biglietto=new Biglietto(nomePasseggero, cognomePasseggero, Sesso.valueOf(sesso), entry.getKey().getPrezzo(),
+				for(Entry<Volo, Integer> entry : voliCarrello.entrySet()) {
+					try {
+						Biglietto biglietto=new Biglietto(nomePasseggero, cognomePasseggero, Sesso.valueOf(sesso), entry.getKey().getPrezzo(),
 						entry.getKey());
-				//biglietti.add(biglietto);
 				
-				PoliticaBagaglioMano politicaBagaglioMano=politicaBagaglioManager.trovaPoliticaCompagniaMano(entry.getKey().getCa().getNome());
-				BagaglioMano bagaglioMano=new BagaglioMano(politicaBagaglioMano.getPeso(), politicaBagaglioMano.getDimensioni(), biglietto 
-						);
-				bagagliMano.add(bagaglioMano);
-				biglietto.setBagaglioMano(bagaglioMano);
+						PoliticaBagaglioMano politicaBagaglioMano=politicaBagaglioManager.trovaPoliticaCompagniaMano(entry.getKey().getCa().getNome());
+						BagaglioMano bagaglioMano=new BagaglioMano(politicaBagaglioMano.getPeso(), politicaBagaglioMano.getDimensioni(), biglietto);
+						bagagliMano.add(bagaglioMano);
+						biglietto.setBagaglioMano(bagaglioMano);
 	
-				
-				if(numeroBagagli!=0) {
-					
-					
-					PoliticaBagaglioStiva politicaBagaglioStiva=politicaBagaglioManager.trovaPoliticaCompagniaStiva(entry.getKey().getCa().getNome());
-					BagaglioStiva bagaglioStiva=new BagaglioStiva(politicaBagaglioStiva.getPeso(), politicaBagaglioStiva.getDimensioni(), biglietto, 
+						if(numeroBagagli!=0) {
+							PoliticaBagaglioStiva politicaBagaglioStiva=politicaBagaglioManager.trovaPoliticaCompagniaStiva(entry.getKey().getCa().getNome());
+							BagaglioStiva bagaglioStiva=new BagaglioStiva(politicaBagaglioStiva.getPeso(), politicaBagaglioStiva.getDimensioni(), biglietto, 
 							politicaBagaglioStiva.getPrezzo(),numeroBagagli);
 					
-					HashSet<BagaglioStiva> bagagli=new HashSet<BagaglioStiva>();
+							HashSet<BagaglioStiva> bagagli=new HashSet<BagaglioStiva>();
 					
-					for(int j=0;j<numeroBagagli;j++) {
-						bagagli.add(bagaglioStiva);
-					}
+							for(int j=0;j<numeroBagagli;j++) {
+								bagagli.add(bagaglioStiva);
+							}
 						
-					biglietto.setBagagliStiva(bagagli);
+							biglietto.setBagagliStiva(bagagli);
 					
-					if(entry.getKey().isCompreso() && numeroBagagli==1) {
-						biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo());
-					} else if(entry.getKey().isCompreso() && numeroBagagli>1) {
-						biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo()+politicaBagaglioStiva.getPrezzo());
-					} else {
-						System.out.println("Non ho il bagaglio compreso pago anche l'aria");
-						biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo()+politicaBagaglioStiva.getPrezzo());
+							if(entry.getKey().isCompreso() && numeroBagagli==1) {
+								biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo());
+							} else if(entry.getKey().isCompreso() && numeroBagagli>1) {
+								biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo()+politicaBagaglioStiva.getPrezzo());
+							} else {
+								System.out.println("Non ho il bagaglio compreso pago anche l'aria");
+								biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo()+politicaBagaglioStiva.getPrezzo());
+							}
+						}
+				
+						biglietti.add(biglietto);
+				
+					} catch (SQLException e) {
+						e.printStackTrace();
 					}
 				}
-				
-			
-				biglietti.add(biglietto);
-				
-				
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			response.getWriter().write("Success");
-			request.getSession().setAttribute("biglietti",biglietti);
-			redirect="/cliente/DettagliAccountServlet";
+				response.getWriter().write("Success");
+				request.getSession().setAttribute("biglietti",biglietti);
+				redirect="/cliente/DettagliAccountServlet";
 			} else {
 				response.getWriter().write("Failed");
 				request.setAttribute("message", "Formato errato dati");
-				redirect="/cliente/nominativiBiglietti.jsp?seats="+seats;
-				
-				
+				redirect="/cliente/nominativiBiglietti.jsp?seats="+seats;	
 			}
-			
 		}
-		
 	
-	
-		
 		for(Biglietto biglietto: biglietti) {
 			System.out.println("############ Mano per il biglietto di "+biglietto.getNome()+"..."+biglietto.getBagaglioMano());
 		}
@@ -139,8 +120,6 @@ public class BigliettiServlet extends HttpServlet {
 		for(Biglietto biglietto: biglietti) {
 			System.out.println("############ Stiva per il biglietto di "+biglietto.getNome()+"..."+biglietto.getBagagliStiva());
 		}
-
-
 		
 		request.getServletContext().getRequestDispatcher(redirect).forward(request, response);
 	}
@@ -161,16 +140,13 @@ public class BigliettiServlet extends HttpServlet {
 			valido=false;
 			System.out.print(nome);
 		}
+		
 		if (!Pattern.matches(expCognome, cognome)) {
 			logger.info("Cognome non corrisponde");
 			valido=false;
 			System.out.print(cognome);
 		}
 	
-		
-		
 		return valido;
-	
 	}
-
 }

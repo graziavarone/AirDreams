@@ -23,9 +23,9 @@ import gestionevolo.Volo;
 import gestionevolo.VoloManager;
 
 /**
- * Servlet implementation class PagamentoServlet
+ * La servlet gestisce tutte le operazioni per il pagamento di biglietti
+ * da parte di un utente correntemente loggato al sistema
  */
-
 @WebServlet(name="/PagamentoServlet", urlPatterns= {"/cliente/PagamentoServlet"})
 public class PagamentoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -70,7 +70,7 @@ public class PagamentoServlet extends HttpServlet {
 			request.setAttribute("carte", carte);
 			
 			if(numeroCarta!=null) {
-			carta=cartaDiCreditoManager.cercaCarta(numeroCarta, account.getEmail());
+				carta=cartaDiCreditoManager.cercaCarta(numeroCarta, account.getEmail());
 			} else {
 				String nCarta=request.getParameter("nCarta");
 				String titolare=request.getParameter("titolare");
@@ -83,9 +83,9 @@ public class PagamentoServlet extends HttpServlet {
 						 System.out.println(message);
 						 response.getWriter().write("Formato errato dati");
 
-							redirect="/cliente/pagamento.jsp";
-						 
-					}  
+						 redirect="/cliente/pagamento.jsp";
+					} 
+					
 					if(!Pattern.matches(expTitolare, titolare)) {
 						message+="Il titolare deve contenere solo lettere dell'alfabeto<br/>";
 						System.out.println(message);
@@ -93,29 +93,28 @@ public class PagamentoServlet extends HttpServlet {
 
 						redirect="/cliente/pagamento.jsp";
 					} 
+					
 					if(!Pattern.matches(expDataScadenza, dataScadenza)) {
 						message+="Formato dataScadenza non valido<br/>";
 					
-						
 						//vedere se scaduta
 						System.out.println(message);
 						response.getWriter().write("Formato errato dati");
 
 						redirect="/cliente/pagamento.jsp";
 						
-					}  
+					} 
+					
 					if(!Pattern.matches(expCvc, cvc)) {
 						message+="Formato cvc non valido<br/>";
 						System.out.println(message);
 						response.getWriter().write("Formato errato dati");
 
 						redirect="/cliente/pagamento.jsp";
-					}  
-					
+					}  	
 				} else{
 				
 					System.out.println(message);
-					
 					
 					int mese = Integer.parseInt(dataScadenza.substring(0,2));
 					System.out.println(mese);
@@ -133,19 +132,18 @@ public class PagamentoServlet extends HttpServlet {
 						cartaScaduta=true;
 						redirect="/cliente/pagamento.jsp";
 						
-						} else if(anno==annoCorrente){
-							System.out.println("mese corrente"+meseCorrente);
-							System.out.println("mese carta"+mese);
-							System.out.println("scaduta"+(mese<=meseCorrente));
-							if(mese<=meseCorrente) {
-								
-								response.getWriter().write("Carta scaduta");
+					} else if(anno==annoCorrente){
+						System.out.println("mese corrente"+meseCorrente);
+						System.out.println("mese carta"+mese);
+						System.out.println("scaduta"+(mese<=meseCorrente));
+						if(mese<=meseCorrente) {
+							response.getWriter().write("Carta scaduta");
 						
-								message+="Carta di credito scaduta, gentilmente inserirne un'altra!<br/>";
-								cartaScaduta=true;
-								redirect="/cliente/pagamento.jsp";
-							}
+							message+="Carta di credito scaduta, gentilmente inserirne un'altra!<br/>";
+							cartaScaduta=true;
+							redirect="/cliente/pagamento.jsp";
 						}
+					}
 					
 					if(!cartaScaduta) {
 						carta=new CartaDiCredito();
@@ -156,11 +154,10 @@ public class PagamentoServlet extends HttpServlet {
 						carta.setAccount(account);
 			
 						cartaDiCreditoManager.creaCartaDiCredito(carta);
-			
-				}
+					}
 				
 					if(carta!=null) {
-						System.out.println("CARTA NON è NULL MA è"+carta);
+						System.out.println("CARTA NON E' NULL MA E'"+carta);
 						Ordine ordine=new Ordine(LocalDate.now(), account, carta);
 						System.out.println(LocalDate.now());
 						ordine=ordineManager.aggiungiOrdine(ordine);
@@ -170,49 +167,35 @@ public class PagamentoServlet extends HttpServlet {
 							biglietto.setOrdine(ordine.getCodOrdine());
 							biglietto=bigliettoManager.aggiungiBiglietto(biglietto);
 							
-							
-								System.out.println("Bagaglio a mano di biglietto "+biglietto.getCodBiglietto()+" per il volo "
+							System.out.println("Bagaglio a mano di biglietto "+biglietto.getCodBiglietto()+" per il volo "
 										+ ""+biglietto.getVolo().getId());
 						
-								bagaglioManager.aggiungiBagaglioMano(biglietto.getBagaglioMano());
+							bagaglioManager.aggiungiBagaglioMano(biglietto.getBagaglioMano());
 							
-							
-								Iterator<BagaglioStiva> iterator=biglietto.getBagagliStiva().iterator();
+							Iterator<BagaglioStiva> iterator=biglietto.getBagagliStiva().iterator();
 								
-								while(iterator.hasNext()) {
-									BagaglioStiva bagaglioStiva=iterator.next();
+							while(iterator.hasNext()) {
+								BagaglioStiva bagaglioStiva=iterator.next();
 									
-									bagaglioManager.aggiungiBagaglioStiva(bagaglioStiva);
-								}
+								bagaglioManager.aggiungiBagaglioStiva(bagaglioStiva);
+							}
 								
-								Volo voloBiglietto=biglietto.getVolo();
-								voloBiglietto.setSeats(voloBiglietto.getSeats()-1);
-								VoloManager voloManager = new VoloManager();
-								voloManager.modificaVolo(voloBiglietto);
+							Volo voloBiglietto=biglietto.getVolo();
+							voloBiglietto.setSeats(voloBiglietto.getSeats()-1);
+							VoloManager voloManager = new VoloManager();
+							voloManager.modificaVolo(voloBiglietto);
 								
-								CarrelloManager carrelloManager=new CarrelloManager();
-								carrelloManager.svuotaCarrello(account.getEmail());
-							
-
-								
-							
+							CarrelloManager carrelloManager=new CarrelloManager();
+							carrelloManager.svuotaCarrello(account.getEmail());
 						}
 			
 						response.getWriter().write("Success");
 						request.getSession().removeAttribute("biglietti");
 						System.out.println("REMOVE ATTRIBUTE");
 						redirect="/cliente/acquisto.jsp";
-				} 
-					
-					
-				
-			}
-	
+					} 	
 				}
-			
-			
-			
-			
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -224,12 +207,9 @@ public class PagamentoServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
-
 		request.setAttribute("message", message);
 		System.out.println(redirect);
 		request.getServletContext().getRequestDispatcher(redirect).forward(request, response);
-
 	}
 
 	/**
@@ -240,7 +220,6 @@ public class PagamentoServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	
 	private boolean valida(String nCarta, String titolare, String dataScadenza, String cvc) throws ParseException {
 		boolean valido=true;
 
@@ -249,6 +228,7 @@ public class PagamentoServlet extends HttpServlet {
 			valido=false;
 			System.out.print(nCarta);
 		}
+		
 		if (!Pattern.matches(expTitolare, titolare)) {
 			logger.info("Titolare non corrisponde");
 			valido=false;
@@ -260,6 +240,7 @@ public class PagamentoServlet extends HttpServlet {
 			valido=false;
 			System.out.print(dataScadenza);
 		}
+		
 		if (!Pattern.matches(expCvc, cvc)) {
 			logger.info("cvc non corrisponde");
 			valido=false;
@@ -267,8 +248,5 @@ public class PagamentoServlet extends HttpServlet {
 		}
 		
 		return valido;
-	
 	}
-
-
 }
