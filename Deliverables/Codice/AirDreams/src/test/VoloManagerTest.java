@@ -34,7 +34,6 @@ public class VoloManagerTest {
 		assertTrue(voli.size()>0);
 	}
 	
-	
 	@Test 
 	public void cercaUnoScalo() {
 		ArrayList<Volo[]> voli=voloManager.cercaUnoScalo("NAP", "TXL", LocalDate.of(2020, 2, 10), 1, 0, 0);
@@ -62,12 +61,10 @@ public class VoloManagerTest {
 	
 	@Test 
 	public void cercaVoli() throws SQLException {
-		
 		ArrayList<Volo> voli=voloManager.cercaVoli("Ryanair");
 		
 		assertTrue(voli.size()>0);
 	}
-	
 	
 	@Test 
 	public void cercaVoliRicerca() throws SQLException {
@@ -80,7 +77,6 @@ public class VoloManagerTest {
 		assertTrue(voli.size()>0);
 	}
 	
-	
 	@Test 
 	public void findById() throws SQLException {
 		
@@ -88,7 +84,6 @@ public class VoloManagerTest {
 		
 		assertNotNull(volo);
 	}
-	
 	
 	@Test 
 	public void modificaVolo() throws SQLException {
@@ -98,9 +93,7 @@ public class VoloManagerTest {
 		
 		assertTrue(result);
 	}
-	
-	
-	
+
 	@Test 
 	public void eliminaVolo() throws SQLException {
 		CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
@@ -113,7 +106,6 @@ public class VoloManagerTest {
 		
 		assertTrue(result);
 	}
-	
 	
 	@After
 	public void tearDown() throws Exception{

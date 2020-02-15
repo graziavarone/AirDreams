@@ -1,20 +1,15 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -24,10 +19,7 @@ import org.springframework.mock.web.MockRequestDispatcher;
 import org.springframework.mock.web.MockServletContext;
 
 import db.DriverManagerConnectionPool;
-import gestioneutente.Account;
 import gestioneutente.ModificaAccountServlet;
-import gestioneutente.RegistrazioneServlet;
-import gestioneutente.UtenteManager;
 
 public class ModificaAccountTest {
 
@@ -99,7 +91,7 @@ public class ModificaAccountTest {
 		Mockito.verify(MyWriter).write("Failed");
 	}
 	
-	//TC_6.1_4 email già presente
+	//TC_6.1_4 email gia' presente
 	@Test
 	public void testCase_4() throws IOException, ServletException {		
 		when(request.getParameter("nome")).thenReturn("Grazia");
@@ -114,7 +106,7 @@ public class ModificaAccountTest {
 		Mockito.verify(MyWriter).write("Failed");
 	}
 	
-	//TC_6.1_4 email già presente
+	//TC_6.1_4 email gia' presente
 	@Test
 	public void testCase_5() throws IOException, ServletException {		
 		when(request.getParameter("nome")).thenReturn("Grazia");
@@ -129,11 +121,8 @@ public class ModificaAccountTest {
 		Mockito.verify(MyWriter).write("Success");
 	}
 	
-	
 	@After
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);
 	}
-
-	
 }

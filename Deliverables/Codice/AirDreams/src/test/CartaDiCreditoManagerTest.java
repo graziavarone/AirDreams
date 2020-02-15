@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -12,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import db.DriverManagerConnectionPool;
-import gestioneordine.Ordine;
 import gestioneutente.CartaDiCredito;
 import gestioneutente.CartaDiCreditoManager;
 import gestioneutente.UtenteManager;
@@ -66,11 +64,7 @@ public class CartaDiCreditoManagerTest {
 		assertTrue(result);
 		
 	}
-	
-
-	
-	
-	
+		
 	@After
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);

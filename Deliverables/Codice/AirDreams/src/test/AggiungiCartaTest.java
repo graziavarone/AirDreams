@@ -22,7 +22,6 @@ import org.springframework.mock.web.MockServletContext;
 import db.DriverManagerConnectionPool;
 import gestioneutente.Account;
 import gestioneutente.AggiungiCartaServlet;
-import gestioneutente.RegistrazioneServlet;
 import gestioneutente.UtenteManager;
 
 public class AggiungiCartaTest {

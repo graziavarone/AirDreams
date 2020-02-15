@@ -6,15 +6,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -28,9 +25,6 @@ import db.DriverManagerConnectionPool;
 import gestionecarrello.Carrello;
 import gestionecarrello.CarrelloManager;
 import gestioneordine.BigliettiServlet;
-import gestioneutente.Account;
-import gestioneutente.ModificaInfoPersonaliServlet;
-import gestioneutente.UtenteManager;
 import gestionevolo.Volo;
 import gestionevolo.VoloManager;
 

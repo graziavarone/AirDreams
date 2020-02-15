@@ -1,23 +1,18 @@
 package test;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import db.DriverManagerConnectionPool;
-import gestioneordine.Biglietto;
 import gestioneordine.Ordine;
 import gestioneordine.OrdineManager;
-import gestioneordine.Sesso;
 import gestioneutente.CartaDiCreditoManager;
 import gestioneutente.UtenteManager;
-import gestionevolo.Volo;
 
 public class OrdineManagerTest {
 	private OrdineManager ordineManager=new OrdineManager();
@@ -43,11 +38,8 @@ public class OrdineManagerTest {
 		assertTrue(result);
 	}
 	
-	
-	
 	@After
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);
 	}
-
 }

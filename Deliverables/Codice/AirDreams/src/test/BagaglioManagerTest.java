@@ -10,11 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import db.DriverManagerConnectionPool;
-import gestionecompagniaaerea.CompagniaAerea;
-import gestionecompagniaaerea.CompagniaAereaManager;
-import gestionecompagniaaerea.PoliticaBagaglioManager;
-import gestionecompagniaaerea.PoliticaBagaglioMano;
-import gestionecompagniaaerea.PoliticaBagaglioStiva;
 import gestioneordine.BagaglioManager;
 import gestioneordine.BagaglioMano;
 import gestioneordine.BagaglioStiva;

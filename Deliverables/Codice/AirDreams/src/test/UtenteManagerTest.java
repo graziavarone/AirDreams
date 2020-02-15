@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import db.DriverManagerConnectionPool;
 import gestioneutente.Account;
-import gestioneutente.CartaDiCredito;
 import gestioneutente.UtenteManager;
 
 public class UtenteManagerTest {
@@ -51,7 +50,6 @@ public class UtenteManagerTest {
 		Account account=utenteManager.findAccountByEmail("rosaria@gmail.com");
 		
 		assertNotNull(account);
-		
 	}
 	
 	@Test
@@ -68,10 +66,9 @@ public class UtenteManagerTest {
 	@Test
 	public void visualizzaInfoUtente() throws Exception {
 
-		Account account=utenteManager.visualizzaInfoUtente("rosaria@gmail.com");
+		Account account=utenteManager.findAccountByEmail("rosaria@gmail.com");
 		
 		assertNotNull(account);
-		
 	}
 	
 	@Test
@@ -81,7 +78,6 @@ public class UtenteManagerTest {
 		boolean result=utenteManager.aggiornaProfilo(accountVecchio, accountNuovo);
 		
 		assertTrue(result);
-		
 	}
 	
 	@Test
@@ -90,7 +86,6 @@ public class UtenteManagerTest {
 		ArrayList<Account> account=utenteManager.getAllUsers();
 		
 		assertEquals(3, account.size());
-		
 	}
 	
 	@Test
@@ -99,7 +94,6 @@ public class UtenteManagerTest {
 		ArrayList<Account> account=utenteManager.findAccountByLetter("R", "R");
 		
 		assertEquals(1, account.size());
-		
 	}
 	
 	
@@ -107,9 +101,8 @@ public class UtenteManagerTest {
 	public void modificaAccount() throws Exception {
 		Account accountVecchio=utenteManager.findAccountByEmail("rosaria@gmail.com");
 		Account accountNuovo=new Account("RosRosRos2", "Rossi", "rosaria@gmail.com", "Rosaria1998");
-		boolean result=utenteManager.modificaAccount(accountVecchio.getEmail(), accountNuovo);
+		boolean result=utenteManager.aggiornaProfilo(accountVecchio, accountNuovo);
 		
 		assertTrue(result);
-		
 	}
 }

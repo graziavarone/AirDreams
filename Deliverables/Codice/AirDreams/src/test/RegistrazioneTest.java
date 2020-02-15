@@ -1,18 +1,15 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -21,9 +18,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockRequestDispatcher;
 
 import db.DriverManagerConnectionPool;
-import gestioneutente.Account;
 import gestioneutente.RegistrazioneServlet;
-import gestioneutente.UtenteManager;
 
 public class RegistrazioneTest {
 
@@ -39,7 +34,6 @@ public class RegistrazioneTest {
 	@Mock
 	MockRequestDispatcher dispatcherSuccess;
 
-	
 	private RegistrazioneServlet servlet;
 
 	@Before
@@ -60,8 +54,6 @@ public class RegistrazioneTest {
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		when(request.getParameter("Cpassword")).thenReturn("@Emanuele2009");
 		
-		
-		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -76,8 +68,6 @@ public class RegistrazioneTest {
 		when(request.getParameter("email")).thenReturn("grazia_varone@hotmail.it");
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		when(request.getParameter("Cpassword")).thenReturn("@Emanuele2009");
-		
-		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -94,8 +84,6 @@ public class RegistrazioneTest {
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		when(request.getParameter("Cpassword")).thenReturn("@Emanuele2009");
 		
-		
-		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -103,7 +91,7 @@ public class RegistrazioneTest {
 	}
 
 	
-	//TC_7.2_4 email già presente
+	//TC_7.2_4 email giï¿½ presente
 	@Test
 	public void testCase_4() throws IOException, ServletException{	
 		when(request.getParameter("nome")).thenReturn("Grazia");
@@ -112,12 +100,10 @@ public class RegistrazioneTest {
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		when(request.getParameter("Cpassword")).thenReturn("@Emanuele2009");
 		
-		
-		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
-		Mockito.verify(MyWriter).write("Email già esistente");
+		Mockito.verify(MyWriter).write("Email giï¿½ esistente");
 	}
 	
 	//TC_7.2_5 password non rispetta il formato
@@ -128,8 +114,6 @@ public class RegistrazioneTest {
 		when(request.getParameter("email")).thenReturn("qualcosa@hotmail.it");
 		when(request.getParameter("password")).thenReturn("123");
 		when(request.getParameter("Cpassword")).thenReturn("123");
-		
-		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -145,8 +129,6 @@ public class RegistrazioneTest {
 		when(request.getParameter("email")).thenReturn("qualcosa@hotmail.it");
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		when(request.getParameter("Cpassword")).thenReturn("123");
-		
-		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -173,6 +155,4 @@ public class RegistrazioneTest {
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);
 	}
-
-	
 }
