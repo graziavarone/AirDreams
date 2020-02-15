@@ -14,7 +14,7 @@ public class PoliticaBagaglioStiva {
 	 * @param peso peso massimo previsto per il bagaglio a stiva dalla politica della compagnia aerea
 	 * @param dimensioni dimensioni previste per il bagaglio a stiva dalla politica della compagnia aerea
 	 * @param prezzo prezzo per il singolo bagaglio a stiva previsto dalla politica della compagnia aerea
-	 * @param compagnia compagnia aerea a cui la politica bagaglio a stiva è relata
+	 * @param compagnia compagnia aerea a cui la politica bagaglio a stiva ï¿½ relata
 	 * @return
 	 */
 	public PoliticaBagaglioStiva(int peso, String dimensioni, float prezzo, CompagniaAerea compagnia) {
@@ -81,16 +81,16 @@ public class PoliticaBagaglioStiva {
 	}
 	
 	/**
-	 * metodo getter di restituzione della compagnia aerea a cui la politica bagaglio a stiva è relata
-	 * @return CompagniaAerea compagnia aerea a cui la politica bagaglio a stiva è relata
+	 * metodo getter di restituzione della compagnia aerea a cui la politica bagaglio a stiva e' relata
+	 * @return CompagniaAerea compagnia aerea a cui la politica bagaglio a stiva e' relata
 	 */
 	public CompagniaAerea getCompagnia() {
 		return compagnia;
 	}
 	
 	/**
-	 * metodo setter di modifica della compagnia aerea a cui la politica bagaglio a stiva è relata
-	 * @param compagnia nuova compagnia aerea a cui la politica bagaglio a stiva è relata
+	 * metodo setter di modifica della compagnia aerea a cui la politica bagaglio a stiva ï¿½ relata
+	 * @param compagnia nuova compagnia aerea a cui la politica bagaglio a stiva ï¿½ relata
 	 */
 	public void setCompagnia(CompagniaAerea compagnia) {
 		this.compagnia = compagnia;

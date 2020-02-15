@@ -13,10 +13,9 @@ public class PoliticaBagaglioMano {
 	 * metodo costruttore della classe PoliticaBagaglioMano
 	 * @param peso peso massimo previsto per il bagaglio a mano dalla politica della compagnia aerea
 	 * @param dimensioni dimensioni previste per il bagaglio a mano dalla politica della compagnia aerea
-	 * @param compagnia compagnia aerea a cui la politica bagaglio a mano è relata
+	 * @param compagnia compagnia aerea a cui la politica bagaglio a mano ï¿½ relata
 	 * @return
 	 */
-
 	public PoliticaBagaglioMano(int peso, String dimensioni, CompagniaAerea compagnia) {
 		super();
 		this.peso = peso;
@@ -64,16 +63,16 @@ public class PoliticaBagaglioMano {
 	}
 
 	/**
-	 * metodo getter di restituzione della compagnia aerea a cui la politica bagaglio a mano è relata
-	 * @return CompagniaAerea compagnia aerea a cui la politica bagaglio a mano è relata
+	 * metodo getter di restituzione della compagnia aerea a cui la politica bagaglio a mano e' relata
+	 * @return CompagniaAerea compagnia aerea a cui la politica bagaglio a mano e' relata
 	 */
 	public CompagniaAerea getCompagnia() {
 		return compagnia;
 	}
 	
 	/**
-	 * metodo setter di modifica della compagnia aerea a cui la politica bagaglio a mano è relata
-	 * @param compagnia nuova compagnia aerea a cui la politica bagaglio a mano è relata
+	 * metodo setter di modifica della compagnia aerea a cui la politica bagaglio a mano e' relata
+	 * @param compagnia nuova compagnia aerea a cui la politica bagaglio a mano e' relata
 	 */
 	public void setCompagnia(CompagniaAerea compagnia) {
 		this.compagnia = compagnia;

@@ -14,14 +14,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-
-
-
-@WebServlet(name="/AggiornaCompagniaAereaServlet",
-			urlPatterns= {"/gestoreCompagnie/AggiornaCompagniaAereaServlet"})
-
+/**
+ * La servlet gestisce tutte le operazioni per l'aggiornamento
+ * delle informazioni relative ad una compagnia aerea i cui voli
+ * sono offerti nel catalogo di sistema e gestiti da un determinato gestore voli
+ */
+@WebServlet(name="/AggiornaCompagniaAereaServlet", urlPatterns= {"/gestoreCompagnie/AggiornaCompagniaAereaServlet"})
 public class AggiornaCompagniaAereaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -44,13 +42,12 @@ public class AggiornaCompagniaAereaServlet extends HttpServlet {
 		String prezzoStiva=request.getParameter("prezzoStiva");
 
 		String nextJSP="";
-	
-				
+		
 		CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
 		PoliticaBagaglioManager politicaBagaglioManager=new PoliticaBagaglioManager();
-				
-				
+					
 		CompagniaAerea compagnia=new CompagniaAerea(nomeCompagnia, sitoCompagnia);
+		
 		try {
 			compagniaAereaManager.aggiornaCompagnia(compagnia);
 		} catch (SQLException e) {
@@ -81,9 +78,5 @@ public class AggiornaCompagniaAereaServlet extends HttpServlet {
 		nextJSP = "/gestoreCompagnie/dettagliCompagnia.jsp";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
         dispatcher.forward(request, response);
-
-
 	}
-
-
 }

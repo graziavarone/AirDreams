@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class DettagliCompagniaAereaServlet
+ * La servlet gestisce tutte le operazioni per la visualizzazione
+ * delle informazioni di una determinata compagnia aerea
  */
 @WebServlet(name="/DettagliCompagniaAereaServlet",
 urlPatterns= {"/gestoreCompagnie/DettagliCompagniaAereaServlet"})
@@ -36,7 +37,6 @@ public class DettagliCompagniaAereaServlet extends HttpServlet {
         
         PoliticaBagaglioManager politicaBagaglioManager=new PoliticaBagaglioManager();
       
-        
         try {
 			PoliticaBagaglioMano politicaMano=politicaBagaglioManager.trovaPoliticaCompagniaMano(nome);
 			request.setAttribute("politicaMano", politicaMano);
@@ -58,5 +58,4 @@ public class DettagliCompagniaAereaServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

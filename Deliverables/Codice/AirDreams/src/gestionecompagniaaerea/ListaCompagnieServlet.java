@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import gestioneutente.UtenteManager;
-
 /**
- * Servlet implementation class ListaCompagnieServlet
+ * La servlet gestisce tutte le operazioni per la visualizzazione
+ * di tutta la lista delle compagnie aeree i cui voli sono offerti dal sistema
+ * e singolarmente gestiti da un determinato gestore voli
  */
 @WebServlet(name="/ListaCompagnieServlet", urlPatterns= {"/gestoreCompagnie/ListaCompagnieServlet"})
 public class ListaCompagnieServlet extends HttpServlet {
@@ -49,7 +49,6 @@ public class ListaCompagnieServlet extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	/**
@@ -59,5 +58,4 @@ public class ListaCompagnieServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

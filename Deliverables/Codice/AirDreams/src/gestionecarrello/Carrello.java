@@ -13,7 +13,7 @@ public class Carrello {
 	private HashMap<Volo, Integer> voli;
 	
 	/**
-	 * metodo costruttore vuoto della classe Carrello
+	 * metodo costruttore della classe Carrello privo di argomenti
 	 */
 	public Carrello() {
 		voli=new HashMap<Volo, Integer>();
