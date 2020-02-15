@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class EliminaVoloServlet
+ * La servlet gestisce le operazioni per la cancellazione di un volo dal catalogo di sistema,
+ * operazione eseguibile solo dal gestore voli
  */
 @WebServlet(name = "EliminaVoloServlet", urlPatterns = {"/gestoreVoli/EliminaVoloServlet"})
 public class EliminaVoloServlet extends HttpServlet {
@@ -32,11 +33,9 @@ public class EliminaVoloServlet extends HttpServlet {
 		String idVolo = request.getParameter("idVolo");
 		VoloManager vManager = new VoloManager();
 		
-		
 		try {
 			if(vManager.eliminaVolo(Integer.parseInt(idVolo))) {
-				request.setAttribute("message", "il volo è stato eliminato");
-		;
+				request.setAttribute("message", "il volo e' stato eliminato");
 				
 				request.getServletContext().getRequestDispatcher("/gestoreVoli/ListaVoliServlet?page=1&action=null").forward(request, response);
 			}
@@ -53,5 +52,4 @@ public class EliminaVoloServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

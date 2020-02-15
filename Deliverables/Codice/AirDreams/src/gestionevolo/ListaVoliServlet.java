@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import gestioneutente.Account;
 
 /**
- * Servlet implementation class RicercaVoliServlet
+ * La servlet gestisce tutte le operazioni per la visualizzazione della lista dei voli 
+ * presenti nel catalogo di sistema, a cura del gestore voli
  */
 @WebServlet(name = "ListaVoliServlet", urlPatterns = {"/gestoreVoli/ListaVoliServlet"})
 public class ListaVoliServlet extends HttpServlet {
@@ -25,8 +26,6 @@ public class ListaVoliServlet extends HttpServlet {
 
 	private String expAeroporto="^[A-Z]{3} - [A-Za-z  ]{1,}, [A-Za-z ]{1,}$";
 	private String expData= "^\\s*(0?[1-9]|1[0-9]|2[2-9]|3[01])\\/\\s*(1[012]|0?[1-9])\\/\\d{4}\\s*$";
-
-
 	private String[] ricercaSalvata= {"","",""};
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -97,12 +96,11 @@ public class ListaVoliServlet extends HttpServlet {
 							ricercaSalvata[2]=data;
 						}
 						
-						System.out.println("Utente è: "+utente);
-						System.out.println("Compagnia è: "+utente.getCompagniaAerea());
+						System.out.println("Utente ï¿½: "+utente);
+						System.out.println("Compagnia ï¿½: "+utente.getCompagniaAerea());
 						String c=utente.getCompagniaAerea().getNome();
 						System.out.println("compagnia aerea di cui il gestore e' tenuto: " + c);
 						voli=voloManager.cercaVoli(ricerca,c);
-						
 							 
 					}  else {
 
@@ -122,36 +120,34 @@ public class ListaVoliServlet extends HttpServlet {
 				request.setAttribute("voli", voli);
 				request.setAttribute("page",pagina);
 				redirect="/gestoreVoli/listaVoli.jsp";
-			
 			}				
 		}	
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(redirect);
 	    dispatcher.forward(request, response);
-		
 	}
 			
 	private boolean valida(String aeroportoP, String aeroportoA, String dateDeparture) {
 		boolean valido=true;
 		
 		if(aeroportoP!=null && !aeroportoP.equals("")) {
-		if (!Pattern.matches(expAeroporto, aeroportoP)) {
-			valido=false;
-			System.out.println("aeroporto partenza non corrisponde");
+			if (!Pattern.matches(expAeroporto, aeroportoP)) {
+				valido=false;
+				System.out.println("aeroporto partenza non corrisponde");
 			}
 		}
 		
 		if(aeroportoA!=null && !aeroportoA.equals(""))  {
-		if (!Pattern.matches(expAeroporto, aeroportoA)) {
-			valido=false;
-			System.out.println("aeroporto arrivo non corrisponde");
+			if (!Pattern.matches(expAeroporto, aeroportoA)) {
+				valido=false;
+				System.out.println("aeroporto arrivo non corrisponde");
 			}
 		}
 		
-		
 		if(dateDeparture!=null && !dateDeparture.equals("")) {
-		if (!Pattern.matches(expData, dateDeparture)) {
-			valido=false;
-			System.out.println("dataPartenza non corrisponde");
+			if (!Pattern.matches(expData, dateDeparture)) {
+				valido=false;
+				System.out.println("dataPartenza non corrisponde");
 			}
 		}
 

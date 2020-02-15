@@ -1,10 +1,7 @@
 package gestionevolo;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,24 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 
-
-
 /**
- * Servlet implementation class RicercaAeroportiServlet
+ * La servlet gestisce tutte le operazioni per la ricerca AJAX di aeroporti nel sistema
  */
 @WebServlet(name = "RicercaAeroportiServlet", urlPatterns = {"/RicercaAeroportiServlet","/gestoreVoli/RicercaAeroportiServlet"})
 public class RicercaAeroportiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 	
-		
-		AeroportoManager model = null;
+    	AeroportoManager model = null;
 
-			
-			model = new AeroportoManager();			
-		 
+		model = new AeroportoManager();			
 		
 		JSONArray prodJson = new JSONArray();
 		String query = request.getParameter("city");
@@ -43,9 +34,7 @@ public class RicercaAeroportiServlet extends HttpServlet {
 			
 			for (Aeroporto a : aeroporti) {
 				prodJson.put(a.getCodice()+ " - " +a.getCity()+", " +a.getStato());
-				
 			}
-			
 		}
 		
 		if (query1 != null) {
@@ -56,7 +45,6 @@ public class RicercaAeroportiServlet extends HttpServlet {
 				prodJson.put(a.getCodice()+ " - " +a.getCity()+", " +a.getStato());
 				
 			}
-			
 		}
 		response.setContentType("application/json");
 		response.getWriter().append(prodJson.toString());
@@ -65,5 +53,4 @@ public class RicercaAeroportiServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

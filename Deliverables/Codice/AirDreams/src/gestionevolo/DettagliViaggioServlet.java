@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class DettagliViaggioServlet
+ * La servlet gestisce le operazioni per la visualizzazione di un dato volo
+ * recuperato dalla lista dei risultati di una ricerca
  */
 @WebServlet("/DettagliViaggioServlet")
 public class DettagliViaggioServlet extends HttpServlet {
@@ -45,7 +46,6 @@ public class DettagliViaggioServlet extends HttpServlet {
 				
 				if(primoVolo!=null)
 					voliViaggio.add(primoVolo);
-				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -58,7 +58,6 @@ public class DettagliViaggioServlet extends HttpServlet {
 				
 				if(secondoVolo!=null)
 					voliViaggio.add(secondoVolo);
-				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -71,7 +70,6 @@ public class DettagliViaggioServlet extends HttpServlet {
 				
 				if(terzoVolo!=null)
 					voliViaggio.add(terzoVolo);
-				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -84,7 +82,6 @@ public class DettagliViaggioServlet extends HttpServlet {
 				
 				if(quartoVolo!=null)
 					voliViaggio.add(quartoVolo);
-				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -97,7 +94,6 @@ public class DettagliViaggioServlet extends HttpServlet {
 				
 				if(quintoVolo!=null)
 					voliViaggio.add(quintoVolo);
-				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -110,7 +106,6 @@ public class DettagliViaggioServlet extends HttpServlet {
 				
 				if(idSestoVolo!=null)
 					voliViaggio.add(sestoVolo);
-				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -118,12 +113,7 @@ public class DettagliViaggioServlet extends HttpServlet {
 		}
 		
 		request.getSession().setAttribute("voli", voliViaggio);
-		
 		request.getServletContext().getRequestDispatcher("/dettagliViaggio.jsp").forward(request, response);
-		
-
-		
-		
 	}
 
 	/**
@@ -133,5 +123,4 @@ public class DettagliViaggioServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

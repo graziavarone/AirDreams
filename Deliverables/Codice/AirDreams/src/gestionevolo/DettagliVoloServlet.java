@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class DettagliVoloServlet
+ * La servlet gestisce tutte le operazioni per la visualizzazione dei dettagli
+ * di un determinato volo
  */
 @WebServlet(name = "dettagliVoloServlet", urlPatterns = {"/gestoreVoli/dettagliVoloServlet"})
 public class DettagliVoloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    VoloManager vManager = new VoloManager();
 	    String idVolo=request.getParameter("idVolo");
 	    Volo volo = null;
 	    
 		try {
-		volo = vManager.findByID(idVolo);
+			volo = vManager.findByID(idVolo);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,5 +45,4 @@ public class DettagliVoloServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

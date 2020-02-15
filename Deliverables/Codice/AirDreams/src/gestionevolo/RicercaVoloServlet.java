@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet che implementa la ricerca dei voli di un gestore
+ * La servlet gestisce le operazioni per la ricera
+ * di un determinato volo richiesta da un utente
  */
 @WebServlet("/RicercaVoloServlet")
 public class RicercaVoloServlet extends HttpServlet {
@@ -23,12 +24,10 @@ public class RicercaVoloServlet extends HttpServlet {
 				//ricerca voli
 			}
 		}
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
