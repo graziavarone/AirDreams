@@ -19,15 +19,7 @@ import gestionecompagniaaerea.CompagniaAereaManager;
 urlPatterns= {"/gestoreCompagnie/DettagliUtenteServlet"})
 public class DettagliUtenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DettagliUtenteServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -54,7 +54,7 @@ http://www.tooplate.com/view/2095-level
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
                             <a class="navbar-brand mr-auto" href="#">
-                                <img src="../img/logo.png" alt="Site logo">
+                                <img src="img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -75,8 +75,8 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
 									  </div>
 									</li>
                        					
@@ -87,18 +87,18 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza gli account</a>
+									  <a href="listaAccount.jsp">Visualizza gli account</a>
 									  <a href="aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
-									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -113,18 +113,18 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza voli</a>
-									  <a href="#">Aggiungi volo</a>
-									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
+									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/carrello.jsp">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -142,6 +142,7 @@ http://www.tooplate.com/view/2095-level
                         </nav>            
                     </div>
                 </div>
+                <!-- /Top Navbar -->
             </div>
             
             <div class="tm-section tm-bg-img" id="tm-section-1">

@@ -23,12 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 public class AggiornaCompagniaAereaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	}
-
-
+	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nomeCompagnia=request.getParameter("nome");
 		

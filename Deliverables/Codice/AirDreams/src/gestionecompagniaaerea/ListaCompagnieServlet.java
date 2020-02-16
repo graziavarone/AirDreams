@@ -20,14 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 public class ListaCompagnieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ArrayList<CompagniaAerea> allComA = new ArrayList<CompagniaAerea>();
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ListaCompagnieServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

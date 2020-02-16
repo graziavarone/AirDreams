@@ -32,7 +32,7 @@
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
                                 <img src="../img/logo.png" alt="Site logo">
                             </a>                         
                         </nav>            

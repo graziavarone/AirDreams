@@ -43,8 +43,8 @@ if(mod==null)
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="../index.jsp">
-                                <img src="../img/logo.png" alt="Site logo">
+                            <a class="navbar-brand mr-auto" href="#">
+                                <img src="img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -65,7 +65,7 @@ if(mod==null)
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
+									  <a href="DettagliAccountServlet">Il mio profilo</a>
 									  <a href="CarrelloServlet">Il mio carrello</a>
 									  </div>
 									</li>
@@ -77,18 +77,18 @@ if(mod==null)
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="ListaAccountServlet">Visualizza gli account</a>
-									  <a href="#">Aggiungi compagnia aerea</a>
-									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="./ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  <a href="DettagliAccountServlet">Il mio profilo</a>
+									  <a href="CarrelloServlet">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -103,18 +103,18 @@ if(mod==null)
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza voli</a>
-									  <a href="#">Aggiungi volo</a>
-									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
+									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="CarrelloServlet">Il mio carrello</a>
-									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  <a href="DettagliAccountServlet">Il mio profilo</a>
+									  <a href="carrello.jsp">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -132,6 +132,7 @@ if(mod==null)
                         </nav>            
                     </div>
                 </div>
+                <!-- /Top Navbar -->
             </div>
             
             <div class="tm-section tm-bg-img" id="tm-section-1">

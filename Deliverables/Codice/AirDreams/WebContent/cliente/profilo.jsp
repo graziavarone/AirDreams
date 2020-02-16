@@ -45,7 +45,7 @@
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="index.jsp">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
                                 <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,7 @@
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
 									  <a href="DettagliAccountServlet">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
+									  <a href="CarrelloServlet">Il mio carrello</a>
 									  </div>
 									</li>
                        					
@@ -79,9 +79,9 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza gli account</a>
-									  <a href="#">Aggiungi compagnia aerea</a>
-									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
@@ -89,8 +89,8 @@
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
 									  <a href="DettagliAccountServlet">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  <a href="CarrelloServlet">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -105,9 +105,9 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza voli</a>
-									  <a href="#">Aggiungi volo</a>
-									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
+									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -115,8 +115,8 @@
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
 									  <a href="DettagliAccountServlet">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  <a href="carrello.jsp">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -134,6 +134,7 @@
                         </nav>            
                     </div>
                 </div>
+                <!-- /Top Navbar -->
             </div>
            
            	<div class="d-inline-flex">
@@ -429,13 +430,11 @@
 	        }); 
 		   
         	function confermaElimina() {
-          		var r = confirm("Cofermi di voler eliminare l'account?");
+          		var r = confirm("Confermi di voler eliminare l'account?");
           		if (r == true) 
-          			location.href = 'EliminaAccountServlet';
+          			location.href = '../EliminaAccountServlet';
           	}
-
-        
-          						
+        	
           	function editabiliInfo() {
           		document.getElementById("nome").removeAttribute("readonly");
           		document.getElementById("cognome").removeAttribute("readonly");
@@ -458,7 +457,7 @@
           		$("#listaBiglietti"+codice).prop('hidden', true);
           		
           		if(test==true){
-          		$("#annulla"+codice).prop('hidden',false);
+          			$("#annulla"+codice).prop('hidden',false);
           		}
           	}
         </script>

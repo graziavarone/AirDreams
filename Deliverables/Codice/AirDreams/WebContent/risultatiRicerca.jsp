@@ -114,8 +114,8 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
 									  </div>
 									</li>
                        					
@@ -126,8 +126,8 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza gli account</a>
-									  <a href="#">Aggiungi compagnia aerea</a>
+									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
@@ -135,9 +135,9 @@
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
+									  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -152,8 +152,8 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="listaVoli.jsp?page=1&action=null">Visualizza voli</a>
-									  <a href="aggiungiVolo.jsp">Aggiungi volo</a>
+									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
+									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
@@ -161,9 +161,9 @@
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
+									  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -181,7 +181,6 @@
                         </nav>            
                     </div>
                 </div>
-         
             </div>
            
            	<div class="d-flex">
@@ -192,8 +191,6 @@
 	  						<div class="img"></div>
 	  						<h3>Ricerca voli per</h3>
 	  					</div>
-	  					
-	  					
 	  				</div>
 	  				
 	  				<div>

@@ -7,14 +7,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<% Boolean mod=(Boolean)request.getAttribute("mod");
+<% 
+	Boolean mod=(Boolean)request.getAttribute("mod");
 
-if(mod==null)
-	mod=true;
+	if(mod==null)
+		mod=true;
 	String message=(String) request.getAttribute("message");
 	
-	
 	Carrello carrello=(Carrello)request.getSession().getAttribute("carrello");
+	
 	HashMap<Volo,Integer> voliCarrello=carrello.getVoli();
 	
 	int seats=0;
@@ -41,7 +42,7 @@ if(mod==null)
     	<link rel="stylesheet" href="../css/tooplate-style.css">                                   <!-- Templatemo style -->
 </head>
 <body>
-<div class="tm-main-content" id="top">
+	<div class="tm-main-content" id="top">
             <div class="tm-top-bar-bg"></div>
             <div class="tm-top-bar" id="tm-top-bar">
                 <!-- Top Navbar -->
@@ -70,7 +71,7 @@ if(mod==null)
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
+									  <a href="DettagliAccountServlet">Il mio profilo</a>
 									  <a href="CarrelloServlet">Il mio carrello</a>
 									  </div>
 									</li>
@@ -82,18 +83,18 @@ if(mod==null)
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="ListaAccountServlet">Visualizza gli account</a>
-									  <a href="#">Aggiungi compagnia aerea</a>
-									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="./ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  <a href="DettagliAccountServlet">Il mio profilo</a>
+									  <a href="CarrelloServlet">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -108,18 +109,18 @@ if(mod==null)
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza voli</a>
-									  <a href="#">Aggiungi volo</a>
-									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
+									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="CarrelloServlet">Il mio carrello</a>
-									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  <a href="DettagliAccountServlet">Il mio profilo</a>
+									  <a href="carrello.jsp">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -137,78 +138,76 @@ if(mod==null)
                         </nav>            
                     </div>
                 </div>
+                <!-- /Top Navbar -->
             </div>
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
-                <div class="tm-bg-white ie-container-width-fix-2">
-                 <%
+                <div class="tm-bg-white w-10">
+                	<div class="container">
+                		<div>
+                 		<%
       						if (message!=null) {
       					%>
-      					<div class="alert alert-primary" role="alert">
-      						<h6><%=message%></h6>
-      					</div>
+      						<div class="alert alert-primary" role="alert">
+      							<h6><%=message%></h6>
+      						</div>
       					<% } %>	
-                    <div class="container ie-h-align-center-fix">
-                    <h3>Il tuo carrello</h3>
-                        <div class="row">
-                            <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                  
-                                   		<div class="pl-5">
-                                   		
-                                   		<% for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) { 
-              
+      					</div>
+      					
+                    	<div class="container ie-h-align-center-fix">
+                    		<div class="form-row tm-search-form-row d-flex justify-content-center">	
+                                	<div class="form-group tm-form-element tm-form-element-100">
+                                		<h3 class="tm-color-primary tm-article-title-1">Il tuo carrello</h3>
+                                	</div>
+                                </div>
+                    	    <div class="row">
+                            	<div class="form-row tm-search-form-row d-flex justify-content-center">
+                  					<div class="pl-5">
+                  						<%
+                  							if (voliCarrello.size()==0) {
+                  						%>
+                  						<div>
+                  							Non sono presenti voli nel carrello
+                  						</div>
+                  						<%		
+                  							}
+                                   			for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) { 
                                    		%>
-                                <div class="p-3 border border-light rounded bg-light">
-                                	<h4><%=entry.getValue()%> Biglietti/o</h4>
-                                		<form action="RimuoviDalCarrelloServlet" method="post">
-    							<input type="hidden" name="idVolo" value="<%=entry.getKey().getId()%>">
-    							<button class="fa fa-trash" aria-hidden="true" style="margin-left: 30px;"></button>
-    							</form>
-      						<div class="form-row align-items-center">
-      							
-  									 <h5><%=entry.getKey().getCa().getNome() %></h5>
-  									 
-  									<h3 style="margin-left: 100px;"><%=entry.getKey().getOrarioPartenza()%></h3> 
-  										<img alt="" src="../img/icon-route.png" width="250px" height="100px">
-  									<h3><%=entry.getKey().getOrarioArrivo()%></h3>
-  										<span style="margin-left: 10px;"> Totale : &euro; <%=entry.getKey().getPrezzo() %></span>
-  							
-    						</div>
-    							
-    					<b><span style="margin-left:177px;"><%=entry.getKey().getAeroportoP().getCodice()%></span> </b>
-    					<span style="margin-left:100px;"><%=entry.getKey().getDurataVolo() %></span> 
-    					<b><span style="margin-left:115px;"><%=entry.getKey().getAeroportoA().getCodice() %></span></b><br>
-    		
-    					
-    			
-    							</div>
-    						
-    						
-    							<br>
-   					
-   					<% } %>
-   					
-   					
+                                		<div class="p-3 border border-light rounded bg-light">
+                                			<h4><%=entry.getValue()%> Biglietti/o</h4>
+                                			<form action="RimuoviDalCarrelloServlet" method="post">
+    											<input type="hidden" name="idVolo" value="<%=entry.getKey().getId()%>">
+    											<button class="fa fa-trash" aria-hidden="true" style="margin-left: 30px;"></button>
+    										</form>
+      										<div class="form-row align-items-center">
+      											<h5><%=entry.getKey().getCa().getNome() %></h5>
+  									 			<h3 style="margin-left: 100px;"><%=entry.getKey().getOrarioPartenza()%></h3> 
+  												<img alt="" src="../img/icon-route.png" width="250px" height="100px">
+  												<h3><%=entry.getKey().getOrarioArrivo()%></h3>
+  												<span style="margin-left: 10px;"> Totale : &euro; <%=entry.getKey().getPrezzo() %></span>
+  											</div>
+    										<b><span style="margin-left:177px;"><%=entry.getKey().getAeroportoP().getCodice()%></span> </b>
+    										<span style="margin-left:100px;"><%=entry.getKey().getDurataVolo() %></span> 
+    										<b><span style="margin-left:115px;"><%=entry.getKey().getAeroportoA().getCodice() %></span></b><br>
+    									</div><br>
+   										<% }%>
    									</div> 
    									
-   									
-    					
-    							
-                                    <div class="form-row tm-search-form-row">                                  
+   									<div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
-                           
-                            				<a  class="btn btn-primary tm-btn-search" href="nominativiBiglietti.jsp?seats=<%=seats%>">Procedi all'acquisto</a>
-                                      
-                                        </div>
-                                      </div>
-                                    
-                              
-                            </div>                        
-                        </div>      
-                    </div>
-                </div>                  
-            </div>
-
+                                        	<%
+                                        		if (voliCarrello.size()!=0) {
+                                        	%>
+                           					<a class="btn btn-primary tm-btn-search" href="nominativiBiglietti.jsp?seats=<%=seats%>">Procedi all'acquisto</a>
+                           					<% } %>
+	                                    </div>
+                                    </div>
+                                </div>                        
+                        	</div>      
+                    	</div>
+                	</div>                  
+           		</div>
+			</div>
               
         </div>
         

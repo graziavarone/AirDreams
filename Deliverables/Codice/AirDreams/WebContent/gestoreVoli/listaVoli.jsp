@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*,gestioneutente.*,gestionevolo.*,java.time.*"%>
+    pageEncoding="UTF-8" import="java.util.*,gestioneutente.*,gestionevolo.*,java.time.*,java.time.format.*"%>
 <!DOCTYPE html>
 
 <% 
@@ -8,7 +8,7 @@
 		mod=true;
 	
 	Account account= (Account) request.getSession().getAttribute("account");
-
+	DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 %>
 
 <html>
@@ -49,7 +49,7 @@
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="index.jsp">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
                                 <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@
                             
                             <ul class="navbar-nav ml-auto">
                             	<% if (request.getSession().getAttribute("account")==null){ %>
-                            		<li class="nav-item"><a class="nav-link" href="../login.jsp">Login</a></li>
+                            		<li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
                             	<% } %>
                             	<%  if (request.getSession().getAttribute("account")!=null){
                             		account=(Account)request.getSession().getAttribute("account");
@@ -71,8 +71,8 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
 									  </div>
 									</li>
                        					
@@ -83,8 +83,8 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza gli account</a>
-									  <a href="#">Aggiungi compagnia aerea</a>
+									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
 									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
@@ -92,9 +92,9 @@
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
+									  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -109,18 +109,18 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="listaVoli.jsp?page=1&action=null">Visualizza voli</a>
+									  <a href="ListaVoliServlet?page=1&action=null">Visualizza voli</a>
 									  <a href="aggiungiVolo.jsp">Aggiungi volo</a>
-									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="profilo.jsp">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
-									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/carrello.jsp">Il mio carrello</a>
+									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -138,6 +138,7 @@
                         </nav>            
                     </div>
                 </div>
+                <!-- /Top Navbar -->
             </div>
            
            	<div class="d-flex">
@@ -188,7 +189,7 @@
                             </div>
                             <div class="form-group row" id="formData" hidden="true">
                             	<label class="col-sm-6 col-form-label">Inserire data del volo</label>
-   					 			<div class="col-sm-5 tm-form-element ">
+   					 			<div class="col-sm-5 tm-form-element">
                                 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
                                     <input name="data" type="text" class="form-control" id="start">
                                 </div>
@@ -249,26 +250,33 @@
     								<div class="col-sm-4">
       									<input type="text" value="<%=voli.get(i).getAeroportoA().getNome()%>" class="form-control-plaintext form-control-sm">
     								</div>
+    							</div>
+    							<div class="form-row align-items-center">
+    								<label class="col-sm-1.5 col-form-label font-weight-bold">Data partenza</label>
+    								<div class="col-sm-4">
+      									<input type="text" value="<%=voli.get(i).getDataPartenza().format(FORMATO_DIA)%>" class="form-control-plaintext form-control-sm">
+    								</div>
     							</div><br>
-    								<div class="form-row align-items-center">
-    								<div class="col-sm-2"></div>
+    							<div class="form-row align-items-center">
     								<label class="col-sm-1.5 col-form-label badge badge-info text-wrap text-white"> Prezzo biglietto</label>
     								<div class="col-sm-1">
       									<input type="text" value="<%=voli.get(i).getPrezzo()%>" class="form-control-plaintext form-control-sm">
     								</div>
     							</div>
     							<div class="form-row align-items-center">
-   	 								<div class="col-sm-2"></div>
-    								<div class="col-sm-5"></div>
-    								<div class="col-sm-2">
+   	 								<div class="col-sm-4"></div>
+    								<div class="col-sm-5">
     									<form action="dettagliVoloServlet">
     										<input type="hidden" id="custId" name="idVolo" value="<%=voli.get(i).getId()%>">
     										<button type="submit" class="btn btn-primary">Visualizza dettagli volo</button>
     									</form>
-    									<form action="EliminaVoloServlet" id="form1">
+    								</div>
+    								<div class="col-sm-1"></div>
+    								<div class="col-sm-2">
+										<form action="EliminaVoloServlet" id="form1">
     										<input type="hidden"  id="custId" name="idVolo" value="<%=voli.get(i).getId()%>">
     										<button type="submit" class="btn btn-primary">
-    										<i class="fa fa-trash" aria-hidden="true"></i>
+    											<i class="fa fa-trash" aria-hidden="true"></i>
     										</button>
     									</form>
     								</div>

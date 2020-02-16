@@ -24,14 +24,6 @@ public class RegistrazioneServlet extends HttpServlet {
 	private String expCognome="^[A-Za-z]{1,}$";
 	private String expEmail="^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$";
 	private String expPassword="^(?=.{6,}$)(?=.*[A-Z])(?=.*[0-9])([\\.-]?\\w+)*.*$";
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegistrazioneServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

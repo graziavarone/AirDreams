@@ -70,8 +70,8 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
 									  </div>
 									</li>
                        					
@@ -82,7 +82,7 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="ListaAccountServlet">Visualizza gli account</a>
+									  <a href="#">Visualizza gli account</a>
 									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
@@ -91,8 +91,8 @@ http://www.tooplate.com/view/2095-level
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
+									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
 									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
@@ -108,7 +108,7 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="gestoreVoli/listaVoli.jsp?page=1&action=null">Visualizza voli</a>
+									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
 									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
@@ -117,7 +117,7 @@ http://www.tooplate.com/view/2095-level
 									<li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Il mio profilo</a>
+									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="#">Il mio carrello</a>
 									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
@@ -137,42 +137,49 @@ http://www.tooplate.com/view/2095-level
                         </nav>            
                     </div>
                 </div>
+                <!-- /Top Navbar -->
             </div>
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
-                  <% if(message!=null){ %>
-				                <p id="messageError"><%=message %></p>
-				                <% } %>
+                	<% if(message!=null){ %>
+				    	<p id="messageError"><%=message %></p>
+				    <% } %>
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                   				<form action="RegistrazioneServlet" method="post" class="tm-search-form tm-section-pad-2" id="form1">
-                                    <div class="form-row tm-search-form-row">
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="nome" type="text" class="form-control" id="inputName" placeholder="Type your name..." required="required">
-                                   
+                                        	<i class="fa fa-user fa-2x tm-form-element-icon"></i> 
+                                            <input name="nome" type="text" class="form-control" id="inputName" placeholder="Nome" required="required">
                                         </div>
                                      
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                         
-                                            <input name="cognome" type="text"  class="form-control" id="inputCognome" placeholder="Type your surname..." required="required">
+                                         	<i class="fa fa-user fa-2x tm-form-element-icon"></i> 
+                                            <input name="cognome" type="text"  class="form-control" id="inputCognome" placeholder="Cognome" required="required">
                                         	<br>
                                         </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="email" type="text" class="form-control" id="inputEmail" placeholder="Type your email" required="required">
+                                        
+                                        <div class="form-group tm-form-element tm-form-element-50"> 
+                                        	<i class="fa fa-envelope fa-2x tm-form-element-icon"></i>                                   
+                                            <input name="email" type="text" class="form-control" id="inputEmail" placeholder="Email" required="required">
                                         	<br>
-                                        </div>                                      
-                                        <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="password" type="password"  class="form-control" id="inputPassword" placeholder="Type your password..." required="required">
+                                        </div>   
+                                     </div>
+                                     <div class="form-row tm-search-form-row d-flex justify-content-center">                                  
+                                        <div class="form-group tm-form-element tm-form-element-50">     
+                                        	<i class="fa fa-unlock-alt fa-2x tm-form-element-icon"></i>                                  
+                                            <input name="password" type="password"  class="form-control" id="inputPassword" placeholder="Password" required="required">
                                        		<br>
                                         </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="Cpassword" type="password" class="form-control" id="inputCPassword" placeholder="Confirm your password..." required="required">
+                                        <div class="form-group tm-form-element tm-form-element-50">     
+                                        	<i class="fa fa-lock fa-2x tm-form-element-icon"></i>                                    
+                                            <input name="Cpassword" type="password" class="form-control" id="inputCPassword" placeholder="Conferma password" required="required">
                                        	<br>
                                         </div>
                                     </div>
-                                    <div class="form-row tm-search-form-row">                                  
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
                                             <input type="submit" class="btn btn-primary tm-btn-search" value="SignUp">
                                         </div>

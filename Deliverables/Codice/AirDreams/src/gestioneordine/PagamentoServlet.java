@@ -35,14 +35,6 @@ public class PagamentoServlet extends HttpServlet {
 	private String expDataScadenza = "^(0[1-9]|1[0-2]|[1-9])\\/(1[4-9]|[2-9][0-9]|20[1-9][1-9])$";
 	private String expCvc = "^[0-9]{3}$";
 	boolean cartaScaduta=false;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PagamentoServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

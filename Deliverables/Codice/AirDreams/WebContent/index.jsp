@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*"%>
     
-<% Boolean mod=(Boolean)request.getAttribute("mod");
+<% 
+	Boolean mod=(Boolean)request.getAttribute("mod");
 
-if(mod==null)
-	mod=true;
+	if(mod==null)
+		mod=true;
 
-String message=(String)request.getAttribute("message");
+	String message=(String)request.getAttribute("message");
 %>
     
 <!DOCTYPE html>
@@ -84,7 +85,7 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza gli account</a>
+									  <a href="gestoreCompagnie/ListaAccountServlet?page=1">Visualizza gli account</a>
 									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
@@ -110,8 +111,8 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="listaVoli.jsp?page=1&action=null">Visualizza voli</a>
-									  <a href="aggiungiVolo.jsp">Aggiungi volo</a>
+									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
+									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
@@ -120,7 +121,7 @@ http://www.tooplate.com/view/2095-level
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
-									  <a href="#">Il mio carrello</a>
+									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
 									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
@@ -139,97 +140,89 @@ http://www.tooplate.com/view/2095-level
                         </nav>            
                     </div>
                 </div>
+                <!-- /Top Navbar -->
             </div>
             
     
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
-                	  <% if(message!=null){ %>
-				                <p id="messageError"><%=message %></p>
-				                <% } %>
-                    <div style="height: 350px;" class="container ie-h-align-center-fix">
-            		
-                            <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                        <div class="row">
-                      
-                                <form action="RicercaVoliServlet" method="post" class="tm-search-form tm-section-pad-2">
-                                		
-                                		  Andata e ritorno<input type="radio" id="andERit" style="margin-right: 30px;" name="tipoViaggio" value="Andata e ritorno" checked="checked">
-                        					Solo andata<input type="radio" id="and"  style="margin-right: 30px;"  name="tipoViaggio" value="Solo andata">
-                        					 Solo voli diretti <input type="checkbox" name="Diretto"  value="Diretto">
-                                    <div class="form-row tm-search-form-row">
-                                    	
+                	<div class="container ie-h-align-center-fix d-flex justify-content-center">
+               			<% if(message!=null){ %>
+				    		<p id="messageError"><%=message%></p>
+				   	 	<% } %>
+                  	  	<div style="height: 350px;" class="">
+                        	<div class="row">
+                      			<form action="RicercaVoliServlet" method="post" class="tm-search-form tm-section-pad-2">
+                               		<div class="form-row tm-search-form-row">
+                               			<div class="form-group col-auto">
+                               				<label class="col-sm-1.5 col-form-label">Andata e ritorno</label><input type="radio" id="andERit" style="margin-right: 30px;" name="tipoViaggio" value="Andata e ritorno" checked="checked">
+                        				</div>
+                        				<div class="form-group col-auto">
+                        					<label class="col-sm-1.5 col-form-label">Solo andata</label><input type="radio" id="and"  style="margin-right: 30px;"  name="tipoViaggio" value="Solo andata">
+                        				</div>
+                        				<div class="form-group col-auto">
+                        					<label class="col-sm-1.5 col-form-label">Solo voli diretti</label><input type="checkbox" name="Diretto"  value="Diretto">
+                                    	</div>
+                                    </div>
+                                    
+                                   	<div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                           <i class="fa fa-plane fa-2x tm-form-element-icon"></i>
+                                          	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
                                             <input name="city" id="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
-                                        </div>
+                                       	</div>
+                                       	<div class="form-group col-auto col-form-label">
                              				<i id=scambia class="fa fa-exchange fa-2x"></i>
-                                           <div class="form-group tm-form-element tm-form-element-100">
-                                            	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                           <input name="cityArrivals" id="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                             			</div>
+                                        <div class="form-group tm-form-element tm-form-element-100">
+                                        	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
+                                           	<input name="cityArrivals" id="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
-                                        
-                                        	<div class="form-group tm-form-element tm-form-element-50">
+                                        <div class="form-group tm-form-element tm-form-element-50">
                                    			<i class="fa fa-group fa-2x tm-form-element-icon"></i>
                                    			<input class="form-control input-group-lg" type="number" id="inputNumber2" name="seats" value="1" min="1" max="100" required>
 							        	</div>
-				
-                                   
-                                    </div>
+									</div>
                                     
-              					 <div class="form-row tm-search-form-row">
+              					 	<div class="form-row tm-search-form-row">
                                 		<div class="form-group tm-form-element tm-form-element-50">
                                     	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
                                            	<input name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza" required>
                                         </div>
-                                        
-                                        	<div class="form-group tm-form-element tm-form-element-50">
+                                        <div class="form-group tm-form-element tm-form-element-50">
                                     	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	<input name="dateReturn" type="text" class="form-control" id="return" placeholder="Data ritorno" 
-                          
-                                           	required>
+                                           	<input name="dateReturn" type="text" class="form-control" id="return" placeholder="Data ritorno" required>
                                         </div>
-                                   
                                     </div>
                         
-                         
-				
-                                  
-                                        <div class="form-group tm-form-element tm-form-element-2">
-                                            <button type="submit" style="margin-left: 600px" class="btn btn-primary tm-btn-search">Cerca</button>
-                                        </div>
-                                     
-                                    
-                                </form>
-                            </div>                        
-                        </div>      
-                    </div>
-                </div>                  
+                         			<div class="form-group tm-form-element tm-form-element-2">
+                                    	<button type="submit" style="margin-left: 500px" class="btn btn-primary tm-btn-search">Cerca</button>
+                                    </div>
+                            	</form>                      
+                        	</div>      
+                   		</div>
+                	</div> 
+                </div>                   
             </div>
           
            	<div class="tm-section tm-position-relative">
-             
-                <div class="container tm-pt-5 tm-pb-4">
+            	<div class="container tm-pt-5 tm-pb-4">
                     <div class="row text-center">
                         <article class="col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-article">                            
                             <i class="fa tm-fa-6x fa-legal tm-color-primary tm-margin-b-20 "></i>
                             <h3 class="tm-color-primary tm-article-title-1">Go everywhere</h3>
                             <p>It is your world and we will help you explore it. Find the best prices from millions of flight deals to organize your perfect trip.</p>
-                          
                         </article>
                         <article class="col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-article">                            
                             <i class="fa tm-fa-6x fa-plane tm-color-primary tm-margin-b-20"></i>
                             <h3 class="tm-color-primary tm-article-title-1">Simple and safe</h3>
                             <p>No extra charge. No nasty surprises. Easily manage your travel expenses, so you can relax even before departure.</p>
-                                                     
                         </article>
                         <article class="col-sm-12 col-md-4 col-lg-4 col-xl-4 tm-article">                           
                             <i class="fa tm-fa-6x fa-life-saver tm-color-primary tm-margin-b-20"></i>
                             <h3 class="tm-color-primary tm-article-title-1">Travel your own way</h3>
                             <p>Do you already know where to go? Find out the best time to book. Find offers for a relaxing short weekend or for an unforgettable adventure..</p>
-                                                    
                         </article>
                     </div>        
                 </div>
@@ -295,8 +288,6 @@ http://www.tooplate.com/view/2095-level
        	 $("#city").val($("#cityArrivals").val());
        	 $("#cityArrivals").val(temp);
         });
-         
-         
-         </script>
-</body>
+       </script>
+	</body>
 </html>

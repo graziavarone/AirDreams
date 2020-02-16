@@ -19,15 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ListaAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ArrayList<Account> allUtenti = new ArrayList<Account>();
-	
-	/**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ListaAccountServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -36,13 +28,14 @@ public class ListaAccountServlet extends HttpServlet {
 		UtenteManager model = null;
 		model = new UtenteManager();	
 		String message = request.getParameter("message");
-	
+		String pagina = request.getParameter("page");
+		
 		try {
 			allUtenti = model.getAllUsers();
 			System.out.println(allUtenti);
 			request.setAttribute("allUtentiAdmin", allUtenti);
 			request.setAttribute("message", message);
-			String nextJSP = "/gestoreCompagnie/listaAccount.jsp";
+			String nextJSP = "/gestoreCompagnie/listaAccount.jsp?page=" + pagina;
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);
 			dispatcher.forward(request, response);
 		} catch (SQLException e) {

@@ -25,16 +25,7 @@ public class ModificaAccountServlet extends HttpServlet {
 	private String expNome="^[A-Za-z]{1,}$";
 	private String expCognome="^[A-Za-z]{1,}$";
 	private String expEmail="^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$";
-       
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ModificaAccountServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
+      
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

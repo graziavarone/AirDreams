@@ -35,14 +35,6 @@ public class RicercaVoliServlet extends HttpServlet {
 	ArrayList<Volo> voliRitornoDiretti=null;
 	ArrayList<Volo[]> voliRitornoUnoScalo=null;
 	ArrayList<Volo[]> voliRitornoDueScali=null;
-	 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RicercaVoliServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

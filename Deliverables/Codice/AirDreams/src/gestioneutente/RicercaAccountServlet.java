@@ -42,7 +42,8 @@ public class RicercaAccountServlet extends HttpServlet {
 		System.out.println("Stampa nomi:" +nome);
 		String cognome = request.getParameter("searchSurname");
 		System.out.println("Stampa cognomi:" +cognome);
-
+		String pagina = request.getParameter("page");
+		
 		if (nome != null && cognome != null) {
 			try {
 				lettera = model.findAccountByLetter(nome, cognome);
@@ -53,7 +54,7 @@ public class RicercaAccountServlet extends HttpServlet {
 					
 				request.setAttribute("allUtentiAdmin", lettera);
 
-				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/gestoreCompagnie/listaAccount.jsp");
+				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/gestoreCompagnie/listaAccount.jsp?page=" + pagina);
 				dispatcher.forward(request, response);
 			} catch (SQLException e) {
 				e.printStackTrace();

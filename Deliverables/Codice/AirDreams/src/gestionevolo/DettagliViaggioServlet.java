@@ -17,15 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/DettagliViaggioServlet")
 public class DettagliViaggioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DettagliViaggioServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
+      
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

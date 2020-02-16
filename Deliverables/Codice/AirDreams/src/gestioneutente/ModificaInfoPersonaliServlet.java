@@ -74,7 +74,7 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 						redirect="/cliente/DettagliAccountServlet";
 					} else {
 						manager.aggiornaProfilo(oldAccount, newAccount);
-						message="aggiornamento dati eseguito";
+						message="aggiornamento dati eseguito con successo";
 						response.getWriter().write("Success");
 						
 						System.out.println("Modifica eseguita poiche' la mail inserita non è gia' presente nel DB");
@@ -113,7 +113,7 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 		
 		if (!Pattern.matches(expNome, nome)) {
 			logger.info("Nome non corrisponde");
-			messageValidation+="Il nome deve contenere solo lettere dell'alfabeto";
+			messageValidation+="Il nome deve contenere solo lettere dell'alfabeto ";
 			valido=false;
 			System.out.print(nome);
 		}
@@ -121,20 +121,20 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 		if (!Pattern.matches(expCognome, cognome)) {
 			logger.info("Cognome non corrisponde");
 			valido=false;
-			messageValidation+="Il cognome deve contenere solo lettere dell'alfabeto";
+			messageValidation+="Il cognome deve contenere solo lettere dell'alfabeto ";
 			System.out.print(cognome);
 		}
 	
 		if (!Pattern.matches(expPassword, password)) {
 			logger.info("password non corrisponde,");
 			valido=false;
-			messageValidation+="La password non rispetta il formato previsto (deve contenere almeno una cifra)";
+			messageValidation+="La password non rispetta il formato previsto (deve contenere almeno una cifra) ";
 			System.out.print(password);
 		}
 		
 		if (!Pattern.matches(expEmail, email)) {
 			valido=false;
-			messageValidation+="L'email non rispetta il formato previsto (esempio: mariorossi@gmail.com)";
+			messageValidation+="L'email non rispetta il formato previsto (esempio: mariorossi@gmail.com) ";
 			System.out.print(email);
 		}
 		

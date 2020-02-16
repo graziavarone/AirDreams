@@ -32,14 +32,6 @@ public class BigliettiServlet extends HttpServlet {
 	private String expNome="^[A-Za-z]{1,}$";
 	private String expCognome="^[A-Za-z]{1,}$";
 	int seats = 0;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BigliettiServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
