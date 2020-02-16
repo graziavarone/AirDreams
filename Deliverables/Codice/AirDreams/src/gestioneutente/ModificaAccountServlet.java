@@ -15,7 +15,7 @@ import gestionecompagniaaerea.CompagniaAereaManager;
 
 /**
  * La servlet gestisce le operazioni per la modifica delle informazioni personali
- * di un utente, relativamente al suo account
+ * di un utente, a cura di un gestore compagnie
  */
 @WebServlet(name="/ModificaAccountServlet",
 urlPatterns= {"/gestoreCompagnie/ModificaAccountServlet"})
