@@ -36,7 +36,9 @@ public class DettagliAccountServlet extends HttpServlet {
 		CartaDiCreditoManager cm=new CartaDiCreditoManager();
 		OrdineManager ordineManager= new OrdineManager();
 		BigliettoManager bigliettoManager=new BigliettoManager();
-		 
+		
+		String annullamento=request.getParameter("annullamento");
+		
 		try {
 			ArrayList<CartaDiCredito> carteUtente=cm.findAll(account.getEmail());
 			ArrayList<Ordine> ordini=	ordineManager.cercaOrdiniUtente(account.getEmail());
@@ -51,11 +53,11 @@ public class DettagliAccountServlet extends HttpServlet {
 			request.setAttribute("carte", carteUtente);
 			request.setAttribute("ordini", ordini);
 			
-			System.out.println("Nuemro ordini "+ordini.size());
+			System.out.println("Numero ordini "+ordini.size());
 			redirect="/cliente/profilo.jsp";
 			
 			System.out.println("biglietti e' null....."+(request.getSession().getAttribute("biglietti")==null));
-			if (request.getSession().getAttribute("biglietti")!=null) {
+			if (request.getSession().getAttribute("biglietti")!=null && annullamento==null) {
 				ArrayList<Biglietto> biglietti=(ArrayList<Biglietto>)request.getSession().getAttribute("biglietti");
 	
 				request.getSession().setAttribute("biglietti",biglietti);
@@ -68,8 +70,7 @@ public class DettagliAccountServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//da implementare successivamente quando si implementeranno le funzionalità ordine e carta di credito
-	
+		
 		request.getServletContext().getRequestDispatcher(redirect).forward(request, response);
 	}
 

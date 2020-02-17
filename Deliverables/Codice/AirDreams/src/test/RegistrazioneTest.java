@@ -34,13 +34,14 @@ public class RegistrazioneTest {
 	@Mock
 	MockRequestDispatcher dispatcherSuccess;
 
+	
 	private RegistrazioneServlet servlet;
 
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(request.getRequestDispatcher("registrazione.jsp")).thenReturn(dispatcher);
-		when(request.getRequestDispatcher("login.jsp")).thenReturn(dispatcherSuccess);
+		when(request.getRequestDispatcher("login.jsp?message=Registrazione effettuata con successo")).thenReturn(dispatcherSuccess);
         servlet = new RegistrazioneServlet();
         DbPopulator.initializeDatabase();
 	}
@@ -53,6 +54,8 @@ public class RegistrazioneTest {
 		when(request.getParameter("email")).thenReturn("grazia_varone@hotmail.it");
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		when(request.getParameter("Cpassword")).thenReturn("@Emanuele2009");
+		
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -69,6 +72,8 @@ public class RegistrazioneTest {
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		when(request.getParameter("Cpassword")).thenReturn("@Emanuele2009");
 		
+		
+		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -83,6 +88,8 @@ public class RegistrazioneTest {
 		when(request.getParameter("email")).thenReturn("grazia@varone@hotmail.it");
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		when(request.getParameter("Cpassword")).thenReturn("@Emanuele2009");
+		
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -100,10 +107,12 @@ public class RegistrazioneTest {
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		when(request.getParameter("Cpassword")).thenReturn("@Emanuele2009");
 		
+		
+		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
-		Mockito.verify(MyWriter).write("Email gi� esistente");
+		Mockito.verify(MyWriter).write("Email gia' esistente");
 	}
 	
 	//TC_7.2_5 password non rispetta il formato
@@ -114,6 +123,8 @@ public class RegistrazioneTest {
 		when(request.getParameter("email")).thenReturn("qualcosa@hotmail.it");
 		when(request.getParameter("password")).thenReturn("123");
 		when(request.getParameter("Cpassword")).thenReturn("123");
+		
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -129,6 +140,8 @@ public class RegistrazioneTest {
 		when(request.getParameter("email")).thenReturn("qualcosa@hotmail.it");
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		when(request.getParameter("Cpassword")).thenReturn("123");
+		
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);

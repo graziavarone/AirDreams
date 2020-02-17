@@ -308,18 +308,23 @@ public class UtenteManager {
 			ps.setString(2,newAccount.getCognome());
 			ps.setString(3,newAccount.getEmail());
 			ps.setString(4,newAccount.getPassword());
-			if (oldAccount.getCompagniaAerea()==null)
+			
+			if (newAccount.getCompagniaAerea()==null)
 				ps.setString(5,null);
 			else
-				ps.setString(5,oldAccount.getCompagniaAerea().getNome());
-			if (oldAccount.getRuolo()==null)
+				ps.setString(5,newAccount.getCompagniaAerea().getNome());
+			
+			if (newAccount.getRuolo()==null) {
 				ps.setString(6,null);
-			else if (oldAccount.getRuolo()==Ruolo.gestoreCompagnie){
+			} else if (newAccount.getRuolo()==Ruolo.gestoreCompagnie) {
 				ps.setString(6,"gestoreCompagnie");
 			} else {
 				ps.setString(6,"gestoreVoli");
 			}
-			ps.setString(7,oldAccount.getEmail());
+			
+			ps.setString(7,newAccount.getEmail());
+			
+			System.out.println("aggiornaProfilo "+ps.toString());
 			ps.executeUpdate();
 			
 			return true; //se l'update va a buon fine
@@ -335,6 +340,6 @@ public class UtenteManager {
 			}
 		}
 		
-		return false;			
+		return false;		
 	}
 }

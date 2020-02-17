@@ -43,14 +43,6 @@ public class CompagniaAereaManagerTest {
 	} 
 	
 	@Test
-	public void getCompagnie() throws Exception{
-		System.out.println("getCompagnie");
-		ArrayList<CompagniaAerea> compagnie=compagniaAereaManager.getAllCompanies();
-		
-		assertEquals(1, compagnie.size());
-	} 
-	
-	@Test
 	public void getAllCompagnies() throws Exception{
 		System.out.println("getAllCompagnies");
 		ArrayList<CompagniaAerea> compagnie=compagniaAereaManager.getAllCompanies();
@@ -68,6 +60,7 @@ public class CompagniaAereaManagerTest {
 		assertTrue(result);
 	} 
 
+	
 	@After
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);

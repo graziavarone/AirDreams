@@ -16,7 +16,9 @@
 	ArrayList<CartaDiCredito> carte=(ArrayList<CartaDiCredito>)request.getAttribute("carte");
 	ArrayList<Ordine> ordini=(ArrayList<Ordine>)request.getAttribute("ordini");
 	
-	 DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	System.out.println("Ordini ottenuti: "+ordini);
+	
+	DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 %>
 
 <html>
@@ -140,7 +142,7 @@
            	<div class="d-inline-flex">
            		<!-- Left Navbar -->
            		<nav id="sidebar">
-	  				<div class="img bg-wrap text-center py-4" style="background-image: url(img/bg-img-1.jpg);">
+	  				<div class="img bg-wrap text-center py-4" style="background-image: url(../img/bg-img-1.jpg);">
 	  					<div class="user-logo">
 	  						<div class="img"></div>
 	  						<h3><%=account.getNome()%></h3>
@@ -148,13 +150,13 @@
 	  				</div>
         			<ul class="list-unstyled components mb-5">
           				<li>
-            				<a href=""><span class="fa fa-user mr-3"></span>Informazioni personali</a>
+            				<a href="#"><span class="fa fa-user mr-3"></span>Informazioni personali</a>
           				</li>
           				<li>
-              				<a href=""><span class="fa fa-credit-card-alt mr-3"></span>Metodi di pagamento</a>
+              				<a href="#"><span class="fa fa-credit-card-alt mr-3"></span>Metodi di pagamento</a>
           				</li>
          			 	<li>
-            				<a href=""><span class="fa fa-cube mr-3"></span>Ordini</a>
+            				<a href="#"><span class="fa fa-cube mr-3"></span>Ordini</a>
           				</li>
           				<% 
           					account=(Account)request.getSession().getAttribute("account");
@@ -165,9 +167,7 @@
           			    <li>
             				<a id="elimina" onclick="confermaElimina()"><span class="fa fa-user-times mr-3"></span>Elimina account</a>
           				</li>
-          				<% 		
-          					}
-          				%>
+          				<%  } %>
         			</ul>
 				</nav>
 				<!-- /Left Navbar -->
@@ -180,60 +180,57 @@
                 	<div class="p-2" id="info">
       					<h2>Informazioni personali <a href='javascript:editabiliInfo()'><span class="fa fa-pencil-square-o"></span></a></h2>
       				
-      					
-      						<%
+      					<%
       						if (request.getAttribute("message")!=null && !request.getAttribute("message").equals("")) {
       					%>
       					<div class="alert alert-primary" role="alert">
       						<h6><%=request.getAttribute("message")%></h6>
-      						</div>
-      							<% } %>
-      							
-      									<%
+      					</div>
+      					<%  } %>
+      					
+      					<%
       						if (request.getAttribute("messageValidation")!=null && !request.getAttribute("messageValidation").equals("")) {
       					%>
-      					
       					<div class="alert alert-primary" role="alert">
       						<h6><%=request.getAttribute("messageValidation")%></h6>
-      						</div>
-      						
-      							<% } %>
-      				
-      				
+      					</div>
+      					<%  } %>
       				
       					<form action="ModificaInfoPersonaliServlet" id="form1" method="post" class="tm-search-form tm-section-pad-2">
                         	<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Nome</label>
    					 			<div class="col-sm-7">
-   					 				<input id="nome" type="text" class="form-control" name="nome" value="<%=account.getNome()%>" readonly>
+   					 				<input id="nome" type="text" onkeyup="checkName(this)" class="form-control" name="nome" value="<%=account.getNome()%>" readonly>
    					 			</div>
   							</div>
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Cognome</label>
    					 			<div class="col-sm-7">
-   					 				<input id="cognome" type="text" class="form-control form-control-sm" name="cognome" value="<%=account.getCognome()%>" readonly>
+   					 				<input id="cognome" type="text" onkeyup="checkCognome(this)" class="form-control form-control-sm" name="cognome" value="<%=account.getCognome()%>" readonly>
    					 			</div>
   							</div>
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Email</label>
    					 			<div class="col-sm-9">
-   					 				<input id="email" type="text" class="form-control form-control-sm" name="email" value="<%=account.getEmail()%>" readonly>
+   					 				<input id="email" type="text" onkeyup="checkEmail(this)" class="form-control form-control-sm" name="email" value="<%=account.getEmail()%>" readonly>
    					 			</div>
   							</div>
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Password</label>
    					 			<div class="col-sm-7">
-   					 				<input id="password" type="password" class="form-control form-control-sm" name="password" value="<%=account.getPassword()%>" readonly>
+   					 				<input id="password" type="password" onkeyup="checkPassword(this)" class="form-control form-control-sm" name="password" value="<%=account.getPassword()%>" readonly>
    					 			</div>
   							</div>			
   							<button onclick="confermaModifica()" id="modifica" type="submit" class="btn btn-primary" hidden="true">Modifica </button>
                          </form>	
       				</div>
+      				
       				<div class="p-2" id="pagamenti">
-      					<h2>Metodi di pagamento <i class="fa fa-pencil-square-o"></i></h2>
+      					<h2> Metodi di pagamento </h2>
       					<% 
-      					if(carte!=null){
-      					for(CartaDiCredito carta: carte) {%>
+      						if(carte!=null){
+      							for(CartaDiCredito carta: carte) {
+      					%>
   							<div class="form-row align-items-center">
   								<label class="col-sm-1.5 col-form-label">Numero carta</label>
    	 							<div class="col-sm-3">
@@ -248,151 +245,138 @@
       								<input type="text" value="<%=carta.getDataScadenza() %>" class="form-control-plaintext form-control-sm">
     							</div>
     							
-    							<form action="RimuoviCartaServlet" method="post">
+    							<form id="form2" action="RimuoviCartaServlet" method="post">
     							<input type="hidden" name="nCarta" value="<%=carta.getnCarta()%>">
     							<button class="fa fa-trash" aria-hidden="true" style="margin-left: 30px;"></button>
     							</form>
     						</div>
-						<% 
-      					}
-      					} %>
+						<%  	
+								}
+      						} 
+      					%>
 						
-						<a   class="btn btn-primary tm-btn-search" style="width: 150px;"  href="aggiungiCarta.jsp">Aggiungi carta</a>
+						<a class="btn btn-primary tm-btn-search" style="width: 150px;" href="aggiungiCarta.jsp">Aggiungi carta</a>
       				</div>
       			
-      				
       				<div class="p-2" id="ordini">
-      				
       					<%
       						if (request.getAttribute("messageOrdine")!=null && !request.getAttribute("messageOrdine").equals("")) {
       					%>
       					<div class="alert alert-primary" role="alert">
       						<h6><%=request.getAttribute("messageOrdine")%></h6>
-      						</div>
-      							<% } %>
+      					</div>
+      					<%  } %>
       							
-      			
-      					<h2>Ordini <i class="fa fa-pencil-square-o"></i></h2>
-      					
-      						
-      					<% for(Ordine ordine:ordini){
-      						
+      					<h2> Ordini </h2>
+      					<% 
+      						for(Ordine ordine:ordini) {
       					%>
-      			
-  							<div class="form-row align-items-center">
-  								<label class="col-sm-2 col-form-label">Codice ordine</label>
-   	 							<div class="col-sm-1">
-      								<input type="text" readonly="readonly" value="<%=ordine.getCodOrdine()%>" class="form-control-plaintext form-control-sm">
-    							</div>
+      					<div class="form-row align-items-center">
+  							<label class="col-sm-2 col-form-label">Codice ordine</label>
+   	 						<div class="col-sm-1">
+      							<input type="text" readonly="readonly" value="<%=ordine.getCodOrdine()%>" class="form-control-plaintext form-control-sm">
+    						</div>
     							
-    							<label class="col-sm-2 col-form-label">Data acquisto</label>
-   	 							<div class="col-sm-2">
-      								<input type="text" readonly="readonly" value="<%=ordine.getDataAcquisto().format(FORMATO_DIA)%>" class="form-control-plaintext form-control-sm">
-    							</div>
+    						<label class="col-sm-2 col-form-label">Data acquisto</label>
+   	 						<div class="col-sm-2">
+      							<input type="text" readonly="readonly" value="<%=ordine.getDataAcquisto().format(FORMATO_DIA)%>" class="form-control-plaintext form-control-sm">
+    						</div>
     							
-    							<% if(request.getAttribute("bigliettiOrdine"+ordine.getCodOrdine())!=null){ 
+    						<% 
+    							if(request.getAttribute("bigliettiOrdine" + ordine.getCodOrdine())!=null) { 
     								ArrayList<Biglietto> biglietti=(ArrayList<Biglietto>)request.getAttribute("bigliettiOrdine"+ordine.getCodOrdine());
     								
     								float totale=0;
     								
     								for(Biglietto biglietto: biglietti)
     									totale+=biglietto.getPrezzoBiglietto();
-    							%>
-    							<label class="col-sm-2 col-form-label">Totale spesa </label>
-    							&euro;
-    							<div class="col-sm-1">
-      								 <input type="text" 
-      								value="<%=String.format("%.2f", totale) %>" 
-      								class="form-control-plaintext form-control-sm">
-      								
-    							</div>
+    								
+    								System.out.println("Totale è "+totale);
+    								System.out.println("Formato totale"+String.format("%.2f", totale));
+    						%>
+    						<label class="col-sm-2 col-form-label">Totale spesa </label>
+    						&euro;
+    						<div class="col-sm-1">
+      							<input type="text" value="<%=String.format("%.2f", totale) %>" class="form-control-plaintext form-control-sm">
+      						</div>
+    						<button id="mostra<%=ordine.getCodOrdine()%>" onclick="mostraBiglietti(<%=ordine.getCodOrdine()%>);" class="fa fa-plus" aria-hidden="true" style="margin-left: 90px;"></button>
+    						<button
+    							<%
+    								boolean test=false;
+									LocalDate oggi=LocalDate.now();
     							
-    										<button id="mostra<%=ordine.getCodOrdine()%>" onclick="mostraBiglietti(<%=ordine.getCodOrdine()%>);" class="fa fa-plus" aria-hidden="true" style="margin-left: 90px;"></button>
-    										<button
+									if(oggi.isBefore(biglietti.get(0).getVolo().getDataPartenza()))
+    									test=true;
+								%>
+    							id="nascondi<%=ordine.getCodOrdine()%>" hidden=true onclick="nascondiBiglietti(<%=ordine.getCodOrdine()%>,<%=test %>);" class="fa fa-minus" aria-hidden="true" style="margin-left: 90px;">
+    						</button>
     										
-    										<%
-    										boolean test=false;
-											LocalDate oggi=LocalDate.now();
-    										
-											
-    										if(oggi.isBefore(biglietti.get(0).getVolo().getDataPartenza()))
-    											test=true;
-											
-    										%>
-    										
-    										
-    										 id="nascondi<%=ordine.getCodOrdine()%>" hidden=true onclick="nascondiBiglietti(<%=ordine.getCodOrdine()%>,<%=test %>);" class="fa fa-minus" aria-hidden="true" style="margin-left: 90px;"></button>
-    										
-    										<form action="AnnullaOrdineServlet">
-    										<input type="hidden" name="idOrdine" value="<%=ordine.getCodOrdine()%>">
-    										<button 
-    										
-    										<%
-    									
-    										if(oggi.isAfter(biglietti.get(0).getVolo().getDataPartenza())){
-    										%>
-    										
-    										hidden=true,
-    										
-    										<% } %>
-    										type="submit" id="annulla<%=ordine.getCodOrdine()%>" class="	fa fa-times-circle"></button>
-    										</form>
+    						<form action="AnnullaOrdineServlet">
+    							<input type="hidden" name="idOrdine" value="<%=ordine.getCodOrdine()%>">
+    							<button 
+    								<%
+    									if(oggi.isAfter(biglietti.get(0).getVolo().getDataPartenza())){
+    								%>
+    								hidden=true,
+    								<% } %>
+    								type="submit" id="annulla<%=ordine.getCodOrdine()%>" class="fa fa-times-circle">
+    							</button>
+    						</form>
+    					</div>
     						
-    						</div>
-    						
-    						<% ArrayList<Biglietto> bigliettiOrdine=(ArrayList<Biglietto>)request.getAttribute("bigliettiOrdine"+ordine.getCodOrdine()); %>
-    						<div id="listaBiglietti<%=ordine.getCodOrdine()%>" hidden="true">
-    							<b>Biglietti</b>
+    					<% 
+    						ArrayList<Biglietto> bigliettiOrdine=(ArrayList<Biglietto>)request.getAttribute("bigliettiOrdine"+ordine.getCodOrdine()); 
+    						System.out.println("Biglietti ordine "+bigliettiOrdine);
+    					%>
+    					<div id="listaBiglietti<%=ordine.getCodOrdine()%>" hidden="true">
+    						<b>Biglietti</b>
     							
 							<table>
-    					
-							  <tr>
-							    <th>Nome</th>
-							    <th>Cognome</th>
-							    <th>Prezzo</th>
-							    <th>Partenza</th>
-							    <th>Arrivo</th>
-							    <th>Compagnia aerea</th>
-							    <th>Regole bagaglio a mano</th>
-							       <th>Regole bagaglio a stiva</th>
-							  </tr>
-							  
-							  <% for(Biglietto biglietto: bigliettiOrdine){ %>
-							  <tr>
-							     <td><%=biglietto.getNome() %></td>
-							    <td><%=biglietto.getCognome() %></td>
-							    <td>&euro;<%=String.format("%.2f",biglietto.getPrezzoBiglietto())%></td>
-							    <td><%=biglietto.getVolo().getAeroportoP().getCity() %>  il <%=biglietto.getVolo().getDataPartenza().format(FORMATO_DIA) %></td>
-							       <td><%=biglietto.getVolo().getAeroportoA().getCity() %> il <%=biglietto.getVolo().getDataArrivo().format(FORMATO_DIA) %></td>
-							       <td><%=biglietto.getVolo().getCa().getNome() %></td>
-							       <td>Peso=<%=biglietto.getBagaglioMano().getPeso() %> kg, dimensioni=<%=biglietto.getBagaglioMano().getDimensioni() %></td>
-							       <% 
-							       Iterator<BagaglioStiva> iterator=biglietto.getBagagliStiva().iterator();
-									
-									if(iterator.hasNext()) {
-										BagaglioStiva bagaglioStiva=iterator.next();
-									
-							       %>
-							       <td>Peso=<%=bagaglioStiva.getPeso() %> kg, dimensioni=<%=bagaglioStiva.getDimensioni() %>, 
-							       prezzo=&euro; <%=String.format("%.2f",bagaglioStiva.getPrezzo())%>,
-							    	quantità bagagli= <%=biglietto.getBagagliStiva().size() %>
-							       </td>
+    							<tr>
+							    	<th>Nome</th>
+							    	<th>Cognome</th>
+							    	<th>Prezzo</th>
+							    	<th>Partenza</th>
+							    	<th>Arrivo</th>
+							    	<th>Compagnia aerea</th>
+							    	<th>Regole bagaglio a mano</th>
+							        <th>Regole bagaglio a stiva</th>
+							  	</tr>
+							    <% 
+							   		for(Biglietto biglietto: bigliettiOrdine) { 
+								  		System.out.println("ho ottenuto in table "+bigliettiOrdine);
+							  	%>
+							  	<tr>
+							    	<td><%=biglietto.getNome() %></td>
+							   	 	<td><%=biglietto.getCognome() %></td>
+							   	 	<td>&euro;<%=String.format("%.2f",biglietto.getPrezzoBiglietto())%></td>
+							    	<td><%=biglietto.getVolo().getAeroportoP().getCity() %>  il <%=biglietto.getVolo().getDataPartenza().format(FORMATO_DIA) %></td>
+							        <td><%=biglietto.getVolo().getAeroportoA().getCity() %> il <%=biglietto.getVolo().getDataArrivo().format(FORMATO_DIA) %></td>
+							        <td><%=biglietto.getVolo().getCa().getNome() %></td>
+							        <td>Peso=<%=biglietto.getBagaglioMano().getPeso() %> kg, dimensioni=<%=biglietto.getBagaglioMano().getDimensioni() %></td>
+							       	<% 
+								      if (biglietto.getBagagliStiva()!=null) {
+									  	Iterator<BagaglioStiva> iterator=biglietto.getBagagliStiva().iterator();
+											
+										if(iterator.hasNext()) {
+											BagaglioStiva bagaglioStiva=iterator.next(); 
+									%>
+							       	<td>
+							       		Peso=<%=bagaglioStiva.getPeso() %> kg, dimensioni=<%=bagaglioStiva.getDimensioni() %>, 
+							       		prezzo=&euro; <%=String.format("%.2f",bagaglioStiva.getPrezzo())%>,
+							    		quantità bagagli= <%=biglietto.getBagagliStiva().size() %>
+							       	</td>
 							       
-							       <% }  else { %>
-							       <td>Non è compreso nel biglietto il/i bagaglio/gli a stiva</td>
+							       <% 	} 
+								      } else { %>
+							      	<td> Non sono compresi nel biglietto bagagli a stiva </td>
 							       <% } %>
-							       
-							  </tr>
-							  
-							  <% } %>
+							    </tr>
+							  	<% } %>
 							</table>
-							
-							</div>
-    						<% } %>
-    							
-    					
-								
-      				<% } %>
+						</div>
+    					<% } %>
+    				<% } %>
       				</div>
       		
       				<div class="tm-section tm-position-relative">
@@ -414,6 +398,7 @@
         </div>
         
         <!-- load JS files -->
+        <script src="../scripts/validaModificaProfilo.js"></script>
         <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
         <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
         <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
@@ -426,6 +411,14 @@
 		   $("#form1").submit(function(e) {    
 	        	if(!confirm("sei sicuro di voler modificare il tuo account?")){      
 	        		e.preventDefault();  
+	        		location.href="DettagliAccountServlet";
+	        	} 
+	        }); 
+		   
+		   $("#form2").submit(function(e) {    
+	        	if(!confirm("sei sicuro di voler eliminare la carta?")){      
+	        		e.preventDefault();  
+	        		location.href="DettagliAccountServlet"
 	        	} 
 	        }); 
 		   
@@ -457,7 +450,7 @@
           		$("#listaBiglietti"+codice).prop('hidden', true);
           		
           		if(test==true){
-          			$("#annulla"+codice).prop('hidden',false);
+          		$("#annulla"+codice).prop('hidden',false);
           		}
           	}
         </script>

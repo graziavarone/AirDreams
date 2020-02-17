@@ -58,7 +58,7 @@ public class RicercaVoloGestoreTest {
         DbPopulator.initializeDatabase();
         
         utente = new UtenteManager();
-        account = utente.findAccountByEmail("noemi@gmail.com");
+        account = utente.findAccountByEmail("gestoreVoli@gmail.com");
         
 	}
 	

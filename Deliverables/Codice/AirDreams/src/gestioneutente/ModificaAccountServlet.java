@@ -25,7 +25,8 @@ public class ModificaAccountServlet extends HttpServlet {
 	private String expNome="^[A-Za-z]{1,}$";
 	private String expCognome="^[A-Za-z]{1,}$";
 	private String expEmail="^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$";
-      
+	private String messageValidation="";
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -33,6 +34,7 @@ public class ModificaAccountServlet extends HttpServlet {
 		UtenteManager manager=new UtenteManager();
 		CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
 		String message="";
+		String redirect="";
 		
 		//prelevo i dati del form
 		String nome=request.getParameter("nome");
@@ -46,65 +48,65 @@ public class ModificaAccountServlet extends HttpServlet {
 		newAccount.setNome(nome);
 		newAccount.setCognome(cognome);
 		newAccount.setEmail(email);
-		
+
 		Account accountVecchio=null;
 		Account a=null;
+		
 		try {
-			accountVecchio = manager.findAccountByEmail(emailVecchia);
-	
-			a = manager.findAccountByEmail(email);
-			
-			if(compagniaAerea.equals("Nessuna")) {
-				newAccount.setCompagniaAerea(null);
-				newAccount.setRuolo(null);
-			} else {
-				newAccount.setCompagniaAerea(compagniaAereaManager.visualizzaInfoCompagniaAerea(compagniaAerea));
-				newAccount.setRuolo(Ruolo.gestoreVoli);
-			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		//controllo che la mail inviata da form (se e' stata modificata) non sia uguale ad una gi� presente nel DB
-		if(email.equals(emailVecchia)) {
-			newAccount.setPassword(accountVecchio.getPassword());
-			
-			if(valida(nome,cognome,email)) {
-			manager.aggiornaProfilo(accountVecchio, newAccount);
-			} else response.getWriter().write("Failed");
-			
-			message+="aggiornamento dati eseguito";
-			request.setAttribute("message",message);
-			System.out.println("Modifica eseguita direttamente poiche' la email e' rimasta invariata");
-			request.setAttribute("utente",newAccount);
-		} else {
-			if (a!=null) { //trovato un account con la email appena inserita
-				message+="la email inserita e' gia' presente, inserirne una nuova";
-				request.setAttribute("message",message);
-				request.setAttribute("utente", accountVecchio);
-				System.out.println("Non ho modificato l'utente poiche' esiste gia' la mail appena inserita");
+			if(!valida(nome, cognome, email)) {
 				response.getWriter().write("Failed");
+				redirect="/gestoreCompagnie/DettagliUtenteServlet?email="+emailVecchia;
 			} else {
-				newAccount.setPassword(accountVecchio.getPassword());
+				accountVecchio = manager.findAccountByEmail(emailVecchia);
+				a = manager.findAccountByEmail(email);
+				
+				if(compagniaAerea.equals("Nessuna")) {
+					newAccount.setCompagniaAerea(null);
+					newAccount.setRuolo(null);
+				} else {
+					newAccount.setCompagniaAerea(compagniaAereaManager.visualizzaInfoCompagniaAerea(compagniaAerea));
+					newAccount.setRuolo(Ruolo.gestoreVoli);
+				}
+				
+				if(email.equals(emailVecchia)) {
+					newAccount.setPassword(accountVecchio.getPassword());
 
-				if(valida(nome,cognome,email)) {
-					manager.aggiornaProfilo(accountVecchio, newAccount);
-					} else response.getWriter().write("Failed");
-				message+="aggiornamento dati eseguito";
-				request.setAttribute("message",message);
-				System.out.println("Modifica eseguita poiche' la mail inserita non � gia' presente nel DB");
-				response.getWriter().write("Success");
-				request.setAttribute("utente",newAccount);
-			}
-		}
-	
-		try {
-			request.setAttribute("compagnie", compagniaAereaManager.getAllCompanies());
+					manager.aggiornaProfilo(manager.findAccountByEmail(emailVecchia), newAccount);
+					
+					message+="aggiornamento dati eseguito";
+					request.setAttribute("message",message);
+					System.out.println("Modifica eseguita direttamente poiche' la email e' rimasta invariata");
+					request.setAttribute("utente",newAccount);
+					redirect="/gestoreCompagnie/DettagliUtenteServlet?email="+email;
+				} else {
+					if (a!=null) { //trovato un account con la email appena inserita
+						message+="la email inserita e' gia' presente, inserirne una nuova";
+						request.setAttribute("message",message);
+						request.setAttribute("utente", accountVecchio);
+						System.out.println("Non ho modificato l'utente poiche' esiste gia' la mail appena inserita");
+						response.getWriter().write("Failed");
+						redirect="/gestoreCompagnie/DettagliUtenteServlet?email="+emailVecchia;
+					} else {
+						newAccount.setPassword(accountVecchio.getPassword());
+						
+						manager.aggiornaProfilo(manager.findAccountByEmail(emailVecchia), newAccount);
+					
+						message+="aggiornamento dati eseguito";
+						request.setAttribute("message",message);
+						System.out.println("Modifica eseguita poiche' la mail inserita non � gia' presente nel DB");
+						response.getWriter().write("Success");
+						request.setAttribute("utente",newAccount);
+						redirect="/gestoreCompagnie/DettagliUtenteServlet?email="+email;
+					}
+				}
+			}	 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		request.getServletContext().getRequestDispatcher("/gestoreCompagnie/dettagliAccount.jsp").forward(request, response);
+		
+		request.setAttribute("message",message);
+		request.setAttribute("messageValidation", messageValidation);
+		request.getServletContext().getRequestDispatcher(redirect).forward(request, response);
 	}
 
 	/**

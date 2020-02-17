@@ -23,8 +23,8 @@ public class BagaglioManagerTest {
 	
 	@Before
 	public void setUp() throws Exception {	
-		//DbPopulator.initializeDatabase();
-		DriverManagerConnectionPool.setTest(true);
+		DbPopulator.initializeDatabase();
+		//DriverManagerConnectionPool.setTest(true);
 	}
 	
 	@Test
@@ -61,7 +61,7 @@ public class BagaglioManagerTest {
 		bagaglioManager.aggiungiBagaglioStiva(new BagaglioStiva(10, "10x10x10", biglietto,33,1));
 		HashSet<BagaglioStiva> bagagli=bagaglioManager.cercaBagagliStivaBiglietto(biglietto);
 		
-		assertNotNull(bagagli);
+		assertTrue(bagagli.size()>0);
 
 	} 
 	

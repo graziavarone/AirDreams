@@ -3,16 +3,17 @@
     pageEncoding="ISO-8859-1" import="java.util.*, gestioneutente.*"%>
     
 <%
- String message=(String)request.getAttribute("message");
+	String message=(String)request.getAttribute("message");
+	String messageValidation=(String)request.getAttribute("messageValidation");
 
- Boolean mod=(Boolean)request.getAttribute("mod");
+ 	Boolean mod=(Boolean)request.getAttribute("mod");
  
- Account utente=(Account)request.getAttribute("utente");
+	Account utente=(Account)request.getAttribute("utente");
  
- ArrayList<CompagniaAerea> compagnie=(ArrayList<CompagniaAerea>) request.getAttribute("compagnie");
-
-if(mod==null)
-	mod=true;
+ 	ArrayList<CompagniaAerea> compagnie=(ArrayList<CompagniaAerea>) request.getAttribute("compagnie");
+	
+ 	if(mod==null)
+		mod=true;
 %>
 <!DOCTYPE html>
 <html>
@@ -149,59 +150,54 @@ http://www.tooplate.com/view/2095-level
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
                 
-                  <% if(message!=null){ %>
-				                <p id="messageError"><%=message %></p>
-				                <% } %>
+                  	<% if((message!=null) && !message.equals("")){ %>
+				  		<p id="messageError"><%=message %></p>
+				  	<% } %>
+				  
+				 	<% if(messageValidation!=null && !messageValidation.equals("")){ %>
+				    	<p id="messageError"><%=messageValidation%></p>
+				    <% } %>
+				  
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                   				<form action="ModificaAccountServlet" method="post"  class="tm-search-form tm-section-pad-2 confirm" id="form1">
-                                         <input type="hidden" name="emailVecchia" value="<%=utente.getEmail()%>">
+                                    <input type="hidden" name="emailVecchia" value="<%=utente.getEmail()%>">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="nome" type="text" class="form-control" value=<%=utente.getNome()%> id="inputName" placeholder="Type your name..." required="required">
-                                   
+                                            <input name="nome" onkeyup="checkName(this)" type="text" class="form-control" value=<%=utente.getNome()%> id="inputName" placeholder="Type your name..." required="required">
                                         </div>
                                      
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                         
-                                            <input name="cognome" type="text"  class="form-control" value=<%=utente.getCognome() %> id="inputCognome" placeholder="Type your surname..." required="required">
+                                            <input name="cognome" onkeyup="checkCognome(this)" type="text"  class="form-control" value=<%=utente.getCognome() %> id="inputCognome" placeholder="Type your surname..." required="required">
                                         	<br>
                                         </div>
+                                        
                                         <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="email" type="text" class="form-control" value=<%=utente.getEmail() %> id="inputEmail" placeholder="Type your email" required="required">
+                                            <input name="email" onkeyup="checkEmail(this)" type="text" class="form-control" value=<%=utente.getEmail() %> id="inputEmail" placeholder="Type your email" required="required">
                                         	<br>
                                         </div>  
                                     	<p style="margin-right: 30px">Assegna la compagnia aerea </p>
                                         <% if(utente.getRuolo()==Ruolo.gestoreVoli){ %>
-                                     	<p>Compagnia aerea attuale <%=utente.getCompagniaAerea().getNome() %>  </p>
+                                     		<p>Compagnia aerea attuale <%=utente.getCompagniaAerea().getNome() %>  </p>
                							<% } %>
-                                    <select id="text" name="combo">
-                                    <option>Nessuna</option>
-										<%
-										for(int i=0;i<compagnie.size();i++){
-											CompagniaAerea compagniaAerea=compagnie.get(i);
-										%>
-										
-										<option><%=compagniaAerea.getNome()%></option>
-										
-										
-										<% } %>
-									</select>
-                                     
                                     
-						
-                                   
-                                    </div>
+                                    	<select id="text" name="combo">
+                                    		<option>Nessuna</option>
+											<%
+												for(int i=0;i<compagnie.size();i++){
+													CompagniaAerea compagniaAerea=compagnie.get(i);
+											%>
+											<option><%=compagniaAerea.getNome()%></option>
+											<% } %>
+										</select>
+                                   	</div>
                                         
-                                    
                                     <div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
                                             <input type="submit" class="btn btn-primary tm-btn-search" value="Modifica">
-                                            
                                         </div>
-                                      </div>
-                                    
+                                    </div>
                                 </form>
                             </div>                        
                         </div>      
@@ -209,9 +205,7 @@ http://www.tooplate.com/view/2095-level
                 </div>              
             </div>
           
-
-            
-            <footer class="tm-bg-dark-blue">
+			<footer class="tm-bg-dark-blue">
                 <div class="container">
                     <div class="row">
                         <p class="col-sm-12 text-center tm-font-light tm-color-white p-4 tm-margin-b-0">
@@ -231,11 +225,15 @@ http://www.tooplate.com/view/2095-level
         <script src="../js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
         <script src="../js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="../slick/slick.min.js"></script>    
-        <script src="../scripts/confirm.js"></script>
                   <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
-	
-
-
+		<script type="text/javascript">
+	  		 $("#form1").submit(function(e) {    
+       			if(!confirm("sei sicuro di voler modificare l' account?")){      
+       				e.preventDefault();  
+       				location.href="ListaCompagnieServlet";
+       			} 
+      	 	}); 
+		</script>
 </body>
 </html>

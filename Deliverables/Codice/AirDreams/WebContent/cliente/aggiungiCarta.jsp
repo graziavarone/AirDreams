@@ -136,18 +136,18 @@ if(mod==null)
                   				<form action="AggiungiCartaServlet" method="post" class="tm-search-form tm-section-pad-2" id="card1">
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="nCarta" type="text" class="form-control" id="inputnCarta" placeholder="Inserire numero carta..." required="required">
+                                            <input name="nCarta" type="text" onkeyup="checkNumeroCarta(this)" class="form-control" id="inputnCarta" placeholder="Inserire numero carta..." required="required">
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                            <input name="titolare" type="text"  class="form-control" id="inputTitolare" placeholder="Titolare della carta" required="required">
+                                            <input name="titolare" type="text" onkeyup="checkTitolare(this)" class="form-control" id="inputTitolare" placeholder="Titolare della carta" required="required">
                                         	<br>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="dataScadenza" type="text" class="form-control" id="inputDataScadenza" placeholder="data scadenza nel formato mm/yy" required="required">
+                                            <input name="dataScadenza" type="text" onkeyup="checkData(this)" class="form-control" id="inputDataScadenza" placeholder="data scadenza nel formato mm/yy" required="required">
                                         	<br>
                                         </div>                                      
                                         <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input name="cvc" type="text"  class="form-control" id="inputCvc" placeholder="cvc" required="required">
+                                            <input name="cvc" type="text" onkeyup="checkCVC(this)" class="form-control" id="inputCvc" placeholder="cvc" required="required">
                                        		<br>
                                         </div>
                                     </div>
@@ -175,6 +175,7 @@ if(mod==null)
         </div>
         
          <!-- load JS files -->
+        <script src="../scripts/validaCarta.js"></script>
         <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
         <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
         <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
@@ -187,6 +188,7 @@ if(mod==null)
 			$('#card1').submit(function(e) {
 				if(!confirm("sicuro di voler proseguire?")) {
 					e.preventDefault();
+					location.href='DettagliAccountServlet';
 				}
 			});
 			

@@ -75,6 +75,8 @@ public class PagamentoServletTest {
         utente = new UtenteManager();
         account = utente.findAccountByEmail("rosaria@gmail.com");
 		when(request.getSession().getAttribute("account")).thenReturn(account);
+		
+	
 	}
 	
 	//TC_2.1_1 formato numero carta errato
@@ -85,6 +87,8 @@ public class PagamentoServletTest {
 		when(request.getParameter("titolare")).thenReturn("Rosaria Rossi");
 		when(request.getParameter("dataScadenza")).thenReturn("02/22");
 		when(request.getParameter("cvc")).thenReturn("676");
+		
+
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -101,6 +105,7 @@ public class PagamentoServletTest {
 		when(request.getParameter("dataScadenza")).thenReturn("02/22");
 		when(request.getParameter("cvc")).thenReturn("676");
 		
+		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -115,6 +120,7 @@ public class PagamentoServletTest {
 		when(request.getParameter("titolare")).thenReturn("Rosaria Rossi");
 		when(request.getParameter("dataScadenza")).thenReturn("02-2022");
 		when(request.getParameter("cvc")).thenReturn("676");
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -131,6 +137,7 @@ public class PagamentoServletTest {
 		when(request.getParameter("dataScadenza")).thenReturn("11/18");
 		when(request.getParameter("cvc")).thenReturn("676");
 		
+		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -145,6 +152,7 @@ public class PagamentoServletTest {
 		when(request.getParameter("titolare")).thenReturn("Rosaria Rossi");
 		when(request.getParameter("dataScadenza")).thenReturn("02/22");
 		when(request.getParameter("cvc")).thenReturn("1");
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -161,32 +169,34 @@ public class PagamentoServletTest {
 		when(request.getParameter("dataScadenza")).thenReturn("02/22");
 		when(request.getParameter("cvc")).thenReturn("676");
 		
-		CarrelloManager carrelloManager=new CarrelloManager();
-	    VoloManager voloManager=new VoloManager();
-		ArrayList<Volo> voli=voloManager.cercaVoli("Ryanair");
-		carrelloManager.svuotaCarrello("rosaria@gmail.com");
-		carrelloManager.aggiungiVoloAlCarrello("rosaria@gmail.com", voli.get(0).getId(), 1);
-		voliCarrello.put(voli.get(0), 1);
-		carrello=carrelloManager.getCarrelloUtente("rosaria@gmail.com");
-		carrello.setVoli(voliCarrello);
+			CarrelloManager carrelloManager=new CarrelloManager();
+	    	VoloManager voloManager=new VoloManager();
+			ArrayList<Volo> voli=voloManager.cercaVoli("Ryanair");
+			carrelloManager.svuotaCarrello("rosaria@gmail.com");
+			carrelloManager.aggiungiVoloAlCarrello("rosaria@gmail.com", voli.get(0).getId(), 1);
+			voliCarrello.put(voli.get(0), 1);
+			carrello=carrelloManager.getCarrelloUtente("rosaria@gmail.com");
+			carrello.setVoli(voliCarrello);
 			
-		Biglietto biglietto=new Biglietto("Rosaria", "Rossi", Sesso.F, 50, voli.get(0));
-		biglietto.setBagaglioMano(new BagaglioMano(10, "22x22x22", biglietto));
-		HashSet<BagaglioStiva> bagaglioStivas=new HashSet<BagaglioStiva>();
-		bagaglioStivas.add(new BagaglioStiva(20, "33x33x33", biglietto,25,1));
-		biglietto.setBagagliStiva(bagaglioStivas);
-		biglietti.add(biglietto);
+			Biglietto biglietto=new Biglietto("Rosaria", "Rossi", Sesso.F, 50, voli.get(0));
+			biglietto.setBagaglioMano(new BagaglioMano(10, "22x22x22", biglietto));
+			HashSet<BagaglioStiva> bagaglioStivas=new HashSet<BagaglioStiva>();
+			bagaglioStivas.add(new BagaglioStiva(20, "33x33x33", biglietto,25,1));
+			biglietto.setBagagliStiva(bagaglioStivas);
+			biglietti.add(biglietto);
+			
+			when(request.getSession().getAttribute("biglietti")).thenReturn(biglietti);  
 		
-		when(request.getSession().getAttribute("biglietti")).thenReturn(biglietti);  
 		
-		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
-		when(response.getWriter()).thenReturn(MyWriter);
-		servlet.doPost(request, response);	
-		Mockito.verify(MyWriter).write("Success");
-	}
+			PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
+			when(response.getWriter()).thenReturn(MyWriter);
+			servlet.doPost(request, response);	
+			Mockito.verify(MyWriter).write("Success");
+		}
 	
 	@After
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);
 	}
+
 }

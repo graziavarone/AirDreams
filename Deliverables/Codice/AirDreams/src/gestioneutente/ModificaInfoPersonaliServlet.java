@@ -113,28 +113,26 @@ public class ModificaInfoPersonaliServlet extends HttpServlet {
 		
 		if (!Pattern.matches(expNome, nome)) {
 			logger.info("Nome non corrisponde");
-			messageValidation+="Il nome deve contenere solo lettere dell'alfabeto ";
+			messageValidation+="Il nome non puo' contenere altri caratteri oltre lettere<br>";
 			valido=false;
 			System.out.print(nome);
 		}
-		
 		if (!Pattern.matches(expCognome, cognome)) {
 			logger.info("Cognome non corrisponde");
 			valido=false;
-			messageValidation+="Il cognome deve contenere solo lettere dell'alfabeto ";
+			messageValidation+="Il cognome non puo' contenere altri caratteri oltre lettere<br>";
 			System.out.print(cognome);
 		}
 	
 		if (!Pattern.matches(expPassword, password)) {
 			logger.info("password non corrisponde,");
 			valido=false;
-			messageValidation+="La password non rispetta il formato previsto (deve contenere almeno una cifra) ";
+			messageValidation+="La password inserita non e' valida per il sistema. Deve avere almeno 6 caratteri e deve contenere almeno un carattere maiuscolo e almeno un numero<br>";
 			System.out.print(password);
 		}
-		
 		if (!Pattern.matches(expEmail, email)) {
 			valido=false;
-			messageValidation+="L'email non rispetta il formato previsto (esempio: mariorossi@gmail.com) ";
+			messageValidation+="L'email non rispetta il formato previsto (esempio: mariorossi@gmail.com)<br>";
 			System.out.print(email);
 		}
 		

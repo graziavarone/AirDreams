@@ -168,7 +168,7 @@ http://www.tooplate.com/view/2095-level
                                    	<div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-100">
                                           	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="city" id="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                            <input name="city" id="city" onblur="checkAeroporto(this)" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                        	</div>
                                        	<div class="form-group col-auto col-form-label">
@@ -176,7 +176,7 @@ http://www.tooplate.com/view/2095-level
                              			</div>
                                         <div class="form-group tm-form-element tm-form-element-100">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                           	<input name="cityArrivals" id="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                           	<input name="cityArrivals" id="cityArrivals" onblur="checkAeroporto(this)" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
@@ -188,11 +188,11 @@ http://www.tooplate.com/view/2095-level
               					 	<div class="form-row tm-search-form-row">
                                 		<div class="form-group tm-form-element tm-form-element-50">
                                     	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	<input name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza" required>
+                                           	<input name="dateDeparture" type="text" onkeyup="checkData(this)" class="form-control" id="start" placeholder="Data partenza" required>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                     	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	<input name="dateReturn" type="text" class="form-control" id="return" placeholder="Data ritorno" required>
+                                           	<input name="dateReturn" type="text" onkeyup="checkData(this)" class="form-control" id="return" placeholder="Data ritorno" required>
                                         </div>
                                     </div>
                         
@@ -247,9 +247,10 @@ http://www.tooplate.com/view/2095-level
         <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		
-		 <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
+		<script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
 		<script src="scripts/ricercaAeroporti.js"> </script>
+		<script src="scripts/validaVolo.js"></script>
         
         <script>
       

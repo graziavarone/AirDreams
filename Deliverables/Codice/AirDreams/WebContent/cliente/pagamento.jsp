@@ -140,75 +140,66 @@
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                             <%
-      						if (request.getAttribute("message")!=null && !request.getAttribute("message").equals("")) {
-      					%>
-      					<div class="alert alert-primary" role="alert">
-      						<h6><%=request.getAttribute("message")%></h6>
-      						</div>
-      							<% } %>
+      							if (request.getAttribute("message")!=null && !request.getAttribute("message").equals("")) {
+      						%>
+      							<div class="alert alert-primary" role="alert">
+      								<h6><%=request.getAttribute("message")%></h6>
+      							</div>
+      						<%  } %>
       							
-                            <form action="PagamentoServlet" method="post" id="form1">
-                            
-                            		<% if(carte!=null && carte.size()!=0){ %>
-                            		Carta <%=carte.get(0).getnCarta() %><input checked="checked" onclick="mostra(this.value)" type="radio" name="carta" value="<%=carte.get(0).getnCarta()%>">
-                            		<% for(int i=1;i<carte.size();i++){ %>
-              						Carta <%=carte.get(i).getnCarta() %><input onclick="mostra(this.value)" type="radio" name="carta" value="<%=carte.get(i).getnCarta()%>">
-        								<br>
-        								<% } %>
-              						<% } %>
+                            <form action="PagamentoServlet" method="post" id="form2">
+                            	<% 
+                            		if(carte!=null && carte.size()!=0){ 
+                            	%>
+                            	Carta <%=carte.get(0).getnCarta() %><input checked="checked" onclick="mostra(this.value)" type="radio" name="carta" value="<%=carte.get(0).getnCarta()%>">
+                            	<% 
+                            			for(int i=1;i<carte.size();i++){ 
+                            	%>
+              					Carta <%=carte.get(i).getnCarta() %><input onclick="mostra(this.value)" type="radio" name="carta" value="<%=carte.get(i).getnCarta()%>">
+        						<br>
+        						<% 		} %>
+              					<% 	} %>
               			
-              							Inserisci una nuova carta<input type="radio" name="carta" value="crea" id="crea" onclick="mostra(this.value)">
-                            	  <div class="form-row tm-search-form-row">                                  
-                                        <div class="form-group tm-form-element tm-form-element-2">
-                                            <button type="submit" id="cartaEsistente" class="btn btn-primary tm-btn-search">Paga</button>
-                                        </div>
-                                      </div>	
-                            
+              					Inserisci una nuova carta<input type="radio" name="carta" value="crea" id="crea" onclick="mostra(this.value)">
+                            	<div class="form-row tm-search-form-row">                                  
+                                	<div class="form-group tm-form-element tm-form-element-2">
+                                   		<button type="submit" id="cartaEsistente" class="btn btn-primary tm-btn-search">Paga</button>
+                                    </div>
+                                </div>	
                             </form>
-                  				<form action="PagamentoServlet" method="post" id="form1">
-                  				    		
-                                   	 <div class="form-row tm-search-form-row">
-                                   	 
-                                        <div class="form-group tm-form-element tm-form-element-100">
-                                            <input  hidden=true name="nCarta" type="text" class="form-control" id="inputnCarta" placeholder="Inserire numero carta..." required="required">
-                                        </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                            <input  hidden=true name="titolare" type="text"  class="form-control" id="inputTitolare" placeholder="Titolare della carta" required="required">
-                                        	<br>
-                                        </div>
-                                        <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input  hidden=true name="dataScadenza" type="text" class="form-control" id="inputDataScadenza" placeholder="data scadenza nel formato mm/yy" required="required">
-                                        	<br>
-                                        </div>                                      
-                                        <div class="form-group tm-form-element tm-form-element-50">                                      
-                                            <input  hidden=true name="cvc" type="text"  class="form-control" id="inputCvc" placeholder="cvc" required="required">
-                                       		<br>
-                                        </div>
-                                          <div class="form-row tm-search-form-row">                                  
+                  			
+                  			<form action="PagamentoServlet" method="post" id="form3">
+                  				<div class="form-row tm-search-form-row">
+                                	<div class="form-group tm-form-element tm-form-element-100">
+                                    	<input  hidden=true name="nCarta" onkeyup="checkNumeroCarta(this)" type="text" class="form-control" id="inputnCarta" placeholder="Inserire numero carta..." required="required">
+                                    </div>
+                                    <div class="form-group tm-form-element tm-form-element-50">
+                                    	<input  hidden=true name="titolare" onkeyup="checkTitolare(this)" type="text"  class="form-control" id="inputTitolare" placeholder="Titolare della carta" required="required">
+                                        <br>
+                                    </div>
+                                    <div class="form-group tm-form-element tm-form-element-50">                                      
+                                    	<input  hidden=true name="dataScadenza" onkeyup="checkData(this)" type="text" class="form-control" id="inputDataScadenza" placeholder="data scadenza nel formato mm/yy" required="required">
+                                        <br>
+                                    </div>                                      
+                                    <div class="form-group tm-form-element tm-form-element-50">                                      
+                                    	<input  hidden=true name="cvc" onkeyup="checkCVC(this)" type="text"  class="form-control" id="inputCvc" placeholder="cvc" required="required">
+                                       	<br>
+                                    </div>
+                                   	<div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
                                             <button type="submit" class="btn btn-primary tm-btn-search" id="submit" hidden=true>Paga</button>
                                         </div>
-                                      </div>	
-                                    </div>
-                                  
-   								
-                                    
-   							</form>		
-    					
-    							
-                             
-                                    
-                              
-                            </div>                        
+                                    </div>	
+                                </div>
+                            </form>		                      
                         </div>      
                     </div>
                 </div>                  
             </div>
-
-            
-        </div>
+		</div>
         
          <!-- load JS files -->
+        <script src="../scripts/validaCarta.js"></script>
         <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
         <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
         <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
@@ -218,23 +209,29 @@
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 			<script type="text/javascript">
 		
-			$('#form1').submit(function(e) {
+			$('#form2').submit(function(e) {
 				if(!confirm("sicuro di voler proseguire?")) {
 					e.preventDefault();
+					location.href="DettagliAccountServlet?annullamento="+true;
 				}
 			});
 			
-       
-          	function mostra(text) {
+			$('#form3').submit(function(e) {
+				if(!confirm("sicuro di voler proseguire?")) {
+					e.preventDefault();
+					location.href="DettagliAccountServlet?annullamento="+true;
+				}
+			});
+			
+       		function mostra(text) {
 				if(text=='crea'){
-          		document.getElementById("inputnCarta").removeAttribute("hidden");
-          		document.getElementById("inputTitolare").removeAttribute("hidden");
-          		document.getElementById("inputDataScadenza").removeAttribute("hidden");
-          		document.getElementById("inputCvc").removeAttribute("hidden");
-         		document.getElementById("submit").removeAttribute("hidden");
-         		$("#cartaEsistente").prop('hidden', true);
-         		
-				} else {
+          			document.getElementById("inputnCarta").removeAttribute("hidden");
+          			document.getElementById("inputTitolare").removeAttribute("hidden");
+          			document.getElementById("inputDataScadenza").removeAttribute("hidden");
+          			document.getElementById("inputCvc").removeAttribute("hidden");
+         			document.getElementById("submit").removeAttribute("hidden");
+         			$("#cartaEsistente").prop('hidden', true);
+         		} else {
 					$("#inputnCarta").prop('hidden', true);
 					$("#inputTitolare").prop('hidden', true);
 					$("#inputDataScadenza").prop('hidden', true);

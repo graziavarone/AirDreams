@@ -14,11 +14,13 @@ public class DbPopulator {
 	public static void initializeDatabase() throws SQLException, FileNotFoundException {
 
 		DriverManagerConnectionPool.setTest(true);
+		System.out.println("In dpPopulator test e' "+DriverManagerConnectionPool.isTest());
 		Connection conn =  DriverManagerConnectionPool.getConnection();
 		ScriptRunner sr = new ScriptRunner(conn);
 		java.io.Reader reader = new BufferedReader(new FileReader("inserimento.sql"));
 		sr.runScript(reader);
 		
-		DriverManagerConnectionPool.releaseConnection(conn);
+		//DriverManagerConnectionPool.releaseConnection(conn);
+		conn.close();
 	}
 }

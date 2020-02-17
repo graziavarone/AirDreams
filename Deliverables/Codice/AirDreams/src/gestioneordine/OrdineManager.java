@@ -31,35 +31,45 @@ public class OrdineManager {
 		PreparedStatement preparedStatement=null;
 		PreparedStatement preparedStatement1=null;
 
+	
 		String updateSQL="INSERT into ordine (dataAcquisto,cartaDiCredito,email) values (?,?,?)";
         
-        try {
-        	connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(updateSQL);
-            
-            preparedStatement.setString(1, ordine.getDataAcquisto().format(FORMATO_DIA));
-            preparedStatement.setString(2, ordine.getCartaDiCredito().getnCarta());
-            preparedStatement.setString(3, ordine.getAccount().getEmail());
+        
+            try {
+                connection = DriverManagerConnectionPool.getConnection();
+                preparedStatement = connection.prepareStatement(updateSQL);
+               
+
+                preparedStatement.setString(1, ordine.getDataAcquisto().format(FORMATO_DIA));
+                preparedStatement.setString(2, ordine.getCartaDiCredito().getnCarta());
+                preparedStatement.setString(3, ordine.getAccount().getEmail());
               
-            System.out.println("aggiungiOrdine: "+ preparedStatement.toString());
-            preparedStatement.executeUpdate();
+             
+            	System.out.println("aggiungiOrdine: "+ preparedStatement.toString());
+                preparedStatement.executeUpdate();
                 
-            String sql1="SELECT codOrdine FROM ordine ORDER BY codOrdine DESC LIMIT 1";
-            preparedStatement1=connection.prepareStatement(sql1);
-            ResultSet rs = preparedStatement1.executeQuery();
+
+                String sql1="SELECT codOrdine FROM ordine ORDER BY codOrdine DESC LIMIT 1";
+                preparedStatement1=connection.prepareStatement(sql1);
+                ResultSet rs = preparedStatement1.executeQuery();
                 
-            if(rs.next()) {
-            	System.out.println("Ho trovato ordine con id "+rs.getInt("codOrdine"));
-            	ordine.setCodOrdine(rs.getInt("codOrdine"));
-        	}    
-        } finally {
-        	try {
-        		if(preparedStatement!=null)
-        			preparedStatement.close();
-            } finally {
-            	DriverManagerConnectionPool.releaseConnection(connection);
+                if(rs.next()) {
+                	System.out.println("Ho trovato ordine con id "+rs.getInt("codOrdine"));
+        			ordine.setCodOrdine(rs.getInt("codOrdine"));
+        			
+        		}
+         		
+                
             }
-        }
+              finally {
+            	try {
+            		if(preparedStatement!=null) preparedStatement.close();
+            		}
+            		finally {
+            			DriverManagerConnectionPool.releaseConnection(connection);
+            		}
+            	}
+        
         
         return ordine;
     }
@@ -73,7 +83,6 @@ public class OrdineManager {
 	public ArrayList<Ordine> cercaOrdiniUtente(String email) throws SQLException {
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
-		PreparedStatement preparedStatement1=null;
 		ResultSet rs=null;
 		ArrayList <Ordine> ordini= new ArrayList <Ordine>();
 		UtenteManager utenteManager= new UtenteManager();
@@ -121,7 +130,6 @@ public class OrdineManager {
 		boolean b=false;
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
-		PreparedStatement preparedStatement1=null;
 		
 		String updateSQL="DELETE from ordine WHERE codOrdine=?";
         

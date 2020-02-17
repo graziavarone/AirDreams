@@ -85,13 +85,12 @@ public class RegistrazioneServlet extends HttpServlet {
 				account=new Account(nome,cognome,email,password);
 				utenteManager.signUp(account);
 				response.getWriter().write("Success");
-				redirect="login.jsp";
+				redirect="login.jsp?message="+message;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		request.setAttribute("message", message);
 		request.getRequestDispatcher(redirect).forward(request, response);
 	}
 

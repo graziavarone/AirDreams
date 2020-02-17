@@ -1,3 +1,4 @@
+
 function checkName(inputtxt) {
 	var name = /^[A-Za-z]{1,}$/;
 	if(!inputtxt.value.match(name)) {
@@ -52,16 +53,15 @@ function checkPassword(inputtxt) {
 }
 
 
-function controllaPassword(inputtxt){
-	var name = document.getElementsByName("password")[0];
-	var confermaPassword = document.getElementsByName("Cpassword")[0];
-	
-	if(name.value==inputtxt.value) {
-		inputtxt.classList.remove("error");
-		inputtxt.classList.add("success");	
-	}
-	else {
-		inputtxt.classList.remove("success");
-		inputtxt.classList.add("error");	
-	}
-}
+
+
+
+
+
+
+
+
+
+
+
+

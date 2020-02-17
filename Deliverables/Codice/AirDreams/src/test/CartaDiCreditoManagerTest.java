@@ -21,8 +21,8 @@ public class CartaDiCreditoManagerTest {
 	
 	@Before
 	public void setUp() throws Exception {	
-		//DbPopulator.initializeDatabase();
-		DriverManagerConnectionPool.setTest(true);
+		DbPopulator.initializeDatabase();
+		//DriverManagerConnectionPool.setTest(true);
 	}
 	
 	@Test
@@ -47,7 +47,7 @@ public class CartaDiCreditoManagerTest {
 		cartaDiCredito.setAccount(utenteManager.findAccountByEmail("noemi@gmail.com"));
 		boolean result=cartaDiCreditoManager.creaCartaDiCredito(cartaDiCredito);
 		
-		cartaDiCreditoManager.eliminaCarta(cartaDiCredito.getnCarta(), "noemi@gmail.com");
+		//cartaDiCreditoManager.eliminaCarta(cartaDiCredito.getnCarta(), "noemi@gmail.com");
 		
 		assertTrue(result);
 		
@@ -55,16 +55,16 @@ public class CartaDiCreditoManagerTest {
 	
 	@Test
 	public void eliminaCarta() throws Exception{
-		CartaDiCredito cartaDiCredito=new CartaDiCredito("2222 2222 2222 2222", "Pinco Pallino", "12/22", 123);
-		cartaDiCredito.setAccount(utenteManager.findAccountByEmail("noemi@gmail.com"));
-		cartaDiCreditoManager.creaCartaDiCredito(cartaDiCredito);
+//		CartaDiCredito cartaDiCredito=new CartaDiCredito("2222 2222 2222 2222", "Pinco Pallino", "12/22", 123);
+	//	cartaDiCredito.setAccount(utenteManager.findAccountByEmail("noemi@gmail.com"));
+		//cartaDiCreditoManager.creaCartaDiCredito(cartaDiCredito);
 		
-		boolean result=cartaDiCreditoManager.eliminaCarta(cartaDiCredito.getnCarta(), "noemi@gmail.com");
+		boolean result=cartaDiCreditoManager.eliminaCarta("1111 1111 1111 1111", "rosaria@gmail.com");
 		
 		assertTrue(result);
 		
 	}
-		
+
 	@After
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);

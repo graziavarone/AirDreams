@@ -3,13 +3,13 @@
 
 
 <%
-String message=(String)request.getAttribute("message");
-Boolean mod=(Boolean)request.getAttribute("mod");
-Volo volo = (Volo) request.getAttribute("volo");
-DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	String message=(String)request.getAttribute("message");
+	Boolean mod=(Boolean)request.getAttribute("mod");
+	Volo volo = (Volo) request.getAttribute("volo");
+	DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-if(mod==null)
-	mod=true;
+	if(mod==null)
+		mod=true;
 %>
     
 <!DOCTYPE html>
@@ -53,8 +53,8 @@ http://www.tooplate.com/view/2095-level
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#">
-                                <img src="img/logo.png" alt="Site logo">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
+                                <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -148,9 +148,11 @@ http://www.tooplate.com/view/2095-level
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
                     <div class="container ie-h-align-center-fix">
-                     <% if (message!=null){ %>
-                    	<p><%=message%></p>
-                   	 <% } %>
+                     <div>
+                     	<% if (message!=null){ %>
+                     		<h2 class="tm-color-primary tm-article-title-1 d-flex justify-content-center"><%=message%></h2>
+                     	<% } %>
+                     </div>
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                                 <form action="ModificaVoloServlet" id="form1" method="post" class="tm-search-form tm-section-pad-2">
@@ -190,7 +192,7 @@ http://www.tooplate.com/view/2095-level
                                             <% String prezzo = String.format("%.2f",volo.getPrezzo());
                                                String prezzoSenzaVirgola = prezzo.replace(",", ".");
                                             %>
-                                            <input name="price" value=<%=prezzoSenzaVirgola%> type="text" class="form-control" placeholder="prezzo base biglietto" required>
+                                            <input name="price" value=<%=prezzoSenzaVirgola%> onkeyup="checkPrezzo(this)" type="text" class="form-control" placeholder="prezzo base biglietto" required>
                                         </div>
                                      </div>
                                      <div class="form-row tm-search-form-row d-flex justify-content-center">
@@ -250,15 +252,16 @@ http://www.tooplate.com/view/2095-level
                                         <div class="form-group tm-form-element tm-form-element-50"> 
                                         	<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
                                             <select name="baggage" class="form-control form-control-lg">
-                                            	<%boolean compreso = volo.isCompreso();
-                                            	  if(compreso == true) {
+                                            	<%
+                                            		boolean compreso = volo.isCompreso();
+                                            	  	if(compreso == true) {
                                             	%>
-                                            	<option>compreso</option>
-										        <option>non compreso</option>
-                                            	<% } else { %>
-                                            	<option>non compreso</option>
-										        <option>compreso</option>
-										        <% } %>
+                                            		<option>compreso</option>
+										        	<option>non compreso</option>
+                                            	<% 	} else { %>
+                                            		<option>non compreso</option>
+										        	<option>compreso</option>
+										        <% 	} %>
 										    </select>
 										</div>
 							        </div>
@@ -307,7 +310,8 @@ http://www.tooplate.com/view/2095-level
         <script>
         $("#form1").submit(function(e) {    
         	if(!confirm("sei sicuro di voler modificare il volo?")){      
-        		e.preventDefault();  
+        		e.preventDefault(); 
+        		location.href="ListaVoliServlet?page=1&action=null"
         	} 
         }); 
       

@@ -5,7 +5,7 @@
 
 if(mod==null)
 	mod=true;
-	String message=(String) request.getAttribute("message");
+	String message=(String) request.getParameter("message");
 %>
 <!DOCTYPE html>
 
@@ -134,7 +134,7 @@ if(mod==null)
                     			<a href="registrazione.jsp" class="btn btn-outline-light text-primary"> Non hai ancora un account? Registrati</a><br>
                     		</div>
                     		<% if (message!=null){ %>
-                    			<h2 class="tm-color-primary tm-article-title-1"><%=message%></h2>
+                    			<h2 class="tm-color-primary tm-article-title-1 d-flex justify-content-center"><%=message%></h2>
                     		<% } %>
                     	</div>
                         <div class="row">

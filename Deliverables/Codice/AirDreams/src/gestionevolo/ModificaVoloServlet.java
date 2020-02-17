@@ -43,6 +43,7 @@ public class ModificaVoloServlet extends HttpServlet {
 	    Volo voloVecchio = null;
 		//ottengo i parametri che mi servono
 		String idVolo = request.getParameter("idVolo");
+		
 		try {
 			voloVecchio = vManager.findByID(idVolo);
 		} catch (SQLException e1) {
@@ -95,11 +96,33 @@ public class ModificaVoloServlet extends HttpServlet {
 		}
 			
 		if (!valida(city,cityArrivals,dateDeparture,price)) {
-			message="Formato campi non valido";
-			response.getWriter().write("Failed");
-			request.setAttribute("volo", voloVecchio);
-			request.setAttribute("message", message);
-			redirect="/gestoreVoli/dettagliVolo.jsp";
+			if(!Pattern.matches(expAeroporto, city)) {
+				message+="Formato aeroporto partenza non valido, inserire nel formato CODICE - citta', stato<br>";
+				response.getWriter().write("Failed");
+				request.setAttribute("message", message);
+				redirect="/gestoreVoli/dettagliVoloServlet?"+idVolo;
+			}
+			
+			if(!Pattern.matches(expAeroporto, cityArrivals)) {
+				message+="Formato aeroporto arrivo non valido,  inserire nel formato CODICE - citta', stato<br>";
+				response.getWriter().write("Failed");
+				request.setAttribute("message", message);
+				redirect="/gestoreVoli/dettagliVoloServlet?"+idVolo;
+			}
+			
+			if(!Pattern.matches(expData, dateDeparture)) {
+				message+="Formato data partenza non valido, inserire nel formato dd/mm/aa<br>";
+				response.getWriter().write("Failed");
+				request.setAttribute("message", message);
+				redirect="/gestoreVoli/dettagliVoloServlet?"+idVolo;
+			}
+			
+			if(!Pattern.matches(expPrice, price)) {
+				message+="Formato prezzo non valido, reinserirlo nel formato giusto(es. 12.00)<br>";
+				response.getWriter().write("Failed");
+				request.setAttribute("message", message);
+				redirect="/gestoreVoli/dettagliVoloServlet?"+idVolo;
+			}
 		} else {
 			try {
 				aeroportoP = manager.findAeroportoById(codAeroportoP);
@@ -116,7 +139,7 @@ public class ModificaVoloServlet extends HttpServlet {
 				} else if(!controllaComboBox(hDeparture,minDeparture,hFly,minFly)) {
 					request.setAttribute("message","Inserire orarioPartenza e/o durata volo");
 					request.setAttribute("volo", voloVecchio);
-					redirect = "/gestoreVoli/dettagliVolo.jsp";	
+					redirect = "/gestoreVoli/dettagliVoloServlet?" + idVolo;
 				} else {
 					LocalDate otherDayDate = LocalDate.parse(dateDeparture, FORMATO_DIA);
 						  
@@ -139,7 +162,7 @@ public class ModificaVoloServlet extends HttpServlet {
 					request.setAttribute("volo", volo);
 					message = "Informazioni modificate";
 					request.setAttribute("message", message);
-					redirect = "/gestoreVoli/dettagliVolo.jsp";
+					redirect = "/gestoreVoli/dettagliVoloServlet?" + idVolo;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -188,7 +211,7 @@ public class ModificaVoloServlet extends HttpServlet {
 			return "Aeroporto partenza uguale a quello di arrivo";
 			
 		if(!(aeroportoP.getCity().equalsIgnoreCase(cityP) && aeroportoP.getStato().equalsIgnoreCase(statoP) && 
-					  aeroportoA.getCity().equalsIgnoreCase(cityA) && aeroportoA.getStato().equalsIgnoreCase(statoA)))
+		     aeroportoA.getCity().equalsIgnoreCase(cityA) && aeroportoA.getStato().equalsIgnoreCase(statoA)))
 			return "Citta' e stato di aeroporto di partenza e/o arrivo non consistenti con il codice dell'aeroporto";
 		
 		return "Success";

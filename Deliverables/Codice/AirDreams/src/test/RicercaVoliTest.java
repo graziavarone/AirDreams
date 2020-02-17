@@ -14,7 +14,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockRequestDispatcher;
+import org.springframework.mock.web.MockServletContext;
 
 import gestionevolo.RicercaVoliServlet;
 
@@ -30,14 +32,22 @@ public class RicercaVoliTest {
 	
 	@Mock
 	MockRequestDispatcher dispatcherSuccess;
+	
+	@Mock
+	MockServletContext servletContext;
 
+	@Mock
+	MockHttpSession session;
+	
 	private RicercaVoliServlet servlet;
 	
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(request.getRequestDispatcher("index.jsp")).thenReturn(dispatcher);
-		when(request.getRequestDispatcher("risultatiRicerca.jsp")).thenReturn(dispatcherSuccess);
+		when(request.getSession()).thenReturn(session);
+		when(request.getServletContext()).thenReturn(servletContext);
+		when(request.getServletContext().getRequestDispatcher("/index.jsp")).thenReturn(dispatcher);
+		when(request.getServletContext().getRequestDispatcher("/risultatiRicerca.jsp")).thenReturn(dispatcherSuccess);
         servlet = new RicercaVoliServlet();
         DbPopulator.initializeDatabase();
 	}
@@ -50,6 +60,8 @@ public class RicercaVoliTest {
 		when(request.getParameter("seats")).thenReturn("13");
 		when(request.getParameter("dateDeparture")).thenReturn("123");
 		when(request.getParameter("dateReturn")).thenReturn("12/02/2020");
+		
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -66,6 +78,8 @@ public class RicercaVoliTest {
 		when(request.getParameter("dateDeparture")).thenReturn("10/02/2020");
 		when(request.getParameter("dateReturn")).thenReturn("123");
 		
+		
+		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -80,6 +94,8 @@ public class RicercaVoliTest {
 		when(request.getParameter("seats")).thenReturn("13");
 		when(request.getParameter("dateDeparture")).thenReturn("10/02/2020");
 		when(request.getParameter("dateReturn")).thenReturn("12/02/2020");
+		
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -96,6 +112,8 @@ public class RicercaVoliTest {
 		when(request.getParameter("dateDeparture")).thenReturn("10/02/2020");
 		when(request.getParameter("dateReturn")).thenReturn("12/02/2020");
 		
+		
+		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -110,6 +128,8 @@ public class RicercaVoliTest {
 		when(request.getParameter("seats")).thenReturn("13");
 		when(request.getParameter("dateDeparture")).thenReturn("10/02/2020");
 		when(request.getParameter("dateReturn")).thenReturn("12/02/2020");
+		
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -126,6 +146,8 @@ public class RicercaVoliTest {
 		when(request.getParameter("dateDeparture")).thenReturn("10/02/2020");
 		when(request.getParameter("dateReturn")).thenReturn("12/02/2020");
 		
+		
+		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -141,9 +163,12 @@ public class RicercaVoliTest {
 		when(request.getParameter("dateDeparture")).thenReturn("10/02/2020");
 		when(request.getParameter("dateReturn")).thenReturn("12/02/2020");
 		
+		
+		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
 		Mockito.verify(MyWriter).write("Success");
 	}
+
 }

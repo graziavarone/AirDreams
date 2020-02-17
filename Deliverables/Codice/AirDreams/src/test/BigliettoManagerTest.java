@@ -16,13 +16,13 @@ import gestionevolo.Volo;
 import gestionevolo.VoloManager;
 
 public class BigliettoManagerTest {
-	private BigliettoManager bigliettoManager=new BigliettoManager();
-	private VoloManager voloManager=new VoloManager();
+private BigliettoManager bigliettoManager=new BigliettoManager();
+private VoloManager voloManager=new VoloManager();
 	
 	@Before
 	public void setUp() throws Exception {	
-		//DbPopulator.initializeDatabase();
-		DriverManagerConnectionPool.setTest(true);
+		DbPopulator.initializeDatabase();
+		//DriverManagerConnectionPool.setTest(true);
 	}
 	
 	@Test
@@ -30,16 +30,16 @@ public class BigliettoManagerTest {
 		Volo volo=voloManager.findByID("1");
 		Biglietto biglietto=new Biglietto("Rosaria", "Rossi", Sesso.F, 26,volo);
 		biglietto.setOrdine(1);
-		biglietto=bigliettoManager.aggiungiBiglietto(biglietto);
+		 biglietto=bigliettoManager.aggiungiBiglietto(biglietto);
 		 
-		assertTrue(biglietto.getCodBiglietto()!=0);
+		 assertTrue(biglietto.getCodBiglietto()!=0);
 	}
 	
 	@Test
 	public void trovaBigliettiOrdine() throws Exception {
 		ArrayList<Biglietto> biglietti=bigliettoManager.trovaBigliettiOrdine(1);
 		 
-		assertTrue(biglietti.size()>0);
+		 assertTrue(biglietti.size()>0);
 	}
 	
 	@After

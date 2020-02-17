@@ -23,8 +23,8 @@ public class VoloManagerTest {
 	
 	@Before
 	public void setUp() throws Exception {	
-		//DbPopulator.initializeDatabase();
-		DriverManagerConnectionPool.setTest(true);
+		DbPopulator.initializeDatabase();
+		//DriverManagerConnectionPool.setTest(true);
 	}
 	
 	@Test 
@@ -33,6 +33,7 @@ public class VoloManagerTest {
 		
 		assertTrue(voli.size()>0);
 	}
+	
 	
 	@Test 
 	public void cercaUnoScalo() {
@@ -61,10 +62,12 @@ public class VoloManagerTest {
 	
 	@Test 
 	public void cercaVoli() throws SQLException {
+		
 		ArrayList<Volo> voli=voloManager.cercaVoli("Ryanair");
 		
 		assertTrue(voli.size()>0);
 	}
+	
 	
 	@Test 
 	public void cercaVoliRicerca() throws SQLException {
@@ -77,6 +80,7 @@ public class VoloManagerTest {
 		assertTrue(voli.size()>0);
 	}
 	
+	
 	@Test 
 	public void findById() throws SQLException {
 		
@@ -84,6 +88,7 @@ public class VoloManagerTest {
 		
 		assertNotNull(volo);
 	}
+	
 	
 	@Test 
 	public void modificaVolo() throws SQLException {
@@ -93,19 +98,18 @@ public class VoloManagerTest {
 		
 		assertTrue(result);
 	}
-
+	
+	
+	
 	@Test 
 	public void eliminaVolo() throws SQLException {
-		CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
-		AeroportoManager aeroportoManager=new AeroportoManager();
-		Volo volo=new Volo(LocalDate.of(2020, 2, 12), 1, 1, LocalTime.of(1, 1), LocalTime.of(1, 1), true,
-				compagniaAereaManager.visualizzaInfoCompagniaAerea("Ryanair"), aeroportoManager.findAeroportoById("NAP"), aeroportoManager.findAeroportoById("TXL"));
-		voloManager.aggiungiVolo(volo);
 		
-		boolean result=voloManager.eliminaVolo(volo.getId());
+		
+		boolean result=voloManager.eliminaVolo(1);
 		
 		assertTrue(result);
 	}
+	
 	
 	@After
 	public void tearDown() throws Exception{

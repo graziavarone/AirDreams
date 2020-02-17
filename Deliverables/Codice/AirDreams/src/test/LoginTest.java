@@ -38,6 +38,7 @@ public class LoginTest {
 	@Mock
 	MockHttpSession session;
 
+	
 	private LoginServlet servlet;
 
 	@Before
@@ -56,6 +57,8 @@ public class LoginTest {
 		when(request.getParameter("email")).thenReturn("grazia_varone@hotmail.it");
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
 		
+		
+		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -67,6 +70,8 @@ public class LoginTest {
 	public void testCase_2() throws IOException, ServletException {		
 		when(request.getParameter("email")).thenReturn("rosaria@gmail.com");
 		when(request.getParameter("password")).thenReturn("@Emanuele2009");
+		
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
@@ -81,6 +86,7 @@ public class LoginTest {
 		when(request.getParameter("password")).thenReturn("Rosaria1998");
 		
 		when(request.getSession()).thenReturn(session);
+		
 		
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);

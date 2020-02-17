@@ -144,7 +144,7 @@
            	<div class="d-flex">
            		<!-- Left Navbar -->
            		<nav id="sidebar">
-	  				<div class="img bg-wrap text-center py-4" style="background-image: url(img/bg-img-1.jpg);">
+	  				<div class="img bg-wrap text-center py-4" style="background-image: url(../img/bg-img-1.jpg);">
 	  					<div class="user-logo">
 	  						<div class="img"></div>
 	  						<h3>Ricerca voli per</h3>

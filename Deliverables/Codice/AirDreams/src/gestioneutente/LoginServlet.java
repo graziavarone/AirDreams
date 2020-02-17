@@ -37,18 +37,26 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("Ho salvato "+account);
 			request.getSession().setAttribute("roles",account.getRuolo());
 			System.out.println("Ho salvato");
-			
+
 			if(request.getSession().getAttribute("voli")!=null) {
 				redirectedPage="/cliente/AggiungiAlCarrelloServlet";
 			} else {
-				redirectedPage="/index.jsp";
+		
+				if(account.getRuolo()!=null) {
+					if(account.getRuolo().equals(Ruolo.gestoreVoli))
+						redirectedPage="/gestoreVoli/ListaVoliServlet?page=1&action=null";
+			
+					if(account.getRuolo().equals(Ruolo.gestoreCompagnie))
+						redirectedPage="/gestoreCompagnie/ListaCompagnieServlet";
+				} else
+					redirectedPage="/cliente/DettagliAccountServlet";
 			}
 			response.getWriter().write("Success");
 		} else {
 			String error="autenticazione fallita";
-			request.setAttribute("message", error);
+
 			response.getWriter().write("Failed");
-			redirectedPage="/errorPage.jsp";
+			redirectedPage="/login.jsp?message="+error;
 		}
 		
 		//redirect alla pagina

@@ -41,7 +41,6 @@ public class ModificaAccountTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(request.getServletContext()).thenReturn(context);
-		when(request.getServletContext().getRequestDispatcher("/gestoreCompagnie/dettagliAccount.jsp")).thenReturn(dispatcher);
         servlet = new ModificaAccountServlet();
         DbPopulator.initializeDatabase();
 	}
@@ -54,7 +53,7 @@ public class ModificaAccountTest {
 		when(request.getParameter("email")).thenReturn("rosaria@gmail.com");
 		when(request.getParameter("emailVecchia")).thenReturn("rosaria@gmail.com");
 		when(request.getParameter("combo")).thenReturn("Nessuna");
-		
+		when(request.getServletContext().getRequestDispatcher("/gestoreCompagnie/DettagliUtenteServlet?email=rosaria@gmail.com")).thenReturn(dispatcher);
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -69,7 +68,7 @@ public class ModificaAccountTest {
 		when(request.getParameter("email")).thenReturn("rosaria@gmail.com");
 		when(request.getParameter("emailVecchia")).thenReturn("rosaria@gmail.com");
 		when(request.getParameter("combo")).thenReturn("Nessuna");
-		
+		when(request.getServletContext().getRequestDispatcher("/gestoreCompagnie/DettagliUtenteServlet?email=rosaria@gmail.com")).thenReturn(dispatcher);
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
@@ -84,14 +83,14 @@ public class ModificaAccountTest {
 		when(request.getParameter("email")).thenReturn("ro@saria@gmail.com");
 		when(request.getParameter("emailVecchia")).thenReturn("rosaria@gmail.com");
 		when(request.getParameter("combo")).thenReturn("Nessuna");
-		
+		when(request.getServletContext().getRequestDispatcher("/gestoreCompagnie/DettagliUtenteServlet?email=rosaria@gmail.com")).thenReturn(dispatcher);
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
 		Mockito.verify(MyWriter).write("Failed");
 	}
 	
-	//TC_6.1_4 email gia' presente
+	//TC_6.1_4 email gi� presente
 	@Test
 	public void testCase_4() throws IOException, ServletException {		
 		when(request.getParameter("nome")).thenReturn("Grazia");
@@ -99,14 +98,14 @@ public class ModificaAccountTest {
 		when(request.getParameter("email")).thenReturn("noemi@gmail.com");
 		when(request.getParameter("emailVecchia")).thenReturn("rosaria@gmail.com");
 		when(request.getParameter("combo")).thenReturn("Nessuna");
-		
+		when(request.getServletContext().getRequestDispatcher("/gestoreCompagnie/DettagliUtenteServlet?email=rosaria@gmail.com")).thenReturn(dispatcher);
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
 		Mockito.verify(MyWriter).write("Failed");
 	}
 	
-	//TC_6.1_4 email gia' presente
+	//TC_6.1_4 success
 	@Test
 	public void testCase_5() throws IOException, ServletException {		
 		when(request.getParameter("nome")).thenReturn("Grazia");
@@ -114,12 +113,13 @@ public class ModificaAccountTest {
 		when(request.getParameter("email")).thenReturn("grazia@gmail.com");
 		when(request.getParameter("emailVecchia")).thenReturn("rosaria@gmail.com");
 		when(request.getParameter("combo")).thenReturn("Nessuna");
-		
+		when(request.getServletContext().getRequestDispatcher("/gestoreCompagnie/DettagliUtenteServlet?email=grazia@gmail.com")).thenReturn(dispatcher);
 		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(MyWriter);
 		servlet.doPost(request, response);	
 		Mockito.verify(MyWriter).write("Success");
 	}
+	
 	
 	@After
 	public void tearDown() throws Exception{

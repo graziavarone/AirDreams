@@ -164,14 +164,14 @@
                             	<div class="form-row tm-search-form-row d-flex justify-content-center">
                   					<div class="pl-5">
                   						<%
-                  							if (voliCarrello.size()==0) {
+                  							if (voliCarrello.isEmpty()) {
                   						%>
-                  						<div>
+                  						<div class="alert alert-primary" role="alert">
                   							Non sono presenti voli nel carrello
                   						</div>
                   						<%		
-                  							}
-                                   			for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) { 
+                  							} else  {
+                                   				for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) { 
                                    		%>
                                 		<div class="p-3 border border-light rounded bg-light">
                                 			<h4><%=entry.getValue()%> Biglietti/o</h4>
@@ -190,19 +190,21 @@
     										<span style="margin-left:100px;"><%=entry.getKey().getDurataVolo() %></span> 
     										<b><span style="margin-left:115px;"><%=entry.getKey().getAeroportoA().getCodice() %></span></b><br>
     									</div><br>
-   										<% }%>
    									</div> 
    									
    									<div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
                                         	<%
-                                        		if (voliCarrello.size()!=0) {
+                                        		if (!voliCarrello.isEmpty()) {
                                         	%>
                            					<a class="btn btn-primary tm-btn-search" href="nominativiBiglietti.jsp?seats=<%=seats%>">Procedi all'acquisto</a>
                            					<% } %>
 	                                    </div>
                                     </div>
-                                </div>                        
+                                    <% 		} 
+                                   		} 
+                                   	%> 
+                                </div>                      
                         	</div>      
                     	</div>
                 	</div>                  
@@ -219,7 +221,7 @@
         <script src="../js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="../slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
-			<script type="text/javascript">
+		<script type="text/javascript">
 		
 			$('#card1').submit(function(e) {
 				if(!confirm("sicuro di voler proseguire?")) {
@@ -228,7 +230,7 @@
 			});
 			
         	function annullaInserimentoCarta() {
-          		var r = confirm("Cofermi di voler annullare l'inserimento della carta di credito?");
+          		var r = confirm("Confermi di voler annullare l'inserimento della carta di credito?");
           		if (r == true) 
           			location.href = 'AggiungiCartaServlet';
           	}

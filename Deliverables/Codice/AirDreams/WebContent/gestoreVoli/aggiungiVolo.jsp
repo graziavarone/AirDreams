@@ -150,9 +150,11 @@ http://www.tooplate.com/view/2095-level
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
                     <div class="container ie-h-align-center-fix">
+                    <div>
                      <% if (message!=null){ %>
-                    	<p><%=message%></p>
+                    	<p class="d-flex justify-content-center"><%=message%></p>
                    	 <% } %>
+                   	 </div>
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                                 <form action="AggiungiVoloServlet" method="post" class="tm-search-form tm-section-pad-2">

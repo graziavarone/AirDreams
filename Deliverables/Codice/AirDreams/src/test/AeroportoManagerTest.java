@@ -18,8 +18,8 @@ public class AeroportoManagerTest {
 	
 	@Before
 	public void setUp() throws Exception {	
-		//DbPopulator.initializeDatabase();
-		DriverManagerConnectionPool.setTest(true);
+		DbPopulator.initializeDatabase();
+		//DriverManagerConnectionPool.setTest(true);
 	}
 	
 	@Test 

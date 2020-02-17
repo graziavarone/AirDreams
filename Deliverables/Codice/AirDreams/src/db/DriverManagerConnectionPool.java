@@ -35,8 +35,9 @@ public class DriverManagerConnectionPool {
 			db = "airdreamstest";
 		}
 
+		System.out.println("Sto usando database "+db);
 		newConnection = DriverManager.getConnection("jdbc:mysql://"+ ip+":"+ 
-				port+"/"+db+"?serverTimezone=UTC", username, password);
+				port+"/"+db+"?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC", username, password);
 
 
 		System.out.println("Create a new DB connection");

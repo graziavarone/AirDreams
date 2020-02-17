@@ -41,16 +41,15 @@ public class BagaglioManager {
                 
             System.out.println("Ho eseguito query per aggiungere bagaglio");
             b=true;
-        } finally {
-        	try {
-        		if(preparedStatement!=null)
-        			preparedStatement.close();
+         } finally {
+            try {
+            	if(preparedStatement!=null) preparedStatement.close();
             } finally {
             	DriverManagerConnectionPool.releaseConnection(connection);
             }
-        }
-       
-        return b;
+         }
+        
+        return b;	
 	}
 	
 	/**
@@ -79,14 +78,13 @@ public class BagaglioManager {
             System.out.println("aggiungiBagaglioStiva: "+ preparedStatement.toString());
             preparedStatement.executeUpdate();
             b=true;
-        } finally {
-        	try {
-        		if(preparedStatement!=null)
-        			preparedStatement.close();
+         } finally {
+            try {
+            	if(preparedStatement!=null) preparedStatement.close();
             } finally {
             	DriverManagerConnectionPool.releaseConnection(connection);
             }
-        }
+         }
         
         return b;
 	}

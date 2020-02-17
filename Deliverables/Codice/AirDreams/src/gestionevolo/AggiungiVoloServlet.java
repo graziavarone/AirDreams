@@ -25,21 +25,20 @@ public class AggiungiVoloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String expAeroporto="^[A-Z]{3} - [A-Za-z  ]{1,}, [A-Za-z ]{1,}$";
 	private String expData= "^\\s*(0?[1-9]|1[0-9]|2[2-9]|3[01])\\/\\s*(1[012]|0?[1-9])\\/\\d{4}\\s*$";
-	private String expPrice="^([0-9]){1,}[.]([0-9]){1,2}$";
 	private DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	//globali per poterle utilizare nella funzione
 	private String cityP = null; //citta partenza
 	private String statoP = null; //stato partenza
 	private String cityA = null; //citta arrivo
 	private String statoA = null; //stato arrivo
-	private String message = null; //messaggio in caso di successo/errore
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//instanzio i manager che mi servono
 		AeroportoManager manager=new AeroportoManager();
 		CompagniaAereaManager cManager = new CompagniaAereaManager();
 		VoloManager vManager = new VoloManager();
-			
+		String message = null; //messaggio in caso di successo/errore
+		
 		//ottengo i parametri che mi servono
 		String city=request.getParameter("city");
 		String cityArrivals=request.getParameter("cityArrivals");
@@ -52,7 +51,7 @@ public class AggiungiVoloServlet extends HttpServlet {
 		String minFly = request.getParameter("minFly");
 		String baggage = request.getParameter("baggage");
 		int seats = Integer.parseInt(request.getParameter("seats"));
-		
+	
 		String redirect = null; //pagina di redirect per fare il forward
 		boolean compreso = false; //bagaglio stiva compreso
 		Aeroporto aeroportoP=null;//partenza
@@ -85,13 +84,29 @@ public class AggiungiVoloServlet extends HttpServlet {
 			}
 		}
 			
-		if (!valida(city,cityArrivals,dateDeparture,price)) {
-			message="Formato campi non valido";
-			response.getWriter().write("Failed");
-			request.setAttribute("message", message);
-			redirect="/gestoreVoli/aggiungiVolo.jsp";
+		if (!valida(city,cityArrivals,dateDeparture)) {
+			if(!Pattern.matches(expAeroporto, city)) {
+				message+="Formato aeroporto partenza non valido, inserire nel formato CODICE - citta', stato<br>";
+				response.getWriter().write("Failed");
+				request.setAttribute("message", message);
+				redirect="/gestoreVoli/aggiungiVolo.jsp";
+			}
+				
+			if(!Pattern.matches(expAeroporto, cityArrivals)) {
+				message+="Formato aeroporto arrivo non valido,  inserire nel formato CODICE - citta', stato<br>";
+				response.getWriter().write("Failed");
+				request.setAttribute("message", message);
+				redirect="/gestoreVoli/aggiungiVolo.jsp";
+			}
+				
+			if(!Pattern.matches(expData, dateDeparture)) {
+				message+="Formato data partenza non valido, inserire nel formato dd/mm/aa<br>";
+				response.getWriter().write("Failed");
+				request.setAttribute("message", message);
+				redirect="/gestoreVoli/aggiungiVolo.jsp";
+			}
 		} else {
-			try { 
+			try {
 				aeroportoP = manager.findAeroportoById(codAeroportoP);
 				aeroportoA = manager.findAeroportoById(codAeroportoA);
 					
@@ -123,30 +138,29 @@ public class AggiungiVoloServlet extends HttpServlet {
 					
 					vManager.aggiungiVolo(volo);
 					response.getWriter().write("Success");
-					request.setAttribute("message", "il volo � stato aggiunto");
+					request.setAttribute("message", "il volo e' stato aggiunto");
 					redirect = "/gestoreVoli/ListaVoliServlet?page=1&action=null";
-				}
+				}		
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
+			}	
 		}
 						
 		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(redirect);
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);	
 	}
-	
+		
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 		
-	private boolean valida(String aeroportoP, String aeroportoA, String dateDeparture, String price) {
+	private boolean valida(String aeroportoP, String aeroportoA, String dateDeparture) {
 		boolean valido=true;
 		if (!Pattern.matches(expAeroporto, aeroportoP)) {
 			valido=false;
 			System.out.println("aeroporto partenza non corrisponde");
-	
 		}
-		
+			
 		if (!Pattern.matches(expAeroporto, aeroportoA)) {
 			valido=false;
 			System.out.println("aeroporto arrivo non corrisponde");
@@ -157,16 +171,10 @@ public class AggiungiVoloServlet extends HttpServlet {
 			System.out.println("dataPartenza non corrisponde");
 		}
 			
-		if (!Pattern.matches(expPrice, price)) {
-			valido=false;
-			System.out.println("il prezzo non corrisponde");
-		}
-			
-		return valido;
+		return valido;	
 	}
 		
 	private String controlloAeroporti(Aeroporto aeroportoP, Aeroporto aeroportoA) {
-
 		if (aeroportoP==null || aeroportoA==null) 
 			return "Aeroporto di partenza e/o arrivo non esiste";
 			
@@ -174,8 +182,8 @@ public class AggiungiVoloServlet extends HttpServlet {
 			return "Aeroporto partenza uguale a quello di arrivo";
 			
 		if(!(aeroportoP.getCity().equalsIgnoreCase(cityP) && aeroportoP.getStato().equalsIgnoreCase(statoP) && 
-				aeroportoA.getCity().equalsIgnoreCase(cityA) && aeroportoA.getStato().equalsIgnoreCase(statoA)))
-			return "Cita' e stato di aeroporto di partenza e/o arrivo non consistenti con il codice dell'aeroporto";
+			 aeroportoA.getCity().equalsIgnoreCase(cityA) && aeroportoA.getStato().equalsIgnoreCase(statoA)))
+			return "Citta' e stato di aeroporto di partenza e/o arrivo non consistenti con il codice dell'aeroporto";
 			 
 		return "Success";
 	}
@@ -183,6 +191,6 @@ public class AggiungiVoloServlet extends HttpServlet {
 	private boolean controllaComboBox(String hDeparture, String minDeparture, String hFly, String minFly) {
 		if(hDeparture.equals("h") || minDeparture.equals("min") || hFly.equals("h") || minFly.equals("min")) return false;
 			
-		return true;
+		return true;		
 	}
 }

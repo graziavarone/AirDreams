@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import db.DriverManagerConnectionPool;
 import gestioneutente.Account;
 import gestioneutente.UtenteManager;
 
@@ -18,8 +16,8 @@ public class UtenteManagerTest {
 	
 	@Before
 	public void setUp() throws Exception {	
-		//DbPopulator.initializeDatabase();
-		DriverManagerConnectionPool.setTest(true);
+		DbPopulator.initializeDatabase();
+		//DriverManagerConnectionPool.setTest(true);
 	}
 	
 	@Test
@@ -50,6 +48,7 @@ public class UtenteManagerTest {
 		Account account=utenteManager.findAccountByEmail("rosaria@gmail.com");
 		
 		assertNotNull(account);
+		
 	}
 	
 	@Test
@@ -64,20 +63,13 @@ public class UtenteManagerTest {
 	}
 	
 	@Test
-	public void visualizzaInfoUtente() throws Exception {
-
-		Account account=utenteManager.findAccountByEmail("rosaria@gmail.com");
-		
-		assertNotNull(account);
-	}
-	
-	@Test
 	public void aggiornaProfilo() throws Exception {
 		Account accountVecchio=utenteManager.findAccountByEmail("rosaria@gmail.com");
 		Account accountNuovo=new Account("RosRosRos", "Rossi", "rosaria@gmail.com", "Rosaria1998");
 		boolean result=utenteManager.aggiornaProfilo(accountVecchio, accountNuovo);
 		
 		assertTrue(result);
+		
 	}
 	
 	@Test
@@ -85,7 +77,8 @@ public class UtenteManagerTest {
 
 		ArrayList<Account> account=utenteManager.getAllUsers();
 		
-		assertEquals(3, account.size());
+		assertEquals(4, account.size());
+		
 	}
 	
 	@Test
@@ -94,15 +87,6 @@ public class UtenteManagerTest {
 		ArrayList<Account> account=utenteManager.findAccountByLetter("R", "R");
 		
 		assertEquals(1, account.size());
-	}
-	
-	
-	@Test
-	public void modificaAccount() throws Exception {
-		Account accountVecchio=utenteManager.findAccountByEmail("rosaria@gmail.com");
-		Account accountNuovo=new Account("RosRosRos2", "Rossi", "rosaria@gmail.com", "Rosaria1998");
-		boolean result=utenteManager.aggiornaProfilo(accountVecchio, accountNuovo);
 		
-		assertTrue(result);
 	}
 }

@@ -5,7 +5,13 @@ Template 2095 Level
 http://www.tooplate.com/view/2095-level
 
 */
+.error{
+	border-color: red;
+}
 
+.success{
+	border-color: green;
+}
     					
 table, th, td {
 	text-align: center;

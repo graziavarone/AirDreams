@@ -18,11 +18,11 @@ public class OrdineManagerTest {
 	private OrdineManager ordineManager=new OrdineManager();
 	private UtenteManager utenteManager=new UtenteManager();
 	private CartaDiCreditoManager cartaDiCreditoManager=new CartaDiCreditoManager();
-	
+
 	@Before
 	public void setUp() throws Exception {	
-		//DbPopulator.initializeDatabase();
-		DriverManagerConnectionPool.setTest(true);
+		DbPopulator.initializeDatabase();
+		//DriverManagerConnectionPool.setTest(true);
 	}
 	
 	@Test
@@ -38,8 +38,11 @@ public class OrdineManagerTest {
 		assertTrue(result);
 	}
 	
+	
+	
 	@After
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);
 	}
+
 }

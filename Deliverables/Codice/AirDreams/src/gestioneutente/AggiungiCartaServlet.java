@@ -1,7 +1,6 @@
 package gestioneutente;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 public class AggiungiCartaServlet extends HttpServlet {
 	private static Logger logger= Logger.getLogger("global");
 	private static final long serialVersionUID = 1L;
-	private String message=null;
 	private String redirect=null;
 	private String expNCarta ="^([0-9]{4}( |\\-)){3}[0-9]{4}$";
 	private String expTitolare = "^[A-Za-z' ]{1,}$";
@@ -48,27 +46,27 @@ public class AggiungiCartaServlet extends HttpServlet {
 		String dataScadenza=request.getParameter("dataScadenza");
 		String cvc=request.getParameter("cvc");
 		Account a = (Account) request.getSession().getAttribute("account");
-		Date date = null;
+		String message=null;
 		CartaDiCreditoManager cm = new CartaDiCreditoManager();
 		
 		try {
 			if(!valida(nCarta, titolare, dataScadenza, cvc)) {
 				if(!Pattern.matches(expNCarta, nCarta)) {
-					 message+="Il numero della carta deve contenere solo cifre<br/>";
+					 message+="La carta da inserire deve rispettare il formato 1111 1111 1111 1111<br/>";
 					 System.out.println(message);
 					 response.getWriter().write("Formato errato dati");
 					 redirect="/cliente/aggiungiCarta.jsp";
 				} 
 				
 				if(!Pattern.matches(expTitolare, titolare)) {
-					message+="Il titolare deve contenere solo lettere dell'alfabeto<br/>";
+					message+="Il nome/cognome non puo' contenere altri caratteri oltre lettere<br/>";
 					System.out.println(message);
 					response.getWriter().write("Formato errato dati");
 					redirect="/cliente/aggiungiCarta.jsp";
 				} 
 				
 				if(!Pattern.matches(expDataScadenza, dataScadenza)) {
-					message+="Formato dataScadenza non valido<br/>";
+					message+="La data inserita non e' valida, deve essere del formato mm/yy<br/>";
 					//vedere se scaduta
 					System.out.println(message);
 					response.getWriter().write("Formato errato dati");
@@ -77,7 +75,7 @@ public class AggiungiCartaServlet extends HttpServlet {
 				}  
 				
 				if(!Pattern.matches(expCvc, cvc)) {
-					message+="Formato cvc non valido<br/>";
+					message+="Il cvc inserito non e' valido, esso contiene solo tre cifre<br/>";
 			
 					System.out.println(message);
 					response.getWriter().write("Formato errato dati");
@@ -100,23 +98,27 @@ public class AggiungiCartaServlet extends HttpServlet {
 					response.getWriter().write("Carta scaduta");
 					message+="Data Scadenza non valida<br/>";
 					redirect="/cliente/aggiungiCarta.jsp";
-				} else if(anno==annoCorrente){
-					if(mese<=meseCorrente) 
-						response.getWriter().write("Carta scaduta");
-						redirect="/cliente/aggiungiCarta.jsp";
-						message+="Carta di credito scaduta, gentilmente inserirne un'altra!<br/>";
+				} else if(anno==annoCorrente && mese<=meseCorrente){
+					response.getWriter().write("Carta scaduta");
+					redirect="/cliente/aggiungiCarta.jsp";
+					message+="Carta di credito scaduta, gentilmente inserirne un'altra!<br/>";
 				} else {
-					cardCred.setnCarta(nCarta);
-					cardCred.setTitolare(titolare);
-					cardCred.setDataScadenza(dataScadenza);
-					cardCred.setCvc(Integer.parseInt(cvc));
-					cardCred.setAccount(a);
+					if(cm.cercaCarta(nCarta, a.getEmail())!=null) {
+						message="Carta di credito gia' registrata<br/>";
+						redirect="/cliente/aggiungiCarta.jsp";
+					} else {
+						cardCred.setnCarta(nCarta);
+						cardCred.setTitolare(titolare);
+						cardCred.setDataScadenza(dataScadenza);
+						cardCred.setCvc(Integer.parseInt(cvc));
+						cardCred.setAccount(a);
 	
-					cm.creaCartaDiCredito(cardCred);
-					message="Inserimento carta effettuato con successo";
-					response.getWriter().write("Success");
-			
-					redirect="/cliente/DettagliAccountServlet";
+						cm.creaCartaDiCredito(cardCred);
+						message="Inserimento carta effettuato con successo<br/>";
+						response.getWriter().write("Success");
+				
+						redirect="/cliente/DettagliAccountServlet";
+					}
 				}
 			}
 		} catch (SQLException e) {

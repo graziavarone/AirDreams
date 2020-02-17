@@ -1,5 +1,6 @@
-function checkName(inputtxt) {
-	var name = /^[A-Za-z]{1,}$/;
+
+function checkNumeroCarta(inputtxt) {
+	var name = /^([0-9]{4}( |\\-)){3}[0-9]{4}$/;
 	if(!inputtxt.value.match(name)) {
 		inputtxt.classList.remove("success");
 		inputtxt.classList.add("error");	
@@ -12,7 +13,7 @@ function checkName(inputtxt) {
 
 
 
-function checkCognome(inputtxt) {
+function checkTitolare(inputtxt) {
 	var name = /^[A-Za-z' ]{1,}$/;
 	
 	if(!inputtxt.value.match(name)) {
@@ -25,8 +26,8 @@ function checkCognome(inputtxt) {
 }
 
 
-function checkEmail(inputtxt) {
-	var name = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+function checkData(inputtxt) {
+	var name = /^\s*(1[012]|0[1-9])\/\d{2}\s*$/;
 
 	if(!inputtxt.value.match(name)) {
 		inputtxt.classList.remove("success");
@@ -39,8 +40,8 @@ function checkEmail(inputtxt) {
 
 
 
-function checkPassword(inputtxt) {
-	var name = /^(?=.{6,}$)(?=.*[A-Z])(?=.*[0-9])([\.-]?\w+)*.*$/;
+function checkCVC(inputtxt) {
+	var name = /^[0-9]{3}$/;
 
 	if(!inputtxt.value.match(name)) {
 		inputtxt.classList.remove("success");
@@ -52,16 +53,15 @@ function checkPassword(inputtxt) {
 }
 
 
-function controllaPassword(inputtxt){
-	var name = document.getElementsByName("password")[0];
-	var confermaPassword = document.getElementsByName("Cpassword")[0];
-	
-	if(name.value==inputtxt.value) {
-		inputtxt.classList.remove("error");
-		inputtxt.classList.add("success");	
-	}
-	else {
-		inputtxt.classList.remove("success");
-		inputtxt.classList.add("error");	
-	}
-}
+
+
+
+
+
+
+
+
+
+
+
+
