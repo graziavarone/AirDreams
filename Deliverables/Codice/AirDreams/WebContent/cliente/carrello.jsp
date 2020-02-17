@@ -142,20 +142,20 @@ System.out.println("MOD SESSIONE: " + mod);
             </div>
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
-                <div class="tm-bg-white w-10">
+                <div class="tm-bg-white">
                 	<div class="container">
-		        		<div>
-      						<% if (message!=null) { %>
-				    		<p><%=message%></p>
-				    		<% } %>
-				   		</div>
+                    	<div>
+                     	<% if (message!=null){ %>
+                    		<p class="d-flex justify-content-center"><%=message%></p>
+                   	 	<% } %>
+                   	 	</div>
       					
                     	<div class="container ie-h-align-center-fix">
                     		<div class="form-row tm-search-form-row d-flex justify-content-center">	
                                 	<div class="form-group tm-form-element tm-form-element-100">
                                 		<h3 class="tm-color-primary tm-article-title-1">Il tuo carrello</h3>
                                 	</div>
-                                </div>
+                            </div>
                     	    <div class="row">
                             	<div class="form-row tm-search-form-row d-flex justify-content-center">
                   					<div class="pl-5">
@@ -170,15 +170,17 @@ System.out.println("MOD SESSIONE: " + mod);
                                    				for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) { 
                                    		%>
                                 		<div class="p-3 border border-light rounded bg-light">
-                                			<h4><%=entry.getValue()%> Biglietti/o</h4>
-                                			<form action="RimuoviDalCarrelloServlet" method="post">
-    											<input type="hidden" name="idVolo" value="<%=entry.getKey().getId()%>">
-    											<button class="fa fa-trash" aria-hidden="true" style="margin-left: 30px;"></button>
-    										</form>
+                                			<div class="form-row align-items-center">
+                                				<h4><%=entry.getValue()%> Biglietti/o</h4>
+                                				<form action="RimuoviDalCarrelloServlet" method="post">
+    												<input type="hidden" name="idVolo" value="<%=entry.getKey().getId()%>">
+    												<button class="fa fa-trash" aria-hidden="true" style="margin-left: 30px;"></button>
+    											</form>
+    										</div>
       										<div class="form-row align-items-center">
       											<h5><%=entry.getKey().getCa().getNome() %></h5>
   									 			<h3 style="margin-left: 100px;"><%=entry.getKey().getOrarioPartenza()%></h3> 
-  												<img alt="" src="../img/icon-route.png" width="250px" height="100px">
+  												<img alt="" src="../img/icon-route.png" width="200px" height="80px">
   												<h3><%=entry.getKey().getOrarioArrivo()%></h3>
   												<span style="margin-left: 10px;"> Totale : &euro; <%=entry.getKey().getPrezzo() %></span>
   											</div>
@@ -186,29 +188,32 @@ System.out.println("MOD SESSIONE: " + mod);
     										<span style="margin-left:100px;"><%=entry.getKey().getDurataVolo() %></span> 
     										<b><span style="margin-left:115px;"><%=entry.getKey().getAeroportoA().getCodice() %></span></b><br>
     									</div><br>
-   									</div> 
-   									
-   									<div class="form-row tm-search-form-row">                                  
+   									</div><br> 
+                                    <% 		} 
+                                   		} 
+                                   	%> 
+                                   	<br><br>
+                                   	<div class="form-row tm-search-form-row">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
                                         	<%
                                         		if (!voliCarrello.isEmpty()) {
                                         	%>
-                           					<a class="btn btn-primary tm-btn-search" href="nominativiBiglietti.jsp?seats=<%=seats%>">Procedi all'acquisto</a>
+                                        	<div class="form-row tm-search-form-row d-flex justify-content-center">
+                                				<div class="form-group tm-form-element tm-form-element-2">
+                                    				<a class="btn btn-primary tm-btn-search" href="nominativiBiglietti.jsp?seats=<%=seats%>">Procedi all'acquisto</a>
+                                    			</div>
+                                			</div>
                            					<% } %>
 	                                    </div>
                                     </div>
-                                    <% 		} 
-                                   		} 
-                                   	%> 
                                 </div>                      
                         	</div>      
                     	</div>
                 	</div>                  
            		</div>
 			</div>
-              
         </div>
-        
+       
          <!-- load JS files -->
         <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
         <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       

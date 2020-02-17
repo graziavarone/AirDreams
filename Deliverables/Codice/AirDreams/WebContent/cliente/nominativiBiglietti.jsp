@@ -44,8 +44,8 @@ if(mod==null)
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#">
-                                <img src="img/logo.png" alt="Site logo">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
+                                <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -140,74 +140,85 @@ if(mod==null)
                 <div class="tm-bg-white ie-container-width-fix-2">
               
                     <div class="container ie-h-align-center-fix">
-            
-                        <div class="row">
+                    	<div class="form-row tm-search-form-row d-flex justify-content-center">	
+                       		<div class="form-group tm-form-element tm-form-element-100">
+                           		<h3 class="tm-color-primary tm-article-title-1">Dettagli del passeggero</h3>
+                            </div>
+                        </div>
+            			<div class="row">
+            				<div>
+								<% if (request.getAttribute("message")!=null && (!request.getAttribute("message").equals(""))) { %>
+				    			<p><%=request.getAttribute("message")%></p>
+				    			<% } %>
+				   			</div>
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-      							<div>
-									<% if (request.getAttribute("message")!=null && (!request.getAttribute("message").equals(""))) { %>
-				    				<p><%=request.getAttribute("message")%></p>
-				    				<% } %>
-				   				</div>
       							
                   				<form action="BigliettiServlet" method="post">
-                                   		<div class="pl-5">
-                                   		
+                                	<div class="pl-3 d-flex justify-content-center">
                                    		<% for(int i=0;i<seats;i+=1) { %>
-                                <div class="p-3 border border-light rounded bg-light">
-                                	<h4>Dettagli del passeggero <%=i+1 %></h4>
-                                		
-    									 <div class="form-row tm-search-form-row">
-                                		<div class="form-group tm-form-element tm-form-element-50">
-                                           	<input name="nomePasseggero<%=i+1%>" type="text" class="form-control"  placeholder="Nome" required>
-                                        	<input name="cognomePasseggero<%=i+1%>" type="text" class="form-control"  placeholder="Cognome" required>
-                                        	<input type="radio" name="sesso<%=i+1%>" required="required" value="F">F
-                                        	<input type="radio" name="sesso<%=i+1%>" required="required" value="M">M
+                                		<div class="p-3 border border-light rounded bg-light">
+      										<div class="form-row align-items-center">
+                                				<div class="form-group tm-form-element tm-form-element-50">
+                                					<div class="form-row align-items-center">
+                                           				<input name="nomePasseggero<%=i+1%>" type="text" class="form-control"  placeholder="Nome" required>
+                                        			</div>
+                                        			<div class="form-row align-items-center">
+                                        				<input name="cognomePasseggero<%=i+1%>" type="text" class="form-control"  placeholder="Cognome" required>
+                                        			</div>
+                                        			<div class="form-row align-items-center">
+                                        				<div class="form-group col-auto">
+                                        					<input type="radio" name="sesso<%=i+1%>" required="required" value="F">F
+                                        				</div>
+                                        				<div class="form-group col-auto">
+                                        					<input type="radio" name="sesso<%=i+1%>" required="required" value="M">M
+                                        				</div>
+                                        			</div>
+                                        			<% 
+                                        				boolean bagaglioCompreso=false;
+                                        				for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) { 
                                         	
-                                        	<% 
-                                        	boolean bagaglioCompreso=false;
-                                        	for(Map.Entry<Volo, Integer> entry : voliCarrello.entrySet()) { 
-                                        	
-                                        		if (entry.getKey().isCompreso()) {%>
+                                        					if (entry.getKey().isCompreso()) { %>
                                         
-                                        		<%  bagaglioCompreso=true ;} %>
-                                        	<% } %>
+                                        				<%  bagaglioCompreso=true ;} %>
+                                        			<% } %>
                                         
-                                      	Aggiungi bagaglio<input type="number" 
-                                      	<% if(bagaglioCompreso==true){ %>
-                                      	min="1"
-                                      	value=1
-                                      	<% } else { %>
-                                      	min="0"
-                                      	value=0
-                                      	<% } %>
-                                      	 name="bagaglioStiva<%=i+1%>" required="required">
-                                        		
-                                        </div>
-    							<br>
-    							</div>
-    						
-    						
-    							<br>
-   					
-   					<% } %>
-   					
-   					</div>
-   								
-                                            <button type="submit" class="btn btn-primary tm-btn-search" >Continua</button>
-                                    
-   							</form>		
-    					
-    							
-                             
-                                    
-                              
-                            </div>                        
-                        </div>      
+                                      				Aggiungi bagaglio<input type="number" 
+                                      				<% if(bagaglioCompreso==true){ %>
+                                      						min="1"
+                                      						value=1
+                                      				<% } else { %>
+                                      						min="0"
+                                      						value=0
+                                      				<% } %>
+                                      	 			name="bagaglioStiva<%=i+1%>" required="required">
+                                      	 			</div>
+                                        		</div>
+    											<br>
+    										</div>
+    										<br>
+   										<% } %>
+   									</div>
+   									<br>
+   									<div class="form-row tm-search-form-row d-flex justify-content-center">
+                                		<div class="form-group tm-form-element tm-form-element-2">
+                                			<button type="submit" class="btn btn-primary tm-btn-search" >Continua</button>
+                                		</div>
+                            		</div>
+   								</form>
+   							</div>		
+    					</div>                             
                     </div>
                 </div>                  
             </div>
-
             
+            <footer class="tm-bg-dark-blue">
+          		<div class="container">
+                    <div class="row">
+                        <p class="col-sm-12 text-center tm-font-light tm-color-white p-4 tm-margin-b-0">
+                        Copyright &copy; <span class="tm-current-year">2019</span>      
+                    </div>
+                </div>                
+          </footer>
         </div>
         
          <!-- load JS files -->

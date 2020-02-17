@@ -178,7 +178,7 @@ System.out.println("MOD SESSIONE: " + mod);
            			<div>
            				<br><br>
            			</div>
-                	<div class="p-2" id="info">
+                	<div class="p-3" id="info">
       					<h2>Informazioni personali <a href='javascript:editabiliInfo()'><span class="fa fa-pencil-square-o"></span></a></h2>
       				    
       				    <div>
@@ -210,7 +210,7 @@ System.out.println("MOD SESSIONE: " + mod);
   							</div>
 							<div class="form-group row">
    					 			<label class="col-sm-3 col-form-label">Email</label>
-   					 			<div class="col-sm-9">
+   					 			<div class="col-sm-7">
    					 				<input id="email" type="text" onkeyup="checkEmail(this)" class="form-control form-control-sm" name="email" value="<%=account.getEmail()%>" readonly>
    					 			</div>
   							</div>
@@ -224,7 +224,7 @@ System.out.println("MOD SESSIONE: " + mod);
                          </form>	
       				</div>
       				
-      				<div class="p-2" id="pagamenti">
+      				<div class="p-3" id="pagamenti">
       					<h2> Metodi di pagamento </h2>
       					<% 
       						if(carte!=null){
@@ -235,7 +235,7 @@ System.out.println("MOD SESSIONE: " + mod);
    	 							<div class="col-sm-3">
       								<input type="text" value="<%=carta.getnCarta() %>" class="form-control-plaintext form-control-sm">
     							</div>
-    							<label class="col-sm-1.5 col-form-label">Titolare</label>
+    							<label class="col-sm-1 col-form-label">Titolare</label>
     							<div class="col-sm-2">
       								<input type="text" value="<%=carta.getTitolare() %>" class="form-control-plaintext form-control-sm">
     							</div>

@@ -40,7 +40,7 @@ System.out.println("MOD SESSIONE: " + mod);
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#">
+                            <a class="navbar-brand mr-auto" href="index.jsp">
                                 <img src="img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,48 +140,39 @@ System.out.println("MOD SESSIONE: " + mod);
 				        <% } %>
 				    </div>
                     <div class="container ie-h-align-center-fix">
-                    <h3>Dettagli viaggio</h3>
+                    	<div class="form-row tm-search-form-row d-flex justify-content-center">	
+                      		<div class="form-group tm-form-element tm-form-element-100">
+                            	<h3 class="tm-color-primary tm-article-title-1">Dettagli viaggio</h3>
+                            </div>
+                       	</div>
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
+                  				
                   				<form action="cliente/AggiungiAlCarrelloServlet" method="post" class="tm-search-form tm-section-pad-2" id="card1">
-                                   		<div class="pl-5">
-                                   		
+                                	<div class="pl-5">
                                    		<% for(Volo v: voliViaggio) { %>
-                                <div class="p-3 border border-light rounded bg-light">
-      						<div class="form-row align-items-center">	
-  									 <h5><%=v.getCa().getNome() %></h5>
-  									 
-  									<h3 style="margin-left: 100px;"><%=v.getOrarioPartenza()%></h3> 
-  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
-  									<h3><%=v.getOrarioArrivo()%></h3>
-  										<span style="margin-left: 10px;"> Totale : &euro; <%=v.getPrezzo() %></span>
-  							
-    						</div>
+                               	 		<div class="p-3 border border-light rounded bg-light">
+      										<div class="form-row align-items-center">	
+  									 			<h5><%=v.getCa().getNome() %></h5>
+  									 			<h3 style="margin-left: 100px;"><%=v.getOrarioPartenza()%></h3> 
+  												<img alt="" src="img/icon-route.png" width="200px" height="80px">
+  												<h3><%=v.getOrarioArrivo()%></h3>
+  												<span style="margin-left: 10px;"> Totale : &euro; <%=v.getPrezzo() %></span>
+		  									</div>
     							
-    					<b><span style="margin-left:177px;"><%=v.getAeroportoP().getCodice()%></span> </b>
-    					<span style="margin-left:100px;"><%=v.getDurataVolo() %></span> 
-    					<b><span style="margin-left:115px;"><%=v.getAeroportoA().getCodice() %></span></b><br>
-    				
-    					
-    			
-    							</div>
-    				
-    							<br>
-   					
-   					<% } %>
-   					
-   					
-   									</div> 
+    										<b><span style="margin-left:177px;"><%=v.getAeroportoP().getCodice()%></span> </b>
+    										<span style="margin-left:100px;"><%=v.getDurataVolo() %></span> 
+    										<b><span style="margin-left:115px;"><%=v.getAeroportoA().getCodice() %></span></b><br>
+    									</div>
+			    						<br>
+   										<% } %>
+	   								</div> 
    									
-   									
-    					
-    							
-                                    <div class="form-row tm-search-form-row">                                  
-                                        <div class="form-group tm-form-element tm-form-element-2">
-                                            <button type="submit" class="btn btn-primary tm-btn-search">Aggiungi al carrello</button>
-                                        </div>
-                                      </div>
-                                    
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">
+                                		<div class="form-group tm-form-element tm-form-element-2">
+                                    		<button type="submit" class="btn btn-primary tm-btn-search">Aggiungi al carrello</button>
+                                    	</div>
+                                	</div>
                                 </form>
                             </div>                        
                         </div>      
@@ -189,7 +180,7 @@ System.out.println("MOD SESSIONE: " + mod);
                 </div>                  
             </div>
 
-                <footer class="tm-bg-dark-blue">
+            <footer class="tm-bg-dark-blue">
                 <div class="container">
                     <div class="row">
                         <p class="col-sm-12 text-center tm-font-light tm-color-white p-4 tm-margin-b-0">

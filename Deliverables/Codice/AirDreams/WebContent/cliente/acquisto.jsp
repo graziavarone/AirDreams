@@ -49,10 +49,12 @@
                                 	<div>
                                 		<h3 class="tm-color-primary tm-article-title-1">
                                 		Grazie per aver acquistato su AirDreams! 
-                                		Le informazioni sul tuo viaggio, e il codice della prenotazione sono stati mandati alla mail
+                                		Le informazioni sul tuo viaggio e il codice della prenotazione sono stati mandati alla mail
                                 		
-                                		 "<%=account.getEmail() %>", il check-in sarà  fatto online sul sito 
-                                		 della/e compagnia/e aerea/e due giorni prima della data di partenza.
+                                		 "<%=account.getEmail() %>". <br>
+                                		
+                                		Il check-in potrà essere effettuato sulle piattaforme delle compagnie aeree	
+                                		dei biglietti acquistati.
                                 		
                                 		</h3>
                                 		

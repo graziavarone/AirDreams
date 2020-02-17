@@ -183,150 +183,128 @@
                     </div>
                 </div>
             </div>
-           
-           	<div class="d-flex">
-           		<!-- Left Navbar -->
-           		<nav id="sidebar">
-	  				<div class="img bg-wrap text-center py-4" style="background-image: url(img/bg-img-1.jpg);">
-	  					<div class="user-logo">
-	  						<div class="img"></div>
-	  						<h3>Ricerca voli per</h3>
-	  					</div>
+        
+        <div class="d-flex">
+        	<!-- Left Navbar -->
+           	<nav id="sidebar">
+	  			<div class="img bg-wrap text-center py-4" style="background-image: url(img/bg-img-1.jpg);">
+	  				<div class="user-logo">
+	  					<div class="img"></div>
+	  					<h3>Ricerca voli per</h3>
 	  				</div>
+	  			</div>
 	  				
-	  				<div>
+	  			<div>
 	  				
-	  				<% if(viaggioSolaAndata){ %>
-	  					<%if (diretto!=null){ %>
-	  				<input type="checkbox" checked="checked" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
-	  				name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
+	  				<% if(viaggioSolaAndata) {
+	  						if (diretto!=null) { 
+	  				%>
+	  					<input type="checkbox" checked="checked" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
+	  					name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
 	  				<% } else { %>
-	  				<input type="checkbox" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
-	  				name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
+	  					<input type="checkbox" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
+	  					name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
 	  	
 	  				<% } %>
-	  						<div class="slidecontainer">
+	  				
+	  				<div class="slidecontainer">
 						  Durata volo <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
 						  type="range" name="durataAndata" min="1" max="24" value="<%=durataAndata%>" class="slider" id="myRangeDurataAndata">
 						    <p style="color: white;">Ore: <span id="durataAndata"></span>h</p>
-						</div>
+					</div>
 						
-							<div class="slidecontainer">
+					<div class="slidecontainer">
 						  Prezzo volo <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
 						   type="range" name="prezzoAndata" min="1" max="500" value="<%=prezzoAndata %>" class="slider" id="myRangePrezzoAndata">
 						    <p style="color: white;">Prezzo: &euro; <span id="prezzoAndata"></span></p>
-						</div>
-						
-	  				<% } else { %>
-	  				<%if (diretto!=null){ %>
-	  				<input type="checkbox" checked="checked" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
-	  				name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
-	  				<% } else { %>
-	  				<input type="checkbox" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
-	  				name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
-	  	
-	  				<% } %>
-	  						<div class="slidecontainer">
+					</div>
+					<% } else { 
+	  					if (diretto!=null){ %>
+	  						<input type="checkbox" checked="checked" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
+	  						name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
+	  					<% } else { %>
+	  						<input type="checkbox" onclick="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)" id="Diretto" 
+	  						name="Diretto" value="Diretto" 	style="margin-left: 30px;">Solo voli diretti<br> 
+	  					<% } %>
+	  					
+	  					<div class="slidecontainer">
 						  Durata volo di andata <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
 						  type="range" name="durataAndata" min="1" max="24" value="<%=durataAndata %>" class="slider" id="myRangeDurataAndata">
 						    <p style="color: white;">Ore: <span id="durataAndata"></span>h</p>
 						</div>
 						
-							<div class="slidecontainer">
+						<div class="slidecontainer">
 						  Prezzo volo di andata <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
 						   type="range" name="prezzoAndata" min="1" max="500" value="<%=prezzoAndata %>" class="slider" id="myRangePrezzoAndata">
 						    <p style="color: white;">Prezzo: &euro; <span id="prezzoAndata"></span></p>
-						    
-						    	<div class="slidecontainer">
+						</div>   
+						
+						<div class="slidecontainer">
 						  Durata volo di ritorno <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
 						  type="range" name="durataAndata" min="1" max="24" value="<%=durataRitorno %>" class="slider" id="myRangeDurataRitorno">
 						    <p style="color: white;">Ore: <span id="durataRitorno"></span>h</p>
 						</div>
 						
-							<div class="slidecontainer">
+						<div class="slidecontainer">
 						  Prezzo volo di ritorno <input onchange="filtra('<%=city%>','<%=cityArrivals %>','<%=seats%>','<%=dateDeparture%>','<%=dateReturn %>',<%=viaggioSolaAndata%>)"
 						   type="range" name="prezzoAndata" min="1" max="500" value="<%=prezzoRitorno %>" class="slider" id="myRangePrezzoRitorno">
 						    <p style="color: white;">Prezzo: &euro; <span id="prezzoRitorno"></span></p>
 						</div>
-	  				
-	  				
 	  				<% } %>
-	  				
-	  				
-	  			
-	  		
-					
-          		
-            		
-						
-						
-	  				
-	  				
-	  				</div>
-        		
-
-        		
-				</nav>
-				<!-- /Left Navbar -->
+	  			</div>
+        	</nav>
+			<!-- /Left Navbar -->
            	
-           		<!-- Information Sections -->
-           		<div class="justify-content-center">
-           			<div>
-           				<!-- verranno inseriti i form per i criteri di ricerca -->
-           			</div>
-           			</div>
-           			
-                	<div class="pl-3" id="info">
-                		<% if((testVoliAndata==true && testVoliRitorno==true) || (testVoliAndata==true && testVoliRitorno==false)){ %>
+           	<!-- Information Sections -->
+           	<div class="justify-content-center">
+           	 	<div class="pl-3" id="info">
+           	 	
+                	<% if((testVoliAndata==true && testVoliRitorno==true) || (testVoliAndata==true && testVoliRitorno==false)) { %>
                 		<p> Non ci sono voli disponibili </p>
-                		<% } else if(voliRitornoDiretti==null && voliRitornoUnoScalo==null && voliRitornoDueScali==null) {%>
-                		
+                	<% } else if(voliRitornoDiretti==null && voliRitornoUnoScalo==null && voliRitornoDueScali==null) { %>
                 		<div class="pl-5"><!-- contiene le varie grid voli -->
-                			<% for(Volo voloAndata: voliAndataDiretti){
-      	
-      							int oreDurataAndata=voloAndata.getDurataVolo().getHour();
-  								int minutiDurataAndata=voloAndata.getDurataVolo().getMinute();
-  								String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
-      							%>
+                			<% for(Volo voloAndata: voliAndataDiretti) {
+      								int oreDurataAndata=voloAndata.getDurataVolo().getHour();
+  									int minutiDurataAndata=voloAndata.getDurataVolo().getMinute();
+  									String durataFormatAndata=oreDurataAndata+"h"+" "+minutiDurataAndata+"min";
+      						%>
 
       						<div class="p-3 border border-light rounded bg-light">
-      						<div class="form-row align-items-center">
-  									 <h5><%=voloAndata.getCa().getNome() %></h5>
+      							<div class="form-row align-items-center">
+  									<h5><%=voloAndata.getCa().getNome() %></h5>
   									<h3 style="margin-left: 100px;"><%=voloAndata.getOrarioPartenza().toString()%></h3> 
-  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									<img alt="" src="img/icon-route.png" width="250px" height="100px">
   									<h3><%=voloAndata.getOrarioArrivo().toString()%></h3>
-  								<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata.getPrezzo()%>    </h3>
-    						</div>
-    					<b><span style="margin-left:177px;"><%=voloAndata.getAeroportoP().getCodice()%></span> </b>
-    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
-    					<b><span style="margin-left:115px;"><%=voloAndata.getAeroportoA().getCodice()%></span></b><br>
+  									<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata.getPrezzo()%></h3>
+    							</div>
+    							<b><span style="margin-left:177px;"><%=voloAndata.getAeroportoP().getCodice()%></span> </b>
+    							<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    							<b><span style="margin-left:115px;"><%=voloAndata.getAeroportoA().getCodice()%></span></b><br>
     					
-    					<span style="color: green; margin-left: 155px; ">Diretto</span>
+    							<span style="color: green; margin-left: 155px; ">Diretto</span>
     						<% 
-    					int posti;
-    					if((posti=voloAndata.getSeats())<=10){ %>
-    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
-    					<% } %>
+    							int posti;
+    							if((posti=voloAndata.getSeats())<=10) { %>
+    								<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    							<% } %>
     					
-    					<% if(voloAndata.isCompreso()){ %>
-    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
-    					<% } %>
+    							<% if(voloAndata.isCompreso()){ %>
+    								<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    							<% } %>
     				
- 						
- 						<form action="DettagliViaggioServlet" method="get">
- 						<input type="hidden" name="primoVolo" value="<%=voloAndata.getId()%>">
-  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
-  					</form>
-   					
-   									</div> 
-   									<br>
+ 								<form action="DettagliViaggioServlet" method="get">
+ 									<input type="hidden" name="primoVolo" value="<%=voloAndata.getId()%>">
+  									<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+  								</form>
+   							</div> 
+   							<br>
    									
-   								<%  }%>
-   									</div>
+   							<% } %>
+   						</div>
    									
-   								<% if(soloVoliDirettiAndata==false){ %>
-   								<div class="pl-5"><!-- contiene le varie grid voli -->
-   						        <% for(Volo[] voloAndata: voliAndataUnoScalo){
+   						<% if(soloVoliDirettiAndata==false){ %>
+   						<div class="pl-5"><!-- contiene le varie grid voli -->
+   						        <% for(Volo[] voloAndata: voliAndataUnoScalo) {
    						        	LocalTime totale;
    									
    									LocalTime durataPrimoVolo=voloAndata[0].getDurataVolo();
@@ -348,45 +326,42 @@
    									
    									String durataFormatAndata=totale.getHour()+"h"+" "+totale.getMinute()+"min";
       							%>
-
-      						<div class="p-3 border border-light rounded bg-light">
-      						<div class="form-row align-items-center">
-  									 <h5><%=voloAndata[0].getCa().getNome() %></h5>
-  									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
+								<div class="p-3 border border-light rounded bg-light">
+      								<div class="form-row align-items-center">
+  										<h5><%=voloAndata[0].getCa().getNome() %></h5>
+  										<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
   										<img alt="" src="img/icon-route.png" width="250px" height="100px">
-  									<h3><%=voloAndata[1].getOrarioArrivo().toString()%></h3>
-  								<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()%>    </h3>
-    						</div>
-    					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
-    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
-    					<b><span style="margin-left:115px;"><%=voloAndata[1].getAeroportoA().getCodice()%></span></b><br>
+  										<h3><%=voloAndata[1].getOrarioArrivo().toString()%></h3>
+  										<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()%>    </h3>
+    								</div>
+    								<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
+    								<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    								<b><span style="margin-left:115px;"><%=voloAndata[1].getAeroportoA().getCodice()%></span></b><br>
     					
-    					<span style="color: red; margin-left: 155px; ">Uno scalo</span>
-    						<% 
-    					int posti;
-    					if((posti=voloAndata[0].getSeats())<=10){ %>
-    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
-    					<% } %>
+    								<span style="color: red; margin-left: 155px; ">Uno scalo</span>
+    								<% 
+    									int posti;
+    									if((posti=voloAndata[0].getSeats())<=10){ 
+    								%>
+    								<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    								<% } %>
     					
-    					<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso()){ %>
-    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
-    					<% } %>
+    								<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso()) { %>
+    								<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    								<% } %>
     				
- 						
-  							<form action="DettagliViaggioServlet" method="get">
- 						<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
- 						<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
-  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
-  						</form>
-  							</div> 
+		 							<form action="DettagliViaggioServlet" method="get">
+ 										<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
+ 										<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
+  										<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+  									</form>
+  								</div> 
     							<br>
-   								<%  }%>
+   							<%  } %>
    						</div>			
-    							<div>
-                			</div>
+    				</div>
                 			
-                			
-                			<div class="pl-5"><!-- contiene le varie grid voli -->
+                	<div class="pl-5"><!-- contiene le varie grid voli -->
    						        <% for(Volo[] voloAndata: voliAndataDueScali){
    						        	LocalTime totale;
    									
@@ -424,39 +399,39 @@
       							%>
 
       						<div class="p-3 border border-light rounded bg-light">
-      						<div class="form-row align-items-center">
+      							<div class="form-row align-items-center">
   									 <h5><%=voloAndata[0].getCa().getNome() %></h5>
-  									<h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
-  										<img alt="" src="img/icon-route.png" width="250px" height="100px">
-  									<h3><%=voloAndata[2].getOrarioArrivo().toString()%></h3>
-  								<h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()%>    </h3>
-    						</div>
-    					<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
-    					<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
-    					<b><span style="margin-left:115px;"><%=voloAndata[2].getAeroportoA().getCodice()%></span></b><br>
+  									 <h3 style="margin-left: 100px;"><%=voloAndata[0].getOrarioPartenza().toString()%></h3> 
+  									 <img alt="" src="img/icon-route.png" width="250px" height="100px">
+  									 <h3><%=voloAndata[2].getOrarioArrivo().toString()%></h3>
+  									 <h3 style="padding-left: 150px; margin-bottom: 100px;"> &euro; <%=voloAndata[0].getPrezzo()+voloAndata[1].getPrezzo()+voloAndata[2].getPrezzo()%>    </h3>
+    							</div>
+    							<b><span style="margin-left:177px;"><%=voloAndata[0].getAeroportoP().getCodice()%></span> </b>
+    							<span style="margin-left:100px;"><%=durataFormatAndata%></span> 
+    							<b><span style="margin-left:115px;"><%=voloAndata[2].getAeroportoA().getCodice()%></span></b><br>
+    						
+    							<span style="color: red; margin-left: 155px; ">Due scali</span>
+    							<% 
+    								int posti;
+    								if((posti=voloAndata[0].getSeats())<=10){ 
+    							%>
+    							<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
+    							<% } %>
     					
-    					<span style="color: red; margin-left: 155px; ">Due scali</span>
-    						<% 
-    					int posti;
-    					if((posti=voloAndata[0].getSeats())<=10){ %>
-    					<span style="color:red; margin-left: 35px;">Solo <%=posti%> posti rimasti</span>
-    					<% } %>
-    					
-    					<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso() || voloAndata[2].isCompreso()){ %>
-    					<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
-    					<% } %>
+    							<% if(voloAndata[0].isCompreso() || voloAndata[1].isCompreso() || voloAndata[2].isCompreso()){ %>
+    							<span style="color:green; margin-left: 50px;">Bagaglio stiva incluso</span>
+    							<% } %>
     				
- 						
-  						<form action="DettagliViaggioServlet" method="get">
- 						<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
- 						<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
- 						<input type="hidden" name="terzoVolo" value="<%=voloAndata[2].getId()%>">
-  						<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
-  						</form>
+ 								<form action="DettagliViaggioServlet" method="get">
+ 									<input type="hidden" name="primoVolo" value="<%=voloAndata[0].getId()%>">
+ 									<input type="hidden" name="secondoVolo" value="<%=voloAndata[1].getId()%>">
+ 									<input type="hidden" name="terzoVolo" value="<%=voloAndata[2].getId()%>">
+  									<button type="submit" style="margin-left: 300px;" class="btn btn-primary">Dettagli</button>
+  								</form>
   							</div> 
-    							<br>
+    						<br>
    					
-   								<%  }%>
+   								<%  } %>
    									</div>
    									<br>
     							<div>

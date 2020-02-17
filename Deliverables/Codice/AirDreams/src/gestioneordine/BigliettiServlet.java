@@ -84,7 +84,6 @@ public class BigliettiServlet extends HttpServlet {
 							} else if(entry.getKey().isCompreso() && numeroBagagli>1) {
 								biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo()+politicaBagaglioStiva.getPrezzo());
 							} else {
-								System.out.println("Non ho il bagaglio compreso pago anche l'aria");
 								biglietto.setPrezzoBiglietto(entry.getKey().getPrezzo()+politicaBagaglioStiva.getPrezzo());
 							}
 						}
