@@ -162,13 +162,13 @@ http://www.tooplate.com/view/2095-level
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
                                         	<% String partenza = volo.getAeroportoP().getCodice() +" - " + volo.getAeroportoP().getCity() + ", " +  volo.getAeroportoP().getStato();%>
-                                            <input name="city" value="<%=partenza%>" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                            <input onblur="checkAeroporto(this)"  name="city" value="<%=partenza%>" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
                                         	<% String arrivo = volo.getAeroportoA().getCodice() +" - " + volo.getAeroportoA().getCity() + ", " +  volo.getAeroportoA().getStato(); %>
-                                           <input name="cityArrivals" value="<%=arrivo%>" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                           <input onblur="checkAeroporto(this)"  name="cityArrivals" value="<%=arrivo%>" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
@@ -186,7 +186,7 @@ http://www.tooplate.com/view/2095-level
                                  	<div class="form-row tm-search-form-row">
                                     	<div class="form-group tm-form-element tm-form-element-50">
                                     	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	<input name="dateDeparture" value="<%=volo.getDataPartenza().format(FORMATO_DIA)%>" type="text" class="form-control" id="start" placeholder="Data partenza" required>
+                                           	<input onkeyup="checkData(this)"  name="dateDeparture" value="<%=volo.getDataPartenza().format(FORMATO_DIA)%>" type="text" class="form-control" id="start" placeholder="Data partenza" required>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="fa fa-euro fa-2x tm-form-element-icon"></i>

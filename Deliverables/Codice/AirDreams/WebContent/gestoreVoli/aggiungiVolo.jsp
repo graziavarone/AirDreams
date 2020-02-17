@@ -162,12 +162,12 @@ http://www.tooplate.com/view/2095-level
                                     <div class="form-row tm-search-form-row">
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                            <input name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                            <input onblur="checkAeroporto(this)"  name="city" type="text" class="form-control"  placeholder="Aeroporto di partenza" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                         	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                           <input name="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
+                                           <input onblur="checkAeroporto(this)"  name="cityArrivals" type="text" class="form-control" placeholder="Aeroporto di arrivo" list="ricerca-datalist" onkeyup="ricerca(this.value, this.name)" required>
                                             <datalist id="ricerca-datalist"></datalist>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
@@ -185,7 +185,7 @@ http://www.tooplate.com/view/2095-level
                                  	<div class="form-row tm-search-form-row">
                                     	<div class="form-group tm-form-element tm-form-element-50">
                                     	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	<input name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza" required>
+                                           	<input onkeyup="checkAeroporto(this)"  name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza" required>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="fa fa-euro fa-2x tm-form-element-icon"></i>

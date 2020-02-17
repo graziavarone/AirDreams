@@ -26,17 +26,6 @@ function checkData(inputtxt) {
 }
 
 
-function checkPrezzo(inputtxt) {
-	var name = /^([0-9]){1,}[.]([0-9]){1,2}$/;
-
-	if(!inputtxt.value.match(name)) {
-		inputtxt.classList.remove("success");
-		inputtxt.classList.add("error");	
-	} else {
-		inputtxt.classList.remove("error");
-		inputtxt.classList.add("success");	
-	}
-}
 
 
 

@@ -26,7 +26,7 @@ public class ModificaVoloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private String expAeroporto="^[A-Z]{3} - [A-Za-z  ]{1,}, [A-Za-z ]{1,}$";
 	private String expData= "^\\s*(0?[1-9]|1[0-9]|2[2-9]|3[01])\\/\\s*(1[012]|0?[1-9])\\/\\d{4}\\s*$";
-	private String expPrice="^([0-9]){1,}[.]([0-9]){1,2}$";
+
 	private DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	//globali per poterle utilizare nella funzione
 	private String cityP = null; //citta partenza
@@ -95,7 +95,7 @@ public class ModificaVoloServlet extends HttpServlet {
 			}
 		}
 			
-		if (!valida(city,cityArrivals,dateDeparture,price)) {
+		if (!valida(city,cityArrivals,dateDeparture)) {
 			if(!Pattern.matches(expAeroporto, city)) {
 				message+="Formato aeroporto partenza non valido, inserire nel formato CODICE - citta', stato<br>";
 				response.getWriter().write("Failed");
@@ -117,12 +117,7 @@ public class ModificaVoloServlet extends HttpServlet {
 				redirect="/gestoreVoli/dettagliVoloServlet?"+idVolo;
 			}
 			
-			if(!Pattern.matches(expPrice, price)) {
-				message+="Formato prezzo non valido, reinserirlo nel formato giusto(es. 12.00)<br>";
-				response.getWriter().write("Failed");
-				request.setAttribute("message", message);
-				redirect="/gestoreVoli/dettagliVoloServlet?"+idVolo;
-			}
+	
 		} else {
 			try {
 				aeroportoP = manager.findAeroportoById(codAeroportoP);
@@ -177,7 +172,7 @@ public class ModificaVoloServlet extends HttpServlet {
 		doGet(request, response);
 	}
 		
-	private boolean valida(String aeroportoP, String aeroportoA, String dateDeparture, String price) {
+	private boolean valida(String aeroportoP, String aeroportoA, String dateDeparture) {
 		boolean valido=true;
 		if (!Pattern.matches(expAeroporto, aeroportoP)) {
 			valido=false;
@@ -194,10 +189,7 @@ public class ModificaVoloServlet extends HttpServlet {
 			System.out.println("dataPartenza non corrisponde");
 		}
 			
-		if (!Pattern.matches(expPrice, price)) {
-			valido=false;
-			System.out.println("il prezzo non corrisponde");
-		}
+	
 			
 		return valido;
 	}
