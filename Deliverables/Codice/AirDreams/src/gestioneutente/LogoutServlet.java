@@ -20,6 +20,8 @@ public class LogoutServlet extends HttpServlet {
 		//chiudo la sessione rimuovendo gli attributi impostati al login
 		request.getSession().removeAttribute("roles");
 		request.getSession().removeAttribute("account");
+		if (request.getSession().getAttribute("mod")!=null)
+			request.getSession().removeAttribute("mod");
 		request.getSession().invalidate();
 		
 		//si è sempre reindirizzati alla index

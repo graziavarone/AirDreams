@@ -59,7 +59,7 @@ public class AggiungiCompagniaAereaServlet extends HttpServlet {
 				politicaBagaglioManager.aggiungiPoliticaBagaglioStiva(bagaglioAStiva);
 				System.out.println("Compagnia aggiunta");
 					
-				nextJSP = "/gestoreCompagnie/listaCompagnie.jsp";
+				nextJSP = "/gestoreCompagnie/ListaCompagnieServlet";
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

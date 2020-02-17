@@ -14,14 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/ChangeMod")
 public class ChangeMod extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ChangeMod() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,9 +22,9 @@ public class ChangeMod extends HttpServlet {
 		String mod=request.getParameter("mod");
 		
 		if(mod.equals("false")) 
-			request.setAttribute("mod", false);
+			request.getSession().setAttribute("mod", false);
 		else
-			request.setAttribute("mod", true);
+			request.getSession().setAttribute("mod", true);
 		
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}

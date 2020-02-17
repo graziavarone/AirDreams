@@ -202,6 +202,8 @@ public class UtenteManager {
 		ArrayList<Account> allUtenti = new ArrayList<Account>();
         Connection connection=null;
 		PreparedStatement preparedStatement=null;
+		Account account= null;
+		Ruolo ruolo = null;
 		
 		String selectSQL="SELECT * FROM utente";
 		
@@ -210,16 +212,25 @@ public class UtenteManager {
 			preparedStatement = connection.prepareStatement(selectSQL);
             ResultSet rs = preparedStatement.executeQuery();
             
-            while (rs.next()) {
-            	Account a = new Account();
-            	
-            	a.setNome(rs.getString("nome"));
-				a.setCognome(rs.getString("cognome"));
-				a.setEmail(rs.getString("email"));
-				a.setPassword(rs.getString("passwordUtente"));
+			while(rs.next()) {
+				CompagniaAereaManager manager=new CompagniaAereaManager();
 				
-				allUtenti.add(a);
-            }
+				account = new Account();
+				
+				account.setNome(rs.getString("nome"));
+				account.setCognome(rs.getString("cognome"));
+				account.setEmail(rs.getString("email"));
+				account.setPassword(rs.getString("passwordUtente"));	
+				CompagniaAerea compagniaAerea=manager.visualizzaInfoCompagniaAerea(rs.getString("compagniaAerea"));
+				account.setCompagniaAerea(compagniaAerea);
+				if(rs.getString("ruolo")!=null) {
+					ruolo= Ruolo.valueOf(rs.getString("ruolo"));
+				}
+				System.out.println("Ho ricevuto "+ruolo);
+				account.setRuolo(ruolo);
+				
+				allUtenti.add(account);
+			}
         } finally {
         	try {
         		if(preparedStatement!=null)
@@ -228,7 +239,7 @@ public class UtenteManager {
         		DriverManagerConnectionPool.releaseConnection(connection);
         	}
         }
-        
+        System.out.println("SIZE: " + allUtenti.size());
         return allUtenti; 
     }
 
@@ -322,7 +333,7 @@ public class UtenteManager {
 				ps.setString(6,"gestoreVoli");
 			}
 			
-			ps.setString(7,newAccount.getEmail());
+			ps.setString(7,oldAccount.getEmail());
 			
 			System.out.println("aggiornaProfilo "+ps.toString());
 			ps.executeUpdate();

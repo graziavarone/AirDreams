@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="gestioneutente.*"%>
     
-<% Boolean mod=(Boolean)request.getAttribute("mod");
-
+<%
+Boolean mod=(Boolean)request.getSession().getAttribute("mod");
+System.out.println("MOD SESSIONE: " + mod);
 if(mod==null)
 	mod=true;
 	String message=(String) request.getParameter("message");
@@ -68,7 +69,7 @@ if(mod==null)
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="ListaAccountServlet?page=1">Visualizza gli account</a>
 									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
@@ -133,9 +134,11 @@ if(mod==null)
                     		<div class="p-3 text-center">
                     			<a href="registrazione.jsp" class="btn btn-outline-light text-primary"> Non hai ancora un account? Registrati</a><br>
                     		</div>
-                    		<% if (message!=null){ %>
-                    			<h2 class="tm-color-primary tm-article-title-1 d-flex justify-content-center"><%=message%></h2>
-                    		<% } %>
+                    		<div>
+                    			<% if (message!=null){ %>
+                    			<h2 class="d-flex justify-content-center"><%=message%></h2>
+                    			<% } %>
+                    		</div>
                     	</div>
                         <div class="row">
                          	<form action="LoginServlet" method="post" class="tm-search-form tm-section-pad-2">

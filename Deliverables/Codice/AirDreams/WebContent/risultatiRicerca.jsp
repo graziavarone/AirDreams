@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 
 <% 
-	Boolean mod=(Boolean)request.getAttribute("mod");
+	Boolean mod=(Boolean)request.getSession().getAttribute("mod");
+	System.out.println("MOD SESSIONE: " + mod);
 	if(mod==null)
 		mod=true;
 	
@@ -37,7 +38,7 @@
 	  }
 	  
 	  System.out.println("Nella jsp la checkbox è" +diretto);
-		Account account= (Account) request.getAttribute("account");
+	  Account account= (Account) request.getAttribute("account");
 		
 	  ArrayList<Volo> voliAndataDiretti=(ArrayList<Volo>)request.getAttribute("voliAndataDiretti");
 	  ArrayList<Volo> voliRitornoDiretti=(ArrayList<Volo>)request.getAttribute("voliRitornoDiretti");
@@ -62,7 +63,7 @@
 	  boolean soloVoliDirettiAndata=voliAndataDiretti!=null && voliAndataUnoScalo==null && voliAndataDueScali==null;
 	 
 	  boolean viaggioSolaAndata=voliRitornoDiretti==null && voliRitornoUnoScalo==null && voliRitornoDueScali==null;
-	  System.out.println("Viagggio sola andata"+viaggioSolaAndata);
+	  System.out.println("Viaggio sola andata"+viaggioSolaAndata);
 		
 %>
 
@@ -85,8 +86,8 @@
     <link rel="stylesheet" href="css/prova.css">
 </head>
 <body>
-        <div class="tm-main-content" id="top">
-            <div class="tm-top-bar-bg"></div>
+    <div class="tm-main-content" id="top">
+    	<div class="tm-top-bar-bg"></div>
             <div class="tm-top-bar" id="tm-top-bar">
                 <!-- Top Navbar -->
                 <div class="container">
@@ -126,7 +127,7 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="ListaAccountServlet?page=1">Visualizza gli account</a>
 									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
@@ -162,7 +163,7 @@
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
-									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
+									  <a href="cliente/carrello.jsp">Il mio carrello</a>
 									  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
@@ -1478,19 +1479,6 @@
       			  		<% }  %>				
 
     							<br><br>
-    									
-      					
-      							<div class="d-flex justify-content-center">
-      					<h2 class="p-2"><i class="fa fa-arrow-left"></i></h2>
-      					<h2 class="p-2"><i class="fa fa-arrow-right"></i></h2>
-      			 			  	
-      					</div>
-    						
-      					 
-      			
-      			
-      				
-      		
       			
       			<!-- /Information Sections -->
 	

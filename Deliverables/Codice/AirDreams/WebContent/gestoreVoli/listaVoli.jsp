@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 
 <% 
-	Boolean mod=(Boolean)request.getAttribute("mod");
+	Boolean mod=(Boolean)request.getSession().getAttribute("mod");
+System.out.println("MOD SESSIONE: " + mod);
 	if(mod==null)
 		mod=true;
 	
@@ -83,7 +84,7 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="../ListaAccountServlet?page=1">Visualizza gli account</a>
 									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
 									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
@@ -111,7 +112,7 @@
 									  <div class="dropdown-content">
 									  <a href="ListaVoliServlet?page=1&action=null">Visualizza voli</a>
 									  <a href="aggiungiVolo.jsp">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -120,7 +121,7 @@
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="cliente/carrello.jsp">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -175,7 +176,7 @@
    					 			<label class="col-sm-6 col-form-label">Inserire aeroporto di partenza</label>
    					 			<div class="col-sm-5 tm-form-element ">
                                 	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                    <input name="city" type="text" class="form-control" value="" id="partenza" list="ricerca-datalist" onkeyup="ricerca(this.value,this.name)">
+                                    <input name="city" type="text" class="form-control" value="" id="partenza" list="ricerca-datalist" onkeyup="checkAeroporto(this)" onkeyup="ricerca(this.value,this.name)">
                                 	<datalist id="ricerca-datalist"></datalist>
                                 </div>
                             </div>
@@ -183,7 +184,7 @@
    					 			<label class="col-sm-6 col-form-label">Inserire aeroporto di destinazione</label>
    					 			<div class="col-sm-5 tm-form-element ">
                                 	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
-                                    <input name="cityArrivals" type="text" class="form-control" value="" id="destinazione" list="ricerca-datalist" onkeyup="ricerca(this.value,this.name)">
+                                    <input name="cityArrivals" type="text" class="form-control" value="" id="destinazione" list="ricerca-datalist" onkeyup="checkAeroporto(this)" onkeyup="ricerca(this.value,this.name)">
                                		<datalist id="ricerca-datalist"></datalist>
                                 </div>	
                             </div>
@@ -191,7 +192,7 @@
                             	<label class="col-sm-6 col-form-label">Inserire data del volo</label>
    					 			<div class="col-sm-5 tm-form-element">
                                 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                    <input name="data" type="text" class="form-control" id="start">
+                                    <input name="data" type="text" class="form-control" id="start" onkeyup="checkData(this)">
                                 </div>
   							</div>			
   							<button id="buttonForm" type="submit" class="btn btn-primary" hidden="true">Ricerca </button>
@@ -199,13 +200,12 @@
            			</div>
                 	<div class="pl-5" id="info">
       					<h2> Lista voli </h2>
-      					<%
-      						if (request.getAttribute("message")!=null) {
-      					%>
-      					<div class="alert alert-primary" role="alert">
-      						<h6><%=request.getAttribute("message")%></h6>
+      					<div>
+      						<% if (request.getAttribute("message")!=null) { %>
+				    		<p><%=request.getAttribute("message")%></p>
+				    		<% } %>
       					</div>
-      					<% } %>	
+
       					<div class="pl-5"><br><!-- contiene le varie grid voli -->
       						<%
       							//calcolo indici di inizio e fine della griglia di visualizzazione
@@ -315,11 +315,15 @@
         <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
         <script src="../js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
         <script src="../js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
-        <script src="../slick/slick.min.js"></script>      
-        
-           <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
+        <script src="../slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
+		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
+		
+        <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
-        <script src="../scripts/ricercaAeroporti.js"> </script>            <!-- http://kenwheeler.github.io/slick/ -->
+        <script src="../scripts/validaAeroporti.js"> </script> 
+        <script src="../scripts/validaVolo.js"> </script>
+        <script src="../scripts/ricercaAeroporti.js"> </script>
+                   <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 		<script>
 		
@@ -345,7 +349,7 @@
 				document.getElementById("buttonForm").removeAttribute("hidden");			
 			}
 			
-		    $("#start").datepicker({
+	        $("#start").datepicker({
 	            defaultDate:"+1w",
 	            dateFormat:"dd/mm/yy",
 	            minDate:0,
@@ -353,6 +357,16 @@
 	            numberOfMonth:1,
 	            onClose: function(selectedDate){
 	                $("#return").datepicker("option","minDate",selectedDate);
+	            }
+	         })
+	         
+	           $("#return").datepicker({
+	            defaultDate:"+1w",
+	            dateFormat:"dd/mm/yy",
+	            changeMonth:false,
+	            numberOfMonth:1,
+	            onClose: function(selectedDate){
+	                $("#start").datepicker("option","maxDate",selectedDate);
 	            }
 	         })
 	         

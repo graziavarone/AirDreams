@@ -6,7 +6,7 @@
 	String message=(String)request.getAttribute("message");
 	String messageValidation=(String)request.getAttribute("messageValidation");
 
- 	Boolean mod=(Boolean)request.getAttribute("mod");
+ 	Boolean mod=(Boolean)request.getSession().getAttribute("mod");
  
 	Account utente=(Account)request.getAttribute("utente");
  
@@ -19,11 +19,11 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-
+    <meta charset="ISO-8859-1">
     <title>AirDreams</title>
 <!--
 Template 2095 Level
@@ -55,8 +55,8 @@ http://www.tooplate.com/view/2095-level
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#">
-                                <img src="img/logo.png" alt="Site logo">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
+                                <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -89,9 +89,9 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="listaAccount.jsp">Visualizza gli account</a>
+									  <a href="ListaAccountServlet?page=1&message=null">Visualizza gli account</a>
 									  <a href="aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
@@ -100,7 +100,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -117,7 +117,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
 									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -126,7 +126,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="cliente/carrello.jsp">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -149,51 +149,59 @@ http://www.tooplate.com/view/2095-level
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
-                
-                  	<% if((message!=null) && !message.equals("")){ %>
-				  		<p id="messageError"><%=message %></p>
-				  	<% } %>
-				  
-				 	<% if(messageValidation!=null && !messageValidation.equals("")){ %>
-				    	<p id="messageError"><%=messageValidation%></p>
-				    <% } %>
-				  
-                    <div class="container ie-h-align-center-fix">
+                	<div>
+                     	<% if (message!=null){ %>
+                    	<p class="d-flex justify-content-center"><%=message%></p>
+                   	 	<% } %>
+                   	 	
+                   	 	<% if(messageValidation!=null && !messageValidation.equals("")){ %>
+				    	<p><%=messageValidation%></p>
+				    	<% } %>
+                   	</div>
+				
+				  	<div class="container ie-h-align-center-fix">
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                   				<form action="ModificaAccountServlet" method="post"  class="tm-search-form tm-section-pad-2 confirm" id="form1">
                                     <input type="hidden" name="emailVecchia" value="<%=utente.getEmail()%>">
-                                    <div class="form-row tm-search-form-row">
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">
                                         <div class="form-group tm-form-element tm-form-element-100">
+                                        	<i class="fa fa-user fa-2x tm-form-element-icon"></i> 
                                             <input name="nome" onkeyup="checkName(this)" type="text" class="form-control" value=<%=utente.getNome()%> id="inputName" placeholder="Type your name..." required="required">
                                         </div>
                                      
                                         <div class="form-group tm-form-element tm-form-element-50">
+                                        	<i class="fa fa-user fa-2x tm-form-element-icon"></i> 
                                             <input name="cognome" onkeyup="checkCognome(this)" type="text"  class="form-control" value=<%=utente.getCognome() %> id="inputCognome" placeholder="Type your surname..." required="required">
                                         	<br>
                                         </div>
                                         
-                                        <div class="form-group tm-form-element tm-form-element-50">                                      
+                                        <div class="form-group tm-form-element tm-form-element-50">   
+                                        	<i class="fa fa-envelope fa-2x tm-form-element-icon"></i>                                    
                                             <input name="email" onkeyup="checkEmail(this)" type="text" class="form-control" value=<%=utente.getEmail() %> id="inputEmail" placeholder="Type your email" required="required">
                                         	<br>
-                                        </div>  
-                                    	<p style="margin-right: 30px">Assegna la compagnia aerea </p>
-                                        <% if(utente.getRuolo()==Ruolo.gestoreVoli){ %>
-                                     		<p>Compagnia aerea attuale <%=utente.getCompagniaAerea().getNome() %>  </p>
-               							<% } %>
+                                        </div> 
+                                    </div> 
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">
+                                        <div class="form-group tm-form-element tm-form-element-50"> 
+                                    		<p style="margin-right: 30px">Assegna la compagnia aerea
+                                        	<% if(utente.getRuolo()==Ruolo.gestoreVoli){ %>
+                                     			Compagnia aerea attuale <%=utente.getCompagniaAerea().getNome() %>  </p>
+               								<% } %>
                                     
-                                    	<select id="text" name="combo">
-                                    		<option>Nessuna</option>
-											<%
-												for(int i=0;i<compagnie.size();i++){
-													CompagniaAerea compagniaAerea=compagnie.get(i);
-											%>
-											<option><%=compagniaAerea.getNome()%></option>
-											<% } %>
-										</select>
+                                    		<select id="text" name="combo">
+                                    			<option>Nessuna</option>
+												<%
+													for(int i=0;i<compagnie.size();i++){
+														CompagniaAerea compagniaAerea=compagnie.get(i);
+												%>
+												<option><%=compagniaAerea.getNome()%></option>
+												<% } %>
+											</select>
+										</div>
                                    	</div>
                                         
-                                    <div class="form-row tm-search-form-row">                                  
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
                                             <input type="submit" class="btn btn-primary tm-btn-search" value="Modifica">
                                         </div>
@@ -218,7 +226,7 @@ http://www.tooplate.com/view/2095-level
 
         
         <!-- load JS files -->
-        <script src="../scripts/validaRegistrazione.js"></script>
+        <script src="../scripts/validaModificaProfilo.js"></script>
         <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->
         <script src="../js/popper.min.js"></script>                    <!-- https://popper.js.org/ -->       
         <script src="../js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->

@@ -206,38 +206,4 @@ public class CompagniaAereaManager {
         
         return allComA; 
     }
-	
-	/**
-	 * metodo che permette di eliminare una compagnia aerea dalla gestione del sistema
-	 * @param nome nome della compagnia aerea da eliminare
-	 * @return boolean true se la cancellazione nel DB va a buon fine, false in caso contrario
-	 * @throws SQLException
-	 */
-	public boolean eliminaCompagnia(String nome) throws SQLException {
-		boolean b = false;
-		Connection connection=null;
-		PreparedStatement preparedStatement=null;
-	
-		String updateSQL="DELETE from compagniaAerea where nome=?";
-        
-        try {
-        	connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(updateSQL);
-
-            preparedStatement.setString(1, nome);
-                
-            System.out.println("eliminaCompagnia: "+ preparedStatement.toString());
-            preparedStatement.executeUpdate();
-            b=true;
-        } finally {
-        	try {
-        		if(preparedStatement!=null)
-        			preparedStatement.close();
-            } finally {
-            	DriverManagerConnectionPool.releaseConnection(connection);
-            }
-        }
-        
-        return b;
-	}
 }

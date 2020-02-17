@@ -49,7 +49,7 @@ public class RicercaAccountServlet extends HttpServlet {
 				lettera = model.findAccountByLetter(nome, cognome);
 				if(lettera.size() == 0)  {
 					message = "Non ci sono utenti che iniziano per questa lettera";	
-					request.setAttribute("message", message);		
+					request.setAttribute("messageRicerca", message);		
 				}
 					
 				request.setAttribute("allUtentiAdmin", lettera);

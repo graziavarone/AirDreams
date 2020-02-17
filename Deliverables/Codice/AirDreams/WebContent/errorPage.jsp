@@ -7,7 +7,7 @@
 		<meta charset="utf-8">
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title> Error </title>
+		<title>Login</title>
     
     	<!-- load stylesheets -->
     	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">  <!-- Google web font "Open Sans" -->
@@ -16,7 +16,7 @@
     	<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
     	<link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
     	<link rel="stylesheet" type="text/css" href="css/datepicker.css"/>
-    	<link rel="stylesheet" href="css/tooplate-style.css">  
+    	<link rel="stylesheet" href="css/tooplate-style.css">                                   <!-- Templatemo style -->
 	</head>
 
 	<body>
@@ -27,35 +27,31 @@
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#">
+                            <a class="navbar-brand mr-auto" href="index.jsp">
                                 <img src="img/logo.png" alt="Site logo">
                             </a>                         
                         </nav>            
                     </div>
                 </div>
             </div>
-            
+
             <div class="tm-section tm-bg-img" id="tm-section-1">
-                <div class="tm-bg-white w-50">
-                    <div>
+                <div class="tm-bg-white w-10">
+                    <div class="container">
                         <div class="row">
-                            <div class="d-flex align-items-center">
-                                <form action="LoginServlet" method="post" class="tm-search-form tm-section-pad-2">
-                                	<div>
-                                		<h3 class="tm-color-primary tm-article-title-1">Si è verificato un errore</h3>
-                                		<%
-											//controlliamo se è arrivato un messaggio di errore dalla request
-											String message=(String) request.getParameter("message");
-											if (message!=null) {	
-										%> 
-                                		<p><%=message%></p>
-                                		<% } %>
-                                		<p> Riprendi la tua esperienza su AirDreams tornando alla <a href="index.jsp">homepage</a> del sistema.</p>
-                					</div>
-                                </form>
-                            </div>                        
-                        </div>      
-                    </div>
+                        	<div>
+                            	<h3 class="tm-color-primary tm-article-title-1">Si è verificato un errore</h3>
+                            	<%
+									//controlliamo se è arrivato un messaggio di errore dalla request
+									String message=(String) request.getParameter("message");
+									if (message!=null) {	
+								%> 
+                                	<p><%=message%></p>
+                                <% } %>
+                                <p> Riprendi la tua esperienza su AirDreams tornando alla <a href="index.jsp">homepage</a> del sistema.</p>
+                			</div>
+                        </div>  
+                    </div>    
                 </div>                  
             </div>
             

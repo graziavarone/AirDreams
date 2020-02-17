@@ -38,7 +38,6 @@ public class CompagniaAereaManagerTest {
 		System.out.println("aggiungiCompagnia");
 		boolean result=compagniaAereaManager.aggiungiCompagnia(new CompagniaAerea("EasyJet","www.easyjet.com"));
 		
-		compagniaAereaManager.eliminaCompagnia("EasyJet");
 		assertTrue(result);
 	} 
 	
@@ -49,17 +48,6 @@ public class CompagniaAereaManagerTest {
 		
 		assertEquals(1, compagnie.size());
 	} 
-	
-	@Test
-	public void eliminaCompagnia() throws Exception{
-		System.out.println("eliminaCompagnia");
-		
-		compagniaAereaManager.aggiungiCompagnia(new CompagniaAerea("EasyJet","www.easyjet.com"));
-		boolean result=compagniaAereaManager.eliminaCompagnia("EasyJet");
-		
-		assertTrue(result);
-	} 
-
 	
 	@After
 	public void tearDown() throws Exception{

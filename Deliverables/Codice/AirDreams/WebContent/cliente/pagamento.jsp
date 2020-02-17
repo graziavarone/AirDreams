@@ -2,7 +2,8 @@
     pageEncoding="ISO-8859-1" import="java.util.*,gestioneutente.*,gestioneordine.*"%>
     
     <%
-	Boolean mod=(Boolean)request.getAttribute("mod");
+    Boolean mod=(Boolean)request.getSession().getAttribute("mod");
+    System.out.println("MOD SESSIONE: " + mod);
 	if(mod==null)
 		mod=true;
 	
@@ -74,9 +75,9 @@
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="../ListaAccountServlet?page=1">Visualizza gli account</a>
 									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
@@ -85,7 +86,7 @@
 									  <div class="dropdown-content">
 									  <a href="DettagliAccountServlet">Il mio profilo</a>
 									  <a href="CarrelloServlet">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -102,7 +103,7 @@
 									  <div class="dropdown-content">
 									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
 									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -111,7 +112,7 @@
 									  <div class="dropdown-content">
 									  <a href="DettagliAccountServlet">Il mio profilo</a>
 									  <a href="carrello.jsp">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -139,13 +140,11 @@
             
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
-                            <%
-      							if (request.getAttribute("message")!=null && !request.getAttribute("message").equals("")) {
-      						%>
-      							<div class="alert alert-primary" role="alert">
-      								<h6><%=request.getAttribute("message")%></h6>
-      							</div>
-      						<%  } %>
+      							<div>
+									<% if (request.getAttribute("message")!=null && (!request.getAttribute("message").equals(""))) { %>
+				    				<p id="messageError"><%=request.getAttribute("message")%></p>
+				    				<% } %>
+				   				</div>
       							
                             <form action="PagamentoServlet" method="post" id="form2">
                             	<% 

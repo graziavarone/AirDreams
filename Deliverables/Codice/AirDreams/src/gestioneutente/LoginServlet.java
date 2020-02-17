@@ -18,7 +18,7 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		UtenteManager manager=new UtenteManager();
 		String redirectedPage="";
-		System.out.println("Ho ricevuto la sessione"+request.getSession());
+		System.out.println("Ho ricevuto la sessione" + request.getSession());
 		
 		//recupero dati inviati dal form e creo un account apposito per il controllo
 		String email=request.getParameter("email");
@@ -48,6 +48,8 @@ public class LoginServlet extends HttpServlet {
 			
 					if(account.getRuolo().equals(Ruolo.gestoreCompagnie))
 						redirectedPage="/gestoreCompagnie/ListaCompagnieServlet";
+					
+					request.getSession().setAttribute("mod",true);
 				} else
 					redirectedPage="/cliente/DettagliAccountServlet";
 			}

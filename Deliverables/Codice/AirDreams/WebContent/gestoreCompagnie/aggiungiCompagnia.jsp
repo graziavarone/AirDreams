@@ -4,21 +4,22 @@
 <%
 	String message=(String)request.getAttribute("message");
 
- Boolean mod=(Boolean)request.getAttribute("mod");
+ 	Boolean mod=(Boolean)request.getSession().getAttribute("mod");
 
-if(mod==null)
-	mod=true;
+	if(mod==null)
+		mod=true;
 %>
 <!DOCTYPE html>
 <html>
 
 <head>
-    <meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+	<meta charset="ISO-8859-1">
+<title>Lista Compagnie</title>
 
-    <title>AirDreams</title>
 <!--
 Template 2095 Level
 http://www.tooplate.com/view/2095-level
@@ -30,14 +31,7 @@ http://www.tooplate.com/view/2095-level
     <link rel="stylesheet" type="text/css" href="../slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="../slick/slick-theme.css"/>
     <link rel="stylesheet" type="text/css" href="../css/datepicker.css"/>
-    <link rel="stylesheet" href="../css/tooplate-style.css">                                   <!-- Templatemo style -->
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-          <![endif]-->
+    <link rel="stylesheet" href="../css/tooplate-style.css"> 
 </head>
 
     <body>
@@ -82,9 +76,9 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="ListaAccountServlet">Visualizza gli account</a>
+									  <a href="ListaAccountServlet?page=1&message=null">Visualizza gli account</a>
 									  <a href="aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
@@ -93,7 +87,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -110,7 +104,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
 									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -119,7 +113,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="cliente/carrello.jsp">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -142,83 +136,64 @@ http://www.tooplate.com/view/2095-level
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
-                  <% if(message!=null){ %>
-				                <p id="messageError"><%=message %></p>
-				                <% } %>
+                	<div>
+                		<% if(message!=null) { %>
+				 		<p><%=message %></p>
+				    	<% } %>
+				    </div>
                     <div class="container ie-h-align-center-fix">
                         <div class="row">
-                            <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
                   				<form action="AggiungiCompagniaAereaServlet" method="post" class="tm-search-form tm-section-pad-2" id="form1">
-                                    <div class="form-row tm-search-form-row">
-                                        <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="nome" type="text" class="form-control"  placeholder="Type name..." required="required">
-                                   
-                                        </div>
-                                     
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                         
-                                            <input name="sitoCompagnia" type="text"  class="form-control"placeholder="Type site.." required="required">
+                                        	<i class="fa fa-plane fa-2x tm-form-element-icon"></i>
+                                            <input name="nome" type="text" class="form-control" onkeyup="checkName(this)" placeholder="Nome compagnia" required="required">
+                                        </div>
+                                        <div class="form-group tm-form-element tm-form-element-50">
+                                         	<i class="fa fa-globe fa-2x tm-form-element-icon"></i>
+                                            <input name="sitoCompagnia" type="text"  class="form-control" onkeyup="checkSito(this)" placeholder="Sito web compagnia" required="required">
                                         	<br>
                                         </div>
-                                  
-                                        
-                              			
-												
-												
-            							</div>
-            							
-            							              <div class="form-row tm-search-form-row">
-                                        <div class="form-group tm-form-element tm-form-element-100">
+                                  	</div>
+            						<div class="form-row tm-search-form-row d-flex justify-content-center">
+                                        <div class="form-group tm-form-element tm-form-element-50">
+                                        	<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
                                             <input name="pesoMano" type="number" class="form-control"  placeholder="Peso bagaglio a mano" required="required">
                                    
                                         </div>
-                                     
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                         
-                                            <input name="dimensioniMano" type="text"  class="form-control"placeholder="Dimensioni bagaglio a mano" required="required">
+                                         	<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
+                                            <input name="dimensioniMano" type="text" class="form-control" onkeyup="checkDimensioni(this)" placeholder="Dimensioni bagaglio a mano" required="required">
                                         	<br>
                                         </div>
-                                	
-            							</div>
-            							
-            							              <div class="form-row tm-search-form-row">
-                                        <div class="form-group tm-form-element tm-form-element-100">
+                                	</div>
+            						<div class="form-row tm-search-form-row d-flex justify-content-center">
+                                        <div class="form-group tm-form-element tm-form-element-50">
+                                        	<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
                                             <input name="pesoStiva" type="number" class="form-control"  placeholder="Peso bagaglio stiva" required="required">
-                                   
-                                        </div>
-                                     
+                                   		</div>
+                                     	<div class="form-group tm-form-element tm-form-element-50">
+                                         	<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
+                                            <input name="dimensioniStiva" type="text"  class="form-control" onkeyup="checkDimensioni(this)" placeholder="Dimensioni bagaglio stiva" required="required">
+                                        	<br>
+                                        </div>  
                                         <div class="form-group tm-form-element tm-form-element-50">
-                                         
-                                            <input name="dimensioniStiva" type="text"  class="form-control"placeholder="Dimensioni bagaglio stiva" required="required">
-                                        	<br>
+                                            <i class="fa fa-euro fa-2x tm-form-element-icon"></i>
+                                            <input name="prezzoStiva" type="number" class="form-control" placeholder="prezzo bagaglio a stiva" step="0.01" required>
                                         </div>
-                                        
-                                        <div class="form-group tm-form-element tm-form-element-100">                                      
-                                            	<input type="number" name="prezzoStiva"
-												placeholder="Prezzo bagaglio stiva" style="height: 42px" step="0.01" required="required"> 
-                                        	<br>
-                                        </div>   
-                                        
-                              			
-												
-												
-            							</div>
-                                    <div class="form-row tm-search-form-row">                                  
+                                    </div>
+                                    <div class="form-row tm-search-form-row d-flex justify-content-center">                                  
                                         <div class="form-group tm-form-element tm-form-element-2">
                                             <input type="submit" class="btn btn-primary tm-btn-search" value="Aggiungi">
                                         </div>
-                                      </div>
-                                    
-                                </form>
-                            </div>                        
+                                    </div>
+                                </form>                     
                         </div>      
                     </div>
                 </div>                  
             </div>
           
-
-            
-            <footer class="tm-bg-dark-blue">
+			<footer class="tm-bg-dark-blue">
                 <div class="container">
                     <div class="row">
                         <p class="col-sm-12 text-center tm-font-light tm-color-white p-4 tm-margin-b-0">
@@ -236,5 +211,10 @@ http://www.tooplate.com/view/2095-level
         <script src="../js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="../slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
-</body>
+		
+        <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
+        <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
+        <script src="../scripts/ricercaAeroporti.js"> </script>
+        <script src="../scripts/validaCompagnia.js"> </script>
+	</body>
 </html>

@@ -3,7 +3,7 @@
     
 <%
 	String message=(String)request.getAttribute("message");
-	Boolean mod=(Boolean)request.getAttribute("mod");
+	Boolean mod=(Boolean)request.getSession().getAttribute("mod");
 	int pagina=Integer.parseInt(request.getParameter("page"));
 	ArrayList<Account> allUtenti = (ArrayList<Account>)request.getAttribute("allUtentiAdmin");
 	System.out.println(allUtenti);
@@ -13,6 +13,7 @@
 	
 	if(mod==null)
 		mod=true;
+	String messageRicerca=(String)request.getAttribute("messageRicerca");
 %>
 <!DOCTYPE html>
 <html>
@@ -88,9 +89,9 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  		<a href="ListaAccountServlet">Visualizza gli account</a>
+									  		<a href="ListaAccountServlet?page=1&message=null">Visualizza gli account</a>
 									  		<a href="aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
-									  		<a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  		<a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -99,7 +100,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  		<a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  		<a href="cliente/CarrelloServlet">Il mio carrello</a>
-									  		<a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  		<a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -116,7 +117,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
 									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -125,7 +126,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="cliente/carrello.jsp">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -223,9 +224,11 @@ http://www.tooplate.com/view/2095-level
 										<input type="submit" value="applica">
 									</span>
 								</span>
-								<% if(message!=null){ %>
-				    				<p id="messageError"><%=message %></p>
-				    			<% } %>
+								<div>
+      								<% if (messageRicerca!=null) { %>
+				    				<p><%=messageRicerca%></p>
+				    				<% } %>
+				    			</div>
 							</form>
                     	</div>
                     	
@@ -245,13 +248,15 @@ http://www.tooplate.com/view/2095-level
     							System.out.println("FINE " + fine);                       
                         
                        			for(int i=inizio; i<fine; i++) {
-                            	Account a = allUtenti.get(i);                                   	
-                        	%>
-                        	<form action="ListaAccountServlet" method="get" class="tm-search-form tm-section-pad-1 pl-5">
+                            		Account a = allUtenti.get(i);   
+                            		System.out.println("RUOLO: " + a.getRuolo());
+                            		if (a.getRuolo()==null || a.getRuolo().equals(Ruolo.gestoreVoli)) {
+                           	%>
+                            <form action="ListaAccountServlet" method="get" class="tm-search-form tm-section-pad-1 pl-5">
                             	<div class="form-row">
   									<label class="col-sm-1.5 col-form-label">Nome</label>
    	 								<div class="form-group col-md">
-      									<input type="text" value="<%=a.getNome() %>" class="form-control-plaintext form-control-sm">
+      									<input type="text" value="<%=a.getNome()%>" class="form-control-plaintext form-control-sm">
     								</div>
     								<label class="col-sm-1.5 col-form-label">Cognome</label>
     								<div class="form-group col-md">
@@ -262,11 +267,13 @@ http://www.tooplate.com/view/2095-level
       									<input type="text" value="<%=a.getEmail() %>" class="form-control-plaintext form-control-sm">
     								</div>
     								<div class="form-group col-md">
-    									<i class="fa fa-pencil-square-o fa-2x"></i>
+    									<a href="DettagliUtenteServlet?email=<%=a.getEmail()%>"><span class="fa fa-pencil-square-o fa-2x"></span></a>
     								</div>
     							</div>
-                            </form>  
-                            <% } %>                   
+                            </form> 
+                           	<% 		} 
+                       			}
+                            %>                   
                         </div>
                         <div class="d-flex justify-content-center">
       						<% if (((pagina-1)*4)>0) { %>

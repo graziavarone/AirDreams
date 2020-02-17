@@ -5,7 +5,7 @@
 <%
     String message=(String)request.getAttribute("message");
 
-     Boolean mod=(Boolean)request.getAttribute("mod");
+     Boolean mod=(Boolean)request.getSession().getAttribute("mod");
      
      PoliticaBagaglioMano politicaMano=(PoliticaBagaglioMano)request.getAttribute("politicaMano");
      PoliticaBagaglioStiva politicaStiva=(PoliticaBagaglioStiva)request.getAttribute("politicaStiva");
@@ -18,11 +18,12 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-
+    <meta charset="ISO-8859-1">
+   
     <title>AirDreams</title>
 <!--
 Template 2095 Level
@@ -53,8 +54,8 @@ http://www.tooplate.com/view/2095-level
                 <div class="container">
                     <div class="row">
                         <nav class="navbar navbar-expand-lg narbar-light">
-                            <a class="navbar-brand mr-auto" href="#">
-                                <img src="img/logo.png" alt="Site logo">
+                            <a class="navbar-brand mr-auto" href="../index.jsp">
+                                <img src="../img/logo.png" alt="Site logo">
                             </a>
                             <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -87,9 +88,9 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="listaAccount.jsp">Visualizza gli account</a>
+									  <a href="ListaAccountServlet?page=1&message=null">Visualizza gli account</a>
 									  <a href="aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
@@ -98,7 +99,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -115,7 +116,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="gestoreVoli/ListaVoliServlet?page=1&action=null">Visualizza voli</a>
 									  <a href="gestoreVoli/aggiungiVolo.jsp">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -124,7 +125,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="cliente/carrello.jsp">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -147,74 +148,64 @@ http://www.tooplate.com/view/2095-level
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
-                  <% if(message!=null){ %>
-				                <p id="messageError"><%=message %></p>
-				                <% } %>
-				                                                
-                                          <a href="../index.jsp">Annulla</a>
+                	<div></div>
+                    <div>
+                     <% if (message!=null){ %>
+                    	<p class="d-flex justify-content-center"><%=message%></p>
+                   	 <% } %>
+                   	 </div>
+
                     <div class="container ie-h-align-center-fix">
-                    Modifica <%=politicaMano.getCompagnia().getNome()%>
                         <div class="row">
                             <div class="col-xs-12 ml-auto mr-auto ie-container-width-fix">
+                            	<div class="form-row tm-search-form-row d-flex justify-content-center">	
+                            		<div class="form-group tm-form-element tm-form-element-100">
+                                		<h3 class="tm-color-primary tm-article-title-1">Modifica <%=politicaMano.getCompagnia().getNome()%></h3>
+                               		</div>
+                            	</div>
                   				<form action="AggiornaCompagniaAereaServlet" method="post" class="tm-search-form tm-section-pad-2" id="form1">
-                                  <input type="hidden" name="nome" value="<%=politicaMano.getCompagnia().getNome()%>">
-                                 
-                                    <div class="form-row tm-search-form-row">
-                                      
-                                     
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                      
-                                            <input name="sitoCompagnia" type="text" value="<%=politicaMano.getCompagnia().getSito()%>"  class="form-control"placeholder="Type site.." required="required">
+                                	<input type="hidden" name="nome" value="<%=politicaMano.getCompagnia().getNome()%>">
+                                 		<div class="form-row tm-search-form-row">
+                                      		<div class="form-group tm-form-element tm-form-element-50">
+                                      			<i class="fa fa-globe fa-2x tm-form-element-icon"></i>
+                                      			<input name="sitoCompagnia" type="text" value="<%=politicaMano.getCompagnia().getSito()%>"  class="form-control"placeholder="Type site.." required="required">
+                                        		<br>
+                                        	</div>
+                                  		</div>
+            							<div class="form-row tm-search-form-row">
+                                        	<div class="form-group tm-form-element tm-form-element-100">
+                                        		<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
+                                           	 	<input name="pesoMano" type="number"  value="<%=politicaMano.getPeso()%>" class="form-control"  placeholder="Peso bagaglio a mano" required="required">
+                                   			</div>
+                                     		<div class="form-group tm-form-element tm-form-element-50">
+                                         		<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
+                                           		<input name="dimensioniMano" type="text"  value="<%=politicaMano.getDimensioni()%>" class="form-control"placeholder="Dimensioni bagaglio a mano" required="required">
+                                        		<br>
+                                       	 	</div>
+                                		</div>
+            							<div class="form-row tm-search-form-row">
+                                        	<div class="form-group tm-form-element tm-form-element-100">
+                                        		<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
+                                           		<input name="pesoStiva" type="number" value="<%=politicaStiva.getPeso()%>" class="form-control"  placeholder="Peso bagaglio stiva" required="required">
+                                   			</div>
+                                     		<div class="form-group tm-form-element tm-form-element-50">
+                                     			<i class="fa fa-suitcase fa-2x tm-form-element-icon"></i>
+                                         		<input name="dimensioniStiva" type="text"  value="<%=politicaStiva.getDimensioni()%>" class="form-control"placeholder="Dimensioni bagaglio stiva" required="required">
+                                        		<br>
+                                        	</div>
+                                        	<div class="form-group tm-form-element tm-form-element-100">
+                                        		<i class="fa fa-euro fa-2x tm-form-element-icon"></i>                                    
+                                            	<input type="number" name="prezzoStiva" class="form-control" placeholder="Prezzo bagaglio stiva" value="<%=politicaStiva.getPrezzo()%>" step="0.01" required="required"> 
                                         	<br>
-                                        </div>
-                                  
-                                   		</div>
-            							
-            							              <div class="form-row tm-search-form-row">
-                                        <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="pesoMano" type="number"  value="<%=politicaMano.getPeso()%>" class="form-control"  placeholder="Peso bagaglio a mano" required="required">
-                                   
-                                        </div>
-                                     
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                         
-                                            <input name="dimensioniMano" type="text"  value="<%=politicaMano.getDimensioni()%>" class="form-control"placeholder="Dimensioni bagaglio a mano" required="required">
-                                        	<br>
-                                        </div>
-                                	
-            							</div>
-            							
-            							              <div class="form-row tm-search-form-row">
-                                        <div class="form-group tm-form-element tm-form-element-100">
-                                            <input name="pesoStiva" type="number" value="<%=politicaStiva.getPeso()%>" class="form-control"  placeholder="Peso bagaglio stiva" required="required">
-                                   
-                                        </div>
-                                     
-                                        <div class="form-group tm-form-element tm-form-element-50">
-                                         
-                                            <input name="dimensioniStiva" type="text"  value="<%=politicaStiva.getDimensioni()%>" class="form-control"placeholder="Dimensioni bagaglio stiva" required="required">
-                                        	<br>
-                                        </div>
-                                        
-                                        <div class="form-group tm-form-element tm-form-element-100">                                      
-                                            	<input type="number" name="prezzoStiva"
-												placeholder="Prezzo bagaglio stiva" value="<%=politicaStiva.getPrezzo()%>"style="height: 42px" step="0.01" required="required"> 
-                                        	<br>
-                                        </div>   
-                              			
-												
-												
-            							</div>
-            							
-            							
-                                    <div class="form-row tm-search-form-row">                                  
-                                        <div class="form-group tm-form-element tm-form-element-2">
-                                            <input type="submit" class="btn btn-primary tm-btn-search" value="Modifica">
+                                        	</div>   
+                              			</div>
+                              			<h6><a href="../index.jsp">Annulla modifica</a></h6> 
+            							<div class="form-row tm-search-form-row d-flex justify-content-center">  
+                                        	<div class="form-group tm-form-element tm-form-element-2">
+                                        		<input type="submit" class="btn btn-primary tm-btn-search" value="Modifica">
                                         </div>
                                       </div>
-                                    
                                 </form>
-
                             </div>                        
                         </div>      
                     </div>

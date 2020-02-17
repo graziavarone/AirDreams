@@ -28,13 +28,11 @@ public class ListaCompagnieServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		CompagniaAereaManager manager = null;
 		manager = new CompagniaAereaManager();	
-		String message = request.getParameter("message");
 	
 		try {
 			allComA = manager.getAllCompanies();
 			System.out.println(allComA);
 			request.setAttribute("allComA", allComA);
-			request.setAttribute("message", message);
 			String nextJSP = "/gestoreCompagnie/listaCompagnie.jsp";
 			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher(nextJSP);
 			dispatcher.forward(request, response);

@@ -33,7 +33,6 @@ public class ModificaVoloServlet extends HttpServlet {
 	private String statoP = null; //stato partenza
 	private String cityA = null; //citta arrivo
 	private String statoA = null; //stato arrivo
-	private String message = null; //messaggio in caso di successo/errore
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//instanzio i manager che mi servono
@@ -41,6 +40,7 @@ public class ModificaVoloServlet extends HttpServlet {
 		CompagniaAereaManager cManager = new CompagniaAereaManager();
 		VoloManager vManager = new VoloManager();
 	    Volo voloVecchio = null;
+		String message = null; //messaggio in caso di successo/errore
 		//ottengo i parametri che mi servono
 		String idVolo = request.getParameter("idVolo");
 		

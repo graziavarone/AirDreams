@@ -7,16 +7,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<% Boolean mod=(Boolean)request.getAttribute("mod");
-
-if(mod==null)
-	mod=true;
+<% 
+	Boolean mod=(Boolean)request.getSession().getAttribute("mod");
+System.out.println("MOD SESSIONE: " + mod);
+	if(mod==null)
+		mod=true;
 	String message=(String) request.getAttribute("message");
 	
-	
-	ArrayList<Volo> voliViaggio=(ArrayList<Volo>)request.getSession().getAttribute("voli");
-
-	
+	ArrayList<Volo> voliViaggio=(ArrayList<Volo>)request.getSession().getAttribute("voli");	
 %>
 <html>
 <head>
@@ -76,7 +74,7 @@ if(mod==null)
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="ListaAccountServlet?page=1">Visualizza gli account</a>
 									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
@@ -136,9 +134,11 @@ if(mod==null)
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
-                  <% if(message!=null){ %>
-				                <p id="messageError"><%=message %></p>
-				                <% } %>
+                	<div>
+                 		<% if(message!=null){ %>
+				        <p><%=message %></p>
+				        <% } %>
+				    </div>
                     <div class="container ie-h-align-center-fix">
                     <h3>Dettagli viaggio</h3>
                         <div class="row">

@@ -4,7 +4,8 @@
 
 <%
 	String message=(String)request.getAttribute("message");
-	Boolean mod=(Boolean)request.getAttribute("mod");
+	Boolean mod=(Boolean)request.getSession().getAttribute("mod");
+	System.out.println("MOD SESSIONE: " + mod);
 	Volo volo = (Volo) request.getAttribute("volo");
 	DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -87,9 +88,9 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="gestoreCompagnie/listaAccount.jsp">Visualizza gli account</a>
+									  <a href="../ListaAccountServlet?page=1">Visualizza gli account</a>
 									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else {%>
@@ -98,7 +99,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="cliente/CarrelloServlet">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreCompagnie</a>
 									  </div>
 									</li>
                            			
@@ -115,7 +116,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="ListaVoliServlet?page=1&action=null">Visualizza voli</a>
 									  <a href="aggiungiVolo.jsp">Aggiungi volo</a>
-									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
+									  <a href="../ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
 									</li>
 									<% } else { %>
@@ -124,7 +125,7 @@ http://www.tooplate.com/view/2095-level
 									  <div class="dropdown-content">
 									  <a href="cliente/DettagliAccountServlet">Il mio profilo</a>
 									  <a href="cliente/carrello.jsp">Il mio carrello</a>
-									  	  <a href="ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
+									  	  <a href="../ChangeMod?mod=true">Passa alla mod. gestoreVoli</a>
 									  </div>
 									</li>
                            			
@@ -150,7 +151,7 @@ http://www.tooplate.com/view/2095-level
                     <div class="container ie-h-align-center-fix">
                      <div>
                      	<% if (message!=null){ %>
-                     		<h2 class="tm-color-primary tm-article-title-1 d-flex justify-content-center"><%=message%></h2>
+                     		<p class="d-flex justify-content-center"><%=message%></p>
                      	<% } %>
                      </div>
                         <div class="row">
@@ -269,7 +270,7 @@ http://www.tooplate.com/view/2095-level
                                    		<label class="col-sm-1.5 col-form-label">Numero totale di posti disponibili per il volo</label>
                                    		<div class="form-group col-auto">
                                    			<i class="fa fa-group fa-2x tm-form-element-icon"></i>
-                                   			<input class="form-control input-group-lg" value= <%=volo.getSeats()%> type="number" id="inputNumber2" name="seats" value="1" min="1" max="100" required>
+                                   			<input class="form-control input-group-lg" value= <%=volo.getSeats()%> type="number" id="inputNumber2" name="seats" required>
 							        	</div>
 							        </div>
                                     <div class="form-row tm-search-form-row d-flex justify-content-center">
@@ -305,7 +306,8 @@ http://www.tooplate.com/view/2095-level
 		
         <script src="http://code.jquery.com/jquery-1.8.2.js"> </script>
         <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"> </script>
-        <script src="../scripts/ricercaAeroporti.js"> </script>
+        <script src="../scripts/validaVolo.js"> </script>
+        <script src="../scripts/validaRegistrazione.js"> </script>
         
         <script>
         $("#form1").submit(function(e) {    

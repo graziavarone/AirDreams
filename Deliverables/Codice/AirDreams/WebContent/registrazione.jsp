@@ -4,8 +4,8 @@
 <%
 	String message=(String)request.getAttribute("message");
 
- 	Boolean mod=(Boolean)request.getAttribute("mod");
-
+	Boolean mod=(Boolean)request.getSession().getAttribute("mod");
+	System.out.println("MOD SESSIONE: " + mod);
 	if(mod==null)
 		mod=true;
 %>
@@ -82,7 +82,7 @@ http://www.tooplate.com/view/2095-level
                            			   <li class="nav-item dropdown">
 									  <a class="nav-link dropbtn"><%=account.getNome() %></a>
 									  <div class="dropdown-content">
-									  <a href="#">Visualizza gli account</a>
+									  <a href="ListaAccountServlet?page=1">Visualizza gli account</a>
 									  <a href="gestoreCompagnie/aggiungiCompagnia.jsp">Aggiungi compagnia aerea</a>
 									  <a href="ChangeMod?mod=false">Passa alla mod. Cliente</a>
 									  </div>
@@ -145,7 +145,7 @@ http://www.tooplate.com/view/2095-level
                     <div class="container ie-h-align-center-fix">
                     	<div>
                	 			<% if(message!=null){ %>
-				            <p id="messageError"><%=message %></p>
+				            <p><%=message %></p>
 				            <% } %>
 				   		</div>
                         <div class="row">
@@ -213,7 +213,8 @@ http://www.tooplate.com/view/2095-level
         <script src="js/bootstrap.min.js"></script>                 <!-- https://getbootstrap.com/ -->
         <script src="js/datepicker.min.js"></script>                <!-- https://github.com/qodesmith/datepicker -->
         <script src="js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
-        <script src="slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
+        <script src="slick/slick.min.js"></script>  
+        <script src="scripts/validaRegistrazione.js"></script>               <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
 </body>
 </html>
