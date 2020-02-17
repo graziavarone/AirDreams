@@ -7,10 +7,7 @@ function checkName(inputtxt) {
 		inputtxt.classList.remove("error");
 		inputtxt.classList.add("success");	
 	}
-		
 }
-
-
 
 function checkCognome(inputtxt) {
 	var name = /^[A-Za-z' ]{1,}$/;
@@ -37,8 +34,6 @@ function checkEmail(inputtxt) {
 	}
 }
 
-
-
 function checkPassword(inputtxt) {
 	var name = /^(?=.{6,}$)(?=.*[A-Z])(?=.*[0-9])([\.-]?\w+)*.*$/;
 
@@ -50,7 +45,6 @@ function checkPassword(inputtxt) {
 		inputtxt.classList.add("success");	
 	}
 }
-
 
 function controllaPassword(inputtxt){
 	var name = document.getElementsByName("password")[0];
