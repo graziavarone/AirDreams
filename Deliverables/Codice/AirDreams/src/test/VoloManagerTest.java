@@ -17,8 +17,9 @@ import gestionecompagniaaerea.CompagniaAereaManager;
 import gestionevolo.AeroportoManager;
 import gestionevolo.Volo;
 import gestionevolo.VoloManager;
+import junit.framework.TestCase;
 
-public class VoloManagerTest {
+public class VoloManagerTest extends TestCase {
 	private VoloManager voloManager=new VoloManager();
 	
 	@Before
@@ -28,7 +29,7 @@ public class VoloManagerTest {
 	}
 	
 	@Test 
-	public void cercaDiretti() {
+	public void testCercaDiretti() {
 		ArrayList<Volo> voli=voloManager.cercaDiretti("NAP", "TXL", LocalDate.of(2020, 2, 10), 1, 0, 0);
 		
 		assertTrue(voli.size()>0);
@@ -36,21 +37,21 @@ public class VoloManagerTest {
 	
 	
 	@Test 
-	public void cercaUnoScalo() {
+	public void testCercaUnoScalo() {
 		ArrayList<Volo[]> voli=voloManager.cercaUnoScalo("NAP", "TXL", LocalDate.of(2020, 2, 10), 1, 0, 0);
 		
 		assertTrue(voli.size()>0);
 	}
 	
 	@Test 
-	public void cercaDueScali() {
+	public void testCercaDueScali() {
 		ArrayList<Volo[]> voli=voloManager.cercaDueScali("TXL", "NAP", LocalDate.of(2020, 2, 12), 1, 0, 0);
 		
 		assertTrue(voli.size()>0);
 	}
 	
 	@Test 
-	public void aggiungiVolo() throws SQLException {
+	public void testAggiungiVolo() throws SQLException {
 		CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
 		AeroportoManager aeroportoManager=new AeroportoManager();
 		Volo volo=new Volo(LocalDate.of(2020, 2, 12), 1, 1, LocalTime.of(1, 1), LocalTime.of(1, 1), true,
@@ -61,7 +62,7 @@ public class VoloManagerTest {
 	}
 	
 	@Test 
-	public void cercaVoli() throws SQLException {
+	public void testCercaVoli() throws SQLException {
 		
 		ArrayList<Volo> voli=voloManager.cercaVoli("Ryanair");
 		
@@ -70,7 +71,7 @@ public class VoloManagerTest {
 	
 	
 	@Test 
-	public void cercaVoliRicerca() throws SQLException {
+	public void testCercaVoliRicerca() throws SQLException {
 		String[] ricerca=new String[3];
 		ricerca[0]="NAP";
 		ricerca[1]="";
@@ -82,7 +83,7 @@ public class VoloManagerTest {
 	
 	
 	@Test 
-	public void findById() throws SQLException {
+	public void testFindById() throws SQLException {
 		
 		Volo volo=voloManager.findByID("1");
 		
@@ -91,7 +92,7 @@ public class VoloManagerTest {
 	
 	
 	@Test 
-	public void modificaVolo() throws SQLException {
+	public void testModificaVolo() throws SQLException {
 		Volo volo= voloManager.findByID("1");
 		volo.setSeats(54);
 		boolean result=voloManager.modificaVolo(volo);
@@ -102,7 +103,7 @@ public class VoloManagerTest {
 	
 	
 	@Test 
-	public void eliminaVolo() throws SQLException {
+	public void testEliminaVolo() throws SQLException {
 		
 		
 		boolean result=voloManager.eliminaVolo(1);

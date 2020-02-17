@@ -20,8 +20,10 @@ import org.springframework.mock.web.MockServletContext;
 
 import db.DriverManagerConnectionPool;
 import gestionecompagniaaerea.AggiungiCompagniaAereaServlet;
+import junit.framework.TestCase;
 
-public class AggiungiCompagniaAereaTest {
+
+public class AggiungiCompagniaAereaTest extends TestCase{
 	@Mock
 	MockHttpServletRequest request;
 
@@ -168,4 +170,6 @@ public class AggiungiCompagniaAereaTest {
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);
 	}
+	
+
 }

@@ -1,15 +1,18 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -19,9 +22,13 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockRequestDispatcher;
 
 import db.DriverManagerConnectionPool;
+import gestioneutente.Account;
 import gestioneutente.LoginServlet;
+import gestioneutente.UtenteManager;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-public class LoginTest {
+public class LoginTest extends TestCase {
 
 	@Mock
 	MockHttpServletRequest request;
@@ -98,4 +105,5 @@ public class LoginTest {
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);
 	}
+	
 }

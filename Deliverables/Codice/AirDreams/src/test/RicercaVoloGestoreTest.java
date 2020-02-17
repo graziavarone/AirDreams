@@ -23,8 +23,9 @@ import db.DriverManagerConnectionPool;
 import gestioneutente.Account;
 import gestioneutente.UtenteManager;
 import gestionevolo.ListaVoliServlet;
+import junit.framework.TestCase;
 
-public class RicercaVoloGestoreTest {
+public class RicercaVoloGestoreTest extends TestCase {
 
 	@Mock
 	MockHttpServletRequest request;

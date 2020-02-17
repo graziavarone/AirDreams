@@ -8,10 +8,14 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
-import gestioneutente.Account;
-import gestioneutente.UtenteManager;
 
-public class UtenteManagerTest {
+import db.DriverManagerConnectionPool;
+import gestioneutente.Account;
+import gestioneutente.CartaDiCredito;
+import gestioneutente.UtenteManager;
+import junit.framework.TestCase;
+
+public class UtenteManagerTest extends TestCase{
 	private UtenteManager utenteManager=new UtenteManager();
 	
 	@Before
@@ -21,7 +25,7 @@ public class UtenteManagerTest {
 	}
 	
 	@Test
-	public void signIn() throws Exception {
+	public void testSignIn() throws Exception {
 		Account account=new Account();
 		account.setEmail("rosaria@gmail.com");
 		account.setPassword("Rosaria1998");
@@ -32,7 +36,7 @@ public class UtenteManagerTest {
 	}
 	
 	@Test
-	public void signUp() throws Exception {
+	public void testSignUp() throws Exception {
 		Account account=new Account("Madonna", "Mia", "madonnaMia@gmail.com", "madonnaMado123");
 		
 		boolean result=utenteManager.signUp(account);
@@ -43,7 +47,7 @@ public class UtenteManagerTest {
 	}
 	
 	@Test
-	public void findAccountByEmail() throws Exception {
+	public void testFindAccountByEmail() throws Exception {
 
 		Account account=utenteManager.findAccountByEmail("rosaria@gmail.com");
 		
@@ -52,7 +56,7 @@ public class UtenteManagerTest {
 	}
 	
 	@Test
-	public void eliminaAccount() throws Exception {
+	public void testEliminaAccount() throws Exception {
 		Account account=new Account("Madonna", "Mia", "madonnaMia@gmail.com", "madonnaMado123");
 		
 		utenteManager.signUp(account);
@@ -63,7 +67,16 @@ public class UtenteManagerTest {
 	}
 	
 	@Test
-	public void aggiornaProfilo() throws Exception {
+	public void testVisualizzaInfoUtente() throws Exception {
+
+		Account account=utenteManager.findAccountByEmail("rosaria@gmail.com");
+		
+		assertNotNull(account);
+		
+	}
+	
+	@Test
+	public void testAggiornaProfilo() throws Exception {
 		Account accountVecchio=utenteManager.findAccountByEmail("rosaria@gmail.com");
 		Account accountNuovo=new Account("RosRosRos", "Rossi", "rosaria@gmail.com", "Rosaria1998");
 		boolean result=utenteManager.aggiornaProfilo(accountVecchio, accountNuovo);
@@ -73,7 +86,7 @@ public class UtenteManagerTest {
 	}
 	
 	@Test
-	public void getAllUsers() throws Exception {
+	public void testGetAllUsers() throws Exception {
 
 		ArrayList<Account> account=utenteManager.getAllUsers();
 		
@@ -82,11 +95,22 @@ public class UtenteManagerTest {
 	}
 	
 	@Test
-	public void findAccountByLetter() throws Exception {
+	public void testFindAccountByLetter() throws Exception {
 
 		ArrayList<Account> account=utenteManager.findAccountByLetter("R", "R");
 		
 		assertEquals(1, account.size());
+		
+	}
+	
+	
+	@Test
+	public void testModificaAccount() throws Exception {
+		Account accountVecchio=utenteManager.findAccountByEmail("rosaria@gmail.com");
+		Account accountNuovo=new Account("RosRosRos2", "Rossi", "rosaria@gmail.com", "Rosaria1998");
+		boolean result=utenteManager.aggiornaProfilo(accountVecchio, accountNuovo);
+		
+		assertTrue(result);
 		
 	}
 }

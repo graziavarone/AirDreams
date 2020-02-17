@@ -17,8 +17,9 @@ import gestionecarrello.CarrelloManager;
 import gestionecompagniaaerea.CompagniaAerea;
 import gestionecompagniaaerea.CompagniaAereaManager;
 import gestionevolo.Volo;
+import junit.framework.TestCase;
 
-public class CompagniaAereaManagerTest {
+public class CompagniaAereaManagerTest extends TestCase {
 	private CompagniaAereaManager compagniaAereaManager=new CompagniaAereaManager();
 	
 	@Before
@@ -27,14 +28,14 @@ public class CompagniaAereaManagerTest {
 	}
 	
 	@Test
-	public void visualizzaInfoCompagniaAerea() throws Exception{
+	public void testVisualizzaInfoCompagniaAerea() throws Exception{
 		System.out.println("visualizzaInfoCompagniaAerea");
 		assertNotNull(compagniaAereaManager.visualizzaInfoCompagniaAerea("Ryanair"));
 
 	} 
 	
 	@Test
-	public void aggiungiCompagnia() throws Exception{
+	public void testAggiungiCompagnia() throws Exception{
 		System.out.println("aggiungiCompagnia");
 		boolean result=compagniaAereaManager.aggiungiCompagnia(new CompagniaAerea("EasyJet","www.easyjet.com"));
 		
@@ -42,7 +43,15 @@ public class CompagniaAereaManagerTest {
 	} 
 	
 	@Test
-	public void getAllCompagnies() throws Exception{
+	public void testGetCompagnie() throws Exception{
+		System.out.println("getCompagnie");
+		ArrayList<CompagniaAerea> compagnie=compagniaAereaManager.getAllCompanies();
+		
+		assertEquals(1, compagnie.size());
+	} 
+	
+	@Test
+	public void testGetAllCompagnies() throws Exception{
 		System.out.println("getAllCompagnies");
 		ArrayList<CompagniaAerea> compagnie=compagniaAereaManager.getAllCompanies();
 		

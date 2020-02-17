@@ -1,15 +1,18 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -18,9 +21,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockRequestDispatcher;
 
 import db.DriverManagerConnectionPool;
+import gestioneutente.Account;
 import gestioneutente.RegistrazioneServlet;
+import gestioneutente.UtenteManager;
+import junit.framework.TestCase;
 
-public class RegistrazioneTest {
+public class RegistrazioneTest extends TestCase {
 
 	@Mock
 	MockHttpServletRequest request;
@@ -98,7 +104,7 @@ public class RegistrazioneTest {
 	}
 
 	
-	//TC_7.2_4 email gi� presente
+	//TC_7.2_4 email gi‡ presente
 	@Test
 	public void testCase_4() throws IOException, ServletException{	
 		when(request.getParameter("nome")).thenReturn("Grazia");
@@ -168,4 +174,6 @@ public class RegistrazioneTest {
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);
 	}
+
+	
 }

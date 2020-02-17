@@ -36,8 +36,9 @@ import gestioneutente.Account;
 import gestioneutente.UtenteManager;
 import gestionevolo.Volo;
 import gestionevolo.VoloManager;
+import junit.framework.TestCase;
 
-public class PagamentoServletTest {
+public class PagamentoServletTest extends TestCase {
 	@Mock
 	MockHttpServletRequest request;
 

@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -14,8 +15,9 @@ import gestioneordine.BigliettoManager;
 import gestioneordine.Sesso;
 import gestionevolo.Volo;
 import gestionevolo.VoloManager;
+import junit.framework.TestCase;
 
-public class BigliettoManagerTest {
+public class BigliettoManagerTest extends TestCase{
 private BigliettoManager bigliettoManager=new BigliettoManager();
 private VoloManager voloManager=new VoloManager();
 	
@@ -26,7 +28,7 @@ private VoloManager voloManager=new VoloManager();
 	}
 	
 	@Test
-	public void aggiungiBiglietto() throws Exception {
+	public void testAggiungiBiglietto() throws Exception {
 		Volo volo=voloManager.findByID("1");
 		Biglietto biglietto=new Biglietto("Rosaria", "Rossi", Sesso.F, 26,volo);
 		biglietto.setOrdine(1);
@@ -36,11 +38,16 @@ private VoloManager voloManager=new VoloManager();
 	}
 	
 	@Test
-	public void trovaBigliettiOrdine() throws Exception {
+	public void testTrovaBigliettiOrdine() throws Exception {
 		ArrayList<Biglietto> biglietti=bigliettoManager.trovaBigliettiOrdine(1);
 		 
 		 assertTrue(biglietti.size()>0);
 	}
+	
+	
+	
+	
+	
 	
 	@After
 	public void tearDown() throws Exception{

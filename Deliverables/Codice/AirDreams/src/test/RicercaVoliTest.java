@@ -12,15 +12,18 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockRequestDispatcher;
 import org.springframework.mock.web.MockServletContext;
 
+import gestioneutente.RegistrazioneServlet;
 import gestionevolo.RicercaVoliServlet;
+import junit.framework.TestCase;
 
-public class RicercaVoliTest {
+public class RicercaVoliTest extends TestCase {
 	@Mock
 	MockHttpServletRequest request;
 

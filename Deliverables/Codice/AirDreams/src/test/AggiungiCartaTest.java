@@ -22,9 +22,15 @@ import org.springframework.mock.web.MockServletContext;
 import db.DriverManagerConnectionPool;
 import gestioneutente.Account;
 import gestioneutente.AggiungiCartaServlet;
+import gestioneutente.RegistrazioneServlet;
 import gestioneutente.UtenteManager;
 
-public class AggiungiCartaTest {
+
+
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+public class AggiungiCartaTest extends TestCase {
 	
 	@Mock
 	MockHttpServletRequest request;
@@ -157,5 +163,6 @@ public class AggiungiCartaTest {
 	public void tearDown() throws Exception{
 		DriverManagerConnectionPool.setTest(false);
 	}
+	
 
 }

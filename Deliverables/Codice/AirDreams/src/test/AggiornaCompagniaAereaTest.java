@@ -20,8 +20,9 @@ import org.springframework.mock.web.MockServletContext;
 
 import db.DriverManagerConnectionPool;
 import gestionecompagniaaerea.AggiornaCompagniaAereaServlet;
+import junit.framework.TestCase;
 
-public class AggiornaCompagniaAereaTest {
+public class AggiornaCompagniaAereaTest extends TestCase {
 	@Mock
 	MockHttpServletRequest request;
 
@@ -30,6 +31,7 @@ public class AggiornaCompagniaAereaTest {
 	
 	@Mock
 	MockRequestDispatcher dispatcher;
+	
 	
 	@Mock
 	MockServletContext servletContext;

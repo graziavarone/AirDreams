@@ -10,13 +10,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 import db.DriverManagerConnectionPool;
+import gestionecompagniaaerea.CompagniaAerea;
+import gestionecompagniaaerea.CompagniaAereaManager;
+import gestionecompagniaaerea.PoliticaBagaglioManager;
+import gestionecompagniaaerea.PoliticaBagaglioMano;
+import gestionecompagniaaerea.PoliticaBagaglioStiva;
 import gestioneordine.BagaglioManager;
 import gestioneordine.BagaglioMano;
 import gestioneordine.BagaglioStiva;
 import gestioneordine.Biglietto;
 import gestioneordine.BigliettoManager;
+import junit.framework.TestCase;
 
-public class BagaglioManagerTest {
+public class BagaglioManagerTest extends TestCase {
 	
 	private BagaglioManager bagaglioManager=new BagaglioManager();
 	private BigliettoManager bigliettoManager=new BigliettoManager();
@@ -28,7 +34,7 @@ public class BagaglioManagerTest {
 	}
 	
 	@Test
-	public void aggiungiBagaglioMano() throws Exception{
+	public void testAggiungiBagaglioMano() throws Exception{
 		Biglietto biglietto=bigliettoManager.trovaBigliettiOrdine(1).get(0);
 		boolean result=bagaglioManager.aggiungiBagaglioMano(new BagaglioMano(10, "10x10x10", biglietto));
 		
@@ -37,7 +43,7 @@ public class BagaglioManagerTest {
 	} 
 	
 	@Test
-	public void aggiungiBagaglioStiva() throws Exception{
+	public void testAggiungiBagaglioStiva() throws Exception{
 		Biglietto biglietto=bigliettoManager.trovaBigliettiOrdine(1).get(0);
 		boolean result=bagaglioManager.aggiungiBagaglioStiva(new BagaglioStiva(10, "10x10x10", biglietto,33,1));
 		
@@ -46,7 +52,7 @@ public class BagaglioManagerTest {
 	} 
 	
 	@Test
-	public void cercaBagaglioManoBiglietto() throws Exception{
+	public void testCercaBagaglioManoBiglietto() throws Exception{
 		Biglietto biglietto=bigliettoManager.trovaBigliettiOrdine(1).get(0);
 		BagaglioMano bagaglioMano=bagaglioManager.cercaBagaglioManoBiglietto(biglietto);
 		
@@ -56,7 +62,7 @@ public class BagaglioManagerTest {
 	
 	
 	@Test
-	public void cercaBagagliStivaBiglietto() throws Exception{
+	public void testCercaBagagliStivaBiglietto() throws Exception{
 		Biglietto biglietto=bigliettoManager.trovaBigliettiOrdine(1).get(0);
 		bagaglioManager.aggiungiBagaglioStiva(new BagaglioStiva(10, "10x10x10", biglietto,33,1));
 		HashSet<BagaglioStiva> bagagli=bagaglioManager.cercaBagagliStivaBiglietto(biglietto);
