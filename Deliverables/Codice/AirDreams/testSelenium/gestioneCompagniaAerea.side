@@ -1,0 +1,1833 @@
+{
+  "id": "b6e120ee-f89b-4f50-9217-ce409ca34102",
+  "version": "2.0",
+  "name": "gestioneCompagniaAerea",
+  "url": "http://localhost/AirDreams/gestoreCompagnie/aggiungiCompagnia.jsp",
+  "tests": [{
+    "id": "aeb229cf-fca6-46f2-a27c-e78049bcf030",
+    "name": "aggiornaCompagniaAereaSitoSbagliato",
+    "commands": []
+  }, {
+    "id": "89f5ec66-b3d2-4b87-90df-fc14984976e7",
+    "name": "aggiornaCompagniaAereaDimensioniMano",
+    "commands": [{
+      "id": "50585152-0764-4db8-9029-2353f510c850",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/AirDreams/gestoreCompagnie/ListaCompagnieServlet",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7218ac7b-d7b6-402e-befe-21d145345059",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f8db765f-b349-446b-a60c-4030b80a10e1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tm-search-form:nth-child(1) .fa",
+      "targets": [
+        ["css=.tm-search-form:nth-child(1) .fa", "css:finder"],
+        ["xpath=//div[@id='tm-section-1']/div/div/div/form/div/div[2]/a/span", "xpath:idRelative"],
+        ["xpath=//a/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e64c1a6d-2f46-4fc6-9474-7fb2dea93de5",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6aed5b91-1b6d-4373-8031-3fbeb1e7037d",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.error", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "34"
+    }, {
+      "id": "a329550b-e338-49d2-9324-de6cd317556f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(3)",
+      "targets": [
+        ["css=.form-row:nth-child(3)", "css:finder"],
+        ["xpath=//form[@id='form1']/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c0fad261-ca7f-4634-9c4a-cde2510af5b3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Modifica']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "d41d6ef0-025a-4e06-ba3a-c102f5fbbf3d",
+    "name": "aggiornaCompagniaAereaDimensioniStiva",
+    "commands": [{
+      "id": "349d2ed6-8f0b-40f1-98c2-cc3c2e96c569",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/AirDreams/gestoreCompagnie/ListaCompagnieServlet",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a647d675-528d-40b4-ad2c-116bb2069eb3",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "260f23d6-f6f2-40b4-92eb-29f5083ad812",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tm-search-form:nth-child(1) .fa",
+      "targets": [
+        ["css=.tm-search-form:nth-child(1) .fa", "css:finder"],
+        ["xpath=//div[@id='tm-section-1']/div/div/div/form/div/div[2]/a/span", "xpath:idRelative"],
+        ["xpath=//a/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b3e1e67e-3822-409a-8f0d-85ace971b17e",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(4) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a6f10897-999f-429a-83f7-c9538f81ca95",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.error", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "10"
+    }, {
+      "id": "05b90f4a-60ac-4eb3-a993-ad70b838e20f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Modifica']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "51a76b62-c2b8-4de4-94e4-9bfda18cb4a1",
+    "name": "aggiornaCompagniaAerea",
+    "commands": [{
+      "id": "98b5a984-a9ca-4f5a-a2b7-97fc98653e58",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/AirDreams/gestoreCompagnie/ListaCompagnieServlet",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ae293802-8c44-48ce-ab02-c26cc57e2351",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1873331b-f7bd-4c7a-810d-fbf3baf9aa8a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.tm-search-form:nth-child(1) .fa",
+      "targets": [
+        ["css=.tm-search-form:nth-child(1) .fa", "css:finder"],
+        ["xpath=//div[@id='tm-section-1']/div/div/div/form/div/div[2]/a/span", "xpath:idRelative"],
+        ["xpath=//a/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7fcdef50-788e-48f5-8be2-21a6b3071434",
+      "comment": "",
+      "command": "click",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.tm-form-element-50:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0faae7a0-5120-4931-8648-cdec31ae0b3b",
+      "comment": "",
+      "command": "click",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.tm-form-element-50:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a69f7c21-f35a-4c3f-9818-f54dbff57616",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.tm-form-element-50:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d59fbb4-3807-4f79-ae48-8861fc86d604",
+      "comment": "",
+      "command": "click",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.tm-form-element-50:nth-child(1) > .form-control", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4096844-862e-404b-9d87-2152d2cd157e",
+      "comment": "",
+      "command": "type",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.success", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "www.airfranceeeeee.com"
+    }, {
+      "id": "3c45cbbd-e7fc-407a-8b68-83b2c1827f5d",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "680f0184-534f-47fd-ab2e-2eab487e97e2",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "15"
+    }, {
+      "id": "1a52583c-57dc-4486-b94f-1f9df31bbe83",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3ce86eae-9806-4a57-b0a9-d2965d148393",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-group:nth-child(2) > .success", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "34x34x56"
+    }, {
+      "id": "30fdb97d-f846-40f1-b99d-86fc74b3543b",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(4) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "60950a22-c42e-4173-918d-d8683c1907b3",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(4) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "25"
+    }, {
+      "id": "09480115-de83-4837-b62e-838b4ceb552d",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(4) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "966821d7-b215-4fff-b7c1-db953e9643c1",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(4) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "105x56x81"
+    }, {
+      "id": "2ee2a6bd-b45e-424e-a3f2-57de0d735374",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "77f63f5c-cad8-4072-a330-d434a274947f",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "35.01"
+    }, {
+      "id": "208cf3d0-a6e8-4e3b-b58c-5212485d899d",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f5a29d6b-7ec8-4d87-89b3-ffca178a9b4b",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "35.02"
+    }, {
+      "id": "b41028ec-ab06-46bb-9d9b-41e6cb61ab74",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "699f8255-3dd7-419f-8aff-19160f8dd452",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7a51cea4-a0e8-49df-b2d4-b87d1beb4b70",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "35.03"
+    }, {
+      "id": "06b0a361-0614-4284-ac4e-471a1d649f6c",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f21340b6-f8c6-4966-894f-0e620b9933e7",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "35.04"
+    }, {
+      "id": "4e2d0346-892f-4fdb-8846-54291db8f5f6",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fd6d13e5-1c1a-4b9e-9011-4e1f48807051",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(5)",
+      "targets": [
+        ["css=.form-row:nth-child(5)", "css:finder"],
+        ["xpath=//form[@id='form1']/div[4]", "xpath:idRelative"],
+        ["xpath=//div[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "28b58cc0-04d9-4980-98cc-f72fa6ecd968",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Modifica']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "2571ce3c-b075-4f5d-81e2-18166773babc",
+    "name": "aggiungiCompagniaAereaNomeSbagliato",
+    "commands": [{
+      "id": "c3dba018-9225-4063-a804-763df45e14be",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/AirDreams/gestoreCompagnie/aggiungiCompagnia.jsp",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bb2a7809-1d1d-4c65-89ad-1bd86859fec9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x840",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3b69c4d9-ce27-4bc5-9159-e372066e2db4",
+      "comment": "",
+      "command": "click",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "857c7123-4f19-4fbe-9f7c-d4f2a641a290",
+      "comment": "",
+      "command": "type",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.error", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "1123"
+    }, {
+      "id": "1ecbb6e6-f3d0-42d0-b0ae-8c072acb1c86",
+      "comment": "",
+      "command": "click",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6f6a2b64-e1ed-45b3-a7b1-aaf01893cc05",
+      "comment": "",
+      "command": "type",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.tm-form-element-50 > .error", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "www.easyjet.com"
+    }, {
+      "id": "597f6089-29fd-4bcd-89f4-38e2f9bfd84f",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ffeb136a-b238-487d-9953-e97ac19bcd29",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "12"
+    }, {
+      "id": "c1b9eced-e187-4321-b3d2-a3a86ea1dab7",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "205a720b-53fc-496a-a1ed-11b53b04410c",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "12x12x12"
+    }, {
+      "id": "dd07e205-3ae6-4546-9a84-384e101a3663",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(2)",
+      "targets": [
+        ["css=.form-row:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='form1']/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a9d598f4-36bc-495b-8d03-c8684263acde",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5c913aa9-0a54-4101-9608-cd63a81dac5d",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "33"
+    }, {
+      "id": "ba9af9f6-9ca4-41c8-ac91-5bbab70a38b8",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "48dd3274-4668-4e9e-918e-b09b0c67917f",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "33x33x33"
+    }, {
+      "id": "368141a5-d596-46cb-887c-a9c76fe1c5e6",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d5f231a-7ee0-41b8-9819-56e168c7ae30",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "34"
+    }, {
+      "id": "c0c52235-1051-4dcb-9760-6e45748675f9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(4)",
+      "targets": [
+        ["css=.form-row:nth-child(4)", "css:finder"],
+        ["xpath=//form[@id='form1']/div[4]", "xpath:idRelative"],
+        ["xpath=//div[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69d54227-5936-4dc2-8779-fa00725d1a37",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Aggiungi']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "e81bb7bd-63a3-4154-a4bb-f5fc507d7e1b",
+    "name": "aggiungiCompagniaAereaSitoSbagliato",
+    "commands": [{
+      "id": "79566d58-5bb7-45bd-af2e-70e71ad8cf21",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/AirDreams/gestoreCompagnie/aggiungiCompagnia.jsp",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c0c1cc63-a290-43c1-a167-1d37cc5b9d9d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1051x806",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9622e759-f0e5-4f94-924e-a865c14a5ddf",
+      "comment": "",
+      "command": "click",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "437c08ee-af59-4d69-850c-201e886914c0",
+      "comment": "",
+      "command": "type",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.success", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "CompagniaUno"
+    }, {
+      "id": "bf8ec747-c6a7-4eda-a73b-647443f37e24",
+      "comment": "",
+      "command": "click",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f2c193c-f8d1-4917-ae97-9dfb65c57c0d",
+      "comment": "",
+      "command": "type",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.error", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "www"
+    }, {
+      "id": "254026c8-8a65-44ad-8603-3f452c154843",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a6f3bbfa-ea77-45c2-bd26-38315d42d2cc",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "b5bd2354-fa9b-484e-b40e-f19d69244a3d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(1)",
+      "targets": [
+        ["css=.form-row:nth-child(1)", "css:finder"],
+        ["xpath=//form[@id='form1']/div", "xpath:idRelative"],
+        ["xpath=//form/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3e928ba4-448c-49c0-93bb-b145359455db",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e85ab92a-de0b-455a-9648-48e2320a714a",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.tm-form-element-50 > .success", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "10x10x10"
+    }, {
+      "id": "7ac9b2b1-6ee9-426c-be12-78170d1e7838",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c52a5958-deaf-4fff-be29-0ed79190dc50",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "219838e3-fa3f-4c1c-a711-551e49bd3a6c",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "91946614-b0ce-4aa5-b40b-9151dddefa10",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "12x12x12"
+    }, {
+      "id": "087f3203-2dfc-4c53-a332-5d65d6f67080",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4cc2f3bb-d7c3-47a6-95f2-00eb7e375922",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "34"
+    }, {
+      "id": "0a67c4e3-ff60-4e1f-974a-79583051b46f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Aggiungi']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "f910a750-9719-496a-9f6e-43e79b38fb65",
+    "name": "aggiungiCompagniaAereaDimensioniMano",
+    "commands": [{
+      "id": "10df1a73-01c6-40b3-ab13-4f89393d26fc",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/AirDreams/gestoreCompagnie/aggiungiCompagnia.jsp",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bfd5d74d-7c72-4c9d-8215-6f1dab4bfe25",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1054x808",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "011dd145-eaef-4bc2-b63d-dc94d32b1dc2",
+      "comment": "",
+      "command": "click",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ff9578a8-d489-40ad-8f95-c722c951819b",
+      "comment": "",
+      "command": "type",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.success", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "CompagniaUno"
+    }, {
+      "id": "1d6e7409-9b6d-401e-8d60-994d3f2800d8",
+      "comment": "",
+      "command": "click",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0e7183e0-94c0-4703-b8bc-96f5c729623f",
+      "comment": "",
+      "command": "type",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.tm-form-element-50 > .success", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "www.compagniauno.com"
+    }, {
+      "id": "5e40228b-5ab9-444a-b018-a136a73b2950",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "376986d6-7856-40fe-8094-28add50c0c71",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "41c83f31-5412-4d66-a317-d1ed0521d36e",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f4cfba4d-ff10-409e-a116-1d84d6be9159",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.error", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "9a9c0e78-598e-434b-a075-7f46fde9a08b",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d296066e-9ce3-4268-92ee-a3f2decff9f3",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "3e86fa33-94da-4895-a844-7951d0fa4e83",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5017a7da-cd97-49cb-8ca3-8fd7964055bf",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "20x20x20"
+    }, {
+      "id": "5520b4f8-a352-4c3a-8d6a-41934228c48e",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6041d8d7-bbf6-4fb5-818a-a2829350d3e0",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "20"
+    }, {
+      "id": "81781b55-02f1-4b50-8636-401f290e2a53",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Aggiungi']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "43547a84-854c-4bc1-8e9c-c5516bf90c79",
+    "name": "aggiungiCompagniaAereaDimensioniStiva",
+    "commands": [{
+      "id": "7b2e299b-c857-4fa2-a0d4-e71592f2ae67",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/AirDreams/gestoreCompagnie/aggiungiCompagnia.jsp",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ddd3a833-92b2-418b-898a-c77737b05b93",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1058x808",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "89477ebe-8dbd-4463-870c-610546d55605",
+      "comment": "",
+      "command": "click",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cb3d3ff6-21e5-41a1-8f2c-9b0a0d060f0c",
+      "comment": "",
+      "command": "type",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.success", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "CompagniaUno"
+    }, {
+      "id": "bf1be799-2f1d-4cc1-b185-9b7d1e65bd2a",
+      "comment": "",
+      "command": "click",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8b2bf136-5a2e-49ea-a5b0-ed80a91603e8",
+      "comment": "",
+      "command": "type",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.tm-form-element-50 > .success", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "www.compagniauno.com"
+    }, {
+      "id": "748dee95-c4b2-4056-9ef5-782157184fd3",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a7d16b9-1051-4f2b-96af-60db17d92347",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "2aa96b37-e582-4a1a-8c09-3661377b6936",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "17aed982-a506-4b41-ab0e-47f051a31785",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "10x10x10"
+    }, {
+      "id": "6a6418ff-6865-4841-bf3b-6779baea4b20",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3c35ac7d-8ad9-41f1-8935-07c11068b287",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "ba3f98d4-9c51-4f63-bdd1-2bb0ad6b370e",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "94d8ea98-7160-4710-9668-0f8ea5179714",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.error", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "20"
+    }, {
+      "id": "5c232963-4b85-4bcd-a52f-5aaa691d69c0",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "19fe1a53-f936-4a6b-a7aa-4bffc8a7b188",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "34"
+    }, {
+      "id": "3f50d760-81ef-490b-aed0-84f80c5ada80",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Aggiungi']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "f1fa2a5f-1434-4a72-a5f8-692c17911408",
+    "name": "aggiungiCompagniaAereaCompagniaEsistente",
+    "commands": [{
+      "id": "62a2937a-0a10-4a62-9d87-22de6b97afb5",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/AirDreams/gestoreCompagnie/aggiungiCompagnia.jsp",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4e7ed7df-e572-40fa-9fed-4db00e287d6d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1062x808",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0a26aa00-568d-472e-9b7e-84a4407adf2e",
+      "comment": "",
+      "command": "click",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "879c8890-f901-4261-b90b-b2236748d5ac",
+      "comment": "",
+      "command": "type",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.success", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Ryanair"
+    }, {
+      "id": "743e329c-c657-4e44-b306-aba93c884608",
+      "comment": "",
+      "command": "click",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7efe0865-bed5-407c-9a42-248ba9ea9653",
+      "comment": "",
+      "command": "type",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.error", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "www.ryanair.com"
+    }, {
+      "id": "1625bde0-3ccb-4b6a-bb36-52c79f013985",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "251e80de-4cc2-4e69-8682-5f3266417ba1",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "c6fd6622-3a2d-44d6-8e6b-8a5f5111ccce",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "137daa92-6d3b-4f15-8fc9-476ce4f74cb7",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "10x10x10"
+    }, {
+      "id": "0dcc8137-a30d-40eb-b4ae-a2a209213b0e",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9d85ec45-89e1-4391-a74e-8cd39a43008b",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "2"
+    }, {
+      "id": "f7e3a472-8aa7-499d-936d-38f17f719ae5",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9a557689-22d1-4a45-8994-e8f22912dd56",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "20x20x20"
+    }, {
+      "id": "9e16c5e8-c30f-4f50-acc1-cb6b47735889",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9fba40ec-b555-4a26-ac2d-f7d744cf494e",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "25"
+    }, {
+      "id": "2cee136f-be70-42b3-be6a-a5e92bf79fa6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Aggiungi']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "aa82b62c-6812-4e3e-ad14-8829521d8396",
+    "name": "aggiungiCompagniaAerea",
+    "commands": [{
+      "id": "978c97f1-556e-4ac3-a522-012b34c31ef5",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/AirDreams/gestoreCompagnie/aggiungiCompagnia.jsp",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ef0622df-92fd-4be6-9c55-ff33a4b294e8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1054x808",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "01ce4b7d-cb96-4585-8eb9-c2f614ed1905",
+      "comment": "",
+      "command": "click",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c52ad513-0ce7-4893-b286-26030757210f",
+      "comment": "",
+      "command": "type",
+      "target": "name=nome",
+      "targets": [
+        ["name=nome", "name"],
+        ["css=.success", "css:finder"],
+        ["xpath=//input[@name='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "FlyDubai"
+    }, {
+      "id": "a74aabbb-5d80-4982-877e-32e14243becb",
+      "comment": "",
+      "command": "click",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.form-row:nth-child(1) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ee6c8b23-0874-4c44-bfd2-1f00ddd121f5",
+      "comment": "",
+      "command": "type",
+      "target": "name=sitoCompagnia",
+      "targets": [
+        ["name=sitoCompagnia", "name"],
+        ["css=.tm-form-element-50 > .success", "css:finder"],
+        ["xpath=//input[@name='sitoCompagnia']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "www.flydubai.com"
+    }, {
+      "id": "5c7c5f12-0828-47c0-b994-7d605ffa1f67",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2c2b8095-0b7b-41a9-b415-6d236b6c1380",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoMano",
+      "targets": [
+        ["name=pesoMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div/input", "xpath:position"]
+      ],
+      "value": "12"
+    }, {
+      "id": "f16db1d7-823a-45fe-b928-ec33ced82066",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad417e3d-dbdc-4e71-8f9e-d573c4295462",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniMano",
+      "targets": [
+        ["name=dimensioniMano", "name"],
+        ["css=.form-row:nth-child(2) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniMano']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "34x34x34"
+    }, {
+      "id": "a9765e28-063c-4e70-87ef-1c6a5809da1f",
+      "comment": "",
+      "command": "click",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9006c070-b017-4ff2-bc51-d52a1448287e",
+      "comment": "",
+      "command": "type",
+      "target": "name=pesoStiva",
+      "targets": [
+        ["name=pesoStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-100 > .form-control", "css:finder"],
+        ["xpath=//input[@name='pesoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/input", "xpath:position"]
+      ],
+      "value": "21"
+    }, {
+      "id": "6a55b1a1-07f9-431c-aa38-07e23258681d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(3) > .tm-form-element-50",
+      "targets": [
+        ["css=.form-row:nth-child(3) > .tm-form-element-50", "css:finder"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6978d538-2c63-4e9b-9708-59617e34ebd1",
+      "comment": "",
+      "command": "click",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e4b21f96-3fd6-4342-a335-d7736fb3f884",
+      "comment": "",
+      "command": "type",
+      "target": "name=dimensioniStiva",
+      "targets": [
+        ["name=dimensioniStiva", "name"],
+        ["css=.form-row:nth-child(3) > .tm-form-element-50 > .form-control", "css:finder"],
+        ["xpath=//input[@name='dimensioniStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "43x43x43"
+    }, {
+      "id": "89171721-64c9-42b2-b81f-e3c412b43fe3",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bcf867d8-95c1-4199-9cc6-61ba188d09a3",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoStiva",
+      "targets": [
+        ["name=prezzoStiva", "name"],
+        ["css=.form-group:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoStiva']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[3]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "56"
+    }, {
+      "id": "5fdb4cce-e09c-44ff-9ab6-8f4a0313d935",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Aggiungi']", "xpath:attributes"],
+        ["xpath=//form[@id='form1']/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "bc1bbc72-adae-4a34-894d-b730e03a9ff0",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost/", "http://localhost/AirDreams/gestoreCompagnie/dettagliCompagnia.jsp", "http://localhost/AirDreams/", "http://localhost/AirDreams/gestoreCompagnie/ListaCompagnieServlet", "http://localhost/AirDreams/gestoreCompagnie/aggiungiCompagnia.jsp"],
+  "plugins": []
+}
