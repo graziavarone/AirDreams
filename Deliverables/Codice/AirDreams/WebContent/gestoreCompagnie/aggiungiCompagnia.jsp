@@ -136,7 +136,7 @@ http://www.tooplate.com/view/2095-level
             
             <div class="tm-section tm-bg-img" id="tm-section-1">
                 <div class="tm-bg-white ie-container-width-fix-2">
-                	<div>
+                	<div class="d-flex justify-content-center">
                 		<% if(message!=null) { %>
 				 		<p><%=message %></p>
 				    	<% } %>

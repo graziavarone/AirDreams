@@ -56,7 +56,7 @@ public class AggiungiCompagniaAereaServlet extends HttpServlet {
 				
 				if(!valida(nomeCompagnia,sitoCompagnia,dimensioniBagaglioMano,dimensioniBagaglioStiva)) {
 					if(!Pattern.matches(expNome, nomeCompagnia)) {
-						 message+="Il nome della compagnia non puÚ contenere altri caratteri oltre lettere<br/>";
+						 message+="Il nome della compagnia non puo' contenere altri caratteri oltre lettere<br/>";
 						 System.out.println(message);
 						 response.getWriter().write("Formato errato dati");
 						 request.setAttribute("message",message);
