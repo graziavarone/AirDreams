@@ -190,8 +190,8 @@ System.out.println("MOD SESSIONE: " + mod);
       					<%
       						if (request.getAttribute("messageValidation")!=null && !request.getAttribute("messageValidation").equals("")) {
       					%>
-      					<div class="alert alert-primary" role="alert">
-      						<h6><%=request.getAttribute("messageValidation")%></h6>
+      					<div>
+      						<p><%=request.getAttribute("messageValidation")%></p>
       					</div>
       					<%  } %>
       				
@@ -329,9 +329,9 @@ System.out.println("MOD SESSIONE: " + mod);
     					%>
     					<div id="listaBiglietti<%=ordine.getCodOrdine()%>" hidden="true">
     						<b>Biglietti</b>
-    							
-							<table>
-    							<tr>
+    						<div><br>
+							<table class="table table-sm">
+    							<tr class="table-active">
 							    	<th>Nome</th>
 							    	<th>Cognome</th>
 							    	<th>Prezzo</th>
@@ -373,6 +373,7 @@ System.out.println("MOD SESSIONE: " + mod);
 							    </tr>
 							  	<% } %>
 							</table>
+							</div>
 						</div>
     					<% } %>
     				<% } %>
@@ -385,8 +386,9 @@ System.out.println("MOD SESSIONE: " + mod);
       			</div>
       			<!-- /Information Sections -->
       	  </div>
-            
-          <footer class="tm-bg-dark-blue">
+           
+        </div>
+                  <footer class="tm-bg-dark-blue">
           		<div class="container">
                     <div class="row">
                         <p class="col-sm-12 text-center tm-font-light tm-color-white p-4 tm-margin-b-0">
@@ -394,8 +396,6 @@ System.out.println("MOD SESSIONE: " + mod);
                     </div>
                 </div>                
           </footer>
-        </div>
-        
         <!-- load JS files -->
         <script src="../scripts/validaModificaProfilo.js"></script>
         <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->

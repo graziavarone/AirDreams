@@ -48,7 +48,7 @@
                                 <form action="LoginServlet" method="post" class="tm-search-form tm-section-pad-2">
                                 	<div>
                                 		<h3 class="tm-color-primary tm-article-title-1">
-                                		Grazie per aver acquistato su AirDreams! 
+                                		Grazie per aver acquistato su AirDreams! <br>
                                 		Le informazioni sul tuo viaggio e il codice della prenotazione sono stati mandati alla mail
                                 		
                                 		 "<%=account.getEmail() %>". <br>

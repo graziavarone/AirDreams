@@ -185,7 +185,7 @@ http://www.tooplate.com/view/2095-level
                                  	<div class="form-row tm-search-form-row">
                                     	<div class="form-group tm-form-element tm-form-element-50">
                                     	 	<i class="fa fa-calendar fa-2x tm-form-element-icon"></i>
-                                           	<input onkeyup="checkAeroporto(this)"  name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza" required>
+                                           	<input onkeyup="checkData(this)"  name="dateDeparture" type="text" class="form-control" id="start" placeholder="Data partenza" required>
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">
                                             <i class="fa fa-euro fa-2x tm-form-element-icon"></i>

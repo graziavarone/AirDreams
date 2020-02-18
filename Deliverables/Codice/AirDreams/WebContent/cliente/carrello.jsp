@@ -162,8 +162,8 @@ System.out.println("MOD SESSIONE: " + mod);
                   						<%
                   							if (voliCarrello.isEmpty()) {
                   						%>
-                  						<div class="alert alert-primary" role="alert">
-                  							Non sono presenti voli nel carrello
+                  						<div class="d-flex justify-content-center">
+                  							<p>Non sono presenti voli nel carrello</p>
                   						</div>
                   						<%		
                   							} else  {
@@ -213,6 +213,14 @@ System.out.println("MOD SESSIONE: " + mod);
            		</div>
 			</div>
         </div>
+           <footer class="tm-bg-dark-blue">
+                <div class="container">
+                    <div class="row">
+                        <p class="col-sm-12 text-center tm-font-light tm-color-white p-4 tm-margin-b-0">
+                        Copyright &copy; <span class="tm-current-year">2019</span>      
+                    </div>
+                </div>                
+            </footer>
        
          <!-- load JS files -->
         <script src="../js/jquery-1.11.3.min.js"></script>             <!-- jQuery (https://jquery.com/download/) -->

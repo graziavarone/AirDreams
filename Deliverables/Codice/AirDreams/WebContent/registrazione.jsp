@@ -177,7 +177,7 @@ http://www.tooplate.com/view/2095-level
                                         </div>
                                         <div class="form-group tm-form-element tm-form-element-50">     
                                         	<i class="fa fa-lock fa-2x tm-form-element-icon"></i>                                    
-                                            <input name="Cpassword" onkeyup="controllaPassword(this)" type="password" class="form-control" id="inputCPassword" placeholder="Conferma password" required="required">
+                                            <input name="Cpassword" onkeyup="checkPassword(this)" type="password" class="form-control" id="inputCPassword" placeholder="Conferma password" required="required">
                                        	<br>
                                         </div>
                                     </div>

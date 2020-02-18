@@ -159,7 +159,7 @@ http://www.tooplate.com/view/2095-level
                             <div class="form-row">
                             	<label class="col-sm-1.5 col-form-label">Nome compagnia </label>
    	 							<div class="form-group col-md">
-      								<input type="text" value="<%=ca.getNome()%>" class="form-control-plaintext form-control-sm">
+      								<input type="text" value="<%=ca.getNome()%>" class="form-control-plaintext form-control-sm" readonly>
     							</div>
     							<div class="form-group col-md">
     								<a href="DettagliCompagniaAereaServlet?nome=<%=ca.getNome()%>"><span class="fa fa-pencil-square-o fa-2x"></span> </a>

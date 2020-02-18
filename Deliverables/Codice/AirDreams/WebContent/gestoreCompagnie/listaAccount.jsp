@@ -256,15 +256,15 @@ http://www.tooplate.com/view/2095-level
                             	<div class="form-row">
   									<label class="col-sm-1.5 col-form-label">Nome</label>
    	 								<div class="form-group col-md">
-      									<input type="text" value="<%=a.getNome()%>" class="form-control-plaintext form-control-sm">
+      									<input type="text" onkeyup="checkName(this)" value="<%=a.getNome()%>" class="form-control-plaintext form-control-sm">
     								</div>
     								<label class="col-sm-1.5 col-form-label">Cognome</label>
     								<div class="form-group col-md">
-      									<input type="text" value="<%=a.getCognome() %>" class="form-control-plaintext form-control-sm">
+      									<input type="text" onkeyup="checkCognome(this)" value="<%=a.getCognome() %>" class="form-control-plaintext form-control-sm">
     								</div>
     								<label class="col-sm-1.5 col-form-label">Email</label>
     								<div class="form-group col-md">
-      									<input type="text" value="<%=a.getEmail() %>" class="form-control-plaintext form-control-sm">
+      									<input type="text" onkeyup="checkEmail(this)" value="<%=a.getEmail() %>" class="form-control-plaintext form-control-sm">
     								</div>
     								<div class="form-group col-md">
     									<a href="DettagliUtenteServlet?email=<%=a.getEmail()%>"><span class="fa fa-pencil-square-o fa-2x"></span></a>
@@ -306,6 +306,6 @@ http://www.tooplate.com/view/2095-level
         <script src="../js/jquery.singlePageNav.min.js"></script>      <!-- Single Page Nav (https://github.com/ChrisWojcik/single-page-nav) -->
         <script src="../slick/slick.min.js"></script>                  <!-- http://kenwheeler.github.io/slick/ -->
 		<!-- dove ho cancellato gli script che non facevano funzionare il link sulla barra di navigazione -->
-
+	
 </body>
 </html>

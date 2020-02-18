@@ -140,11 +140,11 @@
                             <div class="ie-container-width-fix">
       							<div>
 									<% if (request.getAttribute("message")!=null && (!request.getAttribute("message").equals(""))) { %>
-				    				<p id="messageError"><%=request.getAttribute("message")%></p>
+				    				<p><%=request.getAttribute("message")%></p>
 				    				<% } %>
 				   				</div>
       						<div class="pl-5">
-                            	<form action="PagamentoServlet" method="post" id="form2">
+                            	<form action="PagamentoServlet" method="post" id="form2" class="tm-search-form tm-section-pad-2">
                             		<% 
                             			if(carte!=null && carte.size()!=0){ 
                             		%>
@@ -156,13 +156,13 @@
         							<br>
         							<% 		} %>
               						<% 	} %>
-              			
-              						<div>
+              		
+              		                <div>
               							Inserisci una nuova carta <input type="radio" name="carta" value="crea" id="crea" onclick="mostra(this.value)">
               						</div>
-                            		<div class="form-row tm-search-form-row">                                  
+                            		<div class="form-row tm-search-form-row d-flex justify-content-center">                                  
                                 		<div class="form-group tm-form-element tm-form-element-2">
-                                   			<button type="submit" id="cartaEsistente" class="btn btn-primary tm-btn-search" hidden="true">Paga</button>
+                                   			<button type="submit" id="cartaEsistente" class="btn btn-primary tm-btn-search">Paga</button>
                                     	</div>
                                		</div>	
                             	</form>
@@ -188,11 +188,11 @@
                                     	<input hidden=true name="cvc" onkeyup="checkCVC(this)" type="text"  class="form-control" id="inputCvc" placeholder="cvc" required="required">
                                        	<br>
                                     </div>
-                                   	<div class="form-row tm-search-form-row d-flex justify-content-center">                                  
-                                        <div class="form-group tm-form-element tm-form-element-2">
-                                            <button type="submit" class="btn btn-primary tm-btn-search" id="submit">Paga</button>
-                                        </div>
-                                    </div>	
+                            		<div class="form-row tm-search-form-row d-flex justify-content-center">                                  
+                                		<div class="form-group tm-form-element tm-form-element-2">
+                                   			<button type="submit" id="cartaEsistente2" class="btn btn-primary tm-btn-search" hidden="true">Paga</button>
+                                    	</div>
+                               		</div>
                                 </div>
                             </form>		                      
                         </div>      
@@ -232,12 +232,13 @@
           			document.getElementById("inputTitolare").removeAttribute("hidden");
           			document.getElementById("inputDataScadenza").removeAttribute("hidden");
           			document.getElementById("inputCvc").removeAttribute("hidden");
-         			document.getElementById("submit").removeAttribute("hidden");
          			document.getElementById("carta").removeAttribute("hidden");
          			document.getElementById("user").removeAttribute("hidden");
          			document.getElementById("data").removeAttribute("hidden");
          			document.getElementById("cvc").removeAttribute("hidden");
+         			document.getElementById("cartaEsistente2").removeAttribute("hidden");
          			$("#cartaEsistente").prop('hidden', true);
+         			
          		} else {
 					$("#inputnCarta").prop('hidden', true);
 					$("#inputTitolare").prop('hidden', true);
@@ -245,6 +246,11 @@
 					$("#inputCvc").prop('hidden', true);
 					$("#submit").prop('hidden', true);
 					$("#cartaEsistente").prop('hidden', false);
+					$("#carta").prop('hidden',true);
+					$("#user").prop('hidden',true);
+					$("#data").prop('hidden',true);
+					$("#cvc").prop('hidden',true);
+					$("#cartaEsistente2").prop('hidden', true);
 				}
           	}
         </script>
