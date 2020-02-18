@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import gestionevolo.Volo;
+import gestionevolo.VoloManager;
 
 /**
  * La servlet gestisce tutte le operazioni per la cancellazione di un ordine
@@ -27,6 +31,7 @@ public class AnnullaOrdineServlet extends HttpServlet {
 		
 		OrdineManager ordineManager=new OrdineManager();
 		BigliettoManager bigliettoManager=new BigliettoManager();
+		VoloManager voloManager=new VoloManager();
 		
 		try {
 			LocalDateTime oggi=LocalDateTime.now();
@@ -39,6 +44,15 @@ public class AnnullaOrdineServlet extends HttpServlet {
 			System.out.println("Mancano "+giorniCheMancano+" giorni");
 			
 			if(giorniCheMancano>7) {
+				ArrayList<Biglietto> biglietti=bigliettoManager.trovaBigliettiOrdine(Integer.parseInt(idOrdine));
+				for(Biglietto biglietto: biglietti) {
+					Volo volo=biglietto.getVolo();
+					
+					volo.setSeats(volo.getSeats()+1);
+					
+					voloManager.modificaVolo(volo);
+					
+				}
 				ordineManager.annullaOrdine(Integer.parseInt(idOrdine));
 				
 				request.setAttribute("messageOrdine", "Ordine annullato con successo");
