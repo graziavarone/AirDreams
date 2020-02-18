@@ -116,9 +116,25 @@ public class ModificaInfoPersonaliTest extends TestCase {
 		Mockito.verify(MyWriter).write("Failed");
 	}
 	
-	//TC_6.1_5 success
+	//password sbagliata
 	@Test
 	public void testCase_5() throws IOException, ServletException {		
+		when(request.getParameter("nome")).thenReturn("Grazia");
+		when(request.getParameter("cognome")).thenReturn("Varone");
+		when(request.getParameter("email")).thenReturn("grazia@virgilioit");
+		when(request.getParameter("password")).thenReturn("grazia19");
+		
+		when(request.getSession()).thenReturn(session);
+		
+		PrintWriter MyWriter = Mockito.mock(PrintWriter.class);
+		when(response.getWriter()).thenReturn(MyWriter);
+		servlet.doPost(request, response);	
+		Mockito.verify(MyWriter).write("Failed");
+	}
+	
+	//TC_6.1_5 success
+	@Test
+	public void testCase_6() throws IOException, ServletException {		
 		when(request.getParameter("nome")).thenReturn("Grazia");
 		when(request.getParameter("cognome")).thenReturn("Varone");
 		when(request.getParameter("email")).thenReturn("grazia@hotmail.it");
